@@ -1,14 +1,18 @@
 /**
- * Engagement Lab URL Shortener
- * Developed by Engagement Lab, 202
+ * 
+ * Developed by Engagement Lab, 2022
  * @author Johnny Richardson
  * 
  */
 
-// Mongoose config w/ promise
-// import {Mongoose} from 'mongoose';
-
-import { Schema, model, connect, modelNames, models } from 'mongoose';
+import {
+    Schema,
+    model,
+    models,
+    modelNames,
+    connect,
+    connection
+} from 'mongoose';
 
 let dbAddress: string = process.env.MONGO_ADMIN_URI || 'mongodb://localhost:27017/elab-admin';
 
@@ -35,7 +39,7 @@ const userSchema = new Schema({
     lastLogin: {
         type: Date,
     },
-    photo: {        
+    photo: {
         type: String,
     },
 });
@@ -48,11 +52,13 @@ const userSchema = new Schema({
  */
 module.exports = () => {
     let userModel = null;
-    if(modelNames().length === 0) {
-        const conn = connect(dbAddress);
+    if (modelNames().length === 0) {
+        connect(dbAddress);
         userModel = model('User', userSchema);
-    }
-    else
+    } else
         userModel = models['User']
-    return userModel;
+  return {
+        connection,
+        userModel
+    };
 };

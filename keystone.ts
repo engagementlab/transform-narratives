@@ -11,14 +11,13 @@ import {
 import {
   Lists
 } from '.keystone/types';
-
-// const { Passport } = require('@engagementlab/core')(__dirname);
-import express from "express";
-var passport = require('passport');
-const AuthStrategy = require('passport-google-oauth20').Strategy;
 import session from 'express-session';
+
+const passport = require('passport');
+const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
-import parser from 'body-parser';
+const DB = require('./db');
+
 declare module "express-serve-static-core" {
   interface Request {
     logIn: any
@@ -35,7 +34,6 @@ declare module 'express-session' {
     }
   }
 }
-
 
 // const ciMode = process.env.NODE_ENV === 'ci'; 
 
@@ -63,8 +61,6 @@ const Post: Lists.Post = list({
 });
 
 const Passport = () => {
-  const bodyParser = parser;
-
   const strategy = new AuthStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -82,9 +78,7 @@ const Passport = () => {
       const email = profile.emails[0].value;
       const photoUri = profile.photos ? profile.photos[0].value : undefined;
 
-      const User = require('./db');
-
-      User().findOneAndUpdate({
+      DB().userModel.findOneAndUpdate({
           email,
         }, {
           photo: photoUri,
@@ -105,30 +99,6 @@ const Passport = () => {
       );
     }
   );
-
-  // Session store (mongostore for prod)
-  // if (process.env.NODE_ENV === 'development') {
-  //   router.use(
-  //     session({
-  //       secret: process.env.SESSION_COOKIE,
-  //       resave: true,
-  //       saveUninitialized: false,
-  //     })
-  //   );
-  // } else {
-  //   const mongooseConnection = mongoose.connections[0];
-  //   router.use(
-  //     session({
-  //       saveUninitialized: false,
-  //       resave: false,
-  //       secret: process.env.SESSION_COOKIE,
-  //       store: new MongoStore({
-  //         mongooseConnection,
-  //       }),
-  //     })
-  //   );
-  // }
-
   /**
    * Google oauth2/passport config
    */
@@ -170,14 +140,28 @@ export default config({
   server: {
     extendExpressApp: (app) => {
       let p = Passport();
-      app.use(
-        session({
-          secret: 'dgrmksrkgnskxefgnksf',
-          resave: true,
-          saveUninitialized: true,
-        })
-        );
-
+        // Session store (mongostore for prod)
+        if (process.env.NODE_ENV === 'development') {
+          app.use(
+            session({
+              secret: process.env.SESSION_COOKIE,
+              resave: true,
+              saveUninitialized: true,
+            })
+          );
+        } else {
+          const mongooseConnection = DB().connection;
+          app.use(
+            session({
+              saveUninitialized: false,
+              resave: false,
+              secret: process.env.SESSION_COOKIE,
+              store: new MongoStore({
+                mongooseConnection,
+              }),
+            })
+          );
+        }
       app.get('/login', p.authenticate('google', {
         scope: ['openid', 'email'],
       }));
@@ -196,17 +180,15 @@ export default config({
             return;
           }
           
-          // console.log('user', user)
+
           // Log user in
           req.logIn(user, (logInErr: any) => {
             if (logInErr) {
-              console.log('login err', logInErr);
               res.status(500).send(logInErr);
               return logInErr;
             }
 
             // Explicitly save the session before redirecting!
-            console.log('looged in', req.session)
             req.session.save(() => {
               res.redirect(req.session.redirectTo || '/');
               });
@@ -222,15 +204,13 @@ export default config({
         app.use(p.session())
         app.use((req, res, next) => {
           
-          console.log('sesh', req.session)
+          // Ignore API path
           if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
             res.redirect('/login');
           }
           else if(req.session.passport && req.session.passport.user.isAdmin) next();
-          // else res.redirect('/cms/error?type=not-admin');
-          // next();
         });
       },
   },
