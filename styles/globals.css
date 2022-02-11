@@ -1,16 +1,53 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Overpass&family=Work+Sans:wght@400;700&display=swap');
+@tailwind base;
+
+@layer base {
+  p {
+    @apply my-4;
+  }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@tailwind components;
+
+@font-face {
+  font-family: 'Bourbon';
+  font-display: swap;
+  src: url('https://res.cloudinary.com/engagement-lab-home/raw/upload/v1617300924/mapping-impactful-media/font/BourbonGrotesque-Regular.otf') format('opentype');
 }
 
-* {
-  box-sizing: border-box;
+@font-face {
+  font-family: 'GeoticaW01-FourOpen';
+  src: url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open.eot');
+  src: url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open?#iefix') format('embedded-opentype'),
+    url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open.woff2') format('woff2'),
+    url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open.woff') format('woff'),
+    url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open.ttf') format('truetype'),
+    url('https://res.cloudinary.com/engagement-lab-home/raw/upload/mapping-impactful-media/font/Geotica-W01-Four-Open.svg#GeoticaW01-FourOpen') format('svg');
+}
+
+@tailwind utilities;
+
+/* Catch-all for links, h3 in markdown */
+p a {
+  color: #f9a66c;
+  text-decoration: underline;
+}
+
+h3 {
+  font-family: 'Bourbon';
+  margin-top: 1rem;
+}
+
+.list ul {
+  list-style: inside;
+}
+
+/* .list ul li:before {
+  content: "•";
+  font-size: 3rem;
+} */
+
+.list ol {
+  list-style: decimal;
+  padding-left: 2rem;
 }
