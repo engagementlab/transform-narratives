@@ -1,0 +1,25 @@
+{
+    "apps": [{
+        "name": "transform-narratives",
+        "exec_interpreter": "/home/node/.nvm/versions/node/v16.13.1/bin/node",
+        "script": "npm dev",
+        "env_production": {
+            "NODE_ENV": "production"
+        },
+        "env_staging": {
+            "NODE_ENV": "staging"
+        }
+      }],
+    "deploy": {
+      "staging": {
+        "user": "node",
+        "host": "199.94.80.19",
+        "repo": "git@github.com:engagementlab/transform-narratives.git",
+        "ref": "origin/main",
+        "path": "/srv/transform-narratives",
+        "env": {
+          "NODE_ENV": "staging"
+        }
+      }
+    }
+  }
