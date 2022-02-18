@@ -67,7 +67,7 @@ const Passport = () => {
       callbackURL: process.env.AUTH_CALLBACK_URL,
       passReqToCallback: true,
     },
-    (request: any, accessToken: any, refreshToken: any, profile: {
+    (request: any, _accessToken: any, refreshToken: any, profile: {
       emails: {
         value: any;
       } [];photos: {
@@ -76,12 +76,10 @@ const Passport = () => {
     }, done: any) => {
       // Verify user allowed
       const email = profile.emails[0].value;
-      const photoUri = profile.photos ? profile.photos[0].value : undefined;
+      // const photoUri = profile.photos ? profile.photos[0].value : undefined;
 
       DB().userModel.findOneAndUpdate({
           email,
-        }, {
-          photo: photoUri,
         },
         (err: any, user: any) => {
           if (err) {
@@ -144,13 +142,16 @@ export default config({
         if (process.env.NODE_ENV === 'development') {
           app.use(
             session({
-              secret: process.env.SESSION_COOKIE,
+              secret: process.env.SESSION_COOKIE || 'just-dev',
               resave: true,
               saveUninitialized: true,
             })
           );
         } else {
           const mongooseConnection = DB().connection;
+          if(!process.env.SESSION_COOKIE){ 
+              throw new Error('Need SESSION_COOKIE in .env!'); return;
+          }
           app.use(
             session({
               saveUninitialized: false,
@@ -162,11 +163,11 @@ export default config({
             })
           );
         }
-      app.get('/login', p.authenticate('google', {
+      app.get('/cms/login', p.authenticate('google', {
         scope: ['openid', 'email'],
       }));
 
-      app.get('/callback', (req, res, next) => {
+      app.get('/cms/callback', (req, res, next) => {
       try {
         p.authenticate('google', (error: any, user: { permissions: any; }, info: any) => {
           if (error) {
@@ -195,7 +196,7 @@ export default config({
               return null;
             });
           })(req, res);
-        } catch (e) {
+        } catch (e: any) {
           if(e) throw new Error(e);
         }
       });
@@ -208,7 +209,7 @@ export default config({
           if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
-            res.redirect('/login');
+            res.redirect('/cms/login');
           }
           else if(req.session.passport && req.session.passport.user.isAdmin) next();
         });
