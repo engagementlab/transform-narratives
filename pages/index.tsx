@@ -8,7 +8,7 @@ import { Lists } from '.keystone/types';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 
 
-type Post = {
+type Studio = {
   id: string;
   content: any;
   slug: string;
@@ -18,15 +18,17 @@ type Post = {
 export default function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <main style={{ margin: '3rem' }}>
-        <h1>Hello World! 👋🏻 </h1>
-        <ul>
-          {/* Render each post with a link to the content page */}
-          {posts.map(post => (
-            <DocumentRenderer key={post.slug} document={post.content.document} />
+      <main style={{ margin: '20rem' }}>
+       
+          {posts.map((post, i) => (
+
+<div>
+
+            <h1 className="text-3xl">{post.title}</h1>
+            <DocumentRenderer key={i} document={post.content.document} />
+</div>
           ))}
-        </ul>
-      </main>
+       </main>
     </div>
   );
 }
@@ -34,7 +36,7 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
 // Here we use the Lists API to load all the posts we want to display
 // The return of this function is provided to the `Home` component
 export async function getStaticProps() {
-  const posts = await query.Post.findMany({ query: 'id content { document } slug' }) as Post[];
+  const posts = await query.Studio.findMany({ query: 'id title content { document }' }) as Studio[];
   return {
     props: {
       posts

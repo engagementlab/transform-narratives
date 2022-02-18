@@ -28,8 +28,12 @@
 @tailwind utilities;
 
 /* Catch-all for links, h3 in markdown */
-p a {
-  color: #f9a66c;
+body {
+  color: white;
+  background-color: #212121;
+}
+a {
+  color: white;
   text-decoration: underline;
 }
 

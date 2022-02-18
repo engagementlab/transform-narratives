@@ -37,17 +37,17 @@ declare module 'express-session' {
 
 // const ciMode = process.env.NODE_ENV === 'ci'; 
 
-const Post: Lists.Post = list({
+const Studio: Lists.Post = list({
   fields: {
     title: text({
       validation: {
         isRequired: true
       }
     }),
-    slug: text({
-      isIndexed: 'unique',
-      isFilterable: true
-    }),
+    // slug: text({
+    //   isIndexed: 'unique',
+    //   isFilterable: true
+    // }),
     content: document({
       formatting: true,
       dividers: true,
@@ -135,87 +135,87 @@ export default config({
     generateNextGraphqlAPI: true,
     generateNodeAPI: true,
   },
-  server: {
-    extendExpressApp: (app) => {
-      // let p = Passport();
-        // Session store (mongostore for prod)
-        if (process.env.NODE_ENV === 'development') {
-          app.use(
-            session({
-              secret: process.env.SESSION_COOKIE || 'just-dev',
-              resave: true,
-              saveUninitialized: true,
-            })
-          );
-        } else {
-          const mongooseConnection = DB().connection;
-          if(!process.env.SESSION_COOKIE){ 
-              throw new Error('Need SESSION_COOKIE in .env!'); return;
-          }
-          app.use(
-            session({
-              saveUninitialized: false,
-              resave: false,
-              secret: process.env.SESSION_COOKIE,
-              store: new MongoStore({
-                mongooseConnection,
-              }),
-            })
-          );
-        }
-      // app.get('/cms/login', p.authenticate('google', {
-      //   scope: ['openid', 'email'],
-      // }));
+  // server: {
+  //   extendExpressApp: (app) => {
+  //     // let p = Passport();
+  //       // Session store (mongostore for prod)
+  //       if (process.env.NODE_ENV === 'development') {
+  //         app.use(
+  //           session({
+  //             secret: process.env.SESSION_COOKIE || 'just-dev',
+  //             resave: true,
+  //             saveUninitialized: true,
+  //           })
+  //         );
+  //       } else {
+  //         const mongooseConnection = DB().connection;
+  //         if(!process.env.SESSION_COOKIE){ 
+  //             throw new Error('Need SESSION_COOKIE in .env!'); return;
+  //         }
+  //         app.use(
+  //           session({
+  //             saveUninitialized: false,
+  //             resave: false,
+  //             secret: process.env.SESSION_COOKIE,
+  //             store: new MongoStore({
+  //               mongooseConnection,
+  //             }),
+  //           })
+  //         );
+  //       }
+  //     // app.get('/cms/login', p.authenticate('google', {
+  //     //   scope: ['openid', 'email'],
+  //     // }));
 
-      // app.get('/cms/callback', (req, res, next) => {
-      // try {
-      //   p.authenticate('google', (error: any, user: { permissions: any; }, info: any) => {
-      //     if (error) {
-      //       console.log('oauth err', error)
-      //       res.status(401).send(error);
-      //       return;
-      //     }
-      //     if (!user) {
-      //       console.log('info', info)
-      //       res.status(401).send(info);
-      //       return;
-      //     }
+  //     // app.get('/cms/callback', (req, res, next) => {
+  //     // try {
+  //     //   p.authenticate('google', (error: any, user: { permissions: any; }, info: any) => {
+  //     //     if (error) {
+  //     //       console.log('oauth err', error)
+  //     //       res.status(401).send(error);
+  //     //       return;
+  //     //     }
+  //     //     if (!user) {
+  //     //       console.log('info', info)
+  //     //       res.status(401).send(info);
+  //     //       return;
+  //     //     }
           
 
-      //     // Log user in
-      //     req.logIn(user, (logInErr: any) => {
-      //       if (logInErr) {
-      //         res.status(500).send(logInErr);
-      //         return logInErr;
-      //       }
+  //     //     // Log user in
+  //     //     req.logIn(user, (logInErr: any) => {
+  //     //       if (logInErr) {
+  //     //         res.status(500).send(logInErr);
+  //     //         return logInErr;
+  //     //       }
 
-      //       // Explicitly save the session before redirecting!
-      //       req.session.save(() => {
-      //         res.redirect(req.session.redirectTo || '/');
-      //         });
-      //         return null;
-      //       });
-      //     })(req, res);
-      //   } catch (e: any) {
-      //     if(e) throw new Error(e);
-      //   }
-      // });
+  //     //       // Explicitly save the session before redirecting!
+  //     //       req.session.save(() => {
+  //     //         res.redirect(req.session.redirectTo || '/');
+  //     //         });
+  //     //         return null;
+  //     //       });
+  //     //     })(req, res);
+  //     //   } catch (e: any) {
+  //     //     if(e) throw new Error(e);
+  //     //   }
+  //     // });
       
-        // app.use(p.initialize())
-        // app.use(p.session())
-        app.use((req, res, next) => {
+  //       // app.use(p.initialize())
+  //       // app.use(p.session())
+  //       app.use((req, res, next) => {
           
-          // Ignore API path
-          // if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
-          //   // Cache URL to bring user to after auth
-          //   req.session.redirectTo = req.originalUrl;
-          //   res.redirect('/cms/login');
-          // }
-          // else if(req.session.passport && req.session.passport.user.isAdmin) next();
-        });
-      },
-  },
+  //         // Ignore API path
+  //         // if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
+  //         //   // Cache URL to bring user to after auth
+  //         //   req.session.redirectTo = req.originalUrl;
+  //         //   res.redirect('/cms/login');
+  //         // }
+  //         // else if(req.session.passport && req.session.passport.user.isAdmin) next();
+  //       });
+  //     },
+  // },
   lists: {
-    Post
+    Studio: Studio
   },
 });

@@ -11,9 +11,8 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
-model Post {
+model Studio {
   id      String @id @default(cuid())
   title   String @default("")
-  slug    String @unique @default("")
   content String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
