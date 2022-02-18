@@ -137,7 +137,7 @@ export default config({
   },
   server: {
     extendExpressApp: (app) => {
-      let p = Passport();
+      // let p = Passport();
         // Session store (mongostore for prod)
         if (process.env.NODE_ENV === 'development') {
           app.use(
@@ -163,46 +163,46 @@ export default config({
             })
           );
         }
-      app.get('/cms/login', p.authenticate('google', {
-        scope: ['openid', 'email'],
-      }));
+      // app.get('/cms/login', p.authenticate('google', {
+      //   scope: ['openid', 'email'],
+      // }));
 
-      app.get('/cms/callback', (req, res, next) => {
-      try {
-        p.authenticate('google', (error: any, user: { permissions: any; }, info: any) => {
-          if (error) {
-            console.log('oauth err', error)
-            res.status(401).send(error);
-            return;
-          }
-          if (!user) {
-            console.log('info', info)
-            res.status(401).send(info);
-            return;
-          }
+      // app.get('/cms/callback', (req, res, next) => {
+      // try {
+      //   p.authenticate('google', (error: any, user: { permissions: any; }, info: any) => {
+      //     if (error) {
+      //       console.log('oauth err', error)
+      //       res.status(401).send(error);
+      //       return;
+      //     }
+      //     if (!user) {
+      //       console.log('info', info)
+      //       res.status(401).send(info);
+      //       return;
+      //     }
           
 
-          // Log user in
-          req.logIn(user, (logInErr: any) => {
-            if (logInErr) {
-              res.status(500).send(logInErr);
-              return logInErr;
-            }
+      //     // Log user in
+      //     req.logIn(user, (logInErr: any) => {
+      //       if (logInErr) {
+      //         res.status(500).send(logInErr);
+      //         return logInErr;
+      //       }
 
-            // Explicitly save the session before redirecting!
-            req.session.save(() => {
-              res.redirect(req.session.redirectTo || '/');
-              });
-              return null;
-            });
-          })(req, res);
-        } catch (e: any) {
-          if(e) throw new Error(e);
-        }
-      });
+      //       // Explicitly save the session before redirecting!
+      //       req.session.save(() => {
+      //         res.redirect(req.session.redirectTo || '/');
+      //         });
+      //         return null;
+      //       });
+      //     })(req, res);
+      //   } catch (e: any) {
+      //     if(e) throw new Error(e);
+      //   }
+      // });
       
-        app.use(p.initialize())
-        app.use(p.session())
+        // app.use(p.initialize())
+        // app.use(p.session())
         app.use((req, res, next) => {
           
           // Ignore API path
