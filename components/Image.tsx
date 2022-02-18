@@ -3,15 +3,15 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-    Cloudinary
-} from '@cloudinary/base';
+import {Cloudinary} from "@cloudinary/url-gen";
 import {
     AdvancedImage,
     lazyload,
+    accessibility,
     placeholder,
     responsive,
 } from '@cloudinary/react';
+import { Plugins } from '@cloudinary/html';
 
 // Cloudinary instance
 const cld = new Cloudinary({
@@ -43,13 +43,9 @@ const Image = ({
     lazy
 }: ImageProps) => {
     // Instantiate a CloudinaryImage object for the image with public ID;
-    // append dir prefix if missing
-    const prefix =
-        imgId.indexOf(`mapping-impactful-media/img/`) > -1 ?
-        `` :
-        `mapping-impactful-media/img/`;
+    // TODO: append dir prefix if missing
     const cloudImage = cld.image(`${imgId}`);
-    let plugins = [];
+    let plugins: Plugins = [];
 
     // Create image transforms
     cloudImage.addTransformation(transforms || `f_auto,dpr_auto`);
@@ -57,21 +53,20 @@ const Image = ({
     // If lazyload not set to false, enable
     if (lazy === undefined)
         plugins.push(
-            responsive([800, 1000, 1400]),
             lazyload(),
-            placeholder(`blur`)
+            responsive({steps: [800, 1000, 1400]}),
+            // accessibility(),
+            placeholder({mode:'blur'})
         );
 
-        return(
-
-            
+        return(        
             <AdvancedImage
-            id={id}
-            className={className}
-            cldImg={cloudImage}
-            alt={alt}
-            plugins={plugins}
-            style={{ maxWidth: width + `px` }}
+                id={id}
+                className={className}
+                cldImg={cloudImage}
+                alt={alt}
+                plugins={plugins}
+                style={{ maxWidth: width + `px` }}
             />
             );
 }
