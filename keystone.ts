@@ -206,12 +206,12 @@ export default config({
         app.use((req, res, next) => {
           
           // Ignore API path
-          if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
-            // Cache URL to bring user to after auth
-            req.session.redirectTo = req.originalUrl;
-            res.redirect('/cms/login');
-          }
-          else if(req.session.passport && req.session.passport.user.isAdmin) next();
+          // if (req.path !== '/api/__keystone_api_build' && (!req.session.passport || !req.session.passport.user)) {   
+          //   // Cache URL to bring user to after auth
+          //   req.session.redirectTo = req.originalUrl;
+          //   res.redirect('/cms/login');
+          // }
+          // else if(req.session.passport && req.session.passport.user.isAdmin) next();
         });
       },
   },
