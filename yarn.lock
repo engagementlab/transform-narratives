@@ -288,10 +288,10 @@
     "@types/lodash.clonedeep" "^4.5.6"
     lodash.clonedeep "^4.5.0"
 
-"@cloudinary/html@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@cloudinary/html/-/html-1.0.1.tgz"
-  integrity sha512-V7DTDIOpassEmCaL/AWp/39WhQA8zFjtSHFXz9D4+E+Si/eui5YQBXs0GEB6X2qGSUUBHuvu4TdPRJiw8OHtwQ==
+"@cloudinary/html@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/html/-/html-1.1.0.tgz#4a37647698dcc0429765b2297f0212927753a10d"
+  integrity sha512-11cWWqPjk+7NbWHVTLtdaM8KVZyx/48X8n940nLIApEIdJtxzppDFGaXm/S3CrXcjoKgiGr2CxL8rkbDDQWSfA==
   dependencies:
     "@types/lodash.clonedeep" "^4.5.6"
     "@types/lodash.debounce" "^4.0.6"
@@ -300,12 +300,17 @@
     lodash.debounce "^4.0.8"
     typescript "^4.1.2"
 
-"@cloudinary/react@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@cloudinary/react/-/react-1.0.1.tgz"
-  integrity sha512-nQWsBlKtWar6TS+AMLO18Uv5MzHC7kpekfnOLYpkaCAn1BIoHOsrhJXY72hYf43+mB31iXmgCLzNB1buSsycgQ==
+"@cloudinary/react@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/react/-/react-1.1.0.tgz#1e06a80de16db22c0ea0958604b473bb68756e96"
+  integrity sha512-fbucHFj9s8Bodoz7xCOYLOgD79/c09cY9Km/H4OZcOG14/RZy3LfhskRsyqJ+HKqAQnMDU4ujogSwZ4bkuVm/A==
   dependencies:
-    "@cloudinary/html" "^1.0.1"
+    "@cloudinary/html" "^1.1.0"
+
+"@cloudinary/url-gen@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/url-gen/-/url-gen-1.6.0.tgz#0810b4e00193737e336d43f29073b1fce0910a6f"
+  integrity sha512-Ir7IloApze7tUmLxDUjFw3GOcs7/Hrh47p4U3CCtC6wI59ZGMHQe3l3aNhMtdYrJxCVIs2jYp6obWetcfTf3GQ==
 
 "@emotion/cache@^11.4.0", "@emotion/cache@^11.7.1":
   version "11.7.1"
