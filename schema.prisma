@@ -12,7 +12,19 @@ generator client {
 }
 
 model Studio {
-  id      String @id @default(cuid())
-  title   String @default("")
-  content String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id            String        @id @default(cuid())
+  title         String        @default("")
+  content       String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos        StudioMedia[] @relation("Studio_photos")
+  video         String?
+  file_filename String?
+  file_filesize Int?
+}
+
+model StudioMedia {
+  id           String   @id @default(cuid())
+  studioImages Studio[] @relation("Studio_photos")
+  image        String?
+  imageName    String   @default("")
+  altText      String   @default("")
 }

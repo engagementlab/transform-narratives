@@ -3,15 +3,27 @@ import {
   list
 } from '@keystone-6/core';
 import {
+  relationship,
+  select,
   text
 } from '@keystone-6/core/fields';
 import {
   document
 } from '@keystone-6/fields-document';
+
+import { cloudinaryImage } from '@keystone-6/cloudinary';
 import {
   Lists
 } from '.keystone/types';
+import { componentBlocks } from './admin/components/component-blocks';
+
+
+import { AzureStorageConfig, azureStorageFile, azureStorageImage } from '@k6-contrib/fields-azure';
+import 'dotenv/config';
+
 import session from 'express-session';
+import path from 'path';
+import { video } from './admin/components/video';
 
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
@@ -35,19 +47,49 @@ declare module 'express-session' {
   }
 }
 
+const azConfig: AzureStorageConfig = {
+  azureStorageOptions: {
+    account: process.env.AZURE_STORAGE_ACCOUNT,
+    accessKey: process.env.AZURE_STORAGE_ACCESS_KEY,
+    container: process.env.AZURE_STORAGE_CONTAINER,
+  },
+};
+
 // const ciMode = process.env.NODE_ENV === 'ci'; 
 
-const Studio: Lists.Post = list({
+export const cloudinary = {
+  cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+  apiKey: `${process.env.CLOUDINARY_KEY}`,
+  apiSecret: `${process.env.CLOUDINARY_SECRET}`,
+  folder: 'test',
+};
+
+const StudioMedia: Lists.StudioMedia = list({
+  fields: {
+    studioImages: relationship({ ref: 'Studio.photos', many: true }),
+    image: cloudinaryImage({
+      cloudinary,
+      label: 'Source',
+    }),
+    imageName: text({validation: {
+      isRequired: true
+    }}),
+    altText: text({validation: {
+      isRequired: true
+    }}),
+  },
+  ui: {
+    isHidden: true,
+    labelField: 'imageName',
+  },
+});
+const Studio: Lists.Studio = list({
   fields: {
     title: text({
       validation: {
         isRequired: true
       }
     }),
-    // slug: text({
-    //   isIndexed: 'unique',
-    //   isFilterable: true
-    // }),
     content: document({
       formatting: true,
       dividers: true,
@@ -56,7 +98,32 @@ const Studio: Lists.Post = list({
         [1, 1],
         [1, 1, 1],
       ],
-    })
+      ui: {
+        views: path.join(process.cwd(), 'admin/components/component-blocks')
+      },
+      componentBlocks,
+
+      relationships: {
+        image: {
+          kind: 'prop',
+          listKey: 'StudioMedia',
+          selection: 'imageName image {publicUrlTransformed}',
+        },
+      },
+    }),
+    photos: relationship({
+      ref: 'StudioMedia.studioImages',
+      many: true,
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['image', 'imageName', 'altText'],
+        inlineCreate: { fields: ['image', 'imageName', 'altText'] },
+        inlineEdit: { fields: ['image', 'imageName', 'altText'] },
+      },
+    }),
+    video: video({
+      options: ['hi', 'hi2']}),
+    file: azureStorageFile({ azureStorageConfig: azConfig }),
   }
 });
 
@@ -131,10 +198,21 @@ export default config({
     provider: 'sqlite',
     url: 'file:./app.db'
   },
-  experimental: {
-    generateNextGraphqlAPI: true,
-    generateNodeAPI: true,
-  },
+  // experimental: {
+  //   generateNextGraphqlAPI: true,
+  //   generateNodeAPI: true,
+  // },
+  // ui: {
+  //   getAdditionalFiles: [
+  //     async () => [
+  //       {
+  //         mode: 'copy',
+  //         inputPath: path.join(process.cwd(), 'admin', 'next.config.js'),
+  //         outputPath: 'next.config.js',
+  //       },
+  //     ],
+  //   ],
+  // },
   // server: {
   //   extendExpressApp: (app) => {
   //     // let p = Passport();
@@ -216,6 +294,7 @@ export default config({
   //     },
   // },
   lists: {
-    Studio: Studio
+    Studio,
+    StudioMedia
   },
 });

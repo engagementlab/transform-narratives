@@ -5,14 +5,37 @@ type Studio {
   id: ID!
   title: String
   content: Studio_content_Document
+  photos(
+    where: StudioMediaWhereInput! = {}
+    orderBy: [StudioMediaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [StudioMedia!]
+  photosCount(where: StudioMediaWhereInput! = {}): Int
+  video: String
+  file: AzureStorageFileFieldOutput
 }
 
 type Studio_content_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
+interface AzureStorageFileFieldOutput {
+  filename: String!
+  filesize: Int!
+  ref: String!
+  url: String!
+}
+
 input StudioWhereUniqueInput {
   id: ID
+}
+
+type AzureStorageFileFieldOutputType implements AzureStorageFileFieldOutput {
+  filename: String!
+  filesize: Int!
+  ref: String!
+  url: String!
 }
 
 input StudioWhereInput {
@@ -21,6 +44,8 @@ input StudioWhereInput {
   NOT: [StudioWhereInput!]
   id: IDFilter
   title: StringFilter
+  photos: StudioMediaManyRelationFilter
+  video: StringNullableFilter
 }
 
 input IDFilter {
@@ -62,9 +87,44 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input StudioMediaManyRelationFilter {
+  every: StudioMediaWhereInput
+  some: StudioMediaWhereInput
+  none: StudioMediaWhereInput
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
 input StudioOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  video: OrderDirection
 }
 
 enum OrderDirection {
@@ -75,7 +135,27 @@ enum OrderDirection {
 input StudioUpdateInput {
   title: String
   content: JSON
+  photos: StudioMediaRelateToManyForUpdateInput
+  video: String
+  file: AzureStorageFileFieldInput
 }
+
+input StudioMediaRelateToManyForUpdateInput {
+  disconnect: [StudioMediaWhereUniqueInput!]
+  set: [StudioMediaWhereUniqueInput!]
+  create: [StudioMediaCreateInput!]
+  connect: [StudioMediaWhereUniqueInput!]
+}
+
+input AzureStorageFileFieldInput {
+  upload: Upload
+  ref: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
 
 input StudioUpdateArgs {
   where: StudioWhereUniqueInput!
@@ -85,6 +165,134 @@ input StudioUpdateArgs {
 input StudioCreateInput {
   title: String
   content: JSON
+  photos: StudioMediaRelateToManyForCreateInput
+  video: String
+  file: AzureStorageFileFieldInput
+}
+
+input StudioMediaRelateToManyForCreateInput {
+  create: [StudioMediaCreateInput!]
+  connect: [StudioMediaWhereUniqueInput!]
+}
+
+type StudioMedia {
+  id: ID!
+  studioImages(
+    where: StudioWhereInput! = {}
+    orderBy: [StudioOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Studio!]
+  studioImagesCount(where: StudioWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  imageName: String
+  altText: String
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input StudioMediaWhereUniqueInput {
+  id: ID
+}
+
+input StudioMediaWhereInput {
+  AND: [StudioMediaWhereInput!]
+  OR: [StudioMediaWhereInput!]
+  NOT: [StudioMediaWhereInput!]
+  id: IDFilter
+  studioImages: StudioManyRelationFilter
+  imageName: StringFilter
+  altText: StringFilter
+}
+
+input StudioManyRelationFilter {
+  every: StudioWhereInput
+  some: StudioWhereInput
+  none: StudioWhereInput
+}
+
+input StudioMediaOrderByInput {
+  id: OrderDirection
+  imageName: OrderDirection
+  altText: OrderDirection
+}
+
+input StudioMediaUpdateInput {
+  studioImages: StudioRelateToManyForUpdateInput
+  image: Upload
+  imageName: String
+  altText: String
+}
+
+input StudioRelateToManyForUpdateInput {
+  disconnect: [StudioWhereUniqueInput!]
+  set: [StudioWhereUniqueInput!]
+  create: [StudioCreateInput!]
+  connect: [StudioWhereUniqueInput!]
+}
+
+input StudioMediaUpdateArgs {
+  where: StudioMediaWhereUniqueInput!
+  data: StudioMediaUpdateInput!
+}
+
+input StudioMediaCreateInput {
+  studioImages: StudioRelateToManyForCreateInput
+  image: Upload
+  imageName: String
+  altText: String
+}
+
+input StudioRelateToManyForCreateInput {
+  create: [StudioCreateInput!]
+  connect: [StudioWhereUniqueInput!]
 }
 
 """
@@ -102,6 +310,15 @@ type Mutation {
   updateStudios(data: [StudioUpdateArgs!]!): [Studio]
   deleteStudio(where: StudioWhereUniqueInput!): Studio
   deleteStudios(where: [StudioWhereUniqueInput!]!): [Studio]
+  createStudioMedia(data: StudioMediaCreateInput!): StudioMedia
+  createStudioMedias(data: [StudioMediaCreateInput!]!): [StudioMedia]
+  updateStudioMedia(
+    where: StudioMediaWhereUniqueInput!
+    data: StudioMediaUpdateInput!
+  ): StudioMedia
+  updateStudioMedias(data: [StudioMediaUpdateArgs!]!): [StudioMedia]
+  deleteStudioMedia(where: StudioMediaWhereUniqueInput!): StudioMedia
+  deleteStudioMedias(where: [StudioMediaWhereUniqueInput!]!): [StudioMedia]
 }
 
 type Query {
@@ -113,6 +330,14 @@ type Query {
   ): [Studio!]
   studio(where: StudioWhereUniqueInput!): Studio
   studiosCount(where: StudioWhereInput! = {}): Int
+  studioMedias(
+    where: StudioMediaWhereInput! = {}
+    orderBy: [StudioMediaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [StudioMedia!]
+  studioMedia(where: StudioMediaWhereUniqueInput!): StudioMedia
+  studioMediasCount(where: StudioMediaWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 
