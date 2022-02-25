@@ -22,6 +22,19 @@ export const Field = ({
         {field.label} is required
       </Text>
     ) : null;
+    // let Vimeo = require('vimeo').Vimeo;
+    // let client = new Vimeo("e08b340ffc839123f095840317ae7a3d9f8723df", "FqqYM+dZDb+goPytM14N/aEu2gZdrMWIuC26tQL/9Bvuqzm6RtwzWURB9ovcx1xiKFHAe4Yrx/cFztagtfk5UBywbqbVon+aB/EayQtC5+QIY1XDxJRWfFIkCCLqeCqW", "3647f53d834861733e0e0a93de7a4595");
+
+    // client.request({
+    //   method: 'GET',
+    //   path: '/tutorial'
+    // }, function (error, body, status_code, headers) {
+    //   if (error) {
+    //     console.log(error);
+    //   }
+
+    //   console.log(body);
+    // })
   return (
     <FieldContainer as={'div'}>
     
