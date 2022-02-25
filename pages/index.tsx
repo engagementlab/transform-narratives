@@ -6,12 +6,31 @@ import Link from 'next/link';
 import { query } from '.keystone/api';
 import { Lists } from '.keystone/types';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
+import Image from '../components/Image';
 
 
 type Studio = {
   id: string;
   content: any;
   slug: string;
+};
+
+const componentBlocks = {
+  image: (props: any) => {
+    console.log(props.image)
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* <img
+              className="body-image"
+              src={props.image.data.image.publicUrlTransformed}
+              alt=
+            /> */}
+                <Image id={'img' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
+
+
+      </div>
+    );
+  },
 };
 
 // Home receives a `posts` prop from `getStaticProps` below
@@ -25,7 +44,8 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
 <div>
 
             <h1 className="text-3xl">{post.title}</h1>
-            <DocumentRenderer key={i} document={post.content.document} />
+            <DocumentRenderer key={i} document={post.content.document} 
+          componentBlocks={componentBlocks} />
 </div>
           ))}
        </main>
@@ -33,10 +53,8 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
   );
 }
 
-// Here we use the Lists API to load all the posts we want to display
-// The return of this function is provided to the `Home` component
 export async function getStaticProps() {
-  const posts = await query.Studio.findMany({ query: 'id title content { document }' }) as Studio[];
+  const posts = await query.Studio.findMany({ query: 'id title content { document(hydrateRelationships: true) }' }) as Studio[];
   return {
     props: {
       posts
