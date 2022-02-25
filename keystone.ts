@@ -11,7 +11,7 @@ import {
   document
 } from '@keystone-6/fields-document';
 
-import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { cloudinaryImage } from './admin/components/cloudinary';
 import {
   Lists
 } from '.keystone/types';
@@ -64,7 +64,7 @@ export const cloudinary = {
   folder: 'test',
 };
 
-const StudioMedia: Lists.StudioMedia = list({
+const StudioImage: Lists.StudioImage = list({
   fields: {
     studioImages: relationship({ ref: 'Studio.photos', many: true }),
     image: cloudinaryImage({
@@ -81,6 +81,7 @@ const StudioMedia: Lists.StudioMedia = list({
   ui: {
     isHidden: true,
     labelField: 'imageName',
+    
   },
 });
 const Studio: Lists.Studio = list({
@@ -106,14 +107,15 @@ const Studio: Lists.Studio = list({
       relationships: {
         image: {
           kind: 'prop',
-          listKey: 'StudioMedia',
-          selection: 'imageName image {publicUrlTransformed}',
+          listKey: 'StudioImage',
+          selection: 'imageName altText image {publicUrlTransformed publicId}',
         },
       },
     }),
     photos: relationship({
-      ref: 'StudioMedia.studioImages',
+      ref: 'StudioImage.studioImages',
       many: true,
+      label: "Images (add here for use in 'Content' field)",
       ui: {
         displayMode: 'cards',
         cardFields: ['image', 'imageName', 'altText'],
@@ -121,9 +123,9 @@ const Studio: Lists.Studio = list({
         inlineEdit: { fields: ['image', 'imageName', 'altText'] },
       },
     }),
-    video: video({
-      options: ['hi', 'hi2']}),
-    file: azureStorageFile({ azureStorageConfig: azConfig }),
+    // video: video({
+    //   options: ['hi', 'hi2']}),
+    // file: azureStorageFile({ azureStorageConfig: azConfig }),
   }
 });
 
@@ -295,6 +297,6 @@ export default config({
   // },
   lists: {
     Studio,
-    StudioMedia
+    StudioImage
   },
 });
