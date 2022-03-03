@@ -13,6 +13,7 @@
     "@cloudinary/base": "^1.0.0-beta.4",
     "@cloudinary/react": "^1.1.0",
     "@cloudinary/url-gen": "^1.6.0",
+    "@emotion/css": "^11.7.1",
     "@k6-contrib/fields-azure": "^1.0.0",
     "@keystone-6/cloudinary": "^1.0.0",
     "@keystone-6/core": "^1.0.1",
@@ -25,21 +26,26 @@
     "express-session": "^1.17.2",
     "mongoose": "^6.2.1",
     "next": "12.0.10",
+    "node-fetch": "^3.2.0",
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
     "passport-mocked": "^1.4.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-select": "^5.2.2",
     "vimeo": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "17.0.14",
     "@types/react": "17.0.39",
     "autoprefixer": "^10.4.2",
+    "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10",
     "postcss": "^8.4.6",
     "tailwindcss": "^3.0.18",
-    "typescript": "4.5.5"
+    "typescript": "4.5.5",
+    "underscore": "^1.13.2"
   }
 }

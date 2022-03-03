@@ -4,6 +4,7 @@
 type Studio {
   id: ID!
   title: String
+  relatedLinks: JSON
   content: Studio_content_Document
   photos(
     where: StudioImageWhereInput! = {}
@@ -88,6 +89,7 @@ enum OrderDirection {
 
 input StudioUpdateInput {
   title: String
+  relatedLinks: JSON
   content: JSON
   photos: StudioImageRelateToManyForUpdateInput
 }
@@ -106,6 +108,7 @@ input StudioUpdateArgs {
 
 input StudioCreateInput {
   title: String
+  relatedLinks: JSON
   content: JSON
   photos: StudioImageRelateToManyForCreateInput
 }

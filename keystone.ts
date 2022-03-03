@@ -3,6 +3,7 @@ import {
   list
 } from '@keystone-6/core';
 import {
+  json,
   relationship,
   select,
   text
@@ -23,13 +24,11 @@ import 'dotenv/config';
 
 import session from 'express-session';
 import path from 'path';
-import { video } from './admin/components/video';
 
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
 const DB = require('./db');
-
 declare module "express-serve-static-core" {
   interface Request {
     logIn: any
@@ -84,12 +83,23 @@ const StudioImage: Lists.StudioImage = list({
     
   },
 });
+
 const Studio: Lists.Studio = list({
   fields: {
     title: text({
       validation: {
         isRequired: true
       }
+    }),
+    // We've added a json field which implements custom views in the Admin UI
+    relatedLinks: json({
+      // defaultValue: videoData,
+      ui: {
+        views: path.join(__dirname, '/admin/components/video/components.tsx'),
+        createView: { fieldMode: 'edit' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'edit' },
+      },
     }),
     content: document({
       formatting: true,
@@ -123,8 +133,7 @@ const Studio: Lists.Studio = list({
         inlineEdit: { fields: ['image', 'imageName', 'altText'] },
       },
     }),
-    // video: video({
-    //   options: ['hi', 'hi2']}),
+    // video: video(),
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
   }
 });
@@ -195,7 +204,9 @@ const Passport = () => {
   return passport;
 }
 
-export default config({
+export default (() => {
+
+  return config({
   db: {
     provider: 'sqlite',
     url: 'file:./app.db'
@@ -299,4 +310,7 @@ export default config({
     Studio,
     StudioImage
   },
-});
+
+})
+
+})();
