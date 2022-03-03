@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { FieldProps } from '@keystone-6/core/types';
-import { css } from '@emotion/css';
 import { Button } from '@keystone-ui/button';
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
 import { MinusCircleIcon, EditIcon } from '@keystone-ui/icons';
@@ -9,6 +9,8 @@ import { Fragment, useState } from 'react';
 
 import Select, { components, OptionProps } from 'react-select'
 import Image from 'next/image';
+import { css as emCss } from '@emotion/css';
+import { jsx, css } from '@emotion/react';
 // const _ = require('underscore');
 const videoData = require('../../../videoData');
 
@@ -20,21 +22,21 @@ interface RelatedLink {
 
 const styles = {
   form: {
-    field: css`
+    field: emCss`
       align-items: center;
       width: 100%;
       margin: 1rem 0 0 0;
     `,
-    label: css`
+    label: emCss`
       width: 10%;
     `,
-    input: css`
+    input: emCss`
       width: 90%;
     `,
-    button: css`
+    button: emCss`
       margin: .4rem;
     `,
-    select: css`
+    select: emCss`
       position: relative;
       z-index: 100;
       min-width: 100%;
@@ -48,12 +50,12 @@ const styles = {
     `
   },
   list: {
-    ul: css`
+    ul: emCss`
       list-style: none;
       margin: 1rem 0 0 0;
       padding: 0;
     `,
-    li: css`
+    li: emCss`
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
@@ -63,7 +65,7 @@ const styles = {
         background-color: white;
       }
     `,
-    data: css`
+    data: emCss`
       background-color: #eff3f6;
       padding: 0.5rem;
       flex: auto;
@@ -71,13 +73,13 @@ const styles = {
       align-items: flex-start;
       flex-wrap: nowrap;
     `,
-    dataLabel: css`
+    dataLabel: emCss`
       width: 40%;
     `,
-    dataHref: css`
+    dataHref: emCss`
       width: 60%;
     `,
-    optionButton: css`
+    optionButton: emCss`
       margin: 0 0 0 0.5rem;
     `,
   },
@@ -135,7 +137,7 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
     return (
       <div>
             <div
-              style={props.getStyles('option', props)}
+              css={css(props.getStyles('option', props))}
               className={props.cx(
                 {
                   option: true,
