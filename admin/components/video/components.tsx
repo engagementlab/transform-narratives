@@ -1,23 +1,24 @@
+/** @jsxImportSource @emotion/react */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
 import { FieldProps } from '@keystone-6/core/types';
 import { Button } from '@keystone-ui/button';
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
 import { MinusCircleIcon, EditIcon } from '@keystone-ui/icons';
 import { controller } from '@keystone-6/core/fields/types/json/views';
-import { Fragment, useState } from 'react';
+import { ComponentType, Fragment, useState } from 'react';
 
-import Select, { components, OptionProps } from 'react-select'
-import Image from 'next/image';
+import Select, { components, GroupBase, OptionProps, Props } from 'react-select'
+// import Image from 'next/image';
 import { css as emCss } from '@emotion/css';
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 // const _ = require('underscore');
 const videoData = require('../../../videoData');
 
 
-interface RelatedLink {
+interface RelatedVideo {
   label: string;
   videoUrl: string;
+  caption: string;
 }
 
 const styles = {
@@ -41,7 +42,7 @@ const styles = {
       z-index: 100;
       min-width: 100%;
     `,
-    option: css `
+    option: emCss`
       display: flex!important;
       flex-direction: row;
       p {
@@ -86,58 +87,59 @@ const styles = {
 };
 
 export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof controller>) => {
-  const [currentValue, setCurrentValue] = useState<RelatedLink>();
-  const [videoUrl, setVideoUrl] = useState('');
+  const [currentValue, setCurrentValue] = useState<RelatedVideo>();
+  const [videoCaption, setVideoCaption] = useState('');
   const [index, setIndex] = useState<number | null>(null);
 
-  const relatedLinks: RelatedLink[] = value ? JSON.parse(value) : [];
+  const currentVideos: RelatedVideo[] = value ? JSON.parse(value) : [];
 
-  const onSubmitNewRelatedLink = () => {
+  const onSubmitNewVideo = () => {
     if (onChange) {
-      const relatedLinksCopy = [...relatedLinks, currentValue];
+      const newCaption = {caption: videoCaption};
+      const newVideo = {...currentValue, ...newCaption};
+
+      const relatedLinksCopy = [...currentVideos, newVideo];
       onChange(JSON.stringify(relatedLinksCopy));
-      onCancelRelatedLink();
+      onCancel();
     }
   };
 
-  const onDeleteRelatedLink = (index: number) => {
+  const onDeleteVideo = (index: number) => {
     if (onChange) {
-      const relatedLinksCopy = [...relatedLinks];
+      const relatedLinksCopy = [...currentVideos];
       relatedLinksCopy.splice(index, 1);
       onChange(JSON.stringify(relatedLinksCopy));
-      onCancelRelatedLink();
+      onCancel();
     }
   };
 
-  const onEditRelatedLink = (index: number) => {
+  const onEditVideo = (index: number) => {
     if (onChange) {
       setIndex(index);
-      setCurrentValue(relatedLinks[index]);
-      setVideoUrl(relatedLinks[index].videoUrl);
+      setCurrentValue(currentVideos[index]);
+      setVideoCaption(currentVideos[index].caption);
     }
   };
 
-  const onUpdateRelatedLink = () => {
+  const onUpdate = () => {
     if (onChange && index !== null && currentValue) {
-      const relatedLinksCopy = [...relatedLinks];
+      const relatedLinksCopy = [...currentVideos];
       relatedLinksCopy[index] = currentValue!;
       onChange(JSON.stringify(relatedLinksCopy));
-      onCancelRelatedLink();
+      onCancel();
     }
   };
 
-  const onCancelRelatedLink = () => {
+  const onCancel = () => {
     setIndex(null);
     setCurrentValue(undefined);
-    setVideoUrl('');
+    setVideoCaption('');
   };
-
+  
   const CustomOptionComponent = (props: OptionProps) => {
-    // const mergedStyles = Object.assign(, styles.form.option);
     return (
-      <div>
+      <div>        
             <div
-              css={css(props.getStyles('option', props))}
               className={props.cx(
                 {
                   option: true,
@@ -151,13 +153,13 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
               <p>
                 {props.children}
               </p>
-              <img alt={`Thumbnail image for video with title "${props.label}"`} src={props.data.thumb} />
+              <img alt={`Thumbnail image for video with title "${props.label}"`} src={(props.data as any).thumb} />
             </div>
       </div>
       
     )
   }
-  
+
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
@@ -171,27 +173,38 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
               autoFocus={autoFocus}
               options={videoData}
               isDisabled={onChange === undefined}
-              onChange={(newValue, meta) => {setCurrentValue(newValue as RelatedLink)}}
+              onChange={(newValue, meta) => {setCurrentValue(newValue as RelatedVideo)}}
               value={currentValue}
               className={styles.form.select}
-              components={{Option: CustomOptionComponent}}
+              components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+  
             />
 
           <br />
+          {currentValue && (
+            <div>
+              <FieldLabel>Caption</FieldLabel>
+              <TextInput
+                type='text' 
+                onChange={(e) => {setVideoCaption(e.target.value)}}
+                value={videoCaption}
+               />
+            </div>
+          )}
           <div style={{display: 'block'}}>
           {index !== null ? (
             <Fragment>
-              <Button onClick={onUpdateRelatedLink} className={styles.form.button}>
+              <Button onClick={onUpdate} className={styles.form.button}>
                 Update
               </Button>
-              <Button onClick={onCancelRelatedLink} className={styles.form.button}>
+              <Button onClick={onCancel} className={styles.form.button}>
                 Cancel
               </Button>
             </Fragment>
           ) : (
             currentValue && (
               
-              <Button tone='positive' onClick={onSubmitNewRelatedLink} className={styles.form.button}>
+              <Button tone='positive' onClick={onSubmitNewVideo} className={styles.form.button}>
               Add
               </Button>
             
@@ -202,17 +215,18 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
         </Fragment>
       )}
       <ul className={styles.list.ul}>
-        {relatedLinks.map((relatedLink: RelatedLink, i: number) => {
+        {currentVideos.map((relatedLink: RelatedVideo, i: number) => {
           return (
             <li key={`related-link-${i}`} className={styles.list.li}>
               <div className={styles.list.data}>
                 <div className={styles.list.dataLabel}>{relatedLink.label}</div>
+                <div className={styles.list.dataLabel}>{relatedLink.caption}</div>
               </div>
               {onChange && (
                 <div>
                   <Button
                     size="small"
-                    onClick={() => onEditRelatedLink(i)}
+                    onClick={() => onEditVideo(i)}
                     className={styles.list.optionButton}
                   >
                     <EditIcon size="small" color="blue" />
@@ -221,7 +235,7 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
                     <MinusCircleIcon
                       size="small"
                       color="red"
-                      onClick={() => onDeleteRelatedLink(i)}
+                      onClick={() => onDeleteVideo(i)}
                     />
                   </Button>
                 </div>
