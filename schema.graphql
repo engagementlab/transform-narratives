@@ -4,7 +4,6 @@
 type Studio {
   id: ID!
   title: String
-  relatedLinks: JSON
   content: Studio_content_Document
   photos(
     where: StudioImageWhereInput! = {}
@@ -13,6 +12,7 @@ type Studio {
     skip: Int! = 0
   ): [StudioImage!]
   photosCount(where: StudioImageWhereInput! = {}): Int
+  videos: JSON
 }
 
 type Studio_content_Document {
@@ -89,9 +89,9 @@ enum OrderDirection {
 
 input StudioUpdateInput {
   title: String
-  relatedLinks: JSON
   content: JSON
   photos: StudioImageRelateToManyForUpdateInput
+  videos: JSON
 }
 
 input StudioImageRelateToManyForUpdateInput {
@@ -108,9 +108,9 @@ input StudioUpdateArgs {
 
 input StudioCreateInput {
   title: String
-  relatedLinks: JSON
   content: JSON
   photos: StudioImageRelateToManyForCreateInput
+  videos: JSON
 }
 
 input StudioImageRelateToManyForCreateInput {

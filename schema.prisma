@@ -12,11 +12,11 @@ generator client {
 }
 
 model Studio {
-  id           String        @id @default(cuid())
-  title        String        @default("")
-  relatedLinks String?
-  content      String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos       StudioImage[] @relation("Studio_photos")
+  id      String        @id @default(cuid())
+  title   String        @default("")
+  content String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos  StudioImage[] @relation("Studio_photos")
+  videos  String?
 }
 
 model StudioImage {

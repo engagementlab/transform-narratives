@@ -1,7 +1,7 @@
 
 export default function CMS() {
   setTimeout(() => {
-    window.location = `https://cms.qa.transformnarratives.org/`;
+    window.location.href = `https://cms.qa.transformnarratives.org/`;
   }, 2000); 
 
   return (

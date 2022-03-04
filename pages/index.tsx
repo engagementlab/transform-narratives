@@ -12,7 +12,8 @@ import Image from '../components/Image';
 type Studio = {
   id: string;
   content: any;
-  slug: string;
+  title: string;
+  videos: any[];
 };
 
 const componentBlocks = {
@@ -40,13 +41,11 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
       <main style={{ margin: '20rem' }}>
        
           {posts.map((post, i) => (
-
-<div>
-
-            <h1 className="text-3xl">{post.title}</h1>
-            <DocumentRenderer key={i} document={post.content.document} 
-          componentBlocks={componentBlocks} />
-</div>
+              <div key={i}>
+                <h1 className="text-3xl">{post.title}</h1>
+                <DocumentRenderer key={i} document={post.content.document} 
+                componentBlocks={componentBlocks} />
+              </div>
           ))}
        </main>
     </div>

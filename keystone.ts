@@ -46,6 +46,10 @@ declare module 'express-session' {
   }
 }
 
+
+if(!process.env.AZURE_STORAGE_ACCOUNT || !process.env.AZURE_STORAGE_ACCESS_KEY || !process.env.AZURE_STORAGE_CONTAINER)
+  throw new Error(`Please provide AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_ACCESS_KEY, AZURE_STORAGE_CONTAINER`);
+
 const azConfig: AzureStorageConfig = {
   azureStorageOptions: {
     account: process.env.AZURE_STORAGE_ACCOUNT,
@@ -91,16 +95,6 @@ const Studio: Lists.Studio = list({
         isRequired: true
       }
     }),
-    // We've added a json field which implements custom views in the Admin UI
-    relatedLinks: json({
-      // defaultValue: videoData,
-      ui: {
-        views: path.join(__dirname, '/admin/components/video/components.tsx'),
-        createView: { fieldMode: 'edit' },
-        listView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'edit' },
-      },
-    }),
     content: document({
       formatting: true,
       dividers: true,
@@ -109,9 +103,11 @@ const Studio: Lists.Studio = list({
         [1, 1],
         [1, 1, 1],
       ],
+      
       ui: {
         views: path.join(process.cwd(), 'admin/components/component-blocks')
       },
+
       componentBlocks,
 
       relationships: {
@@ -131,6 +127,14 @@ const Studio: Lists.Studio = list({
         cardFields: ['image', 'imageName', 'altText'],
         inlineCreate: { fields: ['image', 'imageName', 'altText'] },
         inlineEdit: { fields: ['image', 'imageName', 'altText'] },
+      },
+    }),
+    videos: json({
+      ui: {
+        views: path.join(__dirname, '/admin/components/video/components.tsx'),
+        createView: { fieldMode: 'edit' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'edit' },
       },
     }),
     // video: video(),
