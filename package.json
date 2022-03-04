@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "postinstall": "keystone postinstall",
-    "dev": "node video.js && next dev -p 8081",
+    "dev": "node vimeo.js && next dev -p 8081",
     "build": "next build && next export",
     "build-ks": "keystone build",
     "start": "next start",
