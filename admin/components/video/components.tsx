@@ -98,17 +98,17 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
       const newCaption = {caption: videoCaption};
       const newVideo = {...currentValue, ...newCaption};
 
-      const relatedLinksCopy = [...currentVideos, newVideo];
-      onChange(JSON.stringify(relatedLinksCopy));
+      const videosCopy = [...currentVideos, newVideo];
+      onChange(JSON.stringify(videosCopy));
       onCancel();
     }
   };
 
   const onDeleteVideo = (index: number) => {
     if (onChange) {
-      const relatedLinksCopy = [...currentVideos];
-      relatedLinksCopy.splice(index, 1);
-      onChange(JSON.stringify(relatedLinksCopy));
+      const videosCopy = [...currentVideos];
+      videosCopy.splice(index, 1);
+      onChange(JSON.stringify(videosCopy));
       onCancel();
     }
   };
@@ -123,9 +123,11 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
 
   const onUpdate = () => {
     if (onChange && index !== null && currentValue) {
-      const relatedLinksCopy = [...currentVideos];
-      relatedLinksCopy[index] = currentValue!;
-      onChange(JSON.stringify(relatedLinksCopy));
+      const updatedCaption = {caption: videoCaption};
+      const updatedVideo = {...currentValue, ...updatedCaption};
+
+      const videosCopy = [...currentVideos, updatedVideo];
+      onChange(JSON.stringify(videosCopy));
       onCancel();
     }
   };

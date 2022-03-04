@@ -1,10 +1,8 @@
-
 import { InferGetStaticPropsType } from 'next';
-import Link from 'next/link';
+import Script from 'next/script'
 
 // Import the generated Lists API and types from Keystone
 import { query } from '.keystone/api';
-import { Lists } from '.keystone/types';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import Image from '../components/Image';
 
@@ -18,7 +16,6 @@ type Studio = {
 
 const componentBlocks = {
   image: (props: any) => {
-    console.log(props.image)
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
             {/* <img
@@ -34,17 +31,32 @@ const componentBlocks = {
   },
 };
 
-// Home receives a `posts` prop from `getStaticProps` below
-export default function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+// Home receives a `studios` prop from `getStaticProps` below
+export default function Home({ studios }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
       <main style={{ margin: '20rem' }}>
        
-          {posts.map((post, i) => (
+          {studios.map((studio, i) => (
               <div key={i}>
-                <h1 className="text-3xl">{post.title}</h1>
-                <DocumentRenderer key={i} document={post.content.document} 
+                <h1 className="text-3xl">{studio.title}</h1>
+                <DocumentRenderer key={i} document={studio.content.document} 
                 componentBlocks={componentBlocks} />
+
+                {studio.videos.map((video, v) => (
+                  <div key={v} className='video'>
+                    <p>{video.label}</p>
+                    <div id={"video-embed-"+v}>
+                        <iframe
+                            src={video.value}
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                      <Script src="https://player.vimeo.com/api/player.js"></Script>
+                    </div>
+                  </div>
+                ))}
               </div>
           ))}
        </main>
@@ -53,10 +65,11 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
 }
 
 export async function getStaticProps() {
-  const posts = await query.Studio.findMany({ query: 'id title content { document(hydrateRelationships: true) }' }) as Studio[];
+  const studios = await query.Studio.findMany({ query: 'id title content { document(hydrateRelationships: true) } videos' }) as Studio[];
+  console.log(studios[0].videos)
   return {
     props: {
-      posts
+      studios
     }
   };
 }

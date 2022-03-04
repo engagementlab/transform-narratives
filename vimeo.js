@@ -16,7 +16,7 @@ const getData = async (apiPath) => {
   let m = _.map(resData.data, (val) => {
     return {
       label: val.name,
-      value: val.uri,
+      value: val.player_embed_url,
       thumb: val.pictures.sizes[2].link,
       thumbSm: val.pictures.sizes[1].link,
     }
