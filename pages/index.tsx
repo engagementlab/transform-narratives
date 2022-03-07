@@ -4,7 +4,9 @@ import Script from 'next/script'
 // Import the generated Lists API and types from Keystone
 import { query } from '.keystone/api';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
+import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
 import Image from '../components/Image';
+import { componentBlocks } from '../admin/components/component-blocks';
 
 
 type Studio = {
@@ -14,18 +16,11 @@ type Studio = {
   videos: any[];
 };
 
-const componentBlocks = {
+const componentBlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
   image: (props: any) => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* <img
-              className="body-image"
-              src={props.image.data.image.publicUrlTransformed}
-              alt=
-            /> */}
-                <Image id={'img' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
-
-
+        <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
       </div>
     );
   },
@@ -41,7 +36,7 @@ export default function Home({ studios }: InferGetStaticPropsType<typeof getStat
               <div key={i}>
                 <h1 className="text-3xl">{studio.title}</h1>
                 <DocumentRenderer key={i} document={studio.content.document} 
-                componentBlocks={componentBlocks} />
+                componentBlocks={componentBlockRenderers} />
 
                 {studio.videos.map((video, v) => (
                   <div key={v} className='video'>
@@ -66,7 +61,8 @@ export default function Home({ studios }: InferGetStaticPropsType<typeof getStat
 
 export async function getStaticProps() {
   const studios = await query.Studio.findMany({ query: 'id title content { document(hydrateRelationships: true) } videos' }) as Studio[];
-  console.log(studios[0].videos)
+  console.log(studios[0].content.document[0].children[0].children[0].children
+    )
   return {
     props: {
       studios

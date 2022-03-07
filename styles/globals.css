@@ -18,7 +18,10 @@
 
 @tailwind utilities;
 
-/* Catch-all for links, h3 in markdown */
-body {
+body, html {
+  background-color: #026670;
   color:  #FEF9C7;
+}
+body div {
+  white-space: pre-wrap;
 }
