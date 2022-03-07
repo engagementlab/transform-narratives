@@ -1,29 +1,18 @@
 import {
   config,
-  list
 } from '@keystone-6/core';
-import {
-  json,
-  relationship,
-  select,
-  text
-} from '@keystone-6/core/fields';
-import {
-  document
-} from '@keystone-6/fields-document';
 
-import { cloudinaryImage } from './admin/components/cloudinary';
-import {
-  Lists
-} from '.keystone/types';
-import { componentBlocks } from './admin/components/component-blocks';
-
-
-import { AzureStorageConfig, azureStorageFile, azureStorageImage } from '@k6-contrib/fields-azure';
 import 'dotenv/config';
 
 import session from 'express-session';
-import path from 'path';
+
+export const cloudinary = {
+  cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+  apiKey: `${process.env.CLOUDINARY_KEY}`,
+  apiSecret: `${process.env.CLOUDINARY_SECRET}`,
+  folder: 'tngvi',
+};
+import * as lists from './admin/schema';
 
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
@@ -45,102 +34,7 @@ declare module 'express-session' {
     }
   }
 }
-
-
-if(!process.env.AZURE_STORAGE_ACCOUNT || !process.env.AZURE_STORAGE_ACCESS_KEY || !process.env.AZURE_STORAGE_CONTAINER)
-  throw new Error(`Please provide AZURE_STORAGE_ACCOUNT, AZURE_STORAGE_ACCESS_KEY, AZURE_STORAGE_CONTAINER`);
-
-const azConfig: AzureStorageConfig = {
-  azureStorageOptions: {
-    account: process.env.AZURE_STORAGE_ACCOUNT,
-    accessKey: process.env.AZURE_STORAGE_ACCESS_KEY,
-    container: process.env.AZURE_STORAGE_CONTAINER,
-  },
-};
-
 // const ciMode = process.env.NODE_ENV === 'ci'; 
-
-export const cloudinary = {
-  cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
-  apiKey: `${process.env.CLOUDINARY_KEY}`,
-  apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-  folder: 'test',
-};
-
-const StudioImage: Lists.StudioImage = list({
-  fields: {
-    studioImages: relationship({ ref: 'Studio.photos', many: true }),
-    image: cloudinaryImage({
-      cloudinary,
-      label: 'Source',
-    }),
-    imageName: text({validation: {
-      isRequired: true
-    }}),
-    altText: text({validation: {
-      isRequired: true
-    }}),
-  },
-  ui: {
-    isHidden: true,
-    labelField: 'imageName',
-    
-  },
-});
-
-const Studio: Lists.Studio = list({
-  fields: {
-    title: text({
-      validation: {
-        isRequired: true
-      }
-    }),
-    content: document({
-      formatting: true,
-      dividers: true,
-      links: true,
-      layouts: [
-        [1, 1],
-        [1, 1, 1],
-      ],
-      
-      ui: {
-        views: path.join(process.cwd(), 'admin/components/component-blocks')
-      },
-
-      componentBlocks,
-
-      relationships: {
-        image: {
-          kind: 'prop',
-          listKey: 'StudioImage',
-          selection: 'imageName altText image {publicUrlTransformed publicId}',
-        },
-      },
-    }),
-    photos: relationship({
-      ref: 'StudioImage.studioImages',
-      many: true,
-      label: "Images (add here for use in 'Content' field)",
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['image', 'imageName', 'altText'],
-        inlineCreate: { fields: ['image', 'imageName', 'altText'] },
-        inlineEdit: { fields: ['image', 'imageName', 'altText'] },
-      },
-    }),
-    videos: json({
-      ui: {
-        views: path.join(__dirname, '/admin/components/video/components.tsx'),
-        createView: { fieldMode: 'edit' },
-        listView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'edit' },
-      },
-    }),
-    // video: video(),
-    // file: azureStorageFile({ azureStorageConfig: azConfig }),
-  }
-});
 
 const Passport = () => {
   const strategy = new AuthStrategy({
@@ -215,10 +109,10 @@ export default (() => {
     provider: 'sqlite',
     url: 'file:./app.db'
   },
-  // experimental: {
-  //   generateNextGraphqlAPI: true,
-  //   generateNodeAPI: true,
-  // },
+  experimental: {
+    generateNextGraphqlAPI: true,
+    generateNodeAPI: true,
+  },
   // ui: {
   //   getAdditionalFiles: [
   //     async () => [
@@ -310,10 +204,7 @@ export default (() => {
   //       });
   //     },
   // },
-  lists: {
-    Studio,
-    StudioImage
-  },
+  lists
 
 })
 
