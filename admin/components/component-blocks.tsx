@@ -8,9 +8,9 @@ import { HydratedRelationshipData } from '@keystone-6/fields-document/dist/decla
 export const componentBlocks = {
   image: component({
      component: (props) => {
-        // hacky way to get the gql query for the cloudinary image data
-       const data = (props.image.value as unknown as HydratedRelationshipData).data;
+      if(!props.image.value) return null;
 
+      const data = (props.image.value as unknown as HydratedRelationshipData).data;
       return (
           <img
             style={{width:'100%'}}

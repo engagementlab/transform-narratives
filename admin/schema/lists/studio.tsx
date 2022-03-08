@@ -95,7 +95,8 @@ const Studio: Lists.Studio = list({
       context,
     }) => {
       let updatedData = resolvedData;
-      updatedData.slug = resolvedData['name'].toLocaleLowerCase().replaceAll(/\s/ig, '-');
+      if(resolvedData.name)
+        updatedData.slug = resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-');
       return updatedData;
     }
   }

@@ -8,11 +8,11 @@ import {
 import {
     Lists
 } from '.keystone/types';
-import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { cloudinaryImage } from '../../components/cloudinary';
 
 const StudioImage: Lists.StudioImage = list({
   fields: {
-    studioImages: relationship({ ref: 'Studio.photos', many: true }),
+    studioImages: relationship({ ref: 'Studio.photos', many: true }), 
     image: cloudinaryImage({
       cloudinary: {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
