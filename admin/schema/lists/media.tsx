@@ -23,6 +23,14 @@ const MediaItem: Lists.MediaItem = list({
           isRequired: true
         }
       }),
+      filters: relationship({
+        ref: 'Filter',
+        many: true,
+        // label: "Images (add here for use in 'Content' field)",
+        ui: {
+          displayMode: 'select',
+        }
+      }),
       content: document({
         formatting: true,
         dividers: true,
@@ -51,7 +59,7 @@ const MediaItem: Lists.MediaItem = list({
       images: relationship({
         ref: 'MediaImage.mediaImages',
         many: true,
-        label: "Images (add here for use in 'Content' field)",
+        label: "Document Images (add here for use in 'Content' field)",
         ui: {
           displayMode: 'cards',
           cardFields: ['image', 'imageName', 'altText'],
@@ -60,6 +68,21 @@ const MediaItem: Lists.MediaItem = list({
           },
           inlineEdit: {
             fields: ['image', 'imageName', 'altText']
+          },
+        },
+      }),
+      galleryImages: relationship({
+        ref: 'MediaImage.mediaGalleryImages',
+        many: true,
+        label: "Gallery Images",
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['image', 'altText', 'caption'],
+          inlineCreate: {
+            fields: ['image', 'altText', 'caption']
+          },
+          inlineEdit: {
+            fields: ['image', 'altText', 'caption']
           },
         },
       }),
