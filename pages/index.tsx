@@ -12,7 +12,7 @@ import { componentBlocks } from '../admin/components/component-blocks';
 type Studio = {
   id: string;
   content: any;
-  title: string;
+  name: string;
   videos: any[];
 };
 
@@ -34,7 +34,7 @@ export default function Home({ studios }: InferGetStaticPropsType<typeof getStat
        
           {studios.map((studio, i) => (
               <div key={i}>
-                <h1 className="text-3xl">{studio.title}</h1>
+                <h1 className="text-3xl">{studio.name}</h1>
                 <DocumentRenderer key={i} document={studio.content.document} 
                 componentBlocks={componentBlockRenderers} />
 
@@ -60,7 +60,7 @@ export default function Home({ studios }: InferGetStaticPropsType<typeof getStat
 }
 
 export async function getStaticProps() {
-  const studios = await query.Studio.findMany({ query: 'id title content { document(hydrateRelationships: true) } videos' }) as Studio[];
+  const studios = await query.Studio.findMany({ query: 'id name content { document(hydrateRelationships: true) } videos' }) as Studio[];
   console.log(studios[0].content.document[0].children[0].children[0].children
     )
   return {

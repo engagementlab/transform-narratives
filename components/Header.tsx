@@ -5,9 +5,8 @@ import Link from 'next/link';
 
 const links = [
   [`/big-picture`, `The Big Picture`],
-  [`/guide`, `Guide`],
-  [`/about`, `About`],
-  [`/team`, `Team`],
+  [`/media-archive`, `Media Archive`],
+  [`/studios`, `Studios`],
 ];
 
 function ActiveLink(href: string) {
@@ -114,6 +113,24 @@ class Header extends Component {
                         </li>
                     );
                 })}
+                <li key='latest' className="uppercase">
+                  <div><span>
+                      Latest
+                    </span>
+                    <ul>
+                      <li>
+                        <Link href='/news' passHref>
+                            News
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href='/events' passHref>
+                            Events
+                        </Link>
+                      </li>
+                    </ul>
+                    </div>
+                </li>
             </ul>
           </div>
         </nav>
