@@ -10,15 +10,15 @@ import {
 } from '.keystone/types';
 import { cloudinaryImage } from '@keystone-6/cloudinary';
 
-const StudioImage: Lists.StudioImage = list({
+const MediaImage: Lists.MediaImage = list({
   fields: {
-    studioImages: relationship({ ref: 'Studio.photos', many: true }),
+    mediaImages: relationship({ ref: 'MediaItem.images', many: true }),
     image: cloudinaryImage({
       cloudinary: {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
         apiKey: `${process.env.CLOUDINARY_KEY}`,
         apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-        folder: 'tngvi',
+        folder: 'tngvi/media',
       },
       label: 'Source',
     }),
@@ -34,4 +34,4 @@ const StudioImage: Lists.StudioImage = list({
     labelField: 'imageName',
   },
 });
-export default StudioImage;
+export default MediaImage;

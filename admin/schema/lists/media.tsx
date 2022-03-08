@@ -16,7 +16,7 @@ import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 
-const MediaItem: Lists.Studio = list({
+const MediaItem: Lists.MediaItem = list({
     fields: {
       title: text({
         validation: {
@@ -43,8 +43,23 @@ const MediaItem: Lists.Studio = list({
         relationships: {
           image: {
             kind: 'prop',
-            listKey: 'StudioImage',
+            listKey: 'MediaImage',
             selection: 'imageName altText image {publicUrlTransformed publicId}',
+          },
+        },
+      }),
+      images: relationship({
+        ref: 'MediaImage.mediaImages',
+        many: true,
+        label: "Images (add here for use in 'Content' field)",
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['image', 'imageName', 'altText'],
+          inlineCreate: {
+            fields: ['image', 'imageName', 'altText']
+          },
+          inlineEdit: {
+            fields: ['image', 'imageName', 'altText']
           },
         },
       }),
@@ -56,7 +71,7 @@ const MediaItem: Lists.Studio = list({
           itemView: { fieldMode: 'edit' },
         },
       }),
-      file: azureStorageFile({ azureStorageConfig: azConfig }),
+      file: azureStorageFile({ azureStorageConfig: azConfig, label: 'PDF' }),
     }
   });
   export default MediaItem;

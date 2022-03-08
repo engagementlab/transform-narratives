@@ -11,10 +11,27 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
+model MediaImage {
+  id          String      @id @default(cuid())
+  mediaImages MediaItem[] @relation("MediaImage_mediaImages")
+  image       String?
+  imageName   String      @default("")
+  altText     String      @default("")
+}
+
+model StudioImage {
+  id           String   @id @default(cuid())
+  studioImages Studio[] @relation("Studio_photos")
+  image        String?
+  imageName    String   @default("")
+  altText      String   @default("")
+}
+
 model MediaItem {
-  id            String  @id @default(cuid())
-  title         String  @default("")
-  content       String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id            String       @id @default(cuid())
+  title         String       @default("")
+  content       String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images        MediaImage[] @relation("MediaImage_mediaImages")
   videos        String?
   file_filename String?
   file_filesize Int?
@@ -27,12 +44,4 @@ model Studio {
   content String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   photos  StudioImage[] @relation("Studio_photos")
   videos  String?
-}
-
-model StudioImage {
-  id           String   @id @default(cuid())
-  studioImages Studio[] @relation("Studio_photos")
-  image        String?
-  imageName    String   @default("")
-  altText      String   @default("")
 }
