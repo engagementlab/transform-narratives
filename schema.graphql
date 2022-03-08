@@ -315,6 +315,8 @@ input StudioRelateToManyForCreateInput {
 type MediaItem {
   id: ID!
   title: String
+  thumbnail: CloudinaryImage_File
+  shortDescription: String
   filters(
     where: FilterWhereInput! = {}
     orderBy: [FilterOrderByInput!]! = []
@@ -369,6 +371,7 @@ input MediaItemWhereInput {
   NOT: [MediaItemWhereInput!]
   id: IDFilter
   title: StringFilter
+  shortDescription: StringFilter
   filters: FilterManyRelationFilter
   images: MediaImageManyRelationFilter
   galleryImages: MediaImageManyRelationFilter
@@ -389,10 +392,13 @@ input MediaImageManyRelationFilter {
 input MediaItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  shortDescription: OrderDirection
 }
 
 input MediaItemUpdateInput {
   title: String
+  thumbnail: Upload
+  shortDescription: String
   filters: FilterRelateToManyForUpdateInput
   content: JSON
   images: MediaImageRelateToManyForUpdateInput
@@ -427,6 +433,8 @@ input MediaItemUpdateArgs {
 
 input MediaItemCreateInput {
   title: String
+  thumbnail: Upload
+  shortDescription: String
   filters: FilterRelateToManyForCreateInput
   content: JSON
   images: MediaImageRelateToManyForCreateInput

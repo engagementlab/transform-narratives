@@ -1,7 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
 import Script from 'next/script'
 
-// Import the generated Lists API and types from Keystone
 import { query } from '.keystone/api';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
@@ -30,7 +29,7 @@ const componentBlockRenderers: InferRenderersForComponentBlocks<typeof component
 export default function Home({ studios }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <main style={{ margin: '20rem' }}>
+      <main>
        
           {studios.map((studio, i) => (
               <div key={i}>

@@ -15,6 +15,7 @@ import {
 import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
+import { cloudinaryImage } from '../../components/cloudinary';
 
 const MediaItem: Lists.MediaItem = list({
     fields: {
@@ -22,6 +23,20 @@ const MediaItem: Lists.MediaItem = list({
         validation: {
           isRequired: true
         }
+      }),
+      thumbnail: cloudinaryImage({
+        cloudinary: {
+          cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+          apiKey: `${process.env.CLOUDINARY_KEY}`,
+          apiSecret: `${process.env.CLOUDINARY_SECRET}`,
+          folder: 'tngvi/media',
+        },
+      }),
+      shortDescription: text({
+        validation: {
+          isRequired: true
+        },
+        ui: { displayMode: 'textarea' },
       }),
       filters: relationship({
         ref: 'Filter',
