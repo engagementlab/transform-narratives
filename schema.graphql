@@ -8,15 +8,14 @@ type Filter {
 }
 
 enum FilterTypeType {
-  voice
-  media
-  dept
-  yr
+  Voices
+  Media
+  Departments
+  Year
 }
 
 input FilterWhereUniqueInput {
   id: ID
-  type: FilterTypeType
 }
 
 input FilterWhereInput {

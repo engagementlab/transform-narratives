@@ -25,14 +25,13 @@ const Filter: Lists.Filter = list({
       type: select({
         type: 'enum',
         options: [
-          { label: 'Voice', value: 'voice' },
-          { label: 'Media', value: 'media' },
-          { label: 'Studio Dept', value: 'dept' },
-          { label: 'Year', value: 'yr' },
+          { label: 'Voice', value: 'Voices' },
+          { label: 'Media', value: 'Media' },
+          { label: 'Studio Dept', value: 'Departments' },
+          { label: 'Year', value: 'Year' },
           
         ],
         validation: { isRequired: true, },
-        isIndexed: 'unique',
         ui: { displayMode: 'segmented-control' },
       }),
     }

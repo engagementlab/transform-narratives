@@ -4694,7 +4694,7 @@ lodash.uniqby@4.5.0:
     lodash._baseiteratee "~4.7.0"
     lodash._baseuniq "~4.6.0"
 
-lodash@^4.17.11, lodash@^4.17.4:
+lodash@^4.17.11, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7232,6 +7232,11 @@ zip-stream@^3.0.1:
     archiver-utils "^2.1.0"
     compress-commons "^3.0.0"
     readable-stream "^3.6.0"
+
+zustand@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.7.1.tgz#7388f0a7175a6c2fd9a2880b383a4bf6cdf6b7c6"
+  integrity sha512-wHBCZlKj+bg03/hP+Tzv24YhnqqP8MCeN9ECPDXoF01062SIbnfl3j9O0znkDw1lNTY0a8WN3F///a0UhhaEqg==
 
 zwitch@^1.0.0:
   version "1.0.5"
