@@ -12,10 +12,7 @@ import {
     componentBlocks
 } from '../admin/components/component-blocks';
 import Image from '../components/Image';
-import create from 'zustand'
-import {
-    Key
-} from "react";
+import create from 'zustand';
 
 type Filter = {
     name: string;
@@ -29,56 +26,74 @@ type MediaItem = {
         publicId: string;
     }
 }
+type FilterState = {
+currentFilters: any[];
+  add: (filter: any) => void
+  reset: () => void
+}
 
 // Create store with Zustand
-const useStore = create(set => ({
+const useStore = create<FilterState>(set => ({
     currentFilters: [],
-    add: (filter: any) => set((state: {
-        currentFilters: string[]
-    }) => {
-
+    add: (filter: any) => set((state) => {
         const isPresent = state.currentFilters.indexOf(filter) > -1;
-        if (!isPresent) state.currentFilters.push(filter);
-
+        if (!isPresent) {
+            return {
+                ...state,
+                currentFilters: [...state.currentFilters, filter]
+            }
+        }
     }),
     //    remove:
-    // reset:
+    reset: () => set({ currentFilters: [] })
 }));
+useStore.subscribe(console.log)
 
 const filterIntersects = (items: any[]) => {
         let currentFilters = useStore(state => state.currentFilters);
 
+        console.log(items
+            .filter(item => _.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0)))
         return items
-            .filter((item: {
-                    filters: _.Dictionary < unknown > | _.NumericDictionary < unknown > | null | undefined;
-                }) => currentFilters.length === 0 ||
-                _.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0))
-
-            .map((item: MediaItem, i: Key | null | undefined) => (
-        <div key={i} className="w-1/3">
-            <Image id={`thumb-${i}`} alt={`Thumbnail for media "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
-            <p>{item.title}</p>
-            <p>{item.shortDescription}</p>
-        </div>
+            .filter(item => currentFilters.length === 0 || (_.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0)))
+                .map((item, i) => (
+                    <div key={i} className="w-1/3">
+                        <Image id={`thumb-${i}`} alt={`Thumbnail for media "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
+                        <p>{item.title}</p>
+                        <p>{item.shortDescription}</p>
+                    </div>
     ))
 };
+  
+function FiltersDebug() {
+
+    const f = useStore(state => state.currentFilters);
+    return <h1>{_.map(f, 'name')} around here ...</h1>
+}
+  
 
 const renderFilters = (filters: { [x: string]: any[]; }) => {
+    const haveFilters = useStore(state => state.currentFilters).length > 0;
     const addFilter = useStore(state => state.add);
-    return Object.keys(filters).map((key) => (
-        <div key={key}>
-            <p>
-                {key}
-            </p>
-            <ul>
-                {filters[key].map(filter => {
-                    return( <li key={filter}><a href="#" onClick={() => addFilter(filter)}>{filter}</a></li>)
-                })}
-            </ul>
+    const reset = useStore(state => state.reset);
+    return <div>
+            {(!haveFilters ? null : <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}>
+               (x) Clear
+            </a>)}
+                {Object.keys(filters).map((key) => (
+                    <div key={key}>
+                        <p className="uppercase">
+                            {key}
+                        </p>
+                        <ul>
+                            {filters[key].map(filter => {
+                                return( <li key={filter}><a href="#" onClick={(e) =>{ addFilter(filter); e.preventDefault() }}>{filter}</a></li>)
+                            })}
+                        </ul>
+                    </div>
+                ))}
         </div>
-    ));
 }
-
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div
@@ -87,6 +102,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
                 {renderFilters(filtersGrouped)}
             </div>
             <div className="flex">
+                {/* {FiltersDebug()} */}
                 {filterIntersects(mediaItems)}
             </div>
         </div>
