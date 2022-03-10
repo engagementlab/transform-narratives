@@ -27,6 +27,11 @@ const Studio: Lists.Studio = list({
     slug: text({
       isIndexed: 'unique',
       isFilterable: true,
+      ui: {
+        itemView: {
+          fieldMode: 'hidden'
+        }
+      }
     }),
     content: document({
       formatting: true,
@@ -94,10 +99,15 @@ const Studio: Lists.Studio = list({
       resolvedData,
       context,
     }) => {
-      let updatedData = resolvedData;
-      if(resolvedData.name)
-        updatedData.slug = resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-');
-      return updatedData;
+      if(resolvedData.name) {
+
+        resolvedData = {
+          ...resolvedData,
+          slug: resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+        }
+
+      }
+      return resolvedData;
     }
   }
 });

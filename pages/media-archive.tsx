@@ -49,30 +49,21 @@ const useStore = create<FilterState>(set => ({
 }));
 useStore.subscribe(console.log)
 
-const filterIntersects = (items: any[]) => {
+const FilterIntersects = (items: any[]) => {
         let currentFilters = useStore(state => state.currentFilters);
 
-        console.log(items
-            .filter(item => _.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0)))
-        return items
+        return <>{items
             .filter(item => currentFilters.length === 0 || (_.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0)))
                 .map((item, i) => (
                     <div key={i} className="w-1/3">
                         <Image id={`thumb-${i}`} alt={`Thumbnail for media "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
                         <p>{item.title}</p>
                         <p>{item.shortDescription}</p>
-                    </div>
-    ))
+                    </div>))}
+                </>
 };
-  
-function FiltersDebug() {
 
-    const f = useStore(state => state.currentFilters);
-    return <h1>{_.map(f, 'name')} around here ...</h1>
-}
-  
-
-const renderFilters = (filters: { [x: string]: any[]; }) => {
+const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const haveFilters = useStore(state => state.currentFilters).length > 0;
     const addFilter = useStore(state => state.add);
     const reset = useStore(state => state.reset);
@@ -99,11 +90,11 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
         <div
         className="container mx-auto mt-14 mb-14 xl:mt-16 flex flex-col md:flex-row items-center font-work-sans text-xl md:text-2xl">
             <div className='w-1/3'>
-                {renderFilters(filtersGrouped)}
+                {RenderFilters(filtersGrouped)}
             </div>
             <div className="flex">
                 {/* {FiltersDebug()} */}
-                {filterIntersects(mediaItems)}
+                {FilterIntersects(mediaItems)}
             </div>
         </div>
     );
