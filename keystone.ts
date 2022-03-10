@@ -1,6 +1,7 @@
 import {
   config,
 } from '@keystone-6/core';
+import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
 
 import 'dotenv/config';
 
@@ -35,6 +36,18 @@ declare module 'express-session' {
   }
 }
 // const ciMode = process.env.NODE_ENV === 'ci'; 
+
+// Fallback
+let dbConfig: DatabaseConfig<BaseKeystoneTypeInfo> = {
+  provider: 'sqlite',
+  url: 'file:./app.db'
+} 
+if(process.env.DB_URI) {
+  dbConfig = {
+    provider: 'postgresql',
+    url: process.env.DB_URI,
+  };
+}
 
 const Passport = () => {
   const strategy = new AuthStrategy({
@@ -105,10 +118,7 @@ const Passport = () => {
 export default (() => {
 
   return config({
-  db: {
-    provider: 'sqlite',
-    url: 'file:./app.db'
-  },
+  db: dbConfig,
   experimental: {
     generateNextGraphqlAPI: true,
     generateNodeAPI: true,

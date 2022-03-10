@@ -28,6 +28,9 @@ const Studio: Lists.Studio = list({
       isIndexed: 'unique',
       isFilterable: true,
       ui: {
+        createView: {
+          fieldMode:'hidden'
+        },
         itemView: {
           fieldMode: 'hidden'
         }
