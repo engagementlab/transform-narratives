@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { useRouter } from 'next/router';
-import Image from './Image';
 import Link from 'next/link';
+import Image from './Image';
 
 const links = [
   [`/big-picture`, `The Big Picture`],
@@ -24,7 +24,7 @@ class Header extends Component {
   render() {
     return (
       <div className="flex justify-center">
-        <nav className="w-full xl:mx-20 my-7 mb-24 flex flex-col md:flex-row">
+        <nav className="w-full my-7 mb-24 flex flex-col md:flex-row">
           <div className="w-full flex justify-center md:justify-start">
             <Link href="/" passHref>
                 <svg viewBox="0 0.081 81.459 50" width="81.459" height="50">
