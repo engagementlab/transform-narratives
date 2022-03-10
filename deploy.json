@@ -17,6 +17,7 @@
         "repo": "git@github.com:engagementlab/transform-narratives.git",
         "ref": "origin/main",
         "path": "/srv/transform-narratives",
+        "post-deploy": "bash ./scripts/deploy.sh",
         "env": {
           "NODE_ENV": "staging"
         }
