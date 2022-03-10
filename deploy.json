@@ -13,7 +13,7 @@
     "deploy": {
       "staging": {
         "user": "node",
-        "host": "199.94.80.19",
+        "host": "199.94.80.92",
         "repo": "git@github.com:engagementlab/transform-narratives.git",
         "ref": "origin/main",
         "path": "/srv/transform-narratives",
