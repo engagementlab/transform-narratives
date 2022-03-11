@@ -47,20 +47,25 @@ const useStore = create<FilterState>(set => ({
     //    remove:
     reset: () => set({ currentFilters: [] })
 }));
-useStore.subscribe(console.log)
+// useStore.subscribe(console.log)
 
 const FilterIntersects = (items: any[]) => {
-        let currentFilters = useStore(state => state.currentFilters);
-
-        return <>{items
-            .filter(item => currentFilters.length === 0 || (_.map(item.filters, 'name').some(r => currentFilters.indexOf(r) >= 0)))
-                .map((item, i) => (
-                    <div key={i} className="w-1/3">
-                        <Image id={`thumb-${i}`} alt={`Thumbnail for media "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
-                        <p>{item.title}</p>
-                        <p>{item.shortDescription}</p>
-                    </div>))}
-                </>
+        const currentFilters = useStore(state => state.currentFilters);
+        const filteredItems = items.filter(
+                // If selected filters empty, show all...
+                item => currentFilters.length === 0 ||
+                // ...otherwise, item's filters must match ALL selected filters
+                _.every(currentFilters, r => _.map(item.filters, 'name').indexOf(r) >= 0));
+        return <>{
+                filteredItems.length === 0 ? 
+                    <p>No matches!</p> :
+                    filteredItems.map((item, i) => (
+                        <div key={i} className="w-1/3">
+                            <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
+                            <p>{item.title}</p>
+                            <p>{item.shortDescription}</p>
+                        </div>))
+        }</>
 };
 
 const RenderFilters = (filters: { [x: string]: any[]; }) => {
@@ -68,9 +73,8 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const addFilter = useStore(state => state.add);
     const reset = useStore(state => state.reset);
     return <div>
-            {(!haveFilters ? null : <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}>
-               (x) Clear
-            </a>)}
+            <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }} style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>(x) Clear</a>
+
                 {Object.keys(filters).map((key) => (
                     <div key={key}>
                         <p className="uppercase">
