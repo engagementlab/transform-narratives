@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Image from './Image';
+import _ from 'lodash';
 
-const links = [
-  [`/big-picture`, `The Big Picture`],
-  [`/media-archive`, `Media Archive`],
-  [`/studios`, `Studios`],
+interface NavLink {
+  label: string;
+  url?: string;
+  subMenu?: NavLink[];
+}
+
+const links: NavLink[] = [
+  {
+    label: 'About', subMenu: [
+      {label: 'The Big Picture', url: '/big-picture'},
+      {label: 'The Initiative', url: '/initiative'}
+    ],
+  },
+  {label: 'Media Archive', url: '/media-archive'},
+  {label: 'Studios', url: '/studios'},
+  {
+    label: 'Latest', subMenu: [
+      {label: 'News', url: '/news'},
+      {label: 'Events', url: '/events'}
+    ],
+  },
+  {label: 'Get Involved', url: '/get-involved'},
 ];
 
 function ActiveLink(href: string) {
@@ -27,21 +45,21 @@ class Header extends Component {
         <nav className="w-full my-7 mb-24 flex flex-col md:flex-row">
           <div className="w-full flex justify-center md:justify-start">
             <Link href="/" passHref>
-                <svg viewBox="0 0.081 81.459 50" width="81.459" height="50">
+                <svg viewBox="0 0.081 81.459 50" width="81.459" height="50" className='cursor-pointer'>
                     <g transform="matrix(0.159112, 0, 0, 0.159112, 0, 0.068195)">
-                        <path style={{fill: 'rgb(254, 249, 199)'}} d="M149,61.7V17.8H0v43.9h32.2c3.9,0,11.1-0.8,14.4,0.2v132.7H102V74.4c0-3.5-0.7-9.8,0.2-12.7H149z" /> 
-                        <path style={{fill: 'rgb(254, 249, 199)'}} d="M362.4,163.7v-28.1c0-3.6,0.8-10-0.2-13h-59.8c-2,0-4.7-0.3-6.2,0.2v19.5c0,2.8-0.5,6.8,0.2,9.1h21.8
+                        <path style={{fill: '#8D33D2'}} d="M149,61.7V17.8H0v43.9h32.2c3.9,0,11.1-0.8,14.4,0.2v132.7H102V74.4c0-3.5-0.7-9.8,0.2-12.7H149z" /> 
+                        <path style={{fill: '#8D33D2'}} d="M362.4,163.7v-28.1c0-3.6,0.8-10-0.2-13h-59.8c-2,0-4.7-0.3-6.2,0.2v19.5c0,2.8-0.5,6.8,0.2,9.1h21.8
                             c3.1,0,7.5-0.6,10.1,0.2c-0.7,2.1-3.1,3.8-4.8,5c-1.9,1.4-3.7,3.1-6,4.1c-6,2.6-17.4,2.6-24,0.5c-9.3-3.1-13.6-9.7-16.1-19.7
                             c-0.7-2.6-0.5-5.5-0.5-8.6c0-13.5,4.6-22.9,13.9-26.9c9.7-4.2,24-1.3,27.8,6.2h29.6c3.7,0,10.4,0.8,13.4-0.2
                             c-2.5-20.2-14.7-32.3-30-39.8c-3.9-1.9-8.7-2.9-13-4.1c-6.7-1.9-15.9-1.6-24.2-1.4c-7.7,0.9-5.4,0.4-7.7,0.9
                             c-3.5,0.7-6.9,1.6-10.3,2.6c-16,5.9-28.4,16.7-35,31.9c-2.1,4.9-3.4,10.4-4.8,16.1c-2.1,8.2-1.5,21.9,0.5,29.5
                             c0.8,3.2,0.8,5.9,1.9,8.9c7.1,19.4,19.4,31.9,39.4,38.4c10.7,3.5,28.5,5.3,40.8,1.7c8.1-2.4,15.7-5.3,21.8-9.6c2.1-1.4,4-3.5,6-5
                             c2.4-1.7,4.6-3.7,6.5-6c1.9-2.5,4-4.9,5.8-7.4C360.4,167.2,361,165.1,362.4,163.7z"></path>
-                        <path style={{fill: 'rgb(254, 249, 199)'}} d="M202.8,67.7c-3.7,0-9.3-0.8-12.5,0.2v64.2h-0.5c-2.8-5.4-6.9-10.3-10.1-15.4c-7-11.1-14.1-22-21.1-33.1
+                        <path style={{fill: '#8D33D2'}} d="M202.8,67.7c-3.7,0-9.3-0.8-12.5,0.2v64.2h-0.5c-2.8-5.4-6.9-10.3-10.1-15.4c-7-11.1-14.1-22-21.1-33.1
                             c-2.3-3.6-4.8-7.3-7.2-11c-1-1.5-2.8-3.1-3.4-5h-27.6c-3.7,0-9.3-0.8-12.5,0.2v127.2h40.1l0-63.3c1.6,0.8,2.4,3.4,3.4,4.8
                             c2.4,3.7,4.9,7.5,7.4,11.3c7.2,10.7,14.2,21.6,21.4,32.4c2.4,3.5,4.7,6.9,7,10.6c0.9,1.4,2.4,2.6,2.9,4.3h27.6
                             c3.5,0,9.8,0.8,12.7-0.2v-115c0-3.7,0.8-9.1-0.2-12.2H202.8z"></path>
-                        <path style={{fill: 'rgb(254, 249, 199)'}} d="M509.3,171c1.5-2.9,3.2-6.1,2.5-9.6c-1.1-6-3.6-10.3-7.4-12.5c-3.6-2.1-8-2.2-13.2-0.3l-1.2,0.4l-0.4,0.1
+                        <path style={{fill: '#8D33D2'}} d="M509.3,171c1.5-2.9,3.2-6.1,2.5-9.6c-1.1-6-3.6-10.3-7.4-12.5c-3.6-2.1-8-2.2-13.2-0.3l-1.2,0.4l-0.4,0.1
                             c0.1-0.4,0.3-0.7,0.4-1.1c0.6-1.6,1.3-3.3,1.8-5.1c0.9-3.4,0.9-6.9,0.3-10.3c-0.1-0.5-0.2-1.1-0.2-1.6c0-0.9-0.1-1.8-0.4-2.7
                             c-2-5.9-7.2-7.9-11.5-9c-2.3-0.7-4.8-0.9-7.2-0.5l-1.2,0.3c-1.3,0.3-2.5,0.6-3.7,1c0.3-1.1,0.8-2.3,1.2-3.2s0.8-1.9,1.1-2.9l1-4.9
                             c0.5-1.6,1-3.3,1.5-5c0.7-2.4,1.5-4.9,2.2-7.1c1.2-3.6,2.1-7.3,2.7-11c0.6-3.3,1.4-6.6,2.3-9.9c2.3-7.2,4.5-14.6,6.5-21.8
@@ -103,34 +121,37 @@ class Header extends Component {
             </Link>
           </div>
           <div className="px-4 mt-4 w-full flex items-center">
-            <ul className="flex justify-between w-full list-none">
-                {links.map((link) => {
+            <ul className="flex justify-between w-full list-none text-purple">
+                {links.map((link: NavLink) => {
+                  // If second index is array, is a sub-nav
+                  if(link.subMenu) {  
+                   return ( <li className='group'>
+                      <a href="#" onClick={(e) =>{ e.preventDefault() }}>{link.label}
+                      <svg height="10.0" width="14" className='inline ml-2'><polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon></svg></a>
+
+                      <ul className="absolute hidden text-gray-700 pt-1 group-hover:block">
+                        {link.subMenu.map((subLink: NavLink) => {
+                          return (
+                            <li key={subLink.label}>
+                              <Link href={subLink.url || ''} passHref>
+                                  {subLink.label}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </li>);  
+                  }
+                  else {
                     return (
-                        <li key={link[0]} className="uppercase">
-                            <Link href={link[0]} passHref>
-                                {link[1]}
+                        <li key={link.label}>
+                            <Link href={link.url || ''} passHref>
+                                {link.label}
                             </Link>
                         </li>
                     );
+                  }
                 })}
-                <li key='latest' className="uppercase">
-                  <div><span>
-                      Latest
-                    </span>
-                    <ul>
-                      <li>
-                        <Link href='/news' passHref>
-                            News
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href='/events' passHref>
-                            Events
-                        </Link>
-                      </li>
-                    </ul>
-                    </div>
-                </li>
             </ul>
           </div>
         </nav>
