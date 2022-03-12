@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app';
 import Head from 'next/head'
 import Header from '../components/Header'
+import Footer from '../components/Footer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,9 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
       </div>
-      <main className='w-full xl:px-8 my-7 mb-24 '>
+      <main className='w-full xl:px-8 my-7 mb-24 font-sans'>
       <Header />
       <Component {...pageProps} />
+      <Footer />
       </main>
     </div>
   ) 
