@@ -2,8 +2,8 @@ const defaultTheme = require(`tailwindcss/defaultTheme`);
 
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",  
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -14,10 +14,10 @@ module.exports = {
     colors: {
       black: '#000',
       bluegreen: '#026670',
+      coated: '#2D3130',
       purple: '#8D33D2',
-      'green-blue': '#5EB89E'
-    }
+      'green-blue': '#5EB89E',
+    },
   },
   plugins: [],
-}
- 
+};
