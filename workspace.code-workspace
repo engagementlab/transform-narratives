@@ -1,8 +1,21 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+    "settings": {
+        "editor.formatOnSave": true,
+        "eslint.packageManager": "yarn",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "[javascriptreact]": {
+            "editor.formatOnSave": false
+        },
+        "debug.internalConsoleOptions": "neverOpen",
+        "WillLuke.nextjs.addTypesOnSave": true,
+        "WillLuke.nextjs.hasPrompted": true,
+    },
+    "folders": [
+        {
+            "name": "./",
+            "path": "."
+        }
+    ]
 }
