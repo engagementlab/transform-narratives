@@ -5,6 +5,8 @@
 //     apiSecret: `${process.env.CLOUDINARY_SECRET}`,
 //     folder: 'tngvi',
 //   };
+export { default as HomeSlide } from './lists/homeSlide';
+export { default as Home } from './lists/home';
 export { default as Filter } from './lists/filter';
 export { default as MediaImage } from './lists/mediaImage';
 export { default as StudioImage } from './lists/studioImage';

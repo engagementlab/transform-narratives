@@ -11,6 +11,21 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
+model HomeSlide {
+  id         String  @id @default(cuid())
+  homeSlides Home[]  @relation("Home_slides")
+  image      String?
+  altText    String  @default("")
+  quote      String  @default("")
+}
+
+model Home {
+  id     String      @id @default(cuid())
+  name   String      @unique @default("Home Page")
+  intro  String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  slides HomeSlide[] @relation("Home_slides")
+}
+
 model Filter {
   id                     String      @id @default(cuid())
   name                   String      @default("")
