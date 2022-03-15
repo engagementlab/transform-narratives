@@ -15,7 +15,10 @@
     "jsx": "preserve",
     "types": ["@emotion/core"],
     "incremental": true,
-    
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ]    
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
