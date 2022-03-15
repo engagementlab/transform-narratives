@@ -10,13 +10,17 @@ module.exports = {
       fontFamily: {
         sans: [`Inter`, ...defaultTheme.fontFamily.sans],
       },
+      borderRadius: {
+        large: '38px',
+      },
     },
     colors: {
       black: '#000',
       bluegreen: '#026670',
       coated: '#2D3130',
-      purple: '#8D33D2',
       'green-blue': '#5EB89E',
+      purple: '#8D33D2',
+      white: '#FFF',
     },
   },
   plugins: [],
