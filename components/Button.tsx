@@ -18,10 +18,8 @@ const Button = ({
       <Link href={link} passHref>
         <button 
         className={`${className} ${
-            hoverColor ? hoverColor : `hover:bg-strawberry`
-        } ${
             margin !== undefined ? margin : `my-10`
-        } inline-block rounded-large px-10 py-7 uppercase bg-purple text-white transition-all`}
+        } inline-block rounded-large px-10 py-7 uppercase bg-purple text-white transition-all hover:opacity-75`}
       >
         {label}</button>
         </Link>
