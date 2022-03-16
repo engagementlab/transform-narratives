@@ -54,6 +54,7 @@ model StudioImage {
 model MediaItem {
   id               String       @id @default(cuid())
   title            String       @default("")
+  key              String       @unique @default("")
   thumbnail        String?
   shortDescription String       @default("")
   filters          Filter[]     @relation("MediaItem_filters")

@@ -16,6 +16,7 @@ import {
     componentBlocks
 } from '../admin/components/component-blocks';
 import Image from '../components/Image';
+import Link from "next/link";
 
 type Filter = {
     name: string;
@@ -23,6 +24,7 @@ type Filter = {
 };
 type MediaItem = {
     title: string;
+    key: string;
     shortDescription: string;
     filters: string;
     thumbnail: {
@@ -125,14 +127,19 @@ const FilterIntersects = (items: any[]) => {
                         <p>No matches!</p> :
                         <AnimatePresence>
                         {filteredItems.map((item, i) => (
-                            <motion.div key={i} className="w-full md:w-1/2 lg:w-1/3"
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}>
-                                    <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
-                                    <p>{item.title}</p>
-                                    <p>{item.shortDescription}</p>
-                                    <p className="uppercase">{_.map(item.filters, 'name').join(', ')}</p>
-                                </motion.div>))}
+                            <Link key={i} href={`/media/${item.key}`} passHref>
+                                <a>
+                                    <motion.div className="w-full md:w-1/2 lg:w-1/3"
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}>
+                                        <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
+                                        <p>{item.title}</p>
+                                        <p>{item.shortDescription}</p>
+                                        <p className="uppercase">{_.map(item.filters, 'name').join(', ')}</p>
+                                    </motion.div>
+                                </a>
+                            </Link>
+                        ))}
                         </AnimatePresence>
                 }
             </div>
@@ -164,7 +171,7 @@ export async function getStaticProps() {
         (filterMemo[type] = filterMemo[type] || []).push(name);
         return filterMemo;
     }, {})
-    const mediaItems = await query.MediaItem.findMany({ query: 'title shortDescription filters { name } thumbnail { publicId }' }) as MediaItem[];
+    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { name } thumbnail { publicId }' }) as MediaItem[];
 
     return {
       props: {

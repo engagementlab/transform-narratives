@@ -49,7 +49,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
       <Fade {...slidesProps} className='-translate-y-40'>
         {homePage.slides.map((slide, i) => (
           <div key={`slide-${i}`} className=' text-center'>
-            <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote} &rdquo;</p>
+            <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
             <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId}  />
           
           </div>

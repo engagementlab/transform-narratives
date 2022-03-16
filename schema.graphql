@@ -456,6 +456,7 @@ input StudioRelateToManyForCreateInput {
 type MediaItem {
   id: ID!
   title: String
+  key: String
   thumbnail: CloudinaryImage_File
   shortDescription: String
   filters(
@@ -497,6 +498,7 @@ interface AzureStorageFileFieldOutput {
 
 input MediaItemWhereUniqueInput {
   id: ID
+  key: String
 }
 
 type AzureStorageFileFieldOutputType implements AzureStorageFileFieldOutput {
@@ -512,6 +514,7 @@ input MediaItemWhereInput {
   NOT: [MediaItemWhereInput!]
   id: IDFilter
   title: StringFilter
+  key: StringFilter
   shortDescription: StringFilter
   filters: FilterManyRelationFilter
   images: MediaImageManyRelationFilter
@@ -533,11 +536,13 @@ input MediaImageManyRelationFilter {
 input MediaItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  key: OrderDirection
   shortDescription: OrderDirection
 }
 
 input MediaItemUpdateInput {
   title: String
+  key: String
   thumbnail: Upload
   shortDescription: String
   filters: FilterRelateToManyForUpdateInput
@@ -574,6 +579,7 @@ input MediaItemUpdateArgs {
 
 input MediaItemCreateInput {
   title: String
+  key: String
   thumbnail: Upload
   shortDescription: String
   filters: FilterRelateToManyForCreateInput
