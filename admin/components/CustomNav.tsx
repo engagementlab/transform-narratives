@@ -6,9 +6,13 @@ export function CustomNavigation({ authenticatedItem, lists }: NavigationProps) 
   return (
     <NavigationContainer authenticatedItem={authenticatedItem}>
           <NavItem href="/">Dashboard</NavItem>
-    
-        <ListNavItems lists={lists}/>
-      {/* ... */}
+
+          {lists.map((list, i) => {
+            return (
+                <NavItem key={i} href={`/${list.path}`}>{list.label}</NavItem>
+              )
+          }
+          )};
     </NavigationContainer>
   )
 }

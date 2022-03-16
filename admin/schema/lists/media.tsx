@@ -24,6 +24,18 @@ const MediaItem: Lists.MediaItem = list({
           isRequired: true
         }
       }),
+      key: text({
+        isIndexed: 'unique',
+        isFilterable: true,
+        ui: {
+          createView: {
+            fieldMode:'hidden'
+          },
+          itemView: {
+            fieldMode: 'hidden'
+          }
+        }
+      }),
       thumbnail: cloudinaryImage({
         cloudinary: {
           cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
@@ -110,6 +122,26 @@ const MediaItem: Lists.MediaItem = list({
         },
       }),
       file: azureStorageFile({ azureStorageConfig: azConfig, label: 'PDF' }),
+    },
+    hooks: {
+      resolveInput: async ({
+        listKey,
+        operation,
+        inputData,
+        item,
+        resolvedData,
+        context,
+      }) => {
+        if(resolvedData.title) {
+  
+          resolvedData = {
+            ...resolvedData,
+            key: resolvedData.title.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+          }
+  
+        }
+        return resolvedData;
+      }
     }
   });
   export default MediaItem;

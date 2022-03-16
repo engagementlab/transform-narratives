@@ -47,6 +47,10 @@ const Home: Lists.Filter = list({
           },
         }),
     },
+    ui: {
+        hideCreate: true,
+        hideDelete: true,
+    },
     graphql: {
         plural: 'HomePage'
     }

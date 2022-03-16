@@ -1,4 +1,5 @@
 import Image from "../components/Image"
+import { CustomNavigation } from "./components/CustomNav"
 
 // admin/config.tsx
 function CustomLogo () {
@@ -14,5 +15,6 @@ function CustomLogo () {
 }
 
 export const components = {
-    Logo: CustomLogo
+    Logo: CustomLogo,
+    Navigation: CustomNavigation,
 }
