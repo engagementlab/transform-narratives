@@ -6,7 +6,7 @@
             "source.fixAll.eslint": true
         },
         "[javascriptreact]": {
-            "editor.formatOnSave": false
+            "editor.formatOnSave": true
         },
         "debug.internalConsoleOptions": "neverOpen",
         "WillLuke.nextjs.addTypesOnSave": true,

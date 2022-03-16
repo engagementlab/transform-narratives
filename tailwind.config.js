@@ -15,10 +15,12 @@ module.exports = {
       },
     },
     colors: {
+      base: '#606A67',
       black: '#000',
       bluegreen: '#026670',
       coated: '#2D3130',
       'green-blue': '#5EB89E',
+      oasis: '#9FEDD7',
       purple: '#8D33D2',
       white: '#FFF',
     },
