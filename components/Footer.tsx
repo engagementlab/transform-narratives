@@ -23,7 +23,7 @@ function ActiveLink(href: string) {
 class Footer extends Component {
   render() {
     return (
-        <nav className="w-full px-4 my-7 mb-24">
+        <nav className="w-full px-12 my-7 mb-24">
             <Link href="/" passHref>
             <svg viewBox="0 0.081 58 35.601" width="58" height="35.601">
                 <g transform="matrix(0.11329, 0, 0, 0.11329, 0, 0.071911)">

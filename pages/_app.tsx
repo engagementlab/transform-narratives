@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
     <div>
 
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
       </div>
-      <main className='w-full xl:px-8 my-7 mb-24 font-sans'>
+      <main className='w-full my-7 mb-24 font-sans'>
       <Header />
       <Component {...pageProps} />
       <Footer />

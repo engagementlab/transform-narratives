@@ -65,7 +65,7 @@ class Header extends Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
       return (
-        <div className="flex justify-center">
+        <div className="flex justify-center xl:px-8">
           <nav className="w-full my-7 mb-24 flex flex-col md:flex-row">
             <div className="w-full flex justify-center md:justify-start">
               <Link href="/" passHref>
