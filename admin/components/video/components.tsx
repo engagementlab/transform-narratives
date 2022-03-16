@@ -155,7 +155,7 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
               <p>
                 {props.children}
               </p>
-              <img alt={`Thumbnail image for video with title "${props.label}"`} src={(props.data as any).thumb} />
+              <img alt={`Thumbnail image for video with title "${props.label}"`} src={(props.data as any).thumbSm} />
             </div>
       </div>
       
@@ -233,11 +233,11 @@ export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof c
                   >
                     <EditIcon size="small" color="blue" />
                   </Button>
-                  <Button size="small" className={styles.list.optionButton}>
+                  <Button size="small" className={styles.list.optionButton}
+                      onClick={() => onDeleteVideo(i)}>
                     <MinusCircleIcon
                       size="small"
                       color="red"
-                      onClick={() => onDeleteVideo(i)}
                     />
                   </Button>
                 </div>
