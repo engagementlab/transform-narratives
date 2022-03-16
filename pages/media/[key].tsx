@@ -6,6 +6,7 @@ import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
 import Image from '../../components/Image';
 import { componentBlocks } from '../../admin/components/component-blocks';
+import Video from '../../components/Video';
 
 type MediaItem = {
     title: string;
@@ -30,18 +31,7 @@ export default function MediaItem({ item }: InferGetStaticPropsType<typeof getSt
   return (
       !item ? 'Not found!' :
     <div>
-        <div className='video'>
-            <img alt={`Thumbnail image for video with title "${item.videos[0].label}"`} src={item.videos[0].thumb} />
-            {/* <div id="video-embed-main">
-                <iframe
-                    src={item.videos[0].value}
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-                <Script src="https://player.vimeo.com/api/player.js"></Script>
-            </div> */}
-        </div>
+        <Video videoLabel={item.videos[0].label} videoUrl={item.videos[0].value} thumbUrl={item.videos[0].thumb} />
 
         <h1 className="text-3xl">{item.title}</h1>
         <DocumentRenderer document={item.content.document} 

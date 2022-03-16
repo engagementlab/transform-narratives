@@ -9,12 +9,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
     query
 } from '.keystone/api';
-import {
-    InferRenderersForComponentBlocks
-} from '@keystone-6/fields-document/component-blocks';
-import {
-    componentBlocks
-} from '../admin/components/component-blocks';
 import Image from '../components/Image';
 import Link from "next/link";
 
