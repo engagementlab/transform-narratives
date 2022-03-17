@@ -25,9 +25,18 @@ const StudioImage: Lists.StudioImage = list({
     imageName: text({validation: {
       isRequired: true
     }}),
-    altText: text({validation: {
-      isRequired: true
-    }}),
+    altText: text({
+      validation: {
+        isRequired: true
+      },
+      label: 'Describe appearance of image'
+    }),
+    caption: text({
+      validation: {
+        isRequired: true,
+      },
+      defaultValue: 'Caption'
+    }),
   },
   ui: {
     isHidden: true,

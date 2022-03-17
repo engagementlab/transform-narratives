@@ -52,8 +52,8 @@ const MediaItem: Lists.MediaItem = list({
       }),
       filters: relationship({
         ref: 'Filter',
+        isFilterable: true,
         many: true,
-        // label: "Images (add here for use in 'Content' field)",
         ui: {
           displayMode: 'select',
         }

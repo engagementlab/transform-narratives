@@ -34,6 +34,15 @@ const Filter: Lists.Filter = list({
         validation: { isRequired: true, },
         ui: { displayMode: 'segmented-control' },
       }),
+      section: select({
+        type: 'enum',
+        options: [
+          { label: 'Media', value: 'media' },
+          { label: 'Studio', value: 'studio' },
+        ],
+        defaultValue: 'Media',
+        ui: { displayMode: 'segmented-control' },
+      }),
     }
   });
   export default Filter;

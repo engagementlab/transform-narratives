@@ -16,6 +16,7 @@ import path from 'path';
 import {
   componentBlocks
 } from '../../components/component-blocks';
+import { cloudinaryImage } from '../../components/cloudinary';
 
 const Studio: Lists.Studio = list({
   fields: {
@@ -24,7 +25,15 @@ const Studio: Lists.Studio = list({
         isRequired: true
       }
     }),
-    slug: text({
+    thumbnail: cloudinaryImage({
+      cloudinary: {
+        cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+        apiKey: `${process.env.CLOUDINARY_KEY}`,
+        apiSecret: `${process.env.CLOUDINARY_SECRET}`,
+        folder: 'tngvi/media',
+      },
+    }),
+    key: text({
       isIndexed: 'unique',
       isFilterable: true,
       ui: {
@@ -36,8 +45,23 @@ const Studio: Lists.Studio = list({
         }
       }
     }),
+    filters: relationship({
+      ref: 'Filter',
+      isFilterable: true,
+      many: true,
+      ui: {
+        displayMode: 'select',
+      }
+    }),
     content: document({
-      formatting: true,
+      formatting: {
+        headingLevels: [3, 4],  
+        inlineMarks: true,
+        listTypes: true,
+        alignment: true,
+        blockTypes: true,
+        softBreaks: true,
+      },
       dividers: true,
       links: true,
       layouts: [
@@ -67,30 +91,30 @@ const Studio: Lists.Studio = list({
       label: "Images (add here for use in 'Content' field)",
       ui: {
         displayMode: 'cards',
-        cardFields: ['image', 'imageName', 'altText'],
+        cardFields: ['image', 'imageName', 'altText', 'caption'],
         inlineCreate: {
-          fields: ['image', 'imageName', 'altText']
+          fields: ['image', 'imageName', 'altText', 'caption']
         },
         inlineEdit: {
-          fields: ['image', 'imageName', 'altText']
+          fields: ['image', 'imageName', 'altText', 'caption']
         },
       },
     }),
-    videos: json({
-      ui: {
-        views: path.join(process.cwd(), '/admin/components/video/components.tsx'),
-        createView: {
-          fieldMode: 'edit'
-        },
-        listView: {
-          fieldMode: 'hidden'
-        },
-        itemView: {
-          fieldMode: 'edit'
-        },
-      },
-    }),
-    // video: video(),
+    // videos: json({
+    //   ui: {
+    //     views: path.join(process.cwd(), '/admin/components/video/components.tsx'),
+    //     createView: {
+    //       fieldMode: 'edit'
+    //     },
+    //     listView: {
+    //       fieldMode: 'hidden'
+    //     },
+    //     itemView: {
+    //       fieldMode: 'edit'
+    //     },
+    //   },
+    // }),
+
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
   },
   hooks: {
@@ -106,7 +130,7 @@ const Studio: Lists.Studio = list({
 
         resolvedData = {
           ...resolvedData,
-          slug: resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+          key: resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-')
         }
 
       }
