@@ -30,7 +30,9 @@ model Filter {
   id                     String      @id @default(cuid())
   name                   String      @default("")
   type                   String
+  section                String?     @default("Media")
   from_MediaItem_filters MediaItem[] @relation("MediaItem_filters")
+  from_Studio_filters    Studio[]    @relation("Studio_filters")
 }
 
 model MediaImage {
@@ -49,6 +51,7 @@ model StudioImage {
   image        String?
   imageName    String   @default("")
   altText      String   @default("")
+  caption      String   @default("Caption")
 }
 
 model MediaItem {
@@ -67,10 +70,11 @@ model MediaItem {
 }
 
 model Studio {
-  id      String        @id @default(cuid())
-  name    String        @default("")
-  slug    String        @unique @default("")
-  content String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos  StudioImage[] @relation("Studio_photos")
-  videos  String?
+  id        String        @id @default(cuid())
+  name      String        @default("")
+  thumbnail String?
+  key       String        @unique @default("")
+  filters   Filter[]      @relation("Studio_filters")
+  content   String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos    StudioImage[] @relation("Studio_photos")
 }

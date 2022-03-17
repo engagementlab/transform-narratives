@@ -246,6 +246,7 @@ type Filter {
   id: ID!
   name: String
   type: FilterTypeType
+  section: FilterSectionType
 }
 
 enum FilterTypeType {
@@ -253,6 +254,11 @@ enum FilterTypeType {
   Media
   Departments
   Year
+}
+
+enum FilterSectionType {
+  media
+  studio
 }
 
 input FilterWhereUniqueInput {
@@ -266,6 +272,7 @@ input FilterWhereInput {
   id: IDFilter
   name: StringFilter
   type: FilterTypeTypeNullableFilter
+  section: FilterSectionTypeNullableFilter
 }
 
 input FilterTypeTypeNullableFilter {
@@ -275,15 +282,24 @@ input FilterTypeTypeNullableFilter {
   not: FilterTypeTypeNullableFilter
 }
 
+input FilterSectionTypeNullableFilter {
+  equals: FilterSectionType
+  in: [FilterSectionType!]
+  notIn: [FilterSectionType!]
+  not: FilterSectionTypeNullableFilter
+}
+
 input FilterOrderByInput {
   id: OrderDirection
   name: OrderDirection
   type: OrderDirection
+  section: OrderDirection
 }
 
 input FilterUpdateInput {
   name: String
   type: FilterTypeType
+  section: FilterSectionType
 }
 
 input FilterUpdateArgs {
@@ -294,6 +310,7 @@ input FilterUpdateArgs {
 input FilterCreateInput {
   name: String
   type: FilterTypeType
+  section: FilterSectionType
 }
 
 type MediaImage {
@@ -394,6 +411,7 @@ type StudioImage {
   image: CloudinaryImage_File
   imageName: String
   altText: String
+  caption: String
 }
 
 input StudioImageWhereUniqueInput {
@@ -408,6 +426,7 @@ input StudioImageWhereInput {
   studioImages: StudioManyRelationFilter
   imageName: StringFilter
   altText: StringFilter
+  caption: StringFilter
 }
 
 input StudioManyRelationFilter {
@@ -420,6 +439,7 @@ input StudioImageOrderByInput {
   id: OrderDirection
   imageName: OrderDirection
   altText: OrderDirection
+  caption: OrderDirection
 }
 
 input StudioImageUpdateInput {
@@ -427,6 +447,7 @@ input StudioImageUpdateInput {
   image: Upload
   imageName: String
   altText: String
+  caption: String
 }
 
 input StudioRelateToManyForUpdateInput {
@@ -446,6 +467,7 @@ input StudioImageCreateInput {
   image: Upload
   imageName: String
   altText: String
+  caption: String
 }
 
 input StudioRelateToManyForCreateInput {
@@ -603,7 +625,15 @@ input MediaImageRelateToManyForCreateInput {
 type Studio {
   id: ID!
   name: String
-  slug: String
+  thumbnail: CloudinaryImage_File
+  key: String
+  filters(
+    where: FilterWhereInput! = {}
+    orderBy: [FilterOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Filter!]
+  filtersCount(where: FilterWhereInput! = {}): Int
   content: Studio_content_Document
   photos(
     where: StudioImageWhereInput! = {}
@@ -612,7 +642,6 @@ type Studio {
     skip: Int! = 0
   ): [StudioImage!]
   photosCount(where: StudioImageWhereInput! = {}): Int
-  videos: JSON
 }
 
 type Studio_content_Document {
@@ -621,7 +650,7 @@ type Studio_content_Document {
 
 input StudioWhereUniqueInput {
   id: ID
-  slug: String
+  key: String
 }
 
 input StudioWhereInput {
@@ -630,7 +659,8 @@ input StudioWhereInput {
   NOT: [StudioWhereInput!]
   id: IDFilter
   name: StringFilter
-  slug: StringFilter
+  key: StringFilter
+  filters: FilterManyRelationFilter
   photos: StudioImageManyRelationFilter
 }
 
@@ -643,15 +673,16 @@ input StudioImageManyRelationFilter {
 input StudioOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  slug: OrderDirection
+  key: OrderDirection
 }
 
 input StudioUpdateInput {
   name: String
-  slug: String
+  thumbnail: Upload
+  key: String
+  filters: FilterRelateToManyForUpdateInput
   content: JSON
   photos: StudioImageRelateToManyForUpdateInput
-  videos: JSON
 }
 
 input StudioImageRelateToManyForUpdateInput {
@@ -668,10 +699,11 @@ input StudioUpdateArgs {
 
 input StudioCreateInput {
   name: String
-  slug: String
+  thumbnail: Upload
+  key: String
+  filters: FilterRelateToManyForCreateInput
   content: JSON
   photos: StudioImageRelateToManyForCreateInput
-  videos: JSON
 }
 
 input StudioImageRelateToManyForCreateInput {
