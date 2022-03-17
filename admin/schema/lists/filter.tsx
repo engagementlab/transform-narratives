@@ -40,7 +40,6 @@ const Filter: Lists.Filter = list({
           { label: 'Media', value: 'media' },
           { label: 'Studio', value: 'studio' },
         ],
-        defaultValue: 'Media',
         ui: { displayMode: 'segmented-control' },
       }),
     }
