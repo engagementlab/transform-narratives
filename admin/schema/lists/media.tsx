@@ -63,12 +63,12 @@ const MediaItem: Lists.MediaItem = list({
         dividers: true,
         links: true,
         layouts: [
-        [1, 1],
-        [1, 1, 1],
-        [2, 1],
-        [1, 2],
-        [1, 2, 1],
-      ],
+          [1, 1],
+          [1, 1, 1],
+          [2, 1],
+          [1, 2],
+          [1, 2, 1],
+        ],
         ui: {
           views: path.join(process.cwd(), 'admin/components/component-blocks')
         },

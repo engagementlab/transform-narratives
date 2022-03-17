@@ -2,6 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  integer,
     json,
     relationship,
     select,
@@ -29,10 +30,14 @@ const Filter: Lists.Filter = list({
           { label: 'Media', value: 'Media' },
           { label: 'Studio Dept', value: 'Departments' },
           { label: 'Year', value: 'Year' },
+          { label: 'Department', value: 'Department' },
+          { label: 'Partner', value: 'Partner' },
+          { label: 'Faculty', value: 'Faculty' },
+          { label: 'Semester', value: 'Semester' },
           
         ],
         validation: { isRequired: true, },
-        ui: { displayMode: 'segmented-control' },
+        ui: { displayMode: 'select' },
       }),
       section: select({
         type: 'enum',
@@ -42,6 +47,7 @@ const Filter: Lists.Filter = list({
         ],
         ui: { displayMode: 'segmented-control' },
       }),
+      // order: integer(),
     }
   });
   export default Filter;

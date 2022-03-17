@@ -58,10 +58,13 @@ const useStore = create<FilterState>(set => ({
 }));
 
 const RenderFilters = (filters: { [x: string]: any[]; }) => {
+   
+    // Store get/set
     const selectedFilters = useStore(state => state.currentFilters);
     const filtersOpen = useStore(state => state.filtersOpen);
     const haveFilters = selectedFilters.length > 0;
-    const haveFiltersForKey = (key: string) => {return _.intersection(selectedFilters, filters[key]).length > 0};
+
+    const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).indexOf(key) > -1};
     const addFilter = useStore(state => state.add);
     const reset = useStore(state => state.reset);
     const resetForKey = useStore(state => state.remove);
@@ -70,24 +73,38 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>
-                            <div className="flex justify-between items-center flex-shrink-0 flex-grow-0">
-                                <svg height="10.0" width="14"><polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#FEF9C7'}}></polygon></svg>
-                                {key}
-                                <a href="#" onClick={(e) =>{ resetForKey(filters[key]); e.preventDefault() }} style={{visibility: !haveFiltersForKey(key) ? 'hidden' : 'visible'}}>x</a>
+                            <div className="mt-4 flex items-center flex-shrink-0 flex-grow-0 uppercase">
+                                <svg height="10.0" width="14" className='inline transition-transform group-hover:rotate-180'>
+                                    <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
+                                </svg>
+                                <span className="ml-2">    
+                                    {key}
+                                </span> 
                             </div>
                             <ul>
                                 {filters[key].map(filter => {
-                                    return( <li key={filter}><a href="#" onClick={(e) =>{ addFilter(filter); e.preventDefault() }}>{filter}</a></li>)
+                                    return (
+                                        <li key={filter} className={`mt-4 text-sm font-semibold ${!haveSpecificFilter(filter) ? 'text-bluegreen' : 'text-purple'}`}>
+                                            <a href="#" onClick={(e) =>{ addFilter(filter); e.preventDefault() }} className='w-3/4 flex items-center justify-between'>
+                                                {filter}
+                                                <svg viewBox="185.411 115.41 11 11" width="11" height="11" className="flex-shrink-0" style={{visibility: !haveSpecificFilter(filter) ? 'hidden' : 'visible'}}>
+                                                    <path d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z" className="fill-purple"></path>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                    )
                                 })}
                             </ul>
                         </div>
                     ))}
-                    </div>;
+                </div>;
 
     return <div> 
             <div className="hidden lg:block">
-                    <a className="uppercase" onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>Filters</a>   
-                    <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>(x) Clear</a> 
+                <div className="mr-2 flex justify-between">
+                    <a onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>Filters</a>   
+                    <a href="#" className="text-bluegreen" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>Clear</a> 
+                </div>
                 {menu}     
             </div>
             {/* Mobile/tablet */}
@@ -114,7 +131,7 @@ const FilterIntersects = (items: any[]) => {
             <div className="w-full flex justify-between">
                     <a className="uppercase" onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>Filters</a>   
                     <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>(x) Clear</a>   
-                    <span>Showing {filteredItems.length} Stories</span>
+                    <span className="uppercase">Showing {filteredItems.length} Stories</span>
             </div>
             <div className="md:flex md:justify-between">{
                         filteredItems.length === 0 ? 
@@ -122,8 +139,8 @@ const FilterIntersects = (items: any[]) => {
                         <AnimatePresence>
                         {filteredItems.map((item, i) => (
                             <Link key={i} href={`/media/${item.key}`} passHref>
-                                <a>
-                                    <motion.div className="w-full md:w-1/2 lg:w-1/3"
+                                <a className="w-full md:w-1/2 lg:w-1/3">
+                                    <motion.div
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}>
                                         <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
@@ -144,16 +161,19 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
     return (
         <div
         className="container mx-auto mt-14 mb-14 xl:mt-16">
-            <div className="w-full"><h2>Media Archive</h2> <hr /></div>
-            <div className="flex items-center">
-            <div className='w-1/5 flex-shrink-0 border-r'>
+        <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
+        <p className="w-full lg:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
+            gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
+            multi-year initiative and hosts 5-7 studios per year.</p>
+        <div className="flex">
+            <div className='w-1/5 flex-shrink-0 border-r border-[#B9CCC7]'>
                 {RenderFilters(filtersGrouped)}
             </div>
             <div className="ml-4">
                 {/* {FiltersDebug()} */}
                 {FilterIntersects(mediaItems)}
             </div>
-                </div>
+            </div>
         </div>
     );
 }

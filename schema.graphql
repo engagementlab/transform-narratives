@@ -254,6 +254,10 @@ enum FilterTypeType {
   Media
   Departments
   Year
+  Department
+  Partner
+  Faculty
+  Semester
 }
 
 enum FilterSectionType {
