@@ -8,6 +8,7 @@ import { query } from '.keystone/api';
 
 import Image from '../../components/Image';
 import { componentBlocks } from '../../admin/components/component-blocks';
+import FlexLayout from '../../components/FlexLayout';
 
 type Studio = {
   id: string;
@@ -33,6 +34,9 @@ block: {
   heading: ({ level, children, textAlign }) => {
     return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
   },
+  layout: ({layout, children}) => {
+    return FlexLayout(layout, children);
+  }
 },
 };
 
@@ -40,16 +44,17 @@ export default function Studio({ item, relatedItems }: InferGetStaticPropsType<t
 return (
     !item ? 'Not found!' :
   <div>
-      <div className='xl:px-8'>
+      <div className='px-4 xl:px-8'>
           <h1 className="text-3xl">{item.name}</h1>
           <p>{_.map(item.filters, 'name').join(', ')}</p>
+
           <DocumentRenderer document={item.content.document} componentBlocks={componentBlockRenderers} renderers={renderers} />
           {/* <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3> */}
 
           {relatedItems &&
               <div>
                   <div className='flex flex-col lg:flex-row justify-between items-center'>
-                      <p>Browse other stories to keep learning</p>
+                      <p>Browse similar Studio courses from the same course series, professor, or media.</p>
                       <Link href='/media-archive' passHref>
                           <a>
                               See All

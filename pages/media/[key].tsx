@@ -15,6 +15,7 @@ import { componentBlocks } from '../../admin/components/component-blocks';
 import Image from '../../components/Image';
 import Video from '../../components/Video';
 import Link from 'next/link';
+import FlexLayout from '../../components/FlexLayout';
 
 type MediaItem = {
     title: string;
@@ -52,10 +53,9 @@ const renderers: DocumentRendererProps['renderers'] = {
     heading: ({ level, children, textAlign }) => {
       return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
     },
-    // layout: ({layout, children}) => {
-    //     if(layout[0] === 2 && layout[1] === 1)
-    //         return <div>{layout[0]}</div>
-    // }
+    layout: ({layout, children}) => {
+      return FlexLayout(layout, children);
+    }
   },
 };
 
@@ -83,7 +83,7 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
                 </div>
             </div>
         </div>
-        <div className='xl:px-8'>
+        <div className='px-4 xl:px-8'>
             <DocumentRenderer document={item.content.document} componentBlocks={componentBlockRenderers} renderers={renderers} />
             <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>
 
