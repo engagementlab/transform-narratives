@@ -64,7 +64,7 @@ return (
                   <div className='flex flex-col lg:flex-row'>
                       {/* {relatedItems.map((relatedItem, i) => (
                           <Link key={i} href={`/media/${relatedItem.key}`} passHref>
-                              <a className="w-full md:w-1/2 lg:w-1/3">
+                              <a className="w-full lg:w-1/3">
                                   <div>
                                       <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${relatedItem.name}"`} imgId={relatedItem.thumbnail.publicId} width={302}  />
                                       <h4 className='text-xl font-semibold mt-3'>{relatedItem.name}</h4>
