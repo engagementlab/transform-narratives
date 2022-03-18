@@ -33,6 +33,14 @@ const Studio: Lists.Studio = list({
         folder: 'tngvi/media',
       },
     }),
+    blurb: text({
+      validation: {
+        isRequired: true
+      },
+      ui: {
+        displayMode: 'textarea'
+      }
+    }),
     key: text({
       isIndexed: 'unique',
       isFilterable: true,

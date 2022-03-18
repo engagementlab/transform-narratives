@@ -73,6 +73,7 @@ model Studio {
   id        String        @id @default(cuid())
   name      String        @default("")
   thumbnail String?
+  blurb     String        @default("")
   key       String        @unique @default("")
   filters   Filter[]      @relation("Studio_filters")
   content   String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")

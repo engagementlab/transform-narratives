@@ -45,7 +45,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ query: 'name type' }) as any[];
+    const filters = await query.Filter.findMany({ where: { section: {equals: 'media'} }, query: 'name type' }) as any[];
     // Group filters by type
     const filtersGrouped = filters.reduce((filterMemo, {type, name}) => {
         (filterMemo[type] = filterMemo[type] || []).push(name);

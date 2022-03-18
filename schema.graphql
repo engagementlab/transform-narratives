@@ -630,6 +630,7 @@ type Studio {
   id: ID!
   name: String
   thumbnail: CloudinaryImage_File
+  blurb: String
   key: String
   filters(
     where: FilterWhereInput! = {}
@@ -663,6 +664,7 @@ input StudioWhereInput {
   NOT: [StudioWhereInput!]
   id: IDFilter
   name: StringFilter
+  blurb: StringFilter
   key: StringFilter
   filters: FilterManyRelationFilter
   photos: StudioImageManyRelationFilter
@@ -677,12 +679,14 @@ input StudioImageManyRelationFilter {
 input StudioOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  blurb: OrderDirection
   key: OrderDirection
 }
 
 input StudioUpdateInput {
   name: String
   thumbnail: Upload
+  blurb: String
   key: String
   filters: FilterRelateToManyForUpdateInput
   content: JSON
@@ -704,6 +708,7 @@ input StudioUpdateArgs {
 input StudioCreateInput {
   name: String
   thumbnail: Upload
+  blurb: String
   key: String
   filters: FilterRelateToManyForCreateInput
   content: JSON

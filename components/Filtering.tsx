@@ -4,9 +4,11 @@ import { AnimatePresence } from "framer-motion"
 import React from "react";
 
 export type MediaItem = {
-    title: string;
+    title?: string;
+    name?: string;
     key: string;
-    shortDescription: string;
+    shortDescription?: string;
+    blurb?: string;
     filters: string;
     thumbnail: {
         publicId: string;
