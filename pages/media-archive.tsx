@@ -27,16 +27,18 @@ type MediaItem = {
 }
 type FilterState = {
     currentFilters: any[];
-    filtersOpen: boolean
+    filtersNavOpen: boolean
+    filterGroupsClosed: string[]
     toggle: (filter: any) => void
-    // remove: (filters: any[]) => void
+    toggleFilterGroupClosed: (filterKey: string) => void
+    toggleFiltersOpen: (open: boolean) => void
     reset: () => void
-    toggleOpen: (open: boolean) => void
 }
 // Create store with Zustand
 const useStore = create<FilterState>(set => ({
     currentFilters: [],
-    filtersOpen: false,
+    filtersNavOpen: false,
+    filterGroupsClosed: [],
     toggle: (filter: any) => set((state) => {
         return state.currentFilters.includes(filter) ?
         {
@@ -48,36 +50,52 @@ const useStore = create<FilterState>(set => ({
             ...state,
             currentFilters: [...state.currentFilters, filter]
         }
-    }),      
+    }), 
+    toggleFilterGroupClosed: (filterGroupKey: string) => set((state) => {
+        return state.filterGroupsClosed.includes(filterGroupKey) ?
+        {
+            ...state,
+            filterGroupsClosed: state.filterGroupsClosed.filter(e => e !== filterGroupKey)
+        }
+        :
+        {
+            ...state,
+            filterGroupsClosed: [...state.filterGroupsClosed, filterGroupKey]
+        }
+    }),     
+    toggleFiltersOpen: (open: boolean) => set({ filtersNavOpen:open }),
     reset: () => set({ currentFilters: [] }),
-    toggleOpen: (open: boolean) => set({ filtersOpen:open })
 }));
 
 const RenderFilters = (filters: { [x: string]: any[]; }) => {
    
     // Store get/set
     const selectedFilters = useStore(state => state.currentFilters);
-    const filtersOpen = useStore(state => state.filtersOpen);
+    const filtersOpen = useStore(state => state.filtersNavOpen);
+    const filterGroupsClosed = useStore(state => state.filterGroupsClosed)
     const haveFilters = selectedFilters.length > 0;
-
-    const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).indexOf(key) > -1};
+    
+    const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).includes(key)};
+    const haveGroupClosed = (key: string) => {return filterGroupsClosed.includes(key)};
     const toggleFilter = useStore(state => state.toggle);
+    const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
     const reset = useStore(state => state.reset);
-    // const resetForKey = useStore(state => state.remove);
-    const toggleOpen = useStore(state => state.toggleOpen);
+    const toggleOpen = useStore(state => state.toggleFiltersOpen);
 
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>
-                            <div className="mt-4 flex items-center flex-shrink-0 flex-grow-0 uppercase">
-                                <svg height="10.0" width="14" className='inline transition-transform group-hover:rotate-180'>
-                                    <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
-                                </svg>
-                                <span className="ml-2">    
-                                    {key}
-                                </span> 
-                            </div>
-                            <ul>
+                            <a href="#" onClick={(e)=>{ toggleFilterGroupOpen(key); e.preventDefault() }}>
+                                <div className="mt-4 flex items-center flex-shrink-0 flex-grow-0 uppercase">
+                                    <svg height="10.0" width="14" className={`inline transition-transform ${haveGroupClosed(key) ? 'rotate-180' : ''}`}>
+                                        <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
+                                    </svg>
+                                    <span className="ml-2">    
+                                        {key}
+                                    </span> 
+                                </div>
+                            </a>
+                            <ul className={`relative overflow-hidden transition-all ${haveGroupClosed(key) ? 'max-h-0' : 'max-h-96'}`}>
                                 {filters[key].map(filter => {
                                     return (
                                         <li key={filter} className={`mt-4 text-sm font-semibold
@@ -86,7 +104,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                                                 className='w-3/4 flex items-center justify-between'>
                                                 {filter}
                                                 <svg viewBox="185.411 115.41 11 11" width="11" height="11"
-                                                    className="flex-shrink-0"
+                                                    className='flex-shrink-0'
                                                     style={{visibility: !haveSpecificFilter(filter) ? 'hidden' : 'visible'}}>
                                                     <path
                                                         d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
@@ -122,7 +140,7 @@ const FilterIntersects = (items: any[]) => {
         const selectedFilters = useStore(state => state.currentFilters);
         const haveFilters = selectedFilters.length > 0;
         const reset = useStore(state => state.reset);
-        const toggleOpen = useStore(state => state.toggleOpen);
+        const toggleOpen = useStore(state => state.toggleFiltersOpen);
         const filteredItems = items.filter(
                 // If selected filters empty, show all...
                 item => selectedFilters.length === 0 ||

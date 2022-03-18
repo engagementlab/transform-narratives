@@ -150,35 +150,35 @@ class Header extends Component {
             <div className="px-4 mt-4 w-1/2 flex items-center">
               <ul className="flex justify-between w-full list-none text-purple text-lg">
                 {links.map((link: NavLink) => {
-                if(link.subMenu) {
-                return ( <li key={link.label} className='group'>
-                  <a href="#" onClick={(e)=>{ e.preventDefault() }}>{link.label}
-                    <svg height="10.0" width="14" className='inline ml-2 transition-transform group-hover:rotate-180'>
-                      <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
-                    </svg></a>
+                  if(link.subMenu) {
+                    return ( <li key={link.label} className='group'>
+                      <a href="#" onClick={(e)=>{ e.preventDefault() }}>{link.label}
+                        <svg height="10.0" width="14" className='inline ml-2 transition-transform group-hover:rotate-180'>
+                          <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
+                        </svg></a>
 
-                    <ul className="absolute hidden opacity-0 text-gray-700 p-3 border-2 border-purple text-right -translate-x-1/2 group-hover:block group-hover:opacity-100">
-                      {link.subMenu.map((subLink: NavLink) => {
-                        return (
-                          <li className='mt-2' key={subLink.label}>
-                            <Link href={subLink.url || '' } passHref>
-                            {subLink.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                </li>);
-                }
-                else {
-                return (
-                <li key={link.label}>
-                  <Link href={link.url || '' } passHref>
-                  {link.label}
-                  </Link>
-                </li>
-                );
-                }
+                        <ul className="absolute hidden opacity-0 text-gray-700 p-3 border-2 border-purple text-right -translate-x-1/2 group-hover:block group-hover:opacity-100">
+                          {link.subMenu.map((subLink: NavLink) => {
+                            return (
+                              <li className='mt-2' key={subLink.label}>
+                                <Link href={subLink.url || '' } passHref>
+                                {subLink.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                    </li>);
+                  }
+                  else {
+                    return (
+                      <li key={link.label}>
+                        <Link href={link.url || '' } passHref>
+                        {link.label}
+                        </Link>
+                      </li>
+                    );
+                  }
                 })}
               </ul>
             </div>
