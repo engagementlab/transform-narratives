@@ -28,8 +28,8 @@ type MediaItem = {
 type FilterState = {
     currentFilters: any[];
     filtersOpen: boolean
-    add: (filter: any) => void
-    remove: (filters: any[]) => void
+    toggle: (filter: any) => void
+    // remove: (filters: any[]) => void
     reset: () => void
     toggleOpen: (open: boolean) => void
 }
@@ -37,22 +37,18 @@ type FilterState = {
 const useStore = create<FilterState>(set => ({
     currentFilters: [],
     filtersOpen: false,
-    add: (filter: any) => set((state) => {
-        const isPresent = state.currentFilters.indexOf(filter) > -1;
-        if (!isPresent) {
-            return {
-                ...state,
-                currentFilters: [...state.currentFilters, filter]
-            }
-        }
-    }),
-    remove: (filters) => set((state) => {
-        
-        return {
+    toggle: (filter: any) => set((state) => {
+        return state.currentFilters.includes(filter) ?
+        {
             ...state,
-            currentFilters: state.currentFilters.filter(e => !filters.includes(e))
+            currentFilters: state.currentFilters.filter(e => e !== filter)
         }
-    }),
+        :
+        {
+            ...state,
+            currentFilters: [...state.currentFilters, filter]
+        }
+    }),      
     reset: () => set({ currentFilters: [] }),
     toggleOpen: (open: boolean) => set({ filtersOpen:open })
 }));
@@ -65,9 +61,9 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const haveFilters = selectedFilters.length > 0;
 
     const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).indexOf(key) > -1};
-    const addFilter = useStore(state => state.add);
+    const toggleFilter = useStore(state => state.toggle);
     const reset = useStore(state => state.reset);
-    const resetForKey = useStore(state => state.remove);
+    // const resetForKey = useStore(state => state.remove);
     const toggleOpen = useStore(state => state.toggleOpen);
 
     const menu = <div>
@@ -84,11 +80,17 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                             <ul>
                                 {filters[key].map(filter => {
                                     return (
-                                        <li key={filter} className={`mt-4 text-sm font-semibold ${!haveSpecificFilter(filter) ? 'text-bluegreen' : 'text-purple'}`}>
-                                            <a href="#" onClick={(e) =>{ addFilter(filter); e.preventDefault() }} className='w-3/4 flex items-center justify-between'>
+                                        <li key={filter} className={`mt-4 text-sm font-semibold
+                                            ${!haveSpecificFilter(filter) ? 'text-bluegreen' : 'text-purple' }`}>
+                                            <a href="#" onClick={(e)=>{ toggleFilter(filter); e.preventDefault() }}
+                                                className='w-3/4 flex items-center justify-between'>
                                                 {filter}
-                                                <svg viewBox="185.411 115.41 11 11" width="11" height="11" className="flex-shrink-0" style={{visibility: !haveSpecificFilter(filter) ? 'hidden' : 'visible'}}>
-                                                    <path d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z" className="fill-purple"></path>
+                                                <svg viewBox="185.411 115.41 11 11" width="11" height="11"
+                                                    className="flex-shrink-0"
+                                                    style={{visibility: !haveSpecificFilter(filter) ? 'hidden' : 'visible'}}>
+                                                    <path
+                                                        d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
+                                                        className="fill-purple"></path>
                                                 </svg>
                                             </a>
                                         </li>
@@ -137,20 +139,20 @@ const FilterIntersects = (items: any[]) => {
                         filteredItems.length === 0 ? 
                         <p>No matches!</p> :
                         <AnimatePresence>
-                        {filteredItems.map((item, i) => (
-                                    <motion.div key={i}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }} className="w-full xl:w-1/3">
-                            <Link href={`/media/${item.key}`} passHref>
-                                <a>
-                                        <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} lazy={true} className="max-w-xs" />
+                            {filteredItems.map((item, i) => (
+                                <motion.div key={i} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                                    className="w-full xl:w-1/3">
+                                    <Link href={`/media/${item.key}`} passHref>
+                                    <a>
+                                        <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"
+                                            `} imgId={item.thumbnail.publicId} lazy={true} className="max-w-xs" />
                                         <p>{item.title}</p>
                                         <p>{item.shortDescription}</p>
                                         <p className="uppercase">{_.map(item.filters, 'name').join(', ')}</p>
-                                </a>
-                            </Link>
-                                    </motion.div>
-                        ))}
+                                    </a>
+                                    </Link>
+                                </motion.div>
+                            ))}
                         </AnimatePresence>
                 }
             </div>
