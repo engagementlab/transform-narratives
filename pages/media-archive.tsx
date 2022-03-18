@@ -80,7 +80,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const toggleFilter = useStore(state => state.toggle);
     const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
     const reset = useStore(state => state.reset);
-    const toggleOpen = useStore(state => state.toggleFiltersOpen);
+    const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
 
     const menu = <div>
                     {Object.keys(filters).map((key) => (
@@ -122,14 +122,14 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     return <div> 
             <div className="hidden lg:block">
                 <div className="mr-2 flex justify-between">
-                    <a onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>Filters</a>   
+                    <a onClick={(e) =>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</a>   
                     <a href="#" className="text-bluegreen" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>Clear</a> 
                 </div>
                 {menu}     
             </div>
             {/* Mobile/tablet */}
             <div className={`lg:hidden block absolute top-0 left-0 h-full z-50 p-20 pt-40 bg-black transition-all ease-in-out ${filtersOpen ? '' : '-translate-x-full'}`}>
-                <a className="uppercase" onClick={(e) =>{ toggleOpen(false); e.preventDefault() }}>Close</a>   
+                <a className="uppercase" onClick={(e) =>{ toggleFiltersOpen(false); e.preventDefault() }}>Close</a>   
                 {menu}     
             </div>
         </div>
@@ -140,7 +140,7 @@ const FilterIntersects = (items: any[]) => {
         const selectedFilters = useStore(state => state.currentFilters);
         const haveFilters = selectedFilters.length > 0;
         const reset = useStore(state => state.reset);
-        const toggleOpen = useStore(state => state.toggleFiltersOpen);
+        const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
         const filteredItems = items.filter(
                 // If selected filters empty, show all...
                 item => selectedFilters.length === 0 ||
@@ -148,10 +148,10 @@ const FilterIntersects = (items: any[]) => {
                 _.every(selectedFilters, r => _.map(item.filters, 'name').indexOf(r) >= 0));
 
         return <div>
-            <div className="w-full flex justify-between">
-                    <a className="uppercase" onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>Filters</a>   
-                    <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>(x) Clear</a>   
-                    <span className="uppercase">Showing {filteredItems.length} Stories</span>
+            <div className="w-full flex flex-col xl:flex-row justify-between">
+                    <button className="my-10 inline-block rounded-large px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75" onClick={(e) =>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</button>
+                    <button className="my-10 inline-block rounded-large px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75" onClick={(e) =>{ reset(); e.preventDefault() }}>Clear</button>
+                    <span className="uppercase w-full block">Showing {filteredItems.length} Stories</span>
             </div>
             <div className="xl:flex">{
                         filteredItems.length === 0 ? 
@@ -180,13 +180,13 @@ const FilterIntersects = (items: any[]) => {
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div
-        className="container mx-auto mt-14 mb-14 xl:mt-16">
+        className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
         <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
         <p className="w-full lg:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
             gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
             multi-year initiative and hosts 5-7 studios per year.</p>
         <div className="flex">
-            <div className='w-1/5 flex-shrink-0 border-r border-[#B9CCC7]'>
+            <div className='hidden xl:block w-1/5 flex-shrink-0 border-r border-[#B9CCC7]'>
                 {RenderFilters(filtersGrouped)}
             </div>
             <div className="ml-4">
