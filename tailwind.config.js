@@ -20,6 +20,7 @@ module.exports = {
       bluegreen: '#026670',
       coated: '#2D3130',
       'green-blue': '#5EB89E',
+      lynx: '#F7F7F7',
       oasis: '#9FEDD7',
       purple: '#8D33D2',
       white: '#FFF',
