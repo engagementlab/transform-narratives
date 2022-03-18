@@ -126,6 +126,10 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     return <div> 
             {/* Tablet portrait+ */}
             <div className="hidden lg:block">
+                <div className="mr-2 flex justify-between">
+                    <span>Filters</span>
+                    <a href="#" className="text-bluegreen" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>Clear</a> 
+                </div>
                 {menu}
             </div>
             {/* Mobile/tablet */}
@@ -163,13 +167,15 @@ const FilterIntersects = (items: any[]) => {
         return <div>
             <div className="w-full flex flex-col xl:flex-row justify-between">
                 {/* Mobile Filters/Clear button */}
+                <div className="lg:hidden inline-block">
                 <button
-                    className="lg:hidden inline-block rounded-large my-4 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
+                    className="rounded-large my-4 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
                     onClick={(e)=>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</button>
                 <button
-                    className="lg:hidden inline-block rounded-large my-2 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
+                    className="rounded-large my-2 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
                     onClick={(e)=>{ reset(); e.preventDefault() }}
                     style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
+                </div>
                 <span className="my-4 uppercase w-full block">Showing {filteredItems.length} Stories</span>
             </div>
             <div className="xl:flex justify-between">{
@@ -199,19 +205,20 @@ const FilterIntersects = (items: any[]) => {
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div
-        className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-        <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
-        <p className="w-full lg:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
-            gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
-            multi-year initiative and hosts 5-7 studios per year.</p>
-        <div className="flex">
-            <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
-                {RenderFilters(filtersGrouped)}
-            </div>
-            <div className="ml-4">
-                {/* {FiltersDebug()} */}
-                {FilterIntersects(mediaItems)}
-            </div>
+        className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
+            <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
+        
+            <p className="w-full lg:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
+                gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
+                multi-year initiative and hosts 5-7 studios per year.</p>
+            
+            <div className="flex">
+                <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
+                    {RenderFilters(filtersGrouped)}
+                </div>
+                <div className="ml-4">
+                    {FilterIntersects(mediaItems)}
+                </div>
             </div>
         </div>
     );
