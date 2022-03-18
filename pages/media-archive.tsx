@@ -133,23 +133,23 @@ const FilterIntersects = (items: any[]) => {
                     <a className="uppercase" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>(x) Clear</a>   
                     <span className="uppercase">Showing {filteredItems.length} Stories</span>
             </div>
-            <div className="md:flex md:justify-between">{
+            <div className="xl:flex">{
                         filteredItems.length === 0 ? 
                         <p>No matches!</p> :
                         <AnimatePresence>
                         {filteredItems.map((item, i) => (
-                            <Link key={i} href={`/media/${item.key}`} passHref>
-                                <a className="w-full md:w-1/2 lg:w-1/3">
-                                    <motion.div
+                                    <motion.div key={i}
                                 animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}>
-                                        <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} width={235}  />
+                                exit={{ opacity: 0 }} className="w-full xl:w-1/3">
+                            <Link href={`/media/${item.key}`} passHref>
+                                <a>
+                                        <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"`} imgId={item.thumbnail.publicId} lazy={true} className="max-w-xs" />
                                         <p>{item.title}</p>
                                         <p>{item.shortDescription}</p>
                                         <p className="uppercase">{_.map(item.filters, 'name').join(', ')}</p>
-                                    </motion.div>
                                 </a>
                             </Link>
+                                    </motion.div>
                         ))}
                         </AnimatePresence>
                 }
