@@ -124,6 +124,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                 </div>;
 
     return <div> 
+            {/* Tablet portrait+ */}
             <div className="hidden lg:block">
                 {menu}
             </div>
@@ -171,13 +172,13 @@ const FilterIntersects = (items: any[]) => {
                     style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
                 <span className="my-4 uppercase w-full block">Showing {filteredItems.length} Stories</span>
             </div>
-            <div className="xl:flex">{
+            <div className="xl:flex justify-between">{
                 filteredItems.length === 0 ?
                 <p>No matches!</p> :
                         <AnimatePresence>
                             {filteredItems.map((item, i) => (
                                 <motion.div key={i} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                    className="w-full xl:w-1/3">
+                                    className="w-full xl:w-1/4">
                                     <Link href={`/media/${item.key}`} passHref>
                                     <a>
                                         <Image id={`thumb-${i}`} alt={`Thumbnail for media with name "${item.title}"
@@ -204,7 +205,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
             gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
             multi-year initiative and hosts 5-7 studios per year.</p>
         <div className="flex">
-            <div className='w-0 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
+            <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
                 {RenderFilters(filtersGrouped)}
             </div>
             <div className="ml-4">
