@@ -167,12 +167,12 @@ const FilterIntersects = (items: any[]) => {
         return <div>
             <div className="w-full flex flex-col xl:flex-row justify-between">
                 {/* Mobile Filters/Clear button */}
-                <div className="lg:hidden inline-block">
+                <div className="lg:hidden inline-block w-full">
                 <button
-                    className="rounded-large my-4 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
+                    className="rounded-large my-4 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
                     onClick={(e)=>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</button>
                 <button
-                    className="rounded-large my-2 px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
+                    className="rounded-large my-2 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
                     onClick={(e)=>{ reset(); e.preventDefault() }}
                     style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
                 </div>
