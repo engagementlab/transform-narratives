@@ -17,11 +17,11 @@ const links: NavLink[] = [{
     label: 'About',
     subMenu: [{
         label: 'The Big Picture',
-        url: '/big-picture'
+        url: '/about/big-picture'
       },
       {
         label: 'The Initiative',
-        url: '/initiative'
+        url: '/about/initiative'
       }
     ],
   },
