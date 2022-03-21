@@ -28,7 +28,7 @@ const renderItem = (props: { item: MediaItem }) => {
                     {/* <Button className=" bg-lynx" link= label='See More' /> */}
                     <Link href={`/studios/${props.item.key}`} passHref>
                         <button 
-                        className='inline-block rounded-large px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx'>
+                        className='inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx'>
                         See More</button>
                     </Link>
                     </div>

@@ -141,7 +141,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                 </a>
                 {menu}
                 <button
-                    className="my-4 w-full rounded-large px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
+                    className="my-4 w-full rounded-full px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
                     onClick={(e)=>{ toggleFiltersOpen(false) }}>Apply</button>
             </div>
         </div>);
@@ -170,10 +170,10 @@ const FilteredItems = (filtersGrouped: {
 
                 <div className="lg:hidden inline-block w-full">
                     <button
-                        className="rounded-large my-4 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
+                        className="rounded-full my-4 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
                         onClick={(e)=>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</button>
                     <button
-                        className="rounded-large my-2 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
+                        className="rounded-full my-2 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
                         onClick={(e)=>{ reset(); e.preventDefault() }}
                         style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
                 </div>

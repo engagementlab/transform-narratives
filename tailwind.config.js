@@ -6,6 +6,9 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    borderRadius: {
+      full: '100px',
+    },
     extend: {
       fontFamily: {
         sans: [`Inter`, ...defaultTheme.fontFamily.sans],
