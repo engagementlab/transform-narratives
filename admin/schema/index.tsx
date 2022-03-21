@@ -1,10 +1,5 @@
-
-// export const cloudinary = {
-//     cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
-//     apiKey: `${process.env.CLOUDINARY_KEY}`,
-//     apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-//     folder: 'tngvi',
-//   };
+export { default as About } from './lists/about';
+export { default as BigPicture } from './lists/bigPicture';
 export { default as HomeSlide } from './lists/homeSlide';
 export { default as Home } from './lists/home';
 export { default as Filter } from './lists/filter';

@@ -9,6 +9,7 @@ import { query } from '.keystone/api';
 import Image from '../../components/Image';
 import { componentBlocks } from '../../admin/components/component-blocks';
 import FlexLayout from '../../components/FlexLayout';
+import BlockRenderers from '../../components/BlockRenderers';
 
 type Studio = {
   id: string;
@@ -17,18 +18,6 @@ type Studio = {
   filters: any[];
   content: any;
 };
-
-const componentBlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
-  image: (props: any) => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
-      </div>
-    );
-  },
-};
- 
-
 const renderers: DocumentRendererProps['renderers'] = {
 block: {
   heading: ({ level, children, textAlign }) => {
@@ -48,7 +37,7 @@ return (
           <h1 className="text-3xl">{item.name}</h1>
           <p>{_.map(item.filters, 'name').join(', ')}</p>
 
-          <DocumentRenderer document={item.content.document} componentBlocks={componentBlockRenderers} renderers={renderers} />
+          <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
           {/* <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3> */}
 
           {relatedItems &&

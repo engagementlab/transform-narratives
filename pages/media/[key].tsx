@@ -16,6 +16,7 @@ import Image from '../../components/Image';
 import Video from '../../components/Video';
 import Link from 'next/link';
 import FlexLayout from '../../components/FlexLayout';
+import BlockRenderers from '../../components/BlockRenderers';
 
 type MediaItem = {
     title: string;
@@ -38,16 +39,6 @@ const useStore = create<ShareState>(set => ({
     toggleCopied: (open: boolean) => set({ urlCopied:open })
 }));
 
-const componentBlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
-  image: (props: any) => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
-      </div>
-    );
-  },
-};
-
 const renderers: DocumentRendererProps['renderers'] = {
   block: {
     heading: ({ level, children, textAlign }) => {
@@ -67,7 +58,7 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
       !item ? 'Not found!' :
     <div>
         <div className='pt-7 text-white bg-coated'>
-            <Video videoLabel={item.videos[0].label} videoUrl={item.videos[0].value} thumbUrl={item.videos[0].thumb} />
+           {item.videos && <Video videoLabel={item.videos[0].label} videoUrl={item.videos[0].value} thumbUrl={item.videos[0].thumb} />}
             <div className='flex justify-between px-8 py-10'>
                 <div>
                     <h1 className="text-3xl">{item.title}</h1>
@@ -75,7 +66,7 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
                 </div>
                 <div>
                     <CopyToClipboard text={thisUrl} onCopy={()=> toggleCopied(true)}>
-                        <button disabled={wasCopied} className={`inline-block rounded-large px-10 py-7 uppercase
+                        <button disabled={wasCopied} className={`inline-block rounded-full px-10 py-7 uppercase
                             border-2 border-oasis text-white transition-all ${!wasCopied && 'hover:opacity-75' }`}>
                             {!wasCopied ? 'Share' : 'Copied URL!'}
                         </button>
@@ -84,10 +75,10 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
             </div>
         </div>
         <div className='px-4 xl:px-8'>
-            <DocumentRenderer document={item.content.document} componentBlocks={componentBlockRenderers} renderers={renderers} />
+            <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
             <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>
 
-            {relatedItems &&
+            {/* {relatedItems &&
                 <div>
                     <div className='flex flex-col lg:flex-row justify-between items-center'>
                         <p>Browse other stories to keep learning</p>
@@ -113,7 +104,7 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
                         ))}
                     </div>
                 </div>
-            }
+            } */}
         </div>
     </div>
   );
