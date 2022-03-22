@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Transforming Narratives of Gun Violence Initiative logo](https://res.cloudinary.com/engagement-lab-home/image/upload/c_scale,w_200/v1647967279/tngvi/logos/TNGVLogo.png)
 
-## Getting Started
+## Transforming Narratives of Gun Violence Initiative website.
 
-First, run the development server:
+### About
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The Engagement Lab at Emerson College has partnered with the Gun Violence Prevention Center at Massachusetts General Hospital and the Louis D. Brown Peace Institute in a three-year initiative to transform narratives of gun violence.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Through this collaboration, students and faculty at Emerson are coming alongside individuals and organizations deeply connected to the issue of gun violence locally, to explore together the impact of dominant narratives and to co-create story-based solutions through arts, media, and communications.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Technical
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This website is built using the [Next.js](https://nextjs.org/) framework as well as the [Keystone v6.x](https://keystonejs.com/) open-source CMS. We host the production app on [Azure serverless](https://azure.microsoft.com/en-us/services/app-service/static/).

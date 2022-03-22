@@ -1,13 +1,10 @@
 import { InferGetStaticPropsType } from 'next';
-import Script from 'next/script'
 
 import { Fade } from 'react-slideshow-image';
 
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
 import Image from '../components/Image';
-import { componentBlocks } from '../admin/components/component-blocks';
 import Button from '../components/Button';
 
 type HomePage = {
