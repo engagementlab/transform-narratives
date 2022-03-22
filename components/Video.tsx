@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { ImageLoaderProps } from 'next/image'
 import Script from 'next/script'
 import create from 'zustand';
 
@@ -16,6 +16,10 @@ const useStore = create<VideoState>(set => ({
     videoOpen: false,
     toggleOpen: (open: boolean) => set({ videoOpen:open })
 }));
+const thumbLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  return src.replace('_1920x1080?r=pad', `_${width}x1080?r=pad`);
+}
+
 const Video = ({
     thumbUrl,
     videoUrl,
@@ -28,7 +32,7 @@ const Video = ({
 
         {videoOpen ? '' : (
           <a href='#' onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>
-            <Image alt={`Thumbnail image for video with title "${videoLabel}"`} src={thumbUrl} width={1920} height={1080} layout='responsive' />
+            <Image alt={`Thumbnail image for video with title "${videoLabel}"`} src={thumbUrl} width={1920} height={1080} layout='responsive' loader={thumbLoader}/>
 
             <span className='absolute top-[calc(50%-75px)] left-[calc(50%-75px)]'>
                 <svg viewBox="0 0 151 151" width="151" height="151">
