@@ -1,9 +1,15 @@
 export { default as About } from './lists/about';
 export { default as BigPicture } from './lists/bigPicture';
+export { default as CommunityImage } from './lists/communityImage';
+export { default as Community } from './lists/community';
+export { default as EventImage } from './lists/eventImage';
+export { default as Event } from './lists/event';
+export { default as Filter } from './lists/filter';
 export { default as HomeSlide } from './lists/homeSlide';
 export { default as Home } from './lists/home';
-export { default as Filter } from './lists/filter';
 export { default as MediaImage } from './lists/mediaImage';
-export { default as StudioImage } from './lists/studioImage';
 export { default as MediaItem } from './lists/media';
+export { default as NewsImage } from './lists/newsImage';
+export { default as NewsItem } from './lists/newsItem';
+export { default as StudioImage } from './lists/studioImage';
 export { default as Studio } from './lists/studio';

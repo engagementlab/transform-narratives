@@ -23,6 +23,53 @@ model BigPicture {
   content String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
+model CommunityImage {
+  id              String      @id @default(cuid())
+  communityImages Community[] @relation("Community_photos")
+  image           String?
+  imageName       String      @default("")
+}
+
+model Community {
+  id        String           @id @default(cuid())
+  name      String           @unique @default("Community Page")
+  values    String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  community String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos    CommunityImage[] @relation("Community_photos")
+}
+
+model EventImage {
+  id          String  @id @default(cuid())
+  eventImages Event[] @relation("Event_images")
+  image       String?
+  imageName   String  @default("")
+  altText     String  @default("")
+  caption     String  @default("Caption (optional)")
+}
+
+model Event {
+  id           String       @id @default(cuid())
+  name         String       @default("")
+  key          String       @unique @default("")
+  thumbnail    String?
+  eventDate    DateTime
+  blurb        String       @default("")
+  content      String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  speakersBios String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images       EventImage[] @relation("Event_images")
+  mainVideo    String?
+  videos       String?
+}
+
+model Filter {
+  id                     String      @id @default(cuid())
+  name                   String      @default("")
+  type                   String
+  section                String?
+  from_MediaItem_filters MediaItem[] @relation("MediaItem_filters")
+  from_Studio_filters    Studio[]    @relation("Studio_filters")
+}
+
 model HomeSlide {
   id         String  @id @default(cuid())
   homeSlides Home[]  @relation("Home_slides")
@@ -38,15 +85,6 @@ model Home {
   slides HomeSlide[] @relation("Home_slides")
 }
 
-model Filter {
-  id                     String      @id @default(cuid())
-  name                   String      @default("")
-  type                   String
-  section                String?
-  from_MediaItem_filters MediaItem[] @relation("MediaItem_filters")
-  from_Studio_filters    Studio[]    @relation("Studio_filters")
-}
-
 model MediaImage {
   id                 String      @id @default(cuid())
   mediaImages        MediaItem[] @relation("MediaImage_mediaImages")
@@ -55,15 +93,6 @@ model MediaImage {
   imageName          String      @default("Image")
   altText            String      @default("")
   caption            String      @default("Caption")
-}
-
-model StudioImage {
-  id           String   @id @default(cuid())
-  studioImages Studio[] @relation("Studio_photos")
-  image        String?
-  imageName    String   @default("")
-  altText      String   @default("")
-  caption      String   @default("Caption")
 }
 
 model MediaItem {
@@ -79,6 +108,34 @@ model MediaItem {
   videos           String?
   file_filename    String?
   file_filesize    Int?
+}
+
+model NewsImage {
+  id         String     @id @default(cuid())
+  newsImages NewsItem[] @relation("NewsImage_newsImages")
+  image      String?
+  imageName  String     @default("Image")
+  altText    String     @default("")
+  caption    String     @default("Caption (optional)")
+}
+
+model NewsItem {
+  id          String      @id @default(cuid())
+  title       String      @default("")
+  key         String      @unique @default("")
+  thumbnail   String?
+  publishDate DateTime
+  body        String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images      NewsImage[] @relation("NewsImage_newsImages")
+}
+
+model StudioImage {
+  id           String   @id @default(cuid())
+  studioImages Studio[] @relation("Studio_photos")
+  image        String?
+  imageName    String   @default("")
+  altText      String   @default("")
+  caption      String   @default("Caption")
 }
 
 model Studio {

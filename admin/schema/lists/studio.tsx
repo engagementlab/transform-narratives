@@ -30,7 +30,7 @@ const Studio: Lists.Studio = list({
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
         apiKey: `${process.env.CLOUDINARY_KEY}`,
         apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-        folder: 'tngvi/media',
+        folder: 'tngvi/studios',
       },
     }),
     blurb: text({

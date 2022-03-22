@@ -131,18 +131,17 @@ input BigPictureCreateInput {
   content: JSON
 }
 
-type HomeSlide {
+type CommunityImage {
   id: ID!
-  homeSlides(
-    where: HomeWhereInput! = {}
-    orderBy: [HomeOrderByInput!]! = []
+  communityImages(
+    where: CommunityWhereInput! = {}
+    orderBy: [CommunityOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Home!]
-  homeSlidesCount(where: HomeWhereInput! = {}): Int
+  ): [Community!]
+  communityImagesCount(where: CommunityWhereInput! = {}): Int
   image: CloudinaryImage_File
-  altText: String
-  quote: String
+  imageName: String
 }
 
 type CloudinaryImage_File {
@@ -195,6 +194,423 @@ input CloudinaryImageFormat {
   transformation: String
 }
 
+input CommunityImageWhereUniqueInput {
+  id: ID
+}
+
+input CommunityImageWhereInput {
+  AND: [CommunityImageWhereInput!]
+  OR: [CommunityImageWhereInput!]
+  NOT: [CommunityImageWhereInput!]
+  id: IDFilter
+  communityImages: CommunityManyRelationFilter
+  imageName: StringFilter
+}
+
+input CommunityManyRelationFilter {
+  every: CommunityWhereInput
+  some: CommunityWhereInput
+  none: CommunityWhereInput
+}
+
+input CommunityImageOrderByInput {
+  id: OrderDirection
+  imageName: OrderDirection
+}
+
+input CommunityImageUpdateInput {
+  communityImages: CommunityRelateToManyForUpdateInput
+  image: Upload
+  imageName: String
+}
+
+input CommunityRelateToManyForUpdateInput {
+  disconnect: [CommunityWhereUniqueInput!]
+  set: [CommunityWhereUniqueInput!]
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input CommunityImageUpdateArgs {
+  where: CommunityImageWhereUniqueInput!
+  data: CommunityImageUpdateInput!
+}
+
+input CommunityImageCreateInput {
+  communityImages: CommunityRelateToManyForCreateInput
+  image: Upload
+  imageName: String
+}
+
+input CommunityRelateToManyForCreateInput {
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+type Community {
+  id: ID!
+  name: String
+  values: Community_values_Document
+  community: Community_community_Document
+  photos(
+    where: CommunityImageWhereInput! = {}
+    orderBy: [CommunityImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CommunityImage!]
+  photosCount(where: CommunityImageWhereInput! = {}): Int
+}
+
+type Community_values_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Community_community_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input CommunityWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input CommunityWhereInput {
+  AND: [CommunityWhereInput!]
+  OR: [CommunityWhereInput!]
+  NOT: [CommunityWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  photos: CommunityImageManyRelationFilter
+}
+
+input CommunityImageManyRelationFilter {
+  every: CommunityImageWhereInput
+  some: CommunityImageWhereInput
+  none: CommunityImageWhereInput
+}
+
+input CommunityOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input CommunityUpdateInput {
+  name: String
+  values: JSON
+  community: JSON
+  photos: CommunityImageRelateToManyForUpdateInput
+}
+
+input CommunityImageRelateToManyForUpdateInput {
+  disconnect: [CommunityImageWhereUniqueInput!]
+  set: [CommunityImageWhereUniqueInput!]
+  create: [CommunityImageCreateInput!]
+  connect: [CommunityImageWhereUniqueInput!]
+}
+
+input CommunityUpdateArgs {
+  where: CommunityWhereUniqueInput!
+  data: CommunityUpdateInput!
+}
+
+input CommunityCreateInput {
+  name: String
+  values: JSON
+  community: JSON
+  photos: CommunityImageRelateToManyForCreateInput
+}
+
+input CommunityImageRelateToManyForCreateInput {
+  create: [CommunityImageCreateInput!]
+  connect: [CommunityImageWhereUniqueInput!]
+}
+
+type EventImage {
+  id: ID!
+  eventImages(
+    where: EventWhereInput! = {}
+    orderBy: [EventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Event!]
+  eventImagesCount(where: EventWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input EventImageWhereUniqueInput {
+  id: ID
+}
+
+input EventImageWhereInput {
+  AND: [EventImageWhereInput!]
+  OR: [EventImageWhereInput!]
+  NOT: [EventImageWhereInput!]
+  id: IDFilter
+  eventImages: EventManyRelationFilter
+  imageName: StringFilter
+  altText: StringFilter
+  caption: StringFilter
+}
+
+input EventManyRelationFilter {
+  every: EventWhereInput
+  some: EventWhereInput
+  none: EventWhereInput
+}
+
+input EventImageOrderByInput {
+  id: OrderDirection
+  imageName: OrderDirection
+  altText: OrderDirection
+  caption: OrderDirection
+}
+
+input EventImageUpdateInput {
+  eventImages: EventRelateToManyForUpdateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input EventRelateToManyForUpdateInput {
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventImageUpdateArgs {
+  where: EventImageWhereUniqueInput!
+  data: EventImageUpdateInput!
+}
+
+input EventImageCreateInput {
+  eventImages: EventRelateToManyForCreateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input EventRelateToManyForCreateInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+type Event {
+  id: ID!
+  name: String
+  key: String
+  thumbnail: CloudinaryImage_File
+  eventDate: DateTime
+  blurb: String
+  content: Event_content_Document
+  speakersBios: Event_speakersBios_Document
+  images(
+    where: EventImageWhereInput! = {}
+    orderBy: [EventImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [EventImage!]
+  imagesCount(where: EventImageWhereInput! = {}): Int
+  mainVideo: JSON
+  videos: JSON
+}
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+type Event_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Event_speakersBios_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input EventWhereUniqueInput {
+  id: ID
+  key: String
+}
+
+input EventWhereInput {
+  AND: [EventWhereInput!]
+  OR: [EventWhereInput!]
+  NOT: [EventWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  key: StringFilter
+  eventDate: DateTimeFilter
+  blurb: StringFilter
+  images: EventImageManyRelationFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input EventImageManyRelationFilter {
+  every: EventImageWhereInput
+  some: EventImageWhereInput
+  none: EventImageWhereInput
+}
+
+input EventOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  key: OrderDirection
+  eventDate: OrderDirection
+  blurb: OrderDirection
+}
+
+input EventUpdateInput {
+  name: String
+  key: String
+  thumbnail: Upload
+  eventDate: DateTime
+  blurb: String
+  content: JSON
+  speakersBios: JSON
+  images: EventImageRelateToManyForUpdateInput
+  mainVideo: JSON
+  videos: JSON
+}
+
+input EventImageRelateToManyForUpdateInput {
+  disconnect: [EventImageWhereUniqueInput!]
+  set: [EventImageWhereUniqueInput!]
+  create: [EventImageCreateInput!]
+  connect: [EventImageWhereUniqueInput!]
+}
+
+input EventUpdateArgs {
+  where: EventWhereUniqueInput!
+  data: EventUpdateInput!
+}
+
+input EventCreateInput {
+  name: String
+  key: String
+  thumbnail: Upload
+  eventDate: DateTime
+  blurb: String
+  content: JSON
+  speakersBios: JSON
+  images: EventImageRelateToManyForCreateInput
+  mainVideo: JSON
+  videos: JSON
+}
+
+input EventImageRelateToManyForCreateInput {
+  create: [EventImageCreateInput!]
+  connect: [EventImageWhereUniqueInput!]
+}
+
+type Filter {
+  id: ID!
+  name: String
+  type: FilterTypeType
+  section: FilterSectionType
+}
+
+enum FilterTypeType {
+  Voices
+  Media
+  Departments
+  Year
+  Department
+  Partner
+  Faculty
+  Semester
+}
+
+enum FilterSectionType {
+  media
+  studio
+}
+
+input FilterWhereUniqueInput {
+  id: ID
+}
+
+input FilterWhereInput {
+  AND: [FilterWhereInput!]
+  OR: [FilterWhereInput!]
+  NOT: [FilterWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  type: FilterTypeTypeNullableFilter
+  section: FilterSectionTypeNullableFilter
+}
+
+input FilterTypeTypeNullableFilter {
+  equals: FilterTypeType
+  in: [FilterTypeType!]
+  notIn: [FilterTypeType!]
+  not: FilterTypeTypeNullableFilter
+}
+
+input FilterSectionTypeNullableFilter {
+  equals: FilterSectionType
+  in: [FilterSectionType!]
+  notIn: [FilterSectionType!]
+  not: FilterSectionTypeNullableFilter
+}
+
+input FilterOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  type: OrderDirection
+  section: OrderDirection
+}
+
+input FilterUpdateInput {
+  name: String
+  type: FilterTypeType
+  section: FilterSectionType
+}
+
+input FilterUpdateArgs {
+  where: FilterWhereUniqueInput!
+  data: FilterUpdateInput!
+}
+
+input FilterCreateInput {
+  name: String
+  type: FilterTypeType
+  section: FilterSectionType
+}
+
+type HomeSlide {
+  id: ID!
+  homeSlides(
+    where: HomeWhereInput! = {}
+    orderBy: [HomeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Home!]
+  homeSlidesCount(where: HomeWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  altText: String
+  quote: String
+}
+
 input HomeSlideWhereUniqueInput {
   id: ID
 }
@@ -234,11 +650,6 @@ input HomeRelateToManyForUpdateInput {
   create: [HomeCreateInput!]
   connect: [HomeWhereUniqueInput!]
 }
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
 
 input HomeSlideUpdateArgs {
   where: HomeSlideWhereUniqueInput!
@@ -328,81 +739,6 @@ input HomeSlideRelateToManyForCreateInput {
   connect: [HomeSlideWhereUniqueInput!]
 }
 
-type Filter {
-  id: ID!
-  name: String
-  type: FilterTypeType
-  section: FilterSectionType
-}
-
-enum FilterTypeType {
-  Voices
-  Media
-  Departments
-  Year
-  Department
-  Partner
-  Faculty
-  Semester
-}
-
-enum FilterSectionType {
-  media
-  studio
-}
-
-input FilterWhereUniqueInput {
-  id: ID
-}
-
-input FilterWhereInput {
-  AND: [FilterWhereInput!]
-  OR: [FilterWhereInput!]
-  NOT: [FilterWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  type: FilterTypeTypeNullableFilter
-  section: FilterSectionTypeNullableFilter
-}
-
-input FilterTypeTypeNullableFilter {
-  equals: FilterTypeType
-  in: [FilterTypeType!]
-  notIn: [FilterTypeType!]
-  not: FilterTypeTypeNullableFilter
-}
-
-input FilterSectionTypeNullableFilter {
-  equals: FilterSectionType
-  in: [FilterSectionType!]
-  notIn: [FilterSectionType!]
-  not: FilterSectionTypeNullableFilter
-}
-
-input FilterOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  type: OrderDirection
-  section: OrderDirection
-}
-
-input FilterUpdateInput {
-  name: String
-  type: FilterTypeType
-  section: FilterSectionType
-}
-
-input FilterUpdateArgs {
-  where: FilterWhereUniqueInput!
-  data: FilterUpdateInput!
-}
-
-input FilterCreateInput {
-  name: String
-  type: FilterTypeType
-  section: FilterSectionType
-}
-
 type MediaImage {
   id: ID!
   mediaImages(
@@ -487,82 +823,6 @@ input MediaImageCreateInput {
 input MediaItemRelateToManyForCreateInput {
   create: [MediaItemCreateInput!]
   connect: [MediaItemWhereUniqueInput!]
-}
-
-type StudioImage {
-  id: ID!
-  studioImages(
-    where: StudioWhereInput! = {}
-    orderBy: [StudioOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Studio!]
-  studioImagesCount(where: StudioWhereInput! = {}): Int
-  image: CloudinaryImage_File
-  imageName: String
-  altText: String
-  caption: String
-}
-
-input StudioImageWhereUniqueInput {
-  id: ID
-}
-
-input StudioImageWhereInput {
-  AND: [StudioImageWhereInput!]
-  OR: [StudioImageWhereInput!]
-  NOT: [StudioImageWhereInput!]
-  id: IDFilter
-  studioImages: StudioManyRelationFilter
-  imageName: StringFilter
-  altText: StringFilter
-  caption: StringFilter
-}
-
-input StudioManyRelationFilter {
-  every: StudioWhereInput
-  some: StudioWhereInput
-  none: StudioWhereInput
-}
-
-input StudioImageOrderByInput {
-  id: OrderDirection
-  imageName: OrderDirection
-  altText: OrderDirection
-  caption: OrderDirection
-}
-
-input StudioImageUpdateInput {
-  studioImages: StudioRelateToManyForUpdateInput
-  image: Upload
-  imageName: String
-  altText: String
-  caption: String
-}
-
-input StudioRelateToManyForUpdateInput {
-  disconnect: [StudioWhereUniqueInput!]
-  set: [StudioWhereUniqueInput!]
-  create: [StudioCreateInput!]
-  connect: [StudioWhereUniqueInput!]
-}
-
-input StudioImageUpdateArgs {
-  where: StudioImageWhereUniqueInput!
-  data: StudioImageUpdateInput!
-}
-
-input StudioImageCreateInput {
-  studioImages: StudioRelateToManyForCreateInput
-  image: Upload
-  imageName: String
-  altText: String
-  caption: String
-}
-
-input StudioRelateToManyForCreateInput {
-  create: [StudioCreateInput!]
-  connect: [StudioWhereUniqueInput!]
 }
 
 type MediaItem {
@@ -712,6 +972,242 @@ input MediaImageRelateToManyForCreateInput {
   connect: [MediaImageWhereUniqueInput!]
 }
 
+type NewsImage {
+  id: ID!
+  newsImages(
+    where: NewsItemWhereInput! = {}
+    orderBy: [NewsItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NewsItem!]
+  newsImagesCount(where: NewsItemWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input NewsImageWhereUniqueInput {
+  id: ID
+}
+
+input NewsImageWhereInput {
+  AND: [NewsImageWhereInput!]
+  OR: [NewsImageWhereInput!]
+  NOT: [NewsImageWhereInput!]
+  id: IDFilter
+  newsImages: NewsItemManyRelationFilter
+  imageName: StringFilter
+  altText: StringFilter
+  caption: StringFilter
+}
+
+input NewsItemManyRelationFilter {
+  every: NewsItemWhereInput
+  some: NewsItemWhereInput
+  none: NewsItemWhereInput
+}
+
+input NewsImageOrderByInput {
+  id: OrderDirection
+  imageName: OrderDirection
+  altText: OrderDirection
+  caption: OrderDirection
+}
+
+input NewsImageUpdateInput {
+  newsImages: NewsItemRelateToManyForUpdateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input NewsItemRelateToManyForUpdateInput {
+  disconnect: [NewsItemWhereUniqueInput!]
+  set: [NewsItemWhereUniqueInput!]
+  create: [NewsItemCreateInput!]
+  connect: [NewsItemWhereUniqueInput!]
+}
+
+input NewsImageUpdateArgs {
+  where: NewsImageWhereUniqueInput!
+  data: NewsImageUpdateInput!
+}
+
+input NewsImageCreateInput {
+  newsImages: NewsItemRelateToManyForCreateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input NewsItemRelateToManyForCreateInput {
+  create: [NewsItemCreateInput!]
+  connect: [NewsItemWhereUniqueInput!]
+}
+
+type NewsItem {
+  id: ID!
+  title: String
+  key: String
+  thumbnail: CloudinaryImage_File
+  publishDate: DateTime
+  body: NewsItem_body_Document
+  images(
+    where: NewsImageWhereInput! = {}
+    orderBy: [NewsImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NewsImage!]
+  imagesCount(where: NewsImageWhereInput! = {}): Int
+}
+
+type NewsItem_body_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input NewsItemWhereUniqueInput {
+  id: ID
+  key: String
+}
+
+input NewsItemWhereInput {
+  AND: [NewsItemWhereInput!]
+  OR: [NewsItemWhereInput!]
+  NOT: [NewsItemWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  key: StringFilter
+  publishDate: DateTimeFilter
+  images: NewsImageManyRelationFilter
+}
+
+input NewsImageManyRelationFilter {
+  every: NewsImageWhereInput
+  some: NewsImageWhereInput
+  none: NewsImageWhereInput
+}
+
+input NewsItemOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  key: OrderDirection
+  publishDate: OrderDirection
+}
+
+input NewsItemUpdateInput {
+  title: String
+  key: String
+  thumbnail: Upload
+  publishDate: DateTime
+  body: JSON
+  images: NewsImageRelateToManyForUpdateInput
+}
+
+input NewsImageRelateToManyForUpdateInput {
+  disconnect: [NewsImageWhereUniqueInput!]
+  set: [NewsImageWhereUniqueInput!]
+  create: [NewsImageCreateInput!]
+  connect: [NewsImageWhereUniqueInput!]
+}
+
+input NewsItemUpdateArgs {
+  where: NewsItemWhereUniqueInput!
+  data: NewsItemUpdateInput!
+}
+
+input NewsItemCreateInput {
+  title: String
+  key: String
+  thumbnail: Upload
+  publishDate: DateTime
+  body: JSON
+  images: NewsImageRelateToManyForCreateInput
+}
+
+input NewsImageRelateToManyForCreateInput {
+  create: [NewsImageCreateInput!]
+  connect: [NewsImageWhereUniqueInput!]
+}
+
+type StudioImage {
+  id: ID!
+  studioImages(
+    where: StudioWhereInput! = {}
+    orderBy: [StudioOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Studio!]
+  studioImagesCount(where: StudioWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input StudioImageWhereUniqueInput {
+  id: ID
+}
+
+input StudioImageWhereInput {
+  AND: [StudioImageWhereInput!]
+  OR: [StudioImageWhereInput!]
+  NOT: [StudioImageWhereInput!]
+  id: IDFilter
+  studioImages: StudioManyRelationFilter
+  imageName: StringFilter
+  altText: StringFilter
+  caption: StringFilter
+}
+
+input StudioManyRelationFilter {
+  every: StudioWhereInput
+  some: StudioWhereInput
+  none: StudioWhereInput
+}
+
+input StudioImageOrderByInput {
+  id: OrderDirection
+  imageName: OrderDirection
+  altText: OrderDirection
+  caption: OrderDirection
+}
+
+input StudioImageUpdateInput {
+  studioImages: StudioRelateToManyForUpdateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input StudioRelateToManyForUpdateInput {
+  disconnect: [StudioWhereUniqueInput!]
+  set: [StudioWhereUniqueInput!]
+  create: [StudioCreateInput!]
+  connect: [StudioWhereUniqueInput!]
+}
+
+input StudioImageUpdateArgs {
+  where: StudioImageWhereUniqueInput!
+  data: StudioImageUpdateInput!
+}
+
+input StudioImageCreateInput {
+  studioImages: StudioRelateToManyForCreateInput
+  image: Upload
+  imageName: String
+  altText: String
+  caption: String
+}
+
+input StudioRelateToManyForCreateInput {
+  create: [StudioCreateInput!]
+  connect: [StudioWhereUniqueInput!]
+}
+
 type Studio {
   id: ID!
   name: String
@@ -830,6 +1326,47 @@ type Mutation {
   updateBigPictures(data: [BigPictureUpdateArgs!]!): [BigPicture]
   deleteBigPicture(where: BigPictureWhereUniqueInput!): BigPicture
   deleteBigPictures(where: [BigPictureWhereUniqueInput!]!): [BigPicture]
+  createCommunityImage(data: CommunityImageCreateInput!): CommunityImage
+  createCommunityImages(data: [CommunityImageCreateInput!]!): [CommunityImage]
+  updateCommunityImage(
+    where: CommunityImageWhereUniqueInput!
+    data: CommunityImageUpdateInput!
+  ): CommunityImage
+  updateCommunityImages(data: [CommunityImageUpdateArgs!]!): [CommunityImage]
+  deleteCommunityImage(where: CommunityImageWhereUniqueInput!): CommunityImage
+  deleteCommunityImages(
+    where: [CommunityImageWhereUniqueInput!]!
+  ): [CommunityImage]
+  createCommunity(data: CommunityCreateInput!): Community
+  createCommunities(data: [CommunityCreateInput!]!): [Community]
+  updateCommunity(
+    where: CommunityWhereUniqueInput!
+    data: CommunityUpdateInput!
+  ): Community
+  updateCommunities(data: [CommunityUpdateArgs!]!): [Community]
+  deleteCommunity(where: CommunityWhereUniqueInput!): Community
+  deleteCommunities(where: [CommunityWhereUniqueInput!]!): [Community]
+  createEventImage(data: EventImageCreateInput!): EventImage
+  createEventImages(data: [EventImageCreateInput!]!): [EventImage]
+  updateEventImage(
+    where: EventImageWhereUniqueInput!
+    data: EventImageUpdateInput!
+  ): EventImage
+  updateEventImages(data: [EventImageUpdateArgs!]!): [EventImage]
+  deleteEventImage(where: EventImageWhereUniqueInput!): EventImage
+  deleteEventImages(where: [EventImageWhereUniqueInput!]!): [EventImage]
+  createEvent(data: EventCreateInput!): Event
+  createEvents(data: [EventCreateInput!]!): [Event]
+  updateEvent(where: EventWhereUniqueInput!, data: EventUpdateInput!): Event
+  updateEvents(data: [EventUpdateArgs!]!): [Event]
+  deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteEvents(where: [EventWhereUniqueInput!]!): [Event]
+  createFilter(data: FilterCreateInput!): Filter
+  createFilters(data: [FilterCreateInput!]!): [Filter]
+  updateFilter(where: FilterWhereUniqueInput!, data: FilterUpdateInput!): Filter
+  updateFilters(data: [FilterUpdateArgs!]!): [Filter]
+  deleteFilter(where: FilterWhereUniqueInput!): Filter
+  deleteFilters(where: [FilterWhereUniqueInput!]!): [Filter]
   createHomeSlide(data: HomeSlideCreateInput!): HomeSlide
   createHomeSlides(data: [HomeSlideCreateInput!]!): [HomeSlide]
   updateHomeSlide(
@@ -845,12 +1382,6 @@ type Mutation {
   updateHomePage(data: [HomeUpdateArgs!]!): [Home]
   deleteHome(where: HomeWhereUniqueInput!): Home
   deleteHomePage(where: [HomeWhereUniqueInput!]!): [Home]
-  createFilter(data: FilterCreateInput!): Filter
-  createFilters(data: [FilterCreateInput!]!): [Filter]
-  updateFilter(where: FilterWhereUniqueInput!, data: FilterUpdateInput!): Filter
-  updateFilters(data: [FilterUpdateArgs!]!): [Filter]
-  deleteFilter(where: FilterWhereUniqueInput!): Filter
-  deleteFilters(where: [FilterWhereUniqueInput!]!): [Filter]
   createMediaImage(data: MediaImageCreateInput!): MediaImage
   createMediaImages(data: [MediaImageCreateInput!]!): [MediaImage]
   updateMediaImage(
@@ -860,15 +1391,6 @@ type Mutation {
   updateMediaImages(data: [MediaImageUpdateArgs!]!): [MediaImage]
   deleteMediaImage(where: MediaImageWhereUniqueInput!): MediaImage
   deleteMediaImages(where: [MediaImageWhereUniqueInput!]!): [MediaImage]
-  createStudioImage(data: StudioImageCreateInput!): StudioImage
-  createStudioImages(data: [StudioImageCreateInput!]!): [StudioImage]
-  updateStudioImage(
-    where: StudioImageWhereUniqueInput!
-    data: StudioImageUpdateInput!
-  ): StudioImage
-  updateStudioImages(data: [StudioImageUpdateArgs!]!): [StudioImage]
-  deleteStudioImage(where: StudioImageWhereUniqueInput!): StudioImage
-  deleteStudioImages(where: [StudioImageWhereUniqueInput!]!): [StudioImage]
   createMediaItem(data: MediaItemCreateInput!): MediaItem
   createMediaItems(data: [MediaItemCreateInput!]!): [MediaItem]
   updateMediaItem(
@@ -878,6 +1400,33 @@ type Mutation {
   updateMediaItems(data: [MediaItemUpdateArgs!]!): [MediaItem]
   deleteMediaItem(where: MediaItemWhereUniqueInput!): MediaItem
   deleteMediaItems(where: [MediaItemWhereUniqueInput!]!): [MediaItem]
+  createNewsImage(data: NewsImageCreateInput!): NewsImage
+  createNewsImages(data: [NewsImageCreateInput!]!): [NewsImage]
+  updateNewsImage(
+    where: NewsImageWhereUniqueInput!
+    data: NewsImageUpdateInput!
+  ): NewsImage
+  updateNewsImages(data: [NewsImageUpdateArgs!]!): [NewsImage]
+  deleteNewsImage(where: NewsImageWhereUniqueInput!): NewsImage
+  deleteNewsImages(where: [NewsImageWhereUniqueInput!]!): [NewsImage]
+  createNewsItem(data: NewsItemCreateInput!): NewsItem
+  createNewsItems(data: [NewsItemCreateInput!]!): [NewsItem]
+  updateNewsItem(
+    where: NewsItemWhereUniqueInput!
+    data: NewsItemUpdateInput!
+  ): NewsItem
+  updateNewsItems(data: [NewsItemUpdateArgs!]!): [NewsItem]
+  deleteNewsItem(where: NewsItemWhereUniqueInput!): NewsItem
+  deleteNewsItems(where: [NewsItemWhereUniqueInput!]!): [NewsItem]
+  createStudioImage(data: StudioImageCreateInput!): StudioImage
+  createStudioImages(data: [StudioImageCreateInput!]!): [StudioImage]
+  updateStudioImage(
+    where: StudioImageWhereUniqueInput!
+    data: StudioImageUpdateInput!
+  ): StudioImage
+  updateStudioImages(data: [StudioImageUpdateArgs!]!): [StudioImage]
+  deleteStudioImage(where: StudioImageWhereUniqueInput!): StudioImage
+  deleteStudioImages(where: [StudioImageWhereUniqueInput!]!): [StudioImage]
   createStudio(data: StudioCreateInput!): Studio
   createStudios(data: [StudioCreateInput!]!): [Studio]
   updateStudio(where: StudioWhereUniqueInput!, data: StudioUpdateInput!): Studio
@@ -903,6 +1452,46 @@ type Query {
   ): [BigPicture!]
   bigPicture(where: BigPictureWhereUniqueInput!): BigPicture
   bigPicturesCount(where: BigPictureWhereInput! = {}): Int
+  communityImages(
+    where: CommunityImageWhereInput! = {}
+    orderBy: [CommunityImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CommunityImage!]
+  communityImage(where: CommunityImageWhereUniqueInput!): CommunityImage
+  communityImagesCount(where: CommunityImageWhereInput! = {}): Int
+  communities(
+    where: CommunityWhereInput! = {}
+    orderBy: [CommunityOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Community!]
+  community(where: CommunityWhereUniqueInput!): Community
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  eventImages(
+    where: EventImageWhereInput! = {}
+    orderBy: [EventImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [EventImage!]
+  eventImage(where: EventImageWhereUniqueInput!): EventImage
+  eventImagesCount(where: EventImageWhereInput! = {}): Int
+  events(
+    where: EventWhereInput! = {}
+    orderBy: [EventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Event!]
+  event(where: EventWhereUniqueInput!): Event
+  eventsCount(where: EventWhereInput! = {}): Int
+  filters(
+    where: FilterWhereInput! = {}
+    orderBy: [FilterOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Filter!]
+  filter(where: FilterWhereUniqueInput!): Filter
+  filtersCount(where: FilterWhereInput! = {}): Int
   homeSlides(
     where: HomeSlideWhereInput! = {}
     orderBy: [HomeSlideOrderByInput!]! = []
@@ -919,14 +1508,6 @@ type Query {
   ): [Home!]
   home(where: HomeWhereUniqueInput!): Home
   homePageCount(where: HomeWhereInput! = {}): Int
-  filters(
-    where: FilterWhereInput! = {}
-    orderBy: [FilterOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Filter!]
-  filter(where: FilterWhereUniqueInput!): Filter
-  filtersCount(where: FilterWhereInput! = {}): Int
   mediaImages(
     where: MediaImageWhereInput! = {}
     orderBy: [MediaImageOrderByInput!]! = []
@@ -935,14 +1516,6 @@ type Query {
   ): [MediaImage!]
   mediaImage(where: MediaImageWhereUniqueInput!): MediaImage
   mediaImagesCount(where: MediaImageWhereInput! = {}): Int
-  studioImages(
-    where: StudioImageWhereInput! = {}
-    orderBy: [StudioImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [StudioImage!]
-  studioImage(where: StudioImageWhereUniqueInput!): StudioImage
-  studioImagesCount(where: StudioImageWhereInput! = {}): Int
   mediaItems(
     where: MediaItemWhereInput! = {}
     orderBy: [MediaItemOrderByInput!]! = []
@@ -951,6 +1524,30 @@ type Query {
   ): [MediaItem!]
   mediaItem(where: MediaItemWhereUniqueInput!): MediaItem
   mediaItemsCount(where: MediaItemWhereInput! = {}): Int
+  newsImages(
+    where: NewsImageWhereInput! = {}
+    orderBy: [NewsImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NewsImage!]
+  newsImage(where: NewsImageWhereUniqueInput!): NewsImage
+  newsImagesCount(where: NewsImageWhereInput! = {}): Int
+  newsItems(
+    where: NewsItemWhereInput! = {}
+    orderBy: [NewsItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NewsItem!]
+  newsItem(where: NewsItemWhereUniqueInput!): NewsItem
+  newsItemsCount(where: NewsItemWhereInput! = {}): Int
+  studioImages(
+    where: StudioImageWhereInput! = {}
+    orderBy: [StudioImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [StudioImage!]
+  studioImage(where: StudioImageWhereUniqueInput!): StudioImage
+  studioImagesCount(where: StudioImageWhereInput! = {}): Int
   studios(
     where: StudioWhereInput! = {}
     orderBy: [StudioOrderByInput!]! = []
