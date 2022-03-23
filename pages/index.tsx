@@ -41,7 +41,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
     <div className=''>
       <div className='w-3/4 lg:w-1/2 text-center mx-auto'>
         <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
-        <Button link='/media-archive' label='Listen to our stories' className='relative z-50' />
+        <Button link='/media-archive' label='Listen to our stories' className='relative z-10' />
       </div>
       <Fade {...slidesProps} className='-translate-y-40'>
         {homePage.slides.map((slide, i) => (

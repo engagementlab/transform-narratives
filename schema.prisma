@@ -48,17 +48,18 @@ model EventImage {
 }
 
 model Event {
-  id           String       @id @default(cuid())
-  name         String       @default("")
-  key          String       @unique @default("")
-  thumbnail    String?
-  eventDate    DateTime
-  blurb        String       @default("")
-  content      String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  speakersBios String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  images       EventImage[] @relation("Event_images")
-  mainVideo    String?
-  videos       String?
+  id               String       @id @default(cuid())
+  name             String       @default("")
+  key              String       @unique @default("")
+  thumbnail        String?
+  eventDate        DateTime
+  registrationLink String       @default("")
+  blurb            String       @default("")
+  content          String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  speakersBios     String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images           EventImage[] @relation("Event_images")
+  mainVideo        String?
+  videos           String?
 }
 
 model Filter {
