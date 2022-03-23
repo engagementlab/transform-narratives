@@ -54,6 +54,7 @@ model Event {
   thumbnail        String?
   eventDate        DateTime
   registrationLink String       @default("")
+  address          String       @default("")
   blurb            String       @default("")
   content          String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   speakersBios     String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")

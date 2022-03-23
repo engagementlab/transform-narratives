@@ -24,7 +24,7 @@ const renderItem = (props: { item: MediaItem }) => {
                 <p className="uppercase">{_.map(props.item.filters, 'name').join(', ')}</p>
             </a>
             </Link>
-    </motion.div>
+        </motion.div>
     );
 }
 

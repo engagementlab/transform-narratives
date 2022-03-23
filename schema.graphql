@@ -413,6 +413,7 @@ type Event {
   thumbnail: CloudinaryImage_File
   eventDate: DateTime
   registrationLink: String
+  address: String
   blurb: String
   content: Event_content_Document
   speakersBios: Event_speakersBios_Document
@@ -452,6 +453,7 @@ input EventWhereInput {
   key: StringFilter
   eventDate: DateTimeFilter
   registrationLink: StringFilter
+  address: StringFilter
   blurb: StringFilter
   images: EventImageManyRelationFilter
 }
@@ -479,6 +481,7 @@ input EventOrderByInput {
   key: OrderDirection
   eventDate: OrderDirection
   registrationLink: OrderDirection
+  address: OrderDirection
   blurb: OrderDirection
 }
 
@@ -488,6 +491,7 @@ input EventUpdateInput {
   thumbnail: Upload
   eventDate: DateTime
   registrationLink: String
+  address: String
   blurb: String
   content: JSON
   speakersBios: JSON
@@ -514,6 +518,7 @@ input EventCreateInput {
   thumbnail: Upload
   eventDate: DateTime
   registrationLink: String
+  address: String
   blurb: String
   content: JSON
   speakersBios: JSON

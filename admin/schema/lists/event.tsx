@@ -58,6 +58,11 @@ const Event: Lists.Event = list({
         //   }
         // },
       }),
+      address: text({
+        ui: {
+          displayMode: 'textarea'
+        }
+      }),
       blurb: text({
         validation: {
           isRequired: true
