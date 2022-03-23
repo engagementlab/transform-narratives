@@ -7,6 +7,7 @@ import {
 import Link from 'next/link';
 import _ from 'lodash';
 import create from 'zustand';
+import { useEffect } from 'react';
 
 interface NavLink {
   label: string;
@@ -51,13 +52,14 @@ const links: NavLink[] = [{
     url: '/get-involved'
   },
 ];
-type FilterState = {
+
+type NavState = {
     navOpen: boolean
     toggleNavOpen: (open: boolean) => void
 }
 
 // Create store with Zustand
-const useStore = create<FilterState>(set => ({
+const useStore = create<NavState>(set => ({
     navOpen: false,
     toggleNavOpen: (open: boolean) => set((state) => { 
         document.body.style.overflow = open ? 'hidden' : 'visible';
@@ -119,7 +121,14 @@ const NavItems = () => {
 const Header = () => {
   const navOpen = useStore(state => state.navOpen);
   const toggleNavOpen = useStore(state => state.toggleNavOpen);
+  const router = useRouter();
 
+  useEffect(() => {
+    router.events.on('routeChangeComplete', () => {
+      toggleNavOpen(false);
+    });
+  });
+  
   // eslint-disable-next-line class-methods-use-this
   return (
     <div className="flex justify-center xl:px-8">
