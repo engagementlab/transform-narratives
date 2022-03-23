@@ -104,7 +104,7 @@ class Footer extends Component {
             </svg>
             </Link>
             <div className="mt-4 w-full flex flex-col md:flex-row justify-between">
-                <div className="mt-4 w-full md:w-1/3 flex flex-col md:flex-row justify-between text-green-blue text-sm">
+                <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col md:flex-row justify-between text-green-blue text-sm">
 
                     <ul className="list-none pt-2 md:pt-0">
                         <li>
@@ -170,8 +170,8 @@ class Footer extends Component {
                         </li>
                     </ul>
                 </div>
-                <div className="flex flex-row items-center justify-between list-none w-full md:w-1/5">
-                    <svg viewBox="0 0 75 26.578" width="75" height="26.578">
+                <div className="flex flex-row items-center justify-between list-none">
+                    <svg viewBox="0 0 75 26.578" width="75" height="26.578" className='flex-shrink-0'>
                         <title>Engagement Lab logo</title>
                         <path fill="#F6A536" fillRule="evenodd"
                             d="M 73.222 24.141 C 73.222 23.798 72.916 23.456 72.305 23.456 L 70.336 23.456 L 70.336 24.826 L 72.305 24.826 C 72.906 24.826 73.222 24.484 73.222 24.141 Z M 72.967 21.4 C 72.967 21.057 72.662 20.715 72.06 20.715 L 70.336 20.715 L 70.336 22.085 L 72.111 22.085 C 72.682 22.066 72.967 21.733 72.967 21.4 Z M 74.619 24.141 C 74.619 25.169 73.844 26.197 72.305 26.197 L 68.909 26.197 L 68.909 19.344 L 72.06 19.344 C 73.6 19.344 74.364 20.372 74.364 21.41 C 74.364 21.85 74.221 22.281 73.946 22.644 C 74.395 23.035 74.619 23.593 74.619 24.141 Z"
