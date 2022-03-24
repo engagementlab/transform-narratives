@@ -2,7 +2,7 @@
   "name": "my-project",
   "private": true,
   "scripts": {
-    "postinstall": "keystone postinstall",
+    "postinstall": "keystone postinstall --fix",
     "dev": "node vimeo.js && next dev -p 8081",
     "build": "next build && next export",
     "build-ks": "keystone build",
