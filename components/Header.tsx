@@ -24,6 +24,10 @@ const links: NavLink[] = [{
       {
         label: 'The Initiative',
         url: '/about/initiative'
+      },
+      {
+        label: 'Our Community',
+        url: '/about/community'
       }
     ],
   },
@@ -133,7 +137,7 @@ const Header = () => {
   return (
     <div className="flex justify-center xl:px-8">
       <nav className="w-full my-7 mb-24 flex flex-col md:flex-row">
-        <div className="w-full px-6 flex justify-between">
+        <div className="w-full px-6 xl:px-0 flex justify-between">
           <Link href="/" passHref>
             <svg viewBox="0 0.081 81.459 50" width="81.459" height="50" className='cursor-pointer'>
               <g transform="matrix(0.159112, 0, 0, 0.159112, 0, 0.068195)">

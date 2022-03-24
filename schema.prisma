@@ -17,25 +17,25 @@ model About {
   content String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
-model BigPicture {
-  id      String @id @default(cuid())
-  name    String @unique @default("Big Picture Page")
-  content String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+model BigPictureImage {
+  id               String       @id @default(cuid())
+  bigPictureImages BigPicture[] @relation("BigPicture_images")
+  image            String?
+  imageName        String       @default("")
+  altText          String       @default("")
 }
 
-model CommunityImage {
-  id              String      @id @default(cuid())
-  communityImages Community[] @relation("Community_photos")
-  image           String?
-  imageName       String      @default("")
+model BigPicture {
+  id      String            @id @default(cuid())
+  name    String            @unique @default("Big Picture Page")
+  content String            @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images  BigPictureImage[] @relation("BigPicture_images")
 }
 
 model Community {
-  id        String           @id @default(cuid())
-  name      String           @unique @default("Community Page")
-  values    String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  community String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos    CommunityImage[] @relation("Community_photos")
+  id     String @id @default(cuid())
+  name   String @unique @default("Community Page")
+  values String @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model EventImage {
@@ -134,6 +134,7 @@ model NewsItem {
 
 model Person {
   id      String  @id @default(cuid())
+  name    String  @default("")
   image   String?
   content String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }

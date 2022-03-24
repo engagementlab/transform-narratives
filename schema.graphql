@@ -88,60 +88,18 @@ input AboutCreateInput {
   content: JSON
 }
 
-type BigPicture {
+type BigPictureImage {
   id: ID!
-  name: String
-  content: BigPicture_content_Document
-}
-
-type BigPicture_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input BigPictureWhereUniqueInput {
-  id: ID
-  name: String
-}
-
-input BigPictureWhereInput {
-  AND: [BigPictureWhereInput!]
-  OR: [BigPictureWhereInput!]
-  NOT: [BigPictureWhereInput!]
-  id: IDFilter
-  name: StringFilter
-}
-
-input BigPictureOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-}
-
-input BigPictureUpdateInput {
-  name: String
-  content: JSON
-}
-
-input BigPictureUpdateArgs {
-  where: BigPictureWhereUniqueInput!
-  data: BigPictureUpdateInput!
-}
-
-input BigPictureCreateInput {
-  name: String
-  content: JSON
-}
-
-type CommunityImage {
-  id: ID!
-  communityImages(
-    where: CommunityWhereInput! = {}
-    orderBy: [CommunityOrderByInput!]! = []
+  bigPictureImages(
+    where: BigPictureWhereInput! = {}
+    orderBy: [BigPictureOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Community!]
-  communityImagesCount(where: CommunityWhereInput! = {}): Int
+  ): [BigPicture!]
+  bigPictureImagesCount(where: BigPictureWhereInput! = {}): Int
   image: CloudinaryImage_File
   imageName: String
+  altText: String
 }
 
 type CloudinaryImage_File {
@@ -194,41 +152,44 @@ input CloudinaryImageFormat {
   transformation: String
 }
 
-input CommunityImageWhereUniqueInput {
+input BigPictureImageWhereUniqueInput {
   id: ID
 }
 
-input CommunityImageWhereInput {
-  AND: [CommunityImageWhereInput!]
-  OR: [CommunityImageWhereInput!]
-  NOT: [CommunityImageWhereInput!]
+input BigPictureImageWhereInput {
+  AND: [BigPictureImageWhereInput!]
+  OR: [BigPictureImageWhereInput!]
+  NOT: [BigPictureImageWhereInput!]
   id: IDFilter
-  communityImages: CommunityManyRelationFilter
+  bigPictureImages: BigPictureManyRelationFilter
   imageName: StringFilter
+  altText: StringFilter
 }
 
-input CommunityManyRelationFilter {
-  every: CommunityWhereInput
-  some: CommunityWhereInput
-  none: CommunityWhereInput
+input BigPictureManyRelationFilter {
+  every: BigPictureWhereInput
+  some: BigPictureWhereInput
+  none: BigPictureWhereInput
 }
 
-input CommunityImageOrderByInput {
+input BigPictureImageOrderByInput {
   id: OrderDirection
   imageName: OrderDirection
+  altText: OrderDirection
 }
 
-input CommunityImageUpdateInput {
-  communityImages: CommunityRelateToManyForUpdateInput
+input BigPictureImageUpdateInput {
+  bigPictureImages: BigPictureRelateToManyForUpdateInput
   image: Upload
   imageName: String
+  altText: String
 }
 
-input CommunityRelateToManyForUpdateInput {
-  disconnect: [CommunityWhereUniqueInput!]
-  set: [CommunityWhereUniqueInput!]
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
+input BigPictureRelateToManyForUpdateInput {
+  disconnect: [BigPictureWhereUniqueInput!]
+  set: [BigPictureWhereUniqueInput!]
+  create: [BigPictureCreateInput!]
+  connect: [BigPictureWhereUniqueInput!]
 }
 
 """
@@ -236,41 +197,101 @@ The `Upload` scalar type represents a file upload.
 """
 scalar Upload
 
-input CommunityImageUpdateArgs {
-  where: CommunityImageWhereUniqueInput!
-  data: CommunityImageUpdateInput!
+input BigPictureImageUpdateArgs {
+  where: BigPictureImageWhereUniqueInput!
+  data: BigPictureImageUpdateInput!
 }
 
-input CommunityImageCreateInput {
-  communityImages: CommunityRelateToManyForCreateInput
+input BigPictureImageCreateInput {
+  bigPictureImages: BigPictureRelateToManyForCreateInput
   image: Upload
   imageName: String
+  altText: String
 }
 
-input CommunityRelateToManyForCreateInput {
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
+input BigPictureRelateToManyForCreateInput {
+  create: [BigPictureCreateInput!]
+  connect: [BigPictureWhereUniqueInput!]
+}
+
+type BigPicture {
+  id: ID!
+  name: String
+  content: BigPicture_content_Document
+  images(
+    where: BigPictureImageWhereInput! = {}
+    orderBy: [BigPictureImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [BigPictureImage!]
+  imagesCount(where: BigPictureImageWhereInput! = {}): Int
+}
+
+type BigPicture_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input BigPictureWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input BigPictureWhereInput {
+  AND: [BigPictureWhereInput!]
+  OR: [BigPictureWhereInput!]
+  NOT: [BigPictureWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  images: BigPictureImageManyRelationFilter
+}
+
+input BigPictureImageManyRelationFilter {
+  every: BigPictureImageWhereInput
+  some: BigPictureImageWhereInput
+  none: BigPictureImageWhereInput
+}
+
+input BigPictureOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input BigPictureUpdateInput {
+  name: String
+  content: JSON
+  images: BigPictureImageRelateToManyForUpdateInput
+}
+
+input BigPictureImageRelateToManyForUpdateInput {
+  disconnect: [BigPictureImageWhereUniqueInput!]
+  set: [BigPictureImageWhereUniqueInput!]
+  create: [BigPictureImageCreateInput!]
+  connect: [BigPictureImageWhereUniqueInput!]
+}
+
+input BigPictureUpdateArgs {
+  where: BigPictureWhereUniqueInput!
+  data: BigPictureUpdateInput!
+}
+
+input BigPictureCreateInput {
+  name: String
+  content: JSON
+  images: BigPictureImageRelateToManyForCreateInput
+}
+
+input BigPictureImageRelateToManyForCreateInput {
+  create: [BigPictureImageCreateInput!]
+  connect: [BigPictureImageWhereUniqueInput!]
 }
 
 type Community {
   id: ID!
   name: String
   values: Community_values_Document
-  community: Community_community_Document
-  photos(
-    where: CommunityImageWhereInput! = {}
-    orderBy: [CommunityImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CommunityImage!]
-  photosCount(where: CommunityImageWhereInput! = {}): Int
 }
 
 type Community_values_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-type Community_community_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
@@ -285,13 +306,6 @@ input CommunityWhereInput {
   NOT: [CommunityWhereInput!]
   id: IDFilter
   name: StringFilter
-  photos: CommunityImageManyRelationFilter
-}
-
-input CommunityImageManyRelationFilter {
-  every: CommunityImageWhereInput
-  some: CommunityImageWhereInput
-  none: CommunityImageWhereInput
 }
 
 input CommunityOrderByInput {
@@ -302,15 +316,6 @@ input CommunityOrderByInput {
 input CommunityUpdateInput {
   name: String
   values: JSON
-  community: JSON
-  photos: CommunityImageRelateToManyForUpdateInput
-}
-
-input CommunityImageRelateToManyForUpdateInput {
-  disconnect: [CommunityImageWhereUniqueInput!]
-  set: [CommunityImageWhereUniqueInput!]
-  create: [CommunityImageCreateInput!]
-  connect: [CommunityImageWhereUniqueInput!]
 }
 
 input CommunityUpdateArgs {
@@ -321,13 +326,6 @@ input CommunityUpdateArgs {
 input CommunityCreateInput {
   name: String
   values: JSON
-  community: JSON
-  photos: CommunityImageRelateToManyForCreateInput
-}
-
-input CommunityImageRelateToManyForCreateInput {
-  create: [CommunityImageCreateInput!]
-  connect: [CommunityImageWhereUniqueInput!]
 }
 
 type EventImage {
@@ -1149,6 +1147,7 @@ input NewsImageRelateToManyForCreateInput {
 
 type Person {
   id: ID!
+  name: String
   image: CloudinaryImage_File
   content: Person_content_Document
 }
@@ -1166,13 +1165,16 @@ input PersonWhereInput {
   OR: [PersonWhereInput!]
   NOT: [PersonWhereInput!]
   id: IDFilter
+  name: StringFilter
 }
 
 input PersonOrderByInput {
   id: OrderDirection
+  name: OrderDirection
 }
 
 input PersonUpdateInput {
+  name: String
   image: Upload
   content: JSON
 }
@@ -1183,6 +1185,7 @@ input PersonUpdateArgs {
 }
 
 input PersonCreateInput {
+  name: String
   image: Upload
   content: JSON
 }
@@ -1372,6 +1375,21 @@ type Mutation {
   updateAbouts(data: [AboutUpdateArgs!]!): [About]
   deleteAbout(where: AboutWhereUniqueInput!): About
   deleteAbouts(where: [AboutWhereUniqueInput!]!): [About]
+  createBigPictureImage(data: BigPictureImageCreateInput!): BigPictureImage
+  createBigPictureImages(
+    data: [BigPictureImageCreateInput!]!
+  ): [BigPictureImage]
+  updateBigPictureImage(
+    where: BigPictureImageWhereUniqueInput!
+    data: BigPictureImageUpdateInput!
+  ): BigPictureImage
+  updateBigPictureImages(data: [BigPictureImageUpdateArgs!]!): [BigPictureImage]
+  deleteBigPictureImage(
+    where: BigPictureImageWhereUniqueInput!
+  ): BigPictureImage
+  deleteBigPictureImages(
+    where: [BigPictureImageWhereUniqueInput!]!
+  ): [BigPictureImage]
   createBigPicture(data: BigPictureCreateInput!): BigPicture
   createBigPictures(data: [BigPictureCreateInput!]!): [BigPicture]
   updateBigPicture(
@@ -1381,17 +1399,6 @@ type Mutation {
   updateBigPictures(data: [BigPictureUpdateArgs!]!): [BigPicture]
   deleteBigPicture(where: BigPictureWhereUniqueInput!): BigPicture
   deleteBigPictures(where: [BigPictureWhereUniqueInput!]!): [BigPicture]
-  createCommunityImage(data: CommunityImageCreateInput!): CommunityImage
-  createCommunityImages(data: [CommunityImageCreateInput!]!): [CommunityImage]
-  updateCommunityImage(
-    where: CommunityImageWhereUniqueInput!
-    data: CommunityImageUpdateInput!
-  ): CommunityImage
-  updateCommunityImages(data: [CommunityImageUpdateArgs!]!): [CommunityImage]
-  deleteCommunityImage(where: CommunityImageWhereUniqueInput!): CommunityImage
-  deleteCommunityImages(
-    where: [CommunityImageWhereUniqueInput!]!
-  ): [CommunityImage]
   createCommunity(data: CommunityCreateInput!): Community
   createCommunities(data: [CommunityCreateInput!]!): [Community]
   updateCommunity(
@@ -1505,6 +1512,14 @@ type Query {
   ): [About!]
   about(where: AboutWhereUniqueInput!): About
   aboutsCount(where: AboutWhereInput! = {}): Int
+  bigPictureImages(
+    where: BigPictureImageWhereInput! = {}
+    orderBy: [BigPictureImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [BigPictureImage!]
+  bigPictureImage(where: BigPictureImageWhereUniqueInput!): BigPictureImage
+  bigPictureImagesCount(where: BigPictureImageWhereInput! = {}): Int
   bigPictures(
     where: BigPictureWhereInput! = {}
     orderBy: [BigPictureOrderByInput!]! = []
@@ -1513,14 +1528,6 @@ type Query {
   ): [BigPicture!]
   bigPicture(where: BigPictureWhereUniqueInput!): BigPicture
   bigPicturesCount(where: BigPictureWhereInput! = {}): Int
-  communityImages(
-    where: CommunityImageWhereInput! = {}
-    orderBy: [CommunityImageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CommunityImage!]
-  communityImage(where: CommunityImageWhereUniqueInput!): CommunityImage
-  communityImagesCount(where: CommunityImageWhereInput! = {}): Int
   communities(
     where: CommunityWhereInput! = {}
     orderBy: [CommunityOrderByInput!]! = []
