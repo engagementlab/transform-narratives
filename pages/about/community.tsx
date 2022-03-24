@@ -2,6 +2,7 @@ import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import BlockRenderers from '../../components/BlockRenderers';
+import Image from '../../components/Image';
 
 type CommunityPage = {
     values: any;
@@ -36,7 +37,19 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
         </div>
         <hr className='border-[#F4B477]' />
         <div className='px-4 xl:px-8 mt-7 w-full lg:w-7/12'>
-            <h2 className="text-xl text-bluegreen">Our Community</h2>
+            <h2 className="text-xl text-bluegreen font-semibold">Our Community</h2>
+
+            {people.map((person, i) => (
+                <div key={i} className='flex flex-col lg:flex-row mt-5'>
+                    <div className='w-full lg:w-1/3 flex-shrink-0'>
+                        <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300}  />
+                    </div>
+                    <div className='ml-4'>
+                        <h4 className='text-xl font-semibold'>{person.name}</h4>
+                        <DocumentRenderer document={person.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
+                    </div>
+                </div>
+            ))}
         </div>
     </div>
     
@@ -51,7 +64,7 @@ export async function getStaticProps() {
   }) as CommunityPage;
   const people = await query.Person.findMany({
     query: `name image { publicId } content { document } `
-  }) as CommunityPage;
+  }) as Person[];
 
   return {
     props: {
