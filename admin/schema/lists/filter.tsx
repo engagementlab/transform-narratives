@@ -9,9 +9,6 @@ import {
     text
 } from '@keystone-6/core/fields';
 import {
-    document
-} from '@keystone-6/fields-document';
-import {
     Lists
 } from '.keystone/types';
 

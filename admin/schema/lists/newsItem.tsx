@@ -50,6 +50,15 @@ const NewsItem: Lists.NewsItem = list({
               isRequired: true,
           }
       }),
+      blurb: text({
+        label: 'Blurb (appears on News index page)',
+        validation: {
+          isRequired: true
+        },
+        ui: {
+          displayMode: 'textarea'
+        }
+      }),
       body: document({
           formatting: {
               headingLevels: [3, 4],

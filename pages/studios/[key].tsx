@@ -94,5 +94,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const relatedItems = (await query.Studio.findMany({
       query: 'name key filters { type name } thumbnail { publicId }',
   })) as Studio[];
+  
   return { props: { item, relatedItems } };
 }

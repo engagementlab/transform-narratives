@@ -1064,6 +1064,7 @@ type NewsItem {
   key: String
   thumbnail: CloudinaryImage_File
   publishDate: DateTime
+  blurb: String
   body: NewsItem_body_Document
   images(
     where: NewsImageWhereInput! = {}
@@ -1091,6 +1092,7 @@ input NewsItemWhereInput {
   title: StringFilter
   key: StringFilter
   publishDate: DateTimeFilter
+  blurb: StringFilter
   images: NewsImageManyRelationFilter
 }
 
@@ -1105,6 +1107,7 @@ input NewsItemOrderByInput {
   title: OrderDirection
   key: OrderDirection
   publishDate: OrderDirection
+  blurb: OrderDirection
 }
 
 input NewsItemUpdateInput {
@@ -1112,6 +1115,7 @@ input NewsItemUpdateInput {
   key: String
   thumbnail: Upload
   publishDate: DateTime
+  blurb: String
   body: JSON
   images: NewsImageRelateToManyForUpdateInput
 }
@@ -1133,6 +1137,7 @@ input NewsItemCreateInput {
   key: String
   thumbnail: Upload
   publishDate: DateTime
+  blurb: String
   body: JSON
   images: NewsImageRelateToManyForCreateInput
 }
@@ -1140,6 +1145,46 @@ input NewsItemCreateInput {
 input NewsImageRelateToManyForCreateInput {
   create: [NewsImageCreateInput!]
   connect: [NewsImageWhereUniqueInput!]
+}
+
+type Person {
+  id: ID!
+  image: CloudinaryImage_File
+  content: Person_content_Document
+}
+
+type Person_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PersonWhereUniqueInput {
+  id: ID
+}
+
+input PersonWhereInput {
+  AND: [PersonWhereInput!]
+  OR: [PersonWhereInput!]
+  NOT: [PersonWhereInput!]
+  id: IDFilter
+}
+
+input PersonOrderByInput {
+  id: OrderDirection
+}
+
+input PersonUpdateInput {
+  image: Upload
+  content: JSON
+}
+
+input PersonUpdateArgs {
+  where: PersonWhereUniqueInput!
+  data: PersonUpdateInput!
+}
+
+input PersonCreateInput {
+  image: Upload
+  content: JSON
 }
 
 type StudioImage {
@@ -1428,6 +1473,12 @@ type Mutation {
   updateNewsItems(data: [NewsItemUpdateArgs!]!): [NewsItem]
   deleteNewsItem(where: NewsItemWhereUniqueInput!): NewsItem
   deleteNewsItems(where: [NewsItemWhereUniqueInput!]!): [NewsItem]
+  createPerson(data: PersonCreateInput!): Person
+  createPeople(data: [PersonCreateInput!]!): [Person]
+  updatePerson(where: PersonWhereUniqueInput!, data: PersonUpdateInput!): Person
+  updatePeople(data: [PersonUpdateArgs!]!): [Person]
+  deletePerson(where: PersonWhereUniqueInput!): Person
+  deletePeople(where: [PersonWhereUniqueInput!]!): [Person]
   createStudioImage(data: StudioImageCreateInput!): StudioImage
   createStudioImages(data: [StudioImageCreateInput!]!): [StudioImage]
   updateStudioImage(
@@ -1550,6 +1601,14 @@ type Query {
   ): [NewsItem!]
   newsItem(where: NewsItemWhereUniqueInput!): NewsItem
   newsItemsCount(where: NewsItemWhereInput! = {}): Int
+  people(
+    where: PersonWhereInput! = {}
+    orderBy: [PersonOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Person!]
+  person(where: PersonWhereUniqueInput!): Person
+  peopleCount(where: PersonWhereInput! = {}): Int
   studioImages(
     where: StudioImageWhereInput! = {}
     orderBy: [StudioImageOrderByInput!]! = []

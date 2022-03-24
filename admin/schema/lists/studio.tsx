@@ -26,6 +26,7 @@ const Studio: Lists.Studio = list({
       }
     }),
     thumbnail: cloudinaryImage({
+      label: 'Thumbnail (need to be sized consistently)',
       cloudinary: {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
         apiKey: `${process.env.CLOUDINARY_KEY}`,
@@ -34,6 +35,7 @@ const Studio: Lists.Studio = list({
       },
     }),
     blurb: text({
+      label: 'Blurb (appears on Studios index page)',
       validation: {
         isRequired: true
       },
@@ -73,11 +75,11 @@ const Studio: Lists.Studio = list({
       dividers: true,
       links: true,
       layouts: [
-        [1, 1],
-        [1, 1, 1],
+        // [1, 1],
+        // [1, 1, 1],
         [2, 1],
-        [1, 2],
-        [1, 2, 1],
+        // [1, 2],
+        // [1, 2, 1],
       ],
       ui: {
         views: path.join(process.cwd(), 'admin/components/component-blocks')

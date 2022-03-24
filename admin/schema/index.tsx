@@ -11,5 +11,6 @@ export { default as MediaImage } from './lists/mediaImage';
 export { default as MediaItem } from './lists/media';
 export { default as NewsImage } from './lists/newsImage';
 export { default as NewsItem } from './lists/newsItem';
+export { default as Person } from './lists/person';
 export { default as StudioImage } from './lists/studioImage';
 export { default as Studio } from './lists/studio';
