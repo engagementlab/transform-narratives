@@ -1,6 +1,6 @@
 export { default as About } from './lists/about';
+export { default as BigPictureImage } from './lists/bigPictureImage';
 export { default as BigPicture } from './lists/bigPicture';
-export { default as CommunityImage } from './lists/communityImage';
 export { default as Community } from './lists/community';
 export { default as EventImage } from './lists/eventImage';
 export { default as Event } from './lists/event';

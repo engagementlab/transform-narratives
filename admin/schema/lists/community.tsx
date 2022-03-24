@@ -42,42 +42,6 @@ const Community: Lists.Community = list({
             },
             componentBlocks,
         }),
-        community: document({
-            formatting: {
-                inlineMarks: true,
-            },
-            links: true,
-            layouts: [
-                [1, 2],
-            ],
-            ui: {
-                views: path.join(process.cwd(), 'admin/components/component-blocks')
-            },
-            componentBlocks,
-            
-            relationships: {
-              image: {
-                kind: 'prop',
-                listKey: 'CommunityImage',
-                selection: 'imageName image {publicUrlTransformed publicId}',
-              },
-            },
-        }),
-        photos: relationship({
-            ref: 'CommunityImage.communityImages',
-            many: true,
-            label: "Images (add here for use in 'Community' field)",
-            ui: {
-            displayMode: 'cards',
-            cardFields: ['image', 'imageName'],
-            inlineCreate: {
-                fields: ['image', 'imageName']
-            },
-            inlineEdit: {
-                fields: ['image', 'imageName']
-            },
-            },
-        }),
     }
   });
   export default Community;

@@ -15,6 +15,11 @@ import { document } from '@keystone-6/fields-document';
 
 const Person: Lists.Person = list({
   fields: {
+    name: text({
+      validation: {
+        isRequired: true
+      }
+    }),
     image: cloudinaryImage({
       cloudinary: {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
@@ -22,10 +27,11 @@ const Person: Lists.Person = list({
         apiSecret: `${process.env.CLOUDINARY_SECRET}`,
         folder: 'tngvi/people',
       },
-      label: 'Source',
+      label: 'Bio Image',
     }),
     content: document({
         formatting: true,
+        label: 'Bio/Content'
     }),
   }
 });
