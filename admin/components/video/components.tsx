@@ -8,12 +8,9 @@ import { controller } from '@keystone-6/core/fields/types/json/views';
 import { ComponentType, Fragment, useState } from 'react';
 
 import Select, { components, GroupBase, OptionProps, Props } from 'react-select'
-// import Image from 'next/image';
 import { css as emCss } from '@emotion/css';
-import { css } from '@emotion/react';
 // const _ = require('underscore');
 const videoData = require('../../../videoData');
-
 
 interface RelatedVideo {
   label: string;
