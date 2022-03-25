@@ -1,10 +1,154 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react';
+import React, { ComponentType, Fragment, useState } from 'react';
 import { NotEditable, component, fields } from '@keystone-6/fields-document/component-blocks';
-import { HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
+import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
 
-// naming the export componentBlocks is important because the Admin UI
-// expects to find the components like on the componentBlocks export
+import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
+import { css as emCss } from '@emotion/css';
+import Select, { GroupBase, OptionProps } from 'react-select'
+const videoData = require('../../videoData');
+
+
+interface RelatedVideo {
+  label: string;
+  videoUrl: string;
+  caption?: string;
+}
+const styles = {
+  form: {
+    field: emCss`
+      align-items: center;
+      width: 100%;
+      margin: 1rem 0 0 0;
+    `,
+    label: emCss`
+      width: 10%;
+    `,
+    input: emCss`
+      width: 90%;
+    `,
+    button: emCss`
+      margin: .4rem;
+    `,
+    select: emCss`
+      position: relative;
+      z-index: 100;
+      min-width: 100%;
+    `,
+    option: emCss`
+      display: flex!important;
+      flex-direction: row;
+      p {
+        width: 50%;
+      }
+    `
+  },
+};
+  
+const CustomOptionComponent = (props: OptionProps) => {
+  return (
+    <div>        
+          <div
+            className={props.cx(
+              {
+                option: true,
+              },
+              props.className
+            ) + ' ' + styles.form.option}
+            ref={props.innerRef}
+            aria-disabled={props.isDisabled}
+            {...props.innerProps}
+          >
+            <p>
+              {props.children}
+            </p>
+            <img alt={`Thumbnail image for video with title "${props.label}"`} src={(props.data as any).thumbSm} />
+          </div>
+    </div>
+    
+  )
+}
+function videoSelect({
+  label,
+  current,
+  defaultValue = {
+    label: 'PICK VIDEO',
+    videoUrl: '',
+  }
+}: {
+  label: string;
+  current?: RelatedVideo;
+  defaultValue: RelatedVideo;
+}): FormField<RelatedVideo, undefined> {
+  
+  return {
+    kind: 'form',
+
+    Input({ value, onChange, autoFocus }) {
+      return (
+        <FieldContainer>
+        {/* <FieldLabel>{label}</FieldLabel> */}
+                     <Select
+                id='video'
+                isClearable
+                autoFocus={autoFocus}
+                options={videoData}
+                isDisabled={onChange === undefined}
+                onChange={event => {
+                  onChange(event as RelatedVideo)
+                }}
+                value={current}
+                className={styles.form.select}
+                components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+    
+              />
+            {/* </div> */}
+        
+      </FieldContainer>
+      )
+    },
+    options: undefined,
+    defaultValue,
+    validate(value) {
+      console.log(typeof value)
+      return typeof value === 'object';
+    },
+  };
+}
+
+const textarea = ({
+  label,
+  defaultValue = "",
+}: {
+  label: string;
+  defaultValue?: string;
+}): FormField<string, undefined> => {
+  return {
+    kind: "form",
+    Input({ value, onChange, autoFocus }) {
+      return (
+        <FieldContainer>
+          <FieldLabel>{label}</FieldLabel>
+          <TextArea
+            autoFocus={autoFocus}
+            value={value}
+            style={{ fontFamily: "monospace" }}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
+          />
+        </FieldContainer>
+      );
+    },
+    options: undefined,
+    defaultValue,
+    validate(value) {
+      return typeof value === "object";
+    },
+  };
+}
+
+
 export const componentBlocks = {
   image: component({
      component: (props) => {
@@ -28,6 +172,43 @@ export const componentBlocks = {
        }),
      },
    }),
+  video: component({
+    component: ({video}) => {
+      // const [currentValue, setCurrentValue] = useState<RelatedVideo>();
+      
+      return (
+            <div>
+              {/* <NotEditable> */}
+        {/* <SyntaxHighlighter language={language.value} style={atomOneDark}> */}
+          {video.value.label}
+        {/* </SyntaxHighlighter> */}
+      {/* </NotEditable> */}
+  
+              {/* <Select
+                id='video'
+                isClearable
+                options={videoData}
+                className={styles.form.select}
+                components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+    
+              /> */}
+            </div>
+       );
+     },
+     label: 'Video',
+     props: {
+
+    // content: textarea({
+    //       label: "Code",
+    //     defaultValue: "console.log('Hello World!');",
+    //   }),
+       video: videoSelect({
+        label: 'Video',
+        defaultValue:'',
+       })
+     },
+     chromeless: false,
+  }),
    button: component({
       component: ({label, link}) => {
         return (      
@@ -61,5 +242,5 @@ export const componentBlocks = {
         link: fields.child({ kind: 'inline', placeholder: '/link/here' }),
       },
       chromeless: true
-    }),
+   }),
  }

@@ -2,6 +2,7 @@ import { InferRenderersForComponentBlocks } from "@keystone-6/fields-document/co
 import Link from "next/link";
 import { componentBlocks } from "../admin/components/component-blocks";
 import Image from "./Image";
+import Video from "./Video";
 
 type ButtonProps = {
   className?: string,
@@ -17,6 +18,9 @@ const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> =
         <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
       </div>
     );
+  },
+  video: (props: any) => {
+    return <Video key={props.video.value} videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
   },
   button: (props: any) => {
     return ( 

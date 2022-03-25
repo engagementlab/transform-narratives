@@ -10,7 +10,7 @@ import {
 } from '.keystone/types';
 import { cloudinaryImage } from '../../components/cloudinary';
 
-const BigPictureImage: Lists.CommunityImage = list({
+const BigPictureImage: Lists.BigPictureImage = list({
   fields: {
     bigPictureImages: relationship({ ref: 'BigPicture.images', many: true }), 
     image: cloudinaryImage({
@@ -18,7 +18,7 @@ const BigPictureImage: Lists.CommunityImage = list({
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
         apiKey: `${process.env.CLOUDINARY_KEY}`,
         apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-        folder: 'tngvi/community',
+        folder: 'tngvi/big-picture',
       },
       label: 'Source',
     }),

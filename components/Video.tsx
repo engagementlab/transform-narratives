@@ -9,12 +9,16 @@ type VideoProps = {
 };
 type VideoState = {
     videoOpen: boolean;
+    videoId: string;
     toggleOpen: (open: boolean) => void
+    setVideoId: (id: string) => void
 }
 // Create store with Zustand
 const useStore = create<VideoState>(set => ({
     videoOpen: false,
-    toggleOpen: (open: boolean) => set({ videoOpen:open })
+    videoId: '',
+    toggleOpen: (open: boolean) => set({ videoOpen:open }),
+    setVideoId: (id: string) => set({ videoId:id }),
 }));
 const thumbLoader = ({ src, width, quality }: ImageLoaderProps) => {
   return src.replace('_1920x1080?r=pad', `_${width}x1080?r=pad`);
@@ -26,9 +30,12 @@ const Video = ({
     videoLabel,
 }: VideoProps) => {
     const toggleOpen = useStore(state => state.toggleOpen);
+    const setId = useStore(state => state.setVideoId);
     const videoOpen = useStore(state => state.videoOpen);
+    const videoId = useStore(state => state.videoId);
+    // setId(videoUrl)
     return (
-      <div className='relative video'>
+      <div className='relative video w-full h-full'>
 
         {videoOpen ? '' : (
           <a href='#' onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>
@@ -48,12 +55,6 @@ const Video = ({
             <div className='relative' style={{padding:'49.27% 0 0 0'}}>
               <iframe src={`${videoUrl}?h=e72038724e&autoplay=1&color=bf9eda&byline=0&portrait=0`}
                style={{position:'absolute',top:0,left:0,width:'100%',height:'100%'}} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen></iframe></div>
-              {/* <iframe
-                  src={}
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                ></iframe>*/}
               <Script src="https://player.vimeo.com/api/player.js"></Script> 
           </div>
         )}
