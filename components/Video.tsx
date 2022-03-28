@@ -7,13 +7,10 @@ type VideoProps = {
   thumbUrl: string,
   videoUrl: string,
   videoLabel: string,
-  videoId: string,
 };
 type VideoState = {
     videoOpen: boolean;
-    // videoId: string;
     toggleOpen: (open: boolean) => void
-    // setVideoId: (id: string) => void
 }
 
 const thumbLoader = ({ src, width, quality }: ImageLoaderProps) => {
@@ -24,22 +21,16 @@ const Video = ({
     thumbUrl,
     videoUrl,
     videoLabel,
-    videoId,
 }: VideoProps) => {
-// Create store with Zustand
-const [useStore] = useState(() =>
-  create<VideoState>(set => ({
-      videoOpen: false,
-      // videoId: '',
-      toggleOpen: (open: boolean) => set({ videoOpen:open }),
-      // setVideoId: (id: string) => set({ videoId:id }),
-  })
-));
+    // Create store with Zustand
+    const [useStore] = useState(() =>
+      create<VideoState>(set => ({
+          videoOpen: false,
+          toggleOpen: (open: boolean) => set({ videoOpen:open }),
+      })
+    ));
     const toggleOpen = useStore(state => state.toggleOpen);
-    // const setId = useStore(state => state.setVideoId);
     const videoOpen = useStore(state => state.videoOpen);
-    // const videoId = useStore(state => state.videoId);
-    // setId(videoUrl)
     return (
       <div className='relative video w-full h-full'>
 
@@ -57,10 +48,9 @@ const [useStore] = useState(() =>
         )}
 
         {!videoOpen ? '' : (
-          <div id="video-embed">
-            {videoId} - {videoUrl}
+          <div id="video-embed"> 
             <div className='relative' style={{padding:'49.27% 0 0 0'}}>
-              <iframe src={`${videoUrl}?h=e72038724e&color=bf9eda&byline=0&portrait=0`}
+              <iframe src={`${videoUrl}?h=e72038724e&color=bf9eda&byline=0&portrait=0&autplay=1`}
                style={{position:'absolute',top:0,left:0,width:'100%',height:'100%'}} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen></iframe></div>
               {/* <Script src="https://player.vimeo.com/api/player.js"></Script>  */}
           </div>

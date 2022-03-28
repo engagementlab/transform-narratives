@@ -42,6 +42,10 @@ const Community: Lists.Community = list({
             },
             componentBlocks,
         }),
-    }
+    },
+    ui: {
+        hideCreate: true,
+        hideDelete: true,
+    },
   });
   export default Community;

@@ -15,7 +15,7 @@ import * as lists from './admin/schema';
 
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 const DB = require('./db');
 declare module 'express-serve-static-core' {
   interface Request {

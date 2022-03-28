@@ -53,6 +53,10 @@ const About: Lists.About = list({
             },
             componentBlocks,
         }),
-    }
+    },
+    ui: {
+        hideCreate: true,
+        hideDelete: true,
+    },
   });
   export default About;

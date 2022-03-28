@@ -20,7 +20,7 @@ const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> =
     );
   },
   video: (props: any) => {
-    return <Video videoId={props.video.value} videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
+    return <Video videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
   },
   button: (props: any) => {
     return ( 

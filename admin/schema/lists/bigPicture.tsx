@@ -69,6 +69,10 @@ const BigPicture: Lists.BigPicture = list({
             },
           },
         }),
-    }
+    },
+    ui: {
+        hideCreate: true,
+        hideDelete: true,
+    },
   });
   export default BigPicture;

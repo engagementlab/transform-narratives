@@ -12,6 +12,7 @@ const videoData = require('../../videoData');
 interface RelatedVideo {
   label: string;
   videoUrl: string;
+  thumbSm: string;
   caption?: string;
 }
 const styles = {
@@ -38,14 +39,23 @@ const styles = {
     option: emCss`
       display: flex!important;
       flex-direction: row;
+      padding: 1rem;
+      cursor: pointer;
       p {
         width: 50%;
+      }
+      img {
+        border: 2px solid white;
+      }
+      &:hover {
+        background: #2D3130;
+        color: white;
       }
     `
   },
 };
   
-const CustomOptionComponent = (props: OptionProps) => {
+const VideoOptionComponent = (props: OptionProps) => {
   return (
     <div>        
           <div
@@ -74,6 +84,7 @@ function videoSelect({
   defaultValue = {
     label: 'PICK VIDEO',
     videoUrl: '',
+    thumbSm: '',
   }
 }: {
   label: string;
@@ -87,67 +98,30 @@ function videoSelect({
     Input({ value, onChange, autoFocus }) {
       return (
         <FieldContainer>
-        {/* <FieldLabel>{label}</FieldLabel> */}
-                     <Select
-                id='video'
-                isClearable
-                autoFocus={autoFocus}
-                options={videoData}
-                isDisabled={onChange === undefined}
-                onChange={event => {
-                  onChange(event as RelatedVideo)
-                }}
-                value={current}
-                className={styles.form.select}
-                components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
-    
-              />
-            {/* </div> */}
-        
+            <Select
+            id='video'
+            isClearable
+            autoFocus={autoFocus}
+            options={videoData}
+            isDisabled={onChange === undefined}
+            onChange={event => {
+              onChange(event as RelatedVideo)
+            }}
+            value={current}
+            className={styles.form.select}
+            components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+
+          />        
       </FieldContainer>
       )
     },
     options: undefined,
     defaultValue,
     validate(value) {
-      console.log(typeof value)
       return typeof value === 'object';
     },
   };
 }
-
-const textarea = ({
-  label,
-  defaultValue = "",
-}: {
-  label: string;
-  defaultValue?: string;
-}): FormField<string, undefined> => {
-  return {
-    kind: "form",
-    Input({ value, onChange, autoFocus }) {
-      return (
-        <FieldContainer>
-          <FieldLabel>{label}</FieldLabel>
-          <TextArea
-            autoFocus={autoFocus}
-            value={value}
-            style={{ fontFamily: "monospace" }}
-            onChange={(event) => {
-              onChange(event.target.value);
-            }}
-          />
-        </FieldContainer>
-      );
-    },
-    options: undefined,
-    defaultValue,
-    validate(value) {
-      return typeof value === "object";
-    },
-  };
-}
-
 
 export const componentBlocks = {
   image: component({
@@ -174,37 +148,27 @@ export const componentBlocks = {
    }),
   video: component({
     component: ({video}) => {
-      // const [currentValue, setCurrentValue] = useState<RelatedVideo>();
-      
       return (
-            <div>
-              {/* <NotEditable> */}
-        {/* <SyntaxHighlighter language={language.value} style={atomOneDark}> */}
-          {video.value.label}
-        {/* </SyntaxHighlighter> */}
-      {/* </NotEditable> */}
-  
-              {/* <Select
-                id='video'
-                isClearable
-                options={videoData}
-                className={styles.form.select}
-                components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
-    
-              /> */}
-            </div>
+          <div>
+            {video.value.label}
+            <br />
+            <img
+              style={{width:'150px'}}
+              src={video.value.thumbSm}
+              // alt="Document image"
+            />
+          </div>
        );
      },
      label: 'Video',
      props: {
-
-    // content: textarea({
-    //       label: "Code",
-    //     defaultValue: "console.log('Hello World!');",
-    //   }),
        video: videoSelect({
         label: 'Video',
-        defaultValue:'',
+        defaultValue: {
+          label: 'Click "Edit" and select.',
+          videoUrl: '',
+          thumbSm: '',
+        }
        })
      },
      chromeless: false,
