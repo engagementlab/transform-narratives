@@ -1,14 +1,38 @@
 /** @jsxImportSource @emotion/react */
 /* eslint-disable @next/next/no-img-element */
-import { FieldProps } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
-import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
-import { MinusCircleIcon, EditIcon } from '@keystone-ui/icons';
-import { controller } from '@keystone-6/core/fields/types/json/views';
-import { ComponentType, Fragment, useState } from 'react';
+import {
+  FieldProps
+} from '@keystone-6/core/types';
+import {
+  Button
+} from '@keystone-ui/button';
+import {
+  FieldContainer,
+  FieldLabel,
+  TextInput
+} from '@keystone-ui/fields';
+import {
+  MinusCircleIcon,
+  EditIcon
+} from '@keystone-ui/icons';
+import {
+  controller
+} from '@keystone-6/core/fields/types/json/views';
+import {
+  ComponentType,
+  Fragment,
+  useState
+} from 'react';
 
-import Select, { components, GroupBase, OptionProps, Props } from 'react-select'
-import { css as emCss } from '@emotion/css';
+import Select, {
+  components,
+  GroupBase,
+  OptionProps,
+  Props
+} from 'react-select'
+import {
+  css as emCss
+} from '@emotion/css';
 // const _ = require('underscore');
 const videoData = require('../../../videoData');
 
@@ -20,26 +44,26 @@ interface RelatedVideo {
 
 const styles = {
   form: {
-    field: emCss`
+    field: emCss `
       align-items: center;
       width: 100%;
       margin: 1rem 0 0 0;
     `,
-    label: emCss`
+    label: emCss `
       width: 10%;
     `,
-    input: emCss`
+    input: emCss `
       width: 90%;
     `,
-    button: emCss`
+    button: emCss `
       margin: .4rem;
     `,
-    select: emCss`
+    select: emCss `
       position: relative;
       z-index: 100;
       min-width: 100%;
     `,
-    option: emCss`
+    option: emCss `
       display: flex!important;
       flex-direction: row;
       p {
@@ -48,12 +72,12 @@ const styles = {
     `
   },
   list: {
-    ul: emCss`
+    ul: emCss `
       list-style: none;
       margin: 1rem 0 0 0;
       padding: 0;
     `,
-    li: emCss`
+    li: emCss `
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
@@ -63,7 +87,7 @@ const styles = {
         background-color: white;
       }
     `,
-    data: emCss`
+    data: emCss `
       background-color: #eff3f6;
       padding: 0.5rem;
       flex: auto;
@@ -71,71 +95,86 @@ const styles = {
       align-items: flex-start;
       flex-wrap: nowrap;
     `,
-    dataLabel: emCss`
+    dataLabel: emCss `
       width: 40%;
     `,
-    dataHref: emCss`
+    dataHref: emCss `
       width: 60%;
     `,
-    optionButton: emCss`
+    optionButton: emCss `
       margin: 0 0 0 0.5rem;
     `,
   },
 };
 
-export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof controller>) => {
-  const [currentValue, setCurrentValue] = useState<RelatedVideo>();
-  const [videoCaption, setVideoCaption] = useState('');
-  const [index, setIndex] = useState<number | null>(null);
+export const Field = ({
+    field,
+    value,
+    onChange,
+    autoFocus
+  }: FieldProps < typeof controller > ) => {
+    const [currentValue, setCurrentValue] = useState < RelatedVideo > ();
+    const [videoCaption, setVideoCaption] = useState('');
+    const [index, setIndex] = useState < number | null > (null);
 
-  const currentVideos: RelatedVideo[] = value ? JSON.parse(value) : [];
+    const currentVideos: RelatedVideo[] = value ? JSON.parse(value) : [];
 
-  const onSubmitNewVideo = () => {
-    if (onChange) {
-      const newCaption = {caption: videoCaption};
-      const newVideo = {...currentValue, ...newCaption};
+    const onSubmitNewVideo = () => {
+      if (onChange) {
+        const newCaption = {
+          caption: videoCaption
+        };
+        const newVideo = {
+          ...currentValue,
+          ...newCaption
+        };
 
-      const videosCopy = [...currentVideos, newVideo];
-      onChange(JSON.stringify(videosCopy));
-      onCancel();
-    }
-  };
+        const videosCopy = [...currentVideos, newVideo];
+        onChange(JSON.stringify(videosCopy));
+        onCancel();
+      }
+    };
 
-  const onDeleteVideo = (index: number) => {
-    if (onChange) {
-      const videosCopy = [...currentVideos];
-      videosCopy.splice(index, 1);
-      onChange(JSON.stringify(videosCopy));
-      onCancel();
-    }
-  };
+    const onDeleteVideo = (index: number) => {
+      if (onChange) {
+        const videosCopy = [...currentVideos];
+        videosCopy.splice(index, 1);
+        onChange(JSON.stringify(videosCopy));
+        onCancel();
+      }
+    };
 
-  const onEditVideo = (index: number) => {
-    if (onChange) {
-      setIndex(index);
-      setCurrentValue(currentVideos[index]);
-      setVideoCaption(currentVideos[index].caption);
-    }
-  };
+    const onEditVideo = (index: number) => {
+      if (onChange) {
+        setIndex(index);
+        setCurrentValue(currentVideos[index]);
+        setVideoCaption(currentVideos[index].caption);
+      }
+    };
 
-  const onUpdate = () => {
-    if (onChange && index !== null && currentValue) {
-      const updatedCaption = {caption: videoCaption};
-      const updatedVideo = {...currentValue, ...updatedCaption};
+    const onUpdate = () => {
+      if (onChange && index !== null && currentValue) {
+        const updatedCaption = {
+          caption: videoCaption
+        };
+        const updatedVideo = {
+          ...currentValue,
+          ...updatedCaption
+        };
 
-      const videosCopy = [...currentVideos, updatedVideo];
-      onChange(JSON.stringify(videosCopy));
-      onCancel();
-    }
-  };
+        const videosCopy = [...currentVideos, updatedVideo];
+        onChange(JSON.stringify(videosCopy));
+        onCancel();
+      }
+    };
 
-  const onCancel = () => {
-    setIndex(null);
-    setCurrentValue(undefined);
-    setVideoCaption('');
-  };
-  
-  const CustomOptionComponent = (props: OptionProps) => {
+    const onCancel = () => {
+      setIndex(null);
+      setCurrentValue(undefined);
+      setVideoCaption('');
+    };
+
+    const CustomOptionComponent = (props: OptionProps) => {
     return (
       <div>        
             <div

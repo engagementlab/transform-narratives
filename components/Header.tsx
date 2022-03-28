@@ -57,6 +57,8 @@ const links: NavLink[] = [{
   },
 ];
 
+const customEase = 'ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300';
+
 type NavState = {
     navOpen: boolean
     toggleNavOpen: (open: boolean) => void
@@ -95,7 +97,7 @@ const NavItems = () => {
               </svg></a>
 
             <ul
-              className="xl:absolute xl:hidden xl:opacity-0 xl:p-3 xl:border-2 xl:-translate-x-1/2 text-gray-700 border-purple text-right  group-hover:block group-hover:opacity-100">
+            className={`xl:opacity-0 xl:p-3 xl:border-2 translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
               {link.subMenu.map((subLink: NavLink) => {
                 return (
                   <li className='mt-6 xl:mt-2' key={subLink.label}>
@@ -136,7 +138,7 @@ const Header = () => {
   // eslint-disable-next-line class-methods-use-this
   return (
     <div className="flex justify-center xl:px-8">
-      <nav className="w-full my-7 mb-24 flex flex-col md:flex-row">
+      <nav className="w-full my-9 mb-24 flex flex-col md:flex-row">
         <div className="w-full px-6 xl:px-0 flex justify-between">
           <Link href="/" passHref>
             <svg viewBox="0 0.081 81.459 50" width="81.459" height="50" className='cursor-pointer'>
@@ -219,22 +221,22 @@ const Header = () => {
           <div id="lines" className='block xl:hidden relative z-50 cursor-pointer' onClick={(e)=>{
             toggleNavOpen(!navOpen) }}>
             <span className={`block relative h-[1px] w-12 bg-purple opacity-100 origin-center transition-all
-              ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300 ${navOpen ? 'opacity-0 left-4' : ' left-0'
+              ${customEase} ${navOpen ? 'opacity-0 left-4' : ' left-0'
               }`}></span>
             <span className={`block relative h-[1px] w-12 bg-purple opacity-100 left-0 origin-center transition-all
-              ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300 ${navOpen ? 'rotate-45 top-0' : 'top-4'
+              ${customEase} ${navOpen ? 'rotate-45 top-0' : 'top-4'
               }`}></span>
             <span className={`block relative h-[1px] w-12 bg-purple opacity-100 left-0 origin-center transition-all
-              ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300 ${navOpen ? '-rotate-45 top-0' : 'top-8'
+              ${customEase} ${navOpen ? '-rotate-45 top-0' : 'top-8'
               }`}></span>
           </div>
           </div>
           <div className={`xl:hidden block w-full fixed overflow-y-scroll top-0 left-full h-full p-5 pt-20 z-40 bg-lynx
-            transition-all ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300 ${!navOpen ? ''
+            transition-all ${customEase} ${!navOpen ? ''
             : '-translate-x-full' }`}>
           {NavItems()}
         </div>
-        <div className="hidden xl:flex px-4 mt-4 w-1/2 items-center">
+        <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-2/5 items-center">
           {NavItems()}
         </div>
       </nav>
