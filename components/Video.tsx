@@ -50,7 +50,7 @@ const Video = ({
         {!videoOpen ? '' : (
           <div id="video-embed"> 
             <div className='relative' style={{padding:'49.27% 0 0 0'}}>
-              <iframe src={`${videoUrl}?h=e72038724e&color=bf9eda&byline=0&portrait=0&autplay=1`}
+              <iframe src={`${videoUrl}?h=e72038724e&color=bf9eda&byline=0&portrait=0&autoplay=1`}
                style={{position:'absolute',top:0,left:0,width:'100%',height:'100%'}} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen></iframe></div>
               {/* <Script src="https://player.vimeo.com/api/player.js"></Script>  */}
           </div>
