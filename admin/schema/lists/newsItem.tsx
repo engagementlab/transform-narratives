@@ -92,7 +92,7 @@ const NewsItem: Lists.NewsItem = list({
             image: {
               kind: 'prop',
               listKey: 'NewsImage',
-              selection: 'imageName altText image {publicUrlTransformed publicId}',
+              selection: 'imageName altText caption image {publicUrlTransformed publicId}',
             },
           },
       }),

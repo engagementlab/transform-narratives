@@ -1,13 +1,11 @@
 import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks'
 import Link from 'next/link';
 import _ from 'lodash';
 
 import { query } from '.keystone/api';
 
 import Image from '../../components/Image';
-import { componentBlocks } from '../../admin/components/component-blocks';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
@@ -21,12 +19,12 @@ type NewsItem = {
 };
 const renderers: DocumentRendererProps['renderers'] = {
     block: {
-    heading: ({ level, children, textAlign }) => {
-        return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
-    },
-    layout: ({layout, children}) => {
-        return FlexLayout(layout, children);
-    }
+        heading: ({ level, children, textAlign }) => {
+            return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
+        },
+        layout: ({layout, children}) => {
+            return FlexLayout(layout, children);
+        }
     },
 };
 
@@ -37,7 +35,7 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
         <div>
             <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} />
             <div className='px-4 xl:px-8'>
-                <h1 className="text-2xl font-extrabold mt-5">{item.title}</h1>
+                <h1 className="text-coated text-2xl font-extrabold mt-5">{item.title}</h1>
                 <div className="text-coated font-medium">
                     {new Date(item.publishDate).toLocaleDateString('en-US', {
                         weekday: 'long',

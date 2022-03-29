@@ -4,18 +4,12 @@ import { componentBlocks } from "../admin/components/component-blocks";
 import Image from "./Image";
 import Video from "./Video";
 
-type ButtonProps = {
-  className?: string,
-  hoverColor?: string,
-  link: string,
-  label: string,
-  margin?: string,
-};
 const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
   image: (props: any) => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
+        <p>{props.image.data.caption}</p>
       </div>
     );
   },

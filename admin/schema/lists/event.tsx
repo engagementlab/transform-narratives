@@ -92,7 +92,7 @@ const Event: Lists.Event = list({
           image: {
             kind: 'prop',
             listKey: 'EventImage',
-            selection: 'imageName altText image {publicUrlTransformed publicId}',
+            selection: 'imageName altText caption image {publicUrlTransformed publicId}',
           },
         },
       }),
@@ -122,23 +122,6 @@ const Event: Lists.Event = list({
           inlineEdit: {
             fields: ['image', 'imageName', 'altText', 'caption']
           },
-        },
-      }),
-         
-      mainVideo: json({
-        ui: {
-          views: path.join(process.cwd(), '/admin/components/video/components.tsx'),
-          createView: { fieldMode: 'edit' },
-          listView: { fieldMode: 'hidden' },
-          itemView: { fieldMode: 'edit' },
-        },
-      }),
-      videos: json({
-        ui: {
-          views: path.join(process.cwd(), '/admin/components/video/components.tsx'),
-          createView: { fieldMode: 'edit' },
-          listView: { fieldMode: 'hidden' },
-          itemView: { fieldMode: 'edit' },
         },
       }),
     },
