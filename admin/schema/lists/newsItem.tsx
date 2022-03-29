@@ -45,6 +45,12 @@ const NewsItem: Lists.NewsItem = list({
           folder: 'tngvi/news',
         },
       }),
+      thumbAltText: text({
+        validation: {
+          isRequired: true
+        },
+        label: 'Describe appearance of Thumbnail/Header Image'
+      }),
       publishDate: timestamp({
           validation:{
               isRequired: true,
@@ -81,6 +87,14 @@ const NewsItem: Lists.NewsItem = list({
               views: path.join(process.cwd(), 'admin/components/component-blocks')
           },
           componentBlocks,
+
+          relationships: {
+            image: {
+              kind: 'prop',
+              listKey: 'NewsImage',
+              selection: 'imageName altText image {publicUrlTransformed publicId}',
+            },
+          },
       }),
       images: relationship({
         ref: 'NewsImage.newsImages',

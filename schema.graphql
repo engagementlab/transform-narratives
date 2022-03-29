@@ -1061,6 +1061,7 @@ type NewsItem {
   title: String
   key: String
   thumbnail: CloudinaryImage_File
+  thumbAltText: String
   publishDate: DateTime
   blurb: String
   body: NewsItem_body_Document
@@ -1089,6 +1090,7 @@ input NewsItemWhereInput {
   id: IDFilter
   title: StringFilter
   key: StringFilter
+  thumbAltText: StringFilter
   publishDate: DateTimeFilter
   blurb: StringFilter
   images: NewsImageManyRelationFilter
@@ -1104,6 +1106,7 @@ input NewsItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
   key: OrderDirection
+  thumbAltText: OrderDirection
   publishDate: OrderDirection
   blurb: OrderDirection
 }
@@ -1112,6 +1115,7 @@ input NewsItemUpdateInput {
   title: String
   key: String
   thumbnail: Upload
+  thumbAltText: String
   publishDate: DateTime
   blurb: String
   body: JSON
@@ -1134,6 +1138,7 @@ input NewsItemCreateInput {
   title: String
   key: String
   thumbnail: Upload
+  thumbAltText: String
   publishDate: DateTime
   blurb: String
   body: JSON

@@ -122,14 +122,15 @@ model NewsImage {
 }
 
 model NewsItem {
-  id          String      @id @default(cuid())
-  title       String      @default("")
-  key         String      @unique @default("")
-  thumbnail   String?
-  publishDate DateTime
-  blurb       String      @default("")
-  body        String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  images      NewsImage[] @relation("NewsImage_newsImages")
+  id           String      @id @default(cuid())
+  title        String      @default("")
+  key          String      @unique @default("")
+  thumbnail    String?
+  thumbAltText String      @default("")
+  publishDate  DateTime
+  blurb        String      @default("")
+  body         String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images       NewsImage[] @relation("NewsImage_newsImages")
 }
 
 model Person {
