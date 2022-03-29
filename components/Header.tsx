@@ -143,7 +143,7 @@ const Header = () => {
   // eslint-disable-next-line class-methods-use-this
   return (
     <div className="flex justify-center xl:px-8">
-      <nav className="w-full my-9 mb-24 flex flex-col md:flex-row">
+      <nav className="w-full mt-9 mb-1 flex flex-col md:flex-row">
         <div className="w-full px-6 xl:px-0 flex justify-between">
           <Link href="/" passHref>
             <svg viewBox="0 0.081 81.459 50" width="81.459" height="50" className='cursor-pointer'>
