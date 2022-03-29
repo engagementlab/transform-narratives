@@ -11,13 +11,18 @@ import {
 import FilteredItems, { MediaItem } from "../components/Filtering";
 import Image from "../components/Image";
 import Layout from "../components/Layout";
+import ImagePlaceholder from "../components/ImagePlaceholder";
 
 const renderItem = (props: { item: MediaItem }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full ml-5">
-                <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
-                    `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" />
+                {
+                    props.item.thumbnail ?
+                    <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
+                    `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
+                    <ImagePlaceholder imageLabel='Studio' width={335} height={200} />
+                }
                 <h4 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h4>
 
                 <div className="flex items-start">

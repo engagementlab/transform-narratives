@@ -8,6 +8,7 @@ import {
 } from '.keystone/api';
 import Image from "../components/Image";
 import Layout from "../components/Layout";
+import ImagePlaceholder from "../components/ImagePlaceholder";
 
 type News = {
     title: string;
@@ -46,14 +47,19 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
                             </div>
                         </div>
                         <div className="flex-grow">
-                            <Link href={`/events/${item.key}`} passHref>
+                            <Link href={`/news/${item.key}`} passHref>
                                 <a>
                                     <h4 className="text-bluegreen text-xl font-semibold my-2">{item.title}</h4>
                                 </a>
                             </Link>
                             <p>{item.blurb}</p>
-                            <Image id={`thumb-${i}`} alt={`Thumbnail for blog post with title "${item.title}" `}
-                                imgId={item.thumbnail.publicId} width={335} />
+                 
+                            {
+                                item.thumbnail ?
+                                <Image id={`thumb-${i}`} alt={`Thumbnail for blog post with title "${item.title}" `}
+                                imgId={item.thumbnail.publicId} width={335} /> :
+                                <ImagePlaceholder imageLabel='News' width={335} height={200} />
+                            }
                         </div>
                     </div>
                     ))}

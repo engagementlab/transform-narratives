@@ -11,6 +11,7 @@ import {
 import FilteredItems, { MediaItem } from "../components/Filtering";
 import Image from "../components/Image";
 import Layout from "../components/Layout";
+import ImagePlaceholder from "../components/ImagePlaceholder";
 
 const renderItem = (props: { item: MediaItem }) => {
     return (
@@ -18,8 +19,12 @@ const renderItem = (props: { item: MediaItem }) => {
         className="w-full xl:w-1/4">
             <Link href={`/media/${props.item.key}`} passHref>
             <a>
-                <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
-                    `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-xs" />
+                {
+                    props.item.thumbnail ?
+                    <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
+                        `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-xs" /> :
+                    <ImagePlaceholder imageLabel='Media' width={335} height={200} />
+                }
                 <p>{props.item.title}</p>
                 <p>{props.item.shortDescription}</p>
                 <p className="uppercase">{_.map(props.item.filters, 'name').join(', ')}</p>

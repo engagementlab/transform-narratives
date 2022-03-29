@@ -10,6 +10,7 @@ import {
 } from '.keystone/api';
 import Image from "../components/Image";
 import Layout from "../components/Layout";
+import ImagePlaceholder from "../components/ImagePlaceholder";
 
 type Event = {
     name: string;
@@ -68,8 +69,12 @@ const Item = (props: ItemProps) => {
                         <h4 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h4>
                     </a>
                 </Link>
-                <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `}
-                    imgId={props.event.thumbnail.publicId} width={335} />
+                 {
+                     props.event.thumbnail ?
+                    <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
+                        imgId={props.event.thumbnail.publicId} width={335} /> :
+                    <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
+                }
             </div>
         </div>
     )

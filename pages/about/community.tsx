@@ -4,6 +4,7 @@ import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-re
 import BlockRenderers from '../../components/BlockRenderers';
 import Image from '../../components/Image';
 import Layout from '../../components/Layout';
+import ImagePlaceholder from '../../components/ImagePlaceholder';
 
 type CommunityPage = {
     values: any;
@@ -44,7 +45,10 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
               {people.map((person, i) => (
                 <div key={i} className='flex flex-col lg:flex-row mt-5'>
                       <div className='w-full lg:w-1/3 flex-shrink-0'>
-                          <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300}  />
+                          {person.image ?
+                            <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300} /> :
+                            <ImagePlaceholder imageLabel='Bio' width={300} height={300} />
+                          }
                       </div>
                       <div className='ml-4'>
                           <h4 className='text-xl font-semibold'>{person.name}</h4>
