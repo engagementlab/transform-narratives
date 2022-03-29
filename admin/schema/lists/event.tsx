@@ -45,6 +45,12 @@ const Event: Lists.Event = list({
           folder: 'tngvi/events',
         },
       }),
+      thumbAltText: text({
+        validation: {
+          isRequired: true
+        },
+        label: 'Describe appearance of Thumbnail/Header Image'
+      }),
       eventDate: timestamp({
           validation:{
               isRequired: true,
@@ -96,18 +102,10 @@ const Event: Lists.Event = list({
           },
         },
       }),
-      speakersBios: document({
-        formatting: {
-            inlineMarks: true,
-        },
-        links: true,
-        layouts: [
-            [1, 2],
-        ],
-        ui: {
-            views: path.join(process.cwd(), 'admin/components/component-blocks')
-        },
-        componentBlocks,
+      speakers: relationship({
+        ref: 'Person',
+        isFilterable: true,
+        many: true,
       }),
       images: relationship({
         ref: 'EventImage.eventImages',

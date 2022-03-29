@@ -52,15 +52,14 @@ model Event {
   name             String       @default("")
   key              String       @unique @default("")
   thumbnail        String?
+  thumbAltText     String       @default("")
   eventDate        DateTime
   registrationLink String       @default("")
   address          String       @default("")
   blurb            String       @default("")
   content          String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  speakersBios     String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  speakers         Person[]     @relation("Event_speakers")
   images           EventImage[] @relation("Event_images")
-  mainVideo        String?
-  videos           String?
 }
 
 model Filter {
@@ -134,10 +133,11 @@ model NewsItem {
 }
 
 model Person {
-  id      String  @id @default(cuid())
-  name    String  @default("")
-  image   String?
-  content String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id                  String  @id @default(cuid())
+  name                String  @default("")
+  image               String?
+  content             String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Event_speakers Event[] @relation("Event_speakers")
 }
 
 model StudioImage {
