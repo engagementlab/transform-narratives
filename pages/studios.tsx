@@ -10,7 +10,7 @@ import {
 } from '.keystone/api';
 import FilteredItems, { MediaItem } from "../components/Filtering";
 import Image from "../components/Image";
-import Button from "../components/Button";
+import Layout from "../components/Layout";
 
 const renderItem = (props: { item: MediaItem }) => {
     return (
@@ -38,15 +38,17 @@ const renderItem = (props: { item: MediaItem }) => {
 
 export default function Studios({ filtersGrouped, studios }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
-        <div
-        className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
-            <h2 className="text-2xl text-bluegreen font-semibold">Studios at Emerson College</h2>
-        
-            <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of gun violence as it is experienced locally. The <i>Transforming Narratives of Gun Violence Initiative</i> is a multi-year initiative and hosts 5-7 studios per year.</p>
+        <Layout>
+            <div
+            className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
+                <h2 className="text-2xl text-bluegreen font-semibold">Studios at Emerson College</h2>
             
-            {FilteredItems(filtersGrouped, studios, renderItem)} 
-           
-        </div>
+                <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of gun violence as it is experienced locally. The <i>Transforming Narratives of Gun Violence Initiative</i> is a multi-year initiative and hosts 5-7 studios per year.</p>
+                
+                {FilteredItems(filtersGrouped, studios, renderItem)} 
+            
+            </div>
+        </Layout>
     );
 }
 

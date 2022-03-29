@@ -2,6 +2,7 @@ import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import BlockRenderers from '../../components/BlockRenderers';
+import Layout from '../../components/Layout';
 
 type BigPicturePage = {
   content: any;
@@ -23,9 +24,11 @@ const renderers: DocumentRendererProps['renderers'] = {
 
 export default function BigPicture({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div className='px-4 xl:px-8 w-full lg:w-7/12'>
-      <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
-    </div>
+    <Layout>
+      <div className='px-4 xl:px-8 w-full lg:w-7/12'>
+        <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
+      </div>
+    </Layout>
   );
 }
 export async function getStaticProps() {

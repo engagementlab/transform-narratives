@@ -75,14 +75,9 @@ const useStore = create<NavState>(set => ({
 }));
 
 // TODO: Disable current page
-function ActiveLink(href: string) {
+function ActiveLink(href: string | undefined) {
   const router = useRouter();
-  const style = {
-    marginRight: 10,
-    color: router.asPath === href ? 'red' : 'black',
-  }
-
-  return style;
+  return router.asPath === href;
 }
 
 const NavItems = () => {
@@ -97,13 +92,18 @@ const NavItems = () => {
               </svg></a>
 
             <ul
-            className={`xl:opacity-0 xl:p-3 xl:border-2 translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
+            className={`xl:opacity-0 xl:p-3 xl:border-2 xl:translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
               {link.subMenu.map((subLink: NavLink) => {
                 return (
                   <li className='mt-6 xl:mt-2' key={subLink.label}>
-                    <Link href={subLink.url || '' } passHref>
-                    {subLink.label}
-                    </Link>
+                  {
+                    ActiveLink(subLink.url) ? 
+                      <span className='opacity-40'>{subLink.label}</span> 
+                    :
+                      <Link href={subLink.url || '' } passHref>
+                        {subLink.label}
+                      </Link>
+                  }
                   </li>
                 );
               })}
@@ -113,9 +113,14 @@ const NavItems = () => {
         else {
           return (
             <li className='mt-6 xl:mt-0' key={link.label}>
-              <Link href={link.url || '' } passHref>
-                {link.label}
-              </Link>
+              {
+                ActiveLink(link.url) ? 
+                  <span className='opacity-40'>{link.label}</span> 
+                  : 
+                  <Link href={link.url || '' } passHref>
+                    {link.label}
+                  </Link>
+              }
             </li>
           );
         }

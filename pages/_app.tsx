@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 import Favicon from '../components/Favicon';
+import { AnimatePresence } from 'framer-motion';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +19,13 @@ function App({ Component, pageProps }: AppProps) {
       </div>
       <main className='w-full my-7 mb-24 font-sans'>
       <Header />
-      <Component {...pageProps} />
+      <AnimatePresence 
+                exitBeforeEnter
+                initial={false}
+                onExitComplete={() => window.scrollTo(0, 0)}>
+
+        <Component {...pageProps} />
+      </AnimatePresence>
       <Footer />
       </main>
     </div>

@@ -9,6 +9,7 @@ import {
     query
 } from '.keystone/api';
 import Image from "../components/Image";
+import Layout from "../components/Layout";
 
 type Event = {
     name: string;
@@ -76,21 +77,23 @@ const Item = (props: ItemProps) => {
 
 export default function Events({ upcoming, past }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
-        <div className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-            <h2 className="text-2xl text-bluegreen font-semibold">Upcoming Events</h2>
-            <div className='flex flex-col mt-6'>
-                {upcoming.map((event, i) => (
-                    <Item key={i} event={event} index={i} past={false} />
-                ))}
-            </div>
+        <Layout>
+            <div className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
+                <h2 className="text-2xl text-bluegreen font-semibold">Upcoming Events</h2>
+                <div className='flex flex-col mt-6'>
+                    {upcoming.map((event, i) => (
+                        <Item key={i} event={event} index={i} past={false} />
+                        ))}
+                </div>
 
-            <h2 className="text-2xl text-bluegreen font-semibold mt-12">Past Events</h2>
-            <div className='flex flex-col mt-6'>
-                {past.map((event, i) => (
-                    <Item key={i} event={event} index={i} past={true} />
-                ))}
+                <h2 className="text-2xl text-bluegreen font-semibold mt-12">Past Events</h2>
+                <div className='flex flex-col mt-6'>
+                    {past.map((event, i) => (
+                        <Item key={i} event={event} index={i} past={true} />
+                        ))}
+                </div>
             </div>
-        </div>
+        </Layout>
     );
 }
 

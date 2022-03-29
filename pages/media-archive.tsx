@@ -10,6 +10,7 @@ import {
 } from '.keystone/api';
 import FilteredItems, { MediaItem } from "../components/Filtering";
 import Image from "../components/Image";
+import Layout from "../components/Layout";
 
 const renderItem = (props: { item: MediaItem }) => {
     return (
@@ -30,6 +31,8 @@ const renderItem = (props: { item: MediaItem }) => {
 
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
+        <Layout>
+
         <div
         className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
             <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
@@ -41,6 +44,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
             {FilteredItems(filtersGrouped, mediaItems, renderItem)} 
            
         </div>
+        </Layout>
     );
 }
 

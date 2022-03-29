@@ -6,6 +6,7 @@ import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import Image from '../components/Image';
 import Button from '../components/Button';
+import Layout from '../components/Layout';
 
 type HomePage = {
   id: string;
@@ -36,23 +37,25 @@ const slidesProps = {
   nextArrow: <span></span>,
 };
 
-export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   return (
-    <div className=''>
-      <div className='w-3/4 lg:w-1/2 text-center mx-auto'>
-        <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
-        <Button link='/media-archive' label='Listen to our stories' className='relative z-10' />
+    <Layout>
+      <div>
+        <div className='w-3/4 lg:w-1/2 text-center mx-auto'>
+          <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
+          <Button link='/media-archive' label='Listen to our stories' className='relative z-10' />
+        </div>
+        <Fade {...slidesProps} className='-translate-y-40'>
+          {homePage.slides.map((slide, i) => (
+            <div key={`slide-${i}`} className=' text-center'>
+              <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
+              <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId}  />
+            
+            </div>
+          ))}
+        </Fade>
       </div>
-      <Fade {...slidesProps} className='-translate-y-40'>
-        {homePage.slides.map((slide, i) => (
-          <div key={`slide-${i}`} className=' text-center'>
-            <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
-            <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId}  />
-          
-          </div>
-        ))}
-      </Fade>
-    </div>
+    </Layout>
   );
 }
 
