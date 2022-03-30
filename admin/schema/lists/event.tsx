@@ -52,9 +52,9 @@ const Event: Lists.Event = list({
         label: 'Describe appearance of Thumbnail/Header Image'
       }),
       eventDate: timestamp({
-          // validation:{
-          //     isRequired: true,
-          // }
+          validation:{
+              isRequired: true,
+          }
       }),
       registrationLink: text({
         // validation: {

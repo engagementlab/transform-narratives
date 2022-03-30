@@ -53,7 +53,7 @@ model Event {
   key              String       @unique @default("")
   thumbnail        String?
   thumbAltText     String       @default("")
-  eventDate        DateTime?
+  eventDate        DateTime
   registrationLink String       @default("")
   address          String       @default("")
   blurb            String       @default("")
