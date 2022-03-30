@@ -74,10 +74,11 @@ const useStore = create<NavState>(set => ({
     }),
 }));
 
-// TODO: Disable current page
-function ActiveLink(href: string | undefined) {
+const ActiveLink = (href: string | undefined) => {
+
   const router = useRouter();
   return router.asPath === href;
+
 }
 
 const NavItems = () => {

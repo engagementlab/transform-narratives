@@ -3,27 +3,36 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import _ from 'lodash';
 import Image from './Image';
+import { UrlObject } from 'url';
 
-interface NavLink {
-  label: string;
-  url?: string;
-  subMenu?: NavLink[];
+const ActiveLink = (href: string | undefined) => {
+
+    const router = useRouter();
+    return router.asPath === href;
+
 }
 
-function ActiveLink(href: string) {
-    const router = useRouter()
-    const style = {
-      marginRight: 10,
-      color: router.asPath === href ? 'red' : 'black',
-    }
-  
-    return style;
-  }
-  
+const LinkRender = (props: { link: string; label: string, pad?: boolean }) => {
+
+    return (
+        <li className={props.pad ? 'pt-2' : ''}>
+            {
+                ActiveLink(props.link) ? 
+                <span className='opacity-40'>{props.label}</span> 
+                :
+                <Link href={props.link} passHref>
+                    {props.label}
+                </Link>
+            }
+        </li>
+    );
+    
+}
+
 class Footer extends Component {
   render() {
     return (
-        <nav className="w-full px-12 my-7 mb-24">
+        <nav className="w-full px-6 xl:px-12 my-7 mb-24">
             <Link href="/" passHref>
             <svg viewBox="0 0.081 58 35.601" width="58" height="35.601">
                 <g transform="matrix(0.11329, 0, 0, 0.11329, 0, 0.071911)">
@@ -104,60 +113,25 @@ class Footer extends Component {
             </svg>
             </Link>
             <div className="mt-4 w-full flex flex-col md:flex-row justify-between">
-                <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col md:flex-row justify-between text-green-blue text-sm">
+                <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col sm:flex-row justify-between text-green-blue text-sm">
 
                     <ul className="list-none pt-2 md:pt-0">
-                        <li>
-                            <Link href='/about' passHref>
-                            About the Initiative
-                            </Link>
-                        </li>
-                        <li className='pt-2'>
-                            <Link href='/community' passHref>
-                            About Our Community
-                            </Link>
-                        </li>
-                        <li className='pt-2'>
-                            <Link href='/big-picture' passHref>
-                            The Big Picture
-                            </Link>
-                        </li>
+                        <LinkRender label='About the Initiative' link='/about/initiative' />
+                        <LinkRender label='About Our Community' link='/about/community' pad={true} />
+                        <LinkRender label='The Big Picture' link='/about/big-picture' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">
-                        <li>
-                            <Link href='/media-archive' passHref>
-                            Media Archive
-                            </Link>
-                        </li>
-                        <li className='pt-2'>
-                            <Link href='/studios' passHref>
-                            Studios
-                            </Link>
-                        </li>
+                        <LinkRender label='Media Archive' link='/media-archive' />
+                        <LinkRender label='Studios' link='/studios' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">
-                        <li>
-                            <Link href='/events' passHref>
-                            Events
-                            </Link>
-                        </li>
-                        <li className='pt-2'>
-                            <Link href='/new' passHref>
-                            News
-                            </Link>
-                        </li>
-                        <li className='pt-2'>
-                            <Link href='/get-involved' passHref>
-                            Get Involved
-                            </Link>
-                        </li>
+                        <LinkRender label='Events' link='/events' />
+                        <LinkRender label='News' link='/news' pad={true} />
+                        <LinkRender label='Get Involved' link='/get-involved' pad={true} />
                     </ul>
-                    <ul className="list-none pt-2 md:pt-0">
-                        <li>
-                            <Link href='/' passHref>
-                            Medium
-                            </Link>
-                        </li>
+                    {/* <ul className="list-none pt-2 md:pt-0">
+                        <LinkRender label='Get Involved' link='/get-involved' pad={true} />
+                        
                         <li className='pt-2'>
                             <Link href='/' passHref>
                             Facebook
@@ -168,9 +142,9 @@ class Footer extends Component {
                             Twitter
                             </Link>
                         </li>
-                    </ul>
+                    </ul> */}
                 </div>
-                <div className="flex flex-row items-center justify-between list-none">
+                <div className="flex flex-row mt-7 lg:mt-0 w-1/3 xl:w-1/4 items-center justify-between list-none">
                     <svg viewBox="0 0 75 26.578" width="75" height="26.578" className='flex-shrink-0'>
                         <title>Engagement Lab logo</title>
                         <path fill="#F6A536" fillRule="evenodd"

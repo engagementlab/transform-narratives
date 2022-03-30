@@ -18,17 +18,17 @@ const renderItem = (props: { item: MediaItem }) => {
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full xl:w-1/4">
             <Link href={`/media/${props.item.key}`} passHref>
-            <a>
-                {
-                    props.item.thumbnail ?
-                    <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
-                        `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-xs" /> :
-                    <ImagePlaceholder imageLabel='Media' width={335} height={200} />
-                }
-                <p>{props.item.title}</p>
-                <p>{props.item.shortDescription}</p>
-                <p className="uppercase">{_.map(props.item.filters, 'name').join(', ')}</p>
-            </a>
+                <a>
+                    {
+                        props.item.thumbnail ?
+                        <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
+                            `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-xs" /> :
+                        <ImagePlaceholder imageLabel='Media' width={335} height={200} />
+                    }
+                    <p>{props.item.title}</p>
+                    <p>{props.item.shortDescription}</p>
+                    <p className="uppercase">{_.map(props.item.filters, 'name').join(', ')}</p>
+                </a>
             </Link>
         </motion.div>
     );
@@ -37,18 +37,17 @@ const renderItem = (props: { item: MediaItem }) => {
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <Layout>
-
-        <div
-        className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
-            <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
-        
-            <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
-                gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
-                multi-year initiative and hosts 5-7 studios per year.</p>
+            <div
+            className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
+                <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
             
-            {FilteredItems(filtersGrouped, mediaItems, renderItem, 'media')} 
-           
-        </div>
+                <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
+                    gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
+                    multi-year initiative and hosts 5-7 studios per year.</p>
+                
+                {FilteredItems(filtersGrouped, mediaItems, renderItem, 'media')} 
+            
+            </div>
         </Layout>
     );
 }

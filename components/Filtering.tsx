@@ -185,7 +185,7 @@ const FilteredItems = (filtersGrouped: {
                 </div>
                 <span className="my-4 uppercase w-full block lg:text-right">{showing}</span>
                     
-                <div className={mode === 'media' ? 'xl:flex justify-between' : ''}>{
+                <div className={mode === 'media' ? 'xl:flex xl:ml-5 justify-between' : ''}>{
                     count === 0 ?
                     <p className='w-full text-4xl text-center'>No matches! Please try other filters.</p> :
                             <AnimatePresence>
