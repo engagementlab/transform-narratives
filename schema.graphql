@@ -415,13 +415,6 @@ type Event {
   address: String
   blurb: String
   content: Event_content_Document
-  speakers(
-    where: PersonWhereInput! = {}
-    orderBy: [PersonOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Person!]
-  speakersCount(where: PersonWhereInput! = {}): Int
   images(
     where: EventImageWhereInput! = {}
     orderBy: [EventImageOrderByInput!]! = []
@@ -455,7 +448,6 @@ input EventWhereInput {
   registrationLink: StringFilter
   address: StringFilter
   blurb: StringFilter
-  speakers: PersonManyRelationFilter
   images: EventImageManyRelationFilter
 }
 
@@ -468,12 +460,6 @@ input DateTimeFilter {
   gt: DateTime
   gte: DateTime
   not: DateTimeFilter
-}
-
-input PersonManyRelationFilter {
-  every: PersonWhereInput
-  some: PersonWhereInput
-  none: PersonWhereInput
 }
 
 input EventImageManyRelationFilter {
@@ -503,15 +489,7 @@ input EventUpdateInput {
   address: String
   blurb: String
   content: JSON
-  speakers: PersonRelateToManyForUpdateInput
   images: EventImageRelateToManyForUpdateInput
-}
-
-input PersonRelateToManyForUpdateInput {
-  disconnect: [PersonWhereUniqueInput!]
-  set: [PersonWhereUniqueInput!]
-  create: [PersonCreateInput!]
-  connect: [PersonWhereUniqueInput!]
 }
 
 input EventImageRelateToManyForUpdateInput {
@@ -536,13 +514,7 @@ input EventCreateInput {
   address: String
   blurb: String
   content: JSON
-  speakers: PersonRelateToManyForCreateInput
   images: EventImageRelateToManyForCreateInput
-}
-
-input PersonRelateToManyForCreateInput {
-  create: [PersonCreateInput!]
-  connect: [PersonWhereUniqueInput!]
 }
 
 input EventImageRelateToManyForCreateInput {

@@ -9,18 +9,23 @@ import Image from '../../components/Image';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import ImagePlaceholder from '../../components/ImagePlaceholder';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type Event = {
-  title: string;
-  publishDate: string;
-  body: any;
+  name: string;
+  eventDate: string;
+  content: any;
   thumbnail: any;
   thumbAltText: string;
 };
 const renderers: DocumentRendererProps['renderers'] = {
     block: {
         heading: ({ level, children, textAlign }) => {
-            return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
+            const customRenderers = {
+                4: 'font-semibold text-[18px] text-coated'
+            };
+            return HeadingStyle(level, children, textAlign, customRenderers);
         },
         layout: ({layout, children}) => {
             return FlexLayout(layout, children);
@@ -33,22 +38,27 @@ export default function Event({ item, relatedItems }: InferGetStaticPropsType<ty
     !item ? 'Not found!' :
     <Layout>
         <div>
-            <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} />
+            {
+                item.thumbnail ?
+                <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} /> :
+                <ImagePlaceholder imageLabel='Header' width={1280} height={350} />
+            }
             <div className='px-4 xl:px-8'>
-                <h1 className="text-coated text-2xl font-extrabold mt-5">{item.title}</h1>
+                <h1 className="text-coated text-2xl font-extrabold mt-5">{item.name}</h1>
                 <div className="text-coated font-medium">
-                    {new Date(item.publishDate).toLocaleDateString('en-US', {
+                    {new Date(item.eventDate).toLocaleDateString('en-US', {
                         weekday: 'long',
-                    })}, {new Date(item.publishDate).toLocaleDateString('en-US', {
+                    })}, {new Date(item.eventDate).toLocaleDateString('en-US', {
                         month: 'long',
                         day: 'numeric',
                         year: 'numeric',
-                    })}, {new Date(item.publishDate).toLocaleTimeString('en-US', {
+                    })}, {new Date(item.eventDate).toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
                     })}
                 </div>
-                <DocumentRenderer document={item.body.document} componentBlocks={BlockRenderers} renderers={renderers} />
+  
+                <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
 
                 {relatedItems &&
                     <div>
@@ -103,7 +113,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const item = (await query.Event.findOne({
       where: { key: params!.key as string },
-      query: 'name eventDate thumbnail { publicId } thumbAltText body { document(hydrateRelationships: true) }',
+      query: 'name eventDate thumbnail { publicId } thumbAltText content { document }',
   })) as Event;
   const relatedItems = null;
   

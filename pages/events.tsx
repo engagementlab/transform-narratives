@@ -68,13 +68,13 @@ const Item = (props: ItemProps) => {
                     <a>
                         <h4 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h4>
                     </a>
-                </Link>
-                 {
+                    {
                      props.event.thumbnail ?
-                    <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
-                        imgId={props.event.thumbnail.publicId} width={335} /> :
-                    <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
-                }
+                     <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
+                     imgId={props.event.thumbnail.publicId} width={335} /> :
+                     <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
+                    }
+                </Link>
             </div>
         </div>
     )

@@ -58,7 +58,6 @@ model Event {
   address          String       @default("")
   blurb            String       @default("")
   content          String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  speakers         Person[]     @relation("Event_speakers")
   images           EventImage[] @relation("Event_images")
 }
 
@@ -133,12 +132,11 @@ model NewsItem {
 }
 
 model Person {
-  id                  String  @id @default(cuid())
-  name                String  @default("")
-  title               String  @default("")
-  image               String?
-  content             String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  from_Event_speakers Event[] @relation("Event_speakers")
+  id      String  @id @default(cuid())
+  name    String  @default("")
+  title   String  @default("")
+  image   String?
+  content String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model StudioImage {

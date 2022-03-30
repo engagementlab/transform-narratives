@@ -9,6 +9,7 @@ import Image from '../../components/Image';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import ImagePlaceholder from '../../components/ImagePlaceholder';
 
 type NewsItem = {
   title: string;
@@ -33,7 +34,11 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
     !item ? 'Not found!' :
     <Layout>
         <div>
-            <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} />
+            {
+                item.thumbnail ?
+                <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} /> :
+                <ImagePlaceholder imageLabel='Header' width={1280} height={350} />
+            }
             <div className='px-4 xl:px-8'>
                 <h1 className="text-coated text-2xl font-extrabold mt-5">{item.title}</h1>
                 <div className="text-coated font-medium">
