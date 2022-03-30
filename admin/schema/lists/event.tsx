@@ -78,7 +78,14 @@ const Event: Lists.Event = list({
         }
       }),
       content: document({
-        formatting: true,
+        formatting: {
+          headingLevels: [2, 3, 4],
+          inlineMarks: true,
+          listTypes: true,
+          alignment: true,
+          blockTypes: true,
+          softBreaks: true,
+        },
         dividers: true,
         links: true,
         layouts: [
@@ -102,11 +109,11 @@ const Event: Lists.Event = list({
           },
         },
       }),
-      speakers: relationship({
-        ref: 'Person',
-        isFilterable: true,
-        many: true,
-      }),
+      // speakers: relationship({
+      //   ref: 'Person',
+      //   isFilterable: true,
+      //   many: true,
+      // }),
       images: relationship({
         ref: 'EventImage.eventImages',
         many: true,
