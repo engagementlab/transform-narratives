@@ -3,6 +3,7 @@ import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type BigPicturePage = {
   content: any;
@@ -17,7 +18,10 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 ? 'text-2xl font-extrabold' : 'text-xl font-semibold'} text-bluegreen`} style={{ textAlign }}>{children}</p>;
+      const customRenderers = {
+        3: 'text-2xl font-extrabold text-bluegreen'
+      };
+      return HeadingStyle(level, children, textAlign, customRenderers);
     },
   },
 };

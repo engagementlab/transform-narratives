@@ -12,12 +12,11 @@ import create from 'zustand';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { componentBlocks } from '../../admin/components/component-blocks';
-import Image from '../../components/Image';
 import Video from '../../components/Video';
-import Link from 'next/link';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type MediaItem = {
     title: string;
@@ -43,7 +42,7 @@ const useStore = create<ShareState>(set => ({
 const renderers: DocumentRendererProps['renderers'] = {
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
+        return HeadingStyle(level, children, textAlign);
     },
     layout: ({layout, children}) => {
       return FlexLayout(layout, children);

@@ -5,6 +5,7 @@ import BlockRenderers from '../../components/BlockRenderers';
 import Image from '../../components/Image';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type CommunityPage = {
     values: any;
@@ -28,7 +29,12 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 ? 'text-2xl font-extrabold' : 'text-xl font-semibold'} text-bluegreen`} style={{ textAlign }}>{children}</p>;
+
+      const customRenderers = {
+        3: 'text-2xl font-extrabold text-bluegreen',
+        4: 'text-xl font-semibold text-bluegreen',
+      };
+      return HeadingStyle(level, children, textAlign, customRenderers);
     },
   },
 };

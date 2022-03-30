@@ -7,6 +7,7 @@ import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-re
 import Image from '../components/Image';
 import Button from '../components/Button';
 import Layout from '../components/Layout';
+import HeadingStyle from '../components/HeadingStyle';
 
 type HomePage = {
   id: string;
@@ -23,7 +24,10 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className='text-2xl text-coated font-semibold' style={{ textAlign }}>{children}</p>;
+      const customRenderers = {
+        2: 'text-2xl text-coated font-semibold'
+      };
+      return HeadingStyle(level, children, textAlign, customRenderers);
     },
   },
 };

@@ -3,41 +3,47 @@ import {
 } from "next";
 import Link from "next/link";
 import _ from 'lodash';
-import { motion } from "framer-motion";
+import {
+    motion
+} from "framer-motion";
 
 import {
     query
 } from '.keystone/api';
-import FilteredItems, { MediaItem } from "../components/Filtering";
+import FilteredItems, {
+    MediaItem
+} from "../components/Filtering";
 import Image from "../components/Image";
 import Layout from "../components/Layout";
 import ImagePlaceholder from "../components/ImagePlaceholder";
 
-const renderItem = (props: { item: MediaItem }) => {
-    return (
-        <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="w-full ml-5">
-                {
-                    props.item.thumbnail ?
-                    <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
-                    `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
-                    <ImagePlaceholder imageLabel='Studio' width={335} height={200} />
-                }
-                <h4 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h4>
+const renderItem = (props: {
+        item: MediaItem
+    }) => {
+        const btnClass = 'inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx group-hover:bg-bluegreen group-hover:text-lynx';
+        return (
+            <Link href={`/studios/${props.item.key}`} passHref>
+                <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="w-full ml-5 cursor-pointer group">
+                    {
+                        props.item.thumbnail ?
+                        <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
+                        `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
+                        <ImagePlaceholder imageLabel='Studio' width={335} height={200} />
+                    }
+                    <h4 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h4>
 
-                <div className="flex items-start">
-                    <div className="w-2/3">
-                        <p className="m-0">{props.item.blurb}</p>
-                        <p className=" text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                    <div className="flex items-start">
+                        <div className="w-2/3">
+                            <p className="m-0">{props.item.blurb}</p>
+                            <p className=" text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                        </div>
+                        <button
+                            className={btnClass}>
+                            See More</button>
                     </div>
-                    {/* <Button className=" bg-lynx" link= label='See More' /> */}
-                    <Link href={`/studios/${props.item.key}`} passHref>
-                        <button 
-                        className='inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx'>
-                        See More</button>
-                    </Link>
-                    </div>
-        </motion.div>
+                </motion.div>
+            </Link>
     );
 }
 

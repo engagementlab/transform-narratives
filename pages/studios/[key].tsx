@@ -6,11 +6,10 @@ import _ from 'lodash';
 
 import { query } from '.keystone/api';
 
-import Image from '../../components/Image';
-import { componentBlocks } from '../../admin/components/component-blocks';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type Studio = {
   id: string;
@@ -22,7 +21,7 @@ type Studio = {
 const renderers: DocumentRendererProps['renderers'] = {
 block: {
   heading: ({ level, children, textAlign }) => {
-    return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
+    return HeadingStyle(level, children, textAlign);
   },
   layout: ({layout, children}) => {
     return FlexLayout(layout, children);

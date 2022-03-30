@@ -10,6 +10,7 @@ import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
+import HeadingStyle from '../../components/HeadingStyle';
 
 type NewsItem = {
   title: string;
@@ -21,7 +22,7 @@ type NewsItem = {
 const renderers: DocumentRendererProps['renderers'] = {
     block: {
         heading: ({ level, children, textAlign }) => {
-            return <p className={`${level === 3 && 'text-2xl text-bluegreen'} font-semibold`} style={{ textAlign }}>{children}</p>;
+            return HeadingStyle(level, children, textAlign);
         },
         layout: ({layout, children}) => {
             return FlexLayout(layout, children);
