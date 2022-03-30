@@ -132,12 +132,13 @@ model NewsItem {
 }
 
 model Person {
-  id      String  @id @default(cuid())
-  name    String  @default("")
-  title   String  @default("")
-  image   String?
-  blurb   String  @default("")
-  content String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id          String  @id @default(cuid())
+  name        String  @default("")
+  title       String  @default("")
+  image       String?
+  blurb       String  @default("")
+  remembrance String  @default("")
+  content     String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model StudioImage {

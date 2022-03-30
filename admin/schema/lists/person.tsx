@@ -41,6 +41,9 @@ const Person: Lists.Person = list({
         displayMode: 'textarea'
       }
     }),
+    remembrance: text({
+      label: 'In remembrance of...'
+    }),
     content: document({
         formatting: true,
         label: 'Full Bio/Content'
