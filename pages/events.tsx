@@ -65,15 +65,17 @@ const Item = (props: ItemProps) => {
             </div>
             <div className="flex-grow">
                 <Link href={`/events/${props.event.key}`} passHref>
-                    <a>
-                        <h4 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h4>
-                    </a>
-                    {
-                     props.event.thumbnail ?
-                     <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
-                     imgId={props.event.thumbnail.publicId} width={335} /> :
-                     <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
-                    }
+                    <div className="cursor-pointer">
+                        <a>
+                            <h4 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h4>
+                        </a>
+                        {
+                            props.event.thumbnail ?
+                            <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
+                            imgId={props.event.thumbnail.publicId} width={335} /> :
+                            <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
+                        }
+                    </div>
                 </Link>
             </div>
         </div>
