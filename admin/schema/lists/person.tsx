@@ -20,6 +20,12 @@ const Person: Lists.Person = list({
         isRequired: true
       }
     }),
+    title: text({
+      label: 'Title/Role',
+      validation: {
+        isRequired: true
+      }
+    }),
     image: cloudinaryImage({
       cloudinary: {
         cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,

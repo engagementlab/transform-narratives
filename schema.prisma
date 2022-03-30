@@ -135,6 +135,7 @@ model NewsItem {
 model Person {
   id                  String  @id @default(cuid())
   name                String  @default("")
+  title               String  @default("")
   image               String?
   content             String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   from_Event_speakers Event[] @relation("Event_speakers")

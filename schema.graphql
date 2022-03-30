@@ -1173,6 +1173,7 @@ input NewsImageRelateToManyForCreateInput {
 type Person {
   id: ID!
   name: String
+  title: String
   image: CloudinaryImage_File
   content: Person_content_Document
 }
@@ -1191,15 +1192,18 @@ input PersonWhereInput {
   NOT: [PersonWhereInput!]
   id: IDFilter
   name: StringFilter
+  title: StringFilter
 }
 
 input PersonOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  title: OrderDirection
 }
 
 input PersonUpdateInput {
   name: String
+  title: String
   image: Upload
   content: JSON
 }
@@ -1211,6 +1215,7 @@ input PersonUpdateArgs {
 
 input PersonCreateInput {
   name: String
+  title: String
   image: Upload
   content: JSON
 }
