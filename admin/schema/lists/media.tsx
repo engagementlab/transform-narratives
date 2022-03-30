@@ -16,6 +16,7 @@ import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 import { cloudinaryImage } from '../../components/cloudinary';
+import { CreateKey } from '../hooks';
 
 const MediaItem: Lists.MediaItem = list({
     fields: {
@@ -136,7 +137,7 @@ const MediaItem: Lists.MediaItem = list({
   
           resolvedData = {
             ...resolvedData,
-            key: resolvedData.title.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+            key: CreateKey(resolvedData.title)
           }
   
         }

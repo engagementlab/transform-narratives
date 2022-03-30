@@ -17,6 +17,7 @@ import {
   componentBlocks
 } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
+import { CreateKey } from '../hooks';
 
 const Studio: Lists.Studio = list({
   fields: {
@@ -140,7 +141,7 @@ const Studio: Lists.Studio = list({
 
         resolvedData = {
           ...resolvedData,
-          key: resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+          key: CreateKey(resolvedData.name)
         }
 
       }

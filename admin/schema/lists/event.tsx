@@ -16,6 +16,7 @@ import {
 import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
+import { CreateKey } from '../hooks';
 
 const Event: Lists.Event = list({
     fields: {
@@ -143,7 +144,7 @@ const Event: Lists.Event = list({
   
           resolvedData = {
             ...resolvedData,
-            key: resolvedData.name.toLocaleLowerCase().replaceAll(/\s/ig, '-')
+            key: CreateKey(resolvedData.name)
           }
   
         }
