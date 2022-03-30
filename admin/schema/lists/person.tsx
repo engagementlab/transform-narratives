@@ -35,9 +35,15 @@ const Person: Lists.Person = list({
       },
       label: 'Bio Image',
     }),
+    blurb: text({
+      label: 'What brings you here?',
+      ui: {
+        displayMode: 'textarea'
+      }
+    }),
     content: document({
         formatting: true,
-        label: 'Bio/Content'
+        label: 'Full Bio/Content'
     }),
   }
 });

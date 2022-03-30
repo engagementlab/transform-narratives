@@ -136,6 +136,7 @@ model Person {
   name    String  @default("")
   title   String  @default("")
   image   String?
+  blurb   String  @default("")
   content String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 

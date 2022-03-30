@@ -13,6 +13,7 @@ type CommunityPage = {
 type Person = {
     name: string;
     title: string;
+    blurb: string;
     image: any;
     content: any;
 }; 
@@ -54,7 +55,14 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                       <div className='ml-4'>
                           <h4 className='text-xl font-semibold'>{person.name}</h4>
                           <p>{person.title}</p>
-                          <DocumentRenderer document={person.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
+                          <p>
+                            <strong>
+                              What brings you here?
+                            </strong>
+                            <br />
+                            {person.blurb}
+                          </p>
+                          {/* <DocumentRenderer document={person.content.document} renderers={renderers} componentBlocks={BlockRenderers} /> */}
                       </div>
                   </div>
               ))}
@@ -72,7 +80,7 @@ export async function getStaticProps() {
     query: `values { document } `
   }) as CommunityPage;
   const people = await query.Person.findMany({
-    query: `name title image { publicId } content { document } `
+    query: `name title blurb image { publicId } content { document } `
   }) as Person[];
 
   return {

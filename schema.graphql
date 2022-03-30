@@ -1147,6 +1147,7 @@ type Person {
   name: String
   title: String
   image: CloudinaryImage_File
+  blurb: String
   content: Person_content_Document
 }
 
@@ -1165,18 +1166,21 @@ input PersonWhereInput {
   id: IDFilter
   name: StringFilter
   title: StringFilter
+  blurb: StringFilter
 }
 
 input PersonOrderByInput {
   id: OrderDirection
   name: OrderDirection
   title: OrderDirection
+  blurb: OrderDirection
 }
 
 input PersonUpdateInput {
   name: String
   title: String
   image: Upload
+  blurb: String
   content: JSON
 }
 
@@ -1189,6 +1193,7 @@ input PersonCreateInput {
   name: String
   title: String
   image: Upload
+  blurb: String
   content: JSON
 }
 
