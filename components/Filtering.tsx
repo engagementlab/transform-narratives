@@ -1,7 +1,9 @@
+import React from "react";
+import { useRouter } from 'next/router'
 import create from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware'
 import _ from 'lodash';
 import { AnimatePresence } from "framer-motion"
-import React from "react";
 
 export type MediaItem = {
     title?: string;
@@ -81,6 +83,12 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
 
+    // const router = useRouter();
+    // useStore.subscribe(state => state.currentFilters,  () => 
+    // {
+    //     router.push({ pathname: router.asPath, query: {filters: selectedFilters[0]} }, undefined, {shallow: true})
+    // });
+    useStore.subscribe(console.log)
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>
