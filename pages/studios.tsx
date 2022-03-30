@@ -24,12 +24,12 @@ const renderItem = (props: {
         return (
             <Link href={`/studios/${props.item.key}`} passHref>
                 <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="w-full ml-5 cursor-pointer group">
+                className="ml-5 cursor-pointer group">
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
                         `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
-                        <ImagePlaceholder imageLabel='Studio' width={335} height={200} />
+                        <ImagePlaceholder imageLabel='Studio' width={716} height={200} />
                     }
                     <h4 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h4>
 

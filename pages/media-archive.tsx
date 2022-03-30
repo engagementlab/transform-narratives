@@ -46,7 +46,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
                 gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
                 multi-year initiative and hosts 5-7 studios per year.</p>
             
-            {FilteredItems(filtersGrouped, mediaItems, renderItem)} 
+            {FilteredItems(filtersGrouped, mediaItems, renderItem, 'media')} 
            
         </div>
         </Layout>

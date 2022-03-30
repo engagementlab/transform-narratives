@@ -148,7 +148,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
 }
 const FilteredItems = (filtersGrouped: {
         [x: string]: any[];
-    }, items: any[], ItemRenderer: React.ComponentType < ItemRendererProps > ) => {
+    }, items: any[], ItemRenderer: React.ComponentType < ItemRendererProps >, mode?: string ) => {
 
         const selectedFilters = useStore(state => state.currentFilters);
         const haveFilters = selectedFilters.length > 0;
@@ -159,6 +159,12 @@ const FilteredItems = (filtersGrouped: {
             item => selectedFilters.length === 0 ||
             // ...otherwise, item's filters must match ALL selected filters
             _.every(selectedFilters, r => _.map(item.filters, 'name').indexOf(r) >= 0));
+
+        const count = filteredItems.length;
+        // Decide plural of item count
+        const showing = `Showing ${count} ${mode === 'media' ? 
+                                `Stor${count === 1 ? 'y' : 'ies'}` : 
+                                `Studio${count === 1 ? '' : 's'}`}`;
 
         return <div className="flex">
             <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
@@ -177,12 +183,11 @@ const FilteredItems = (filtersGrouped: {
                         onClick={(e)=>{ reset(); e.preventDefault() }}
                         style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
                 </div>
-                <span className="my-4 uppercase w-full block lg:text-right">Showing {filteredItems.length} Stories</span>
-
+                <span className="my-4 uppercase w-full block lg:text-right">{showing}</span>
                     
-                <div className="xl:flex justify-between">{
-                    filteredItems.length === 0 ?
-                    <p>No matches!</p> :
+                <div className={mode === 'media' ? 'xl:flex justify-between' : ''}>{
+                    count === 0 ?
+                    <p className='w-full text-4xl text-center'>No matches! Please try other filters.</p> :
                             <AnimatePresence>
                                 {filteredItems.map((item: MediaItem, i: number) => (
                                     <ItemRenderer key={i} item={item} />
