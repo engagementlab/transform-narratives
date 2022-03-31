@@ -4,6 +4,7 @@ import {
 import {
     json,
     relationship,
+    select,
     text
 } from '@keystone-6/core/fields';
 import {
@@ -17,6 +18,9 @@ import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 import { cloudinaryImage } from '../../components/cloudinary';
 import { CreateKey } from '../hooks';
+import { VideoField } from '../../types/Video';
+
+const videoData = require('../../../videoData');
 
 const MediaItem: Lists.MediaItem = list({
     fields: {

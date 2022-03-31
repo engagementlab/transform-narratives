@@ -83,12 +83,15 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
 
-    // const router = useRouter();
+    const router = useRouter();
     // useStore.subscribe(state => state.currentFilters,  () => 
     // {
     //     router.push({ pathname: router.asPath, query: {filters: selectedFilters[0]} }, undefined, {shallow: true})
     // });
-    useStore.subscribe(console.log)
+    useStore.subscribe((e => {
+        console.log(e.currentFilters)
+        router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('-')} }, undefined, {shallow: true})
+    }))
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>

@@ -103,20 +103,6 @@ const Passport = () => {
 
   passport.use(strategy);
 
-  // // Support json encoded bodies
-  // router.use(bodyParser.json());
-
-  // // Support encoded bodies
-  // router.use(
-  //   bodyParser.urlencoded({
-  //     extended: true,
-  //   })
-  // );
-
-  // // Set router to use passport
-  // router.use(passport.initialize());
-  // router.use(passport.session());
-
   return passport;
 };
 

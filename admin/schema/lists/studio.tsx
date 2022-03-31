@@ -111,20 +111,13 @@ const Studio: Lists.Studio = list({
         },
       },
     }),
-    // videos: json({
-    //   ui: {
-    //     views: path.join(process.cwd(), '/admin/components/video/components.tsx'),
-    //     createView: {
-    //       fieldMode: 'edit'
-    //     },
-    //     listView: {
-    //       fieldMode: 'hidden'
-    //     },
-    //     itemView: {
-    //       fieldMode: 'edit'
-    //     },
-    //   },
-    // }),
+    videos: relationship({
+      ref: 'MediaItem',
+      many: true,
+      ui: {
+        displayMode: 'select',
+      }
+    }),
 
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
   },
