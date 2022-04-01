@@ -10,6 +10,7 @@ import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
+import Video from '../../components/Video';
 
 type Studio = {
   id: string;
@@ -17,6 +18,7 @@ type Studio = {
   key: string;
   filters: any[];
   content: any;
+  associatedMedia:[{ videos: any[]}];
 };
 const renderers: DocumentRendererProps['renderers'] = {
 block: {
@@ -39,6 +41,22 @@ return (
             <p>{_.map(item.filters, 'name').join(', ')}</p>
 
             <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+
+            {item.associatedMedia &&  
+              <div>
+                <h2 className='text-2xl text-bluegreen font-semibold'>Studio Outcomes</h2>
+                {item.associatedMedia.map((media) => {
+                  if(!media.videos) return;
+                  return media.videos.map((video, i) => (
+                      <div key={`video-${i}`}>
+                        <Video videoLabel={video.label} videoUrl={video.value} thumbUrl={video.thumb} />
+                        <p className='font-semibold'>{video.label}</p>
+                        <p>{video.caption}</p>
+                      </div>
+                  ));
+                })}
+              </div>
+            }
 
             {relatedItems &&
                 <div>
@@ -93,7 +111,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const item = (await query.Studio.findOne({
       where: { key: params!.key as string },
-      query: 'name filters { name } content { document(hydrateRelationships: true) }',
+      query: 'name filters { name } content { document(hydrateRelationships: true) } associatedMedia { videos }',
   })) as Studio;
   const relatedItems = (await query.Studio.findMany({
       query: 'name key filters { type name } thumbnail { publicId }',

@@ -111,7 +111,7 @@ const Studio: Lists.Studio = list({
         },
       },
     }),
-    videos: relationship({
+    associatedMedia: relationship({
       ref: 'MediaItem',
       many: true,
       ui: {

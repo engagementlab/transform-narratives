@@ -1299,13 +1299,13 @@ type Studio {
     skip: Int! = 0
   ): [StudioImage!]
   photosCount(where: StudioImageWhereInput! = {}): Int
-  videos(
+  associatedMedia(
     where: MediaItemWhereInput! = {}
     orderBy: [MediaItemOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [MediaItem!]
-  videosCount(where: MediaItemWhereInput! = {}): Int
+  associatedMediaCount(where: MediaItemWhereInput! = {}): Int
 }
 
 type Studio_content_Document {
@@ -1327,7 +1327,7 @@ input StudioWhereInput {
   key: StringFilter
   filters: FilterManyRelationFilter
   photos: StudioImageManyRelationFilter
-  videos: MediaItemManyRelationFilter
+  associatedMedia: MediaItemManyRelationFilter
 }
 
 input StudioImageManyRelationFilter {
@@ -1351,7 +1351,7 @@ input StudioUpdateInput {
   filters: FilterRelateToManyForUpdateInput
   content: JSON
   photos: StudioImageRelateToManyForUpdateInput
-  videos: MediaItemRelateToManyForUpdateInput
+  associatedMedia: MediaItemRelateToManyForUpdateInput
 }
 
 input StudioImageRelateToManyForUpdateInput {
@@ -1374,7 +1374,7 @@ input StudioCreateInput {
   filters: FilterRelateToManyForCreateInput
   content: JSON
   photos: StudioImageRelateToManyForCreateInput
-  videos: MediaItemRelateToManyForCreateInput
+  associatedMedia: MediaItemRelateToManyForCreateInput
 }
 
 input StudioImageRelateToManyForCreateInput {
