@@ -11,6 +11,7 @@ import {
 import {
     Lists
 } from '.keystone/types';
+import { CreateKey } from '../hooks';
 
 const Filter: Lists.Filter = list({
     fields: {
@@ -18,6 +19,16 @@ const Filter: Lists.Filter = list({
       name: text({
         validation: {
           isRequired: true
+        }
+      }),
+      key: text({
+        ui: {
+          createView: {
+            fieldMode:'hidden'
+          },
+          itemView: {
+            fieldMode: 'hidden'
+          }
         }
       }),
       type: select({
@@ -45,6 +56,26 @@ const Filter: Lists.Filter = list({
         ui: { displayMode: 'segmented-control' },
       }),
       // order: integer(),
+    },
+    hooks: {
+      resolveInput: async ({
+        listKey,
+        operation,
+        inputData,
+        item,
+        resolvedData,
+        context,
+      }) => {
+        if(resolvedData.name) {
+  
+          resolvedData = {
+            ...resolvedData,
+            key: CreateKey(resolvedData.name)
+          }
+  
+        }
+        return resolvedData;
+      }
     }
   });
   export default Filter;

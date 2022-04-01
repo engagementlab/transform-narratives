@@ -525,6 +525,7 @@ input EventImageRelateToManyForCreateInput {
 type Filter {
   id: ID!
   name: String
+  key: String
   type: FilterTypeType
   section: FilterSectionType
 }
@@ -555,6 +556,7 @@ input FilterWhereInput {
   NOT: [FilterWhereInput!]
   id: IDFilter
   name: StringFilter
+  key: StringFilter
   type: FilterTypeTypeNullableFilter
   section: FilterSectionTypeNullableFilter
 }
@@ -576,12 +578,14 @@ input FilterSectionTypeNullableFilter {
 input FilterOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  key: OrderDirection
   type: OrderDirection
   section: OrderDirection
 }
 
 input FilterUpdateInput {
   name: String
+  key: String
   type: FilterTypeType
   section: FilterSectionType
 }
@@ -593,6 +597,7 @@ input FilterUpdateArgs {
 
 input FilterCreateInput {
   name: String
+  key: String
   type: FilterTypeType
   section: FilterSectionType
 }

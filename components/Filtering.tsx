@@ -82,6 +82,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
     const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
+    console.log(filters)
 
     const router = useRouter();
     // useStore.subscribe(state => state.currentFilters,  () => 

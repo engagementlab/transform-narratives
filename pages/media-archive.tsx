@@ -53,12 +53,13 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ where: { section: {equals: 'media'} }, query: 'name type' }) as any[];
+    const filters = await query.Filter.findMany({ where: { section: {equals: 'media'} }, query: 'key name type' }) as any[];
     // Group filters by type
-    const filtersGrouped = filters.reduce((filterMemo, {type, name}) => {
-        (filterMemo[type] = filterMemo[type] || []).push(name);
+    const filtersGrouped = filters.reduce((filterMemo, {type, key, name}) => {
+        (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
-    }, {})
+    }, {});
+    console.log(filtersGrouped)
     const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { name } thumbnail { publicId }' }) as MediaItem[];
 
     return {

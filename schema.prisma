@@ -64,6 +64,7 @@ model Event {
 model Filter {
   id                     String      @id @default(cuid())
   name                   String      @default("")
+  key                    String      @default("")
   type                   String
   section                String?
   from_MediaItem_filters MediaItem[] @relation("MediaItem_filters")
