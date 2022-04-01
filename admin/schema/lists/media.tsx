@@ -18,7 +18,6 @@ import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 import { cloudinaryImage } from '../../components/cloudinary';
 import { CreateKey } from '../hooks';
-import { VideoField } from '../../types/Video';
 
 const videoData = require('../../../videoData');
 
