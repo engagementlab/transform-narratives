@@ -121,7 +121,7 @@ class Footer extends Component {
                         <LinkRender label='The Big Picture' link='/about/big-picture' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">
-                        <LinkRender label='Media Archive' link='/media-archive' />
+                        <LinkRender label='Media Archive' link='/archive' />
                         <LinkRender label='Studios' link='/studios' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">

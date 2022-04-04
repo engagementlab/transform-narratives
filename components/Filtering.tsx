@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from 'next/router'
 import create, { Mutate, GetState, SetState, StoreApi } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import _ from 'lodash';
@@ -73,21 +72,8 @@ const useStore = create<
         }))
     );
 
-useStore.subscribe(state => state.currentFilters,(c, p) => {
-// const router = useRouter();
-
-    // if(router.query.filters) {
-    //         return;
-    //     }
-        // router.replace({ pathname: router.asPath, query: {...router.query, filters: c.join('&')} }, undefined, {shallow: true})
-    //     router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('&')} }, undefined, {shallow: true})
-        console.log(c === p)
-        console.log(c, p)
-        const url = new URL(window.location.href);
-        url.searchParams.set('foo', 'bar');
-        window.history.pushState({}, '', url);
-
-        // priorFilters = state.currentFilters;
+useStore.subscribe(state => state.currentFilters, (current) => {
+    history.replaceState({}, 'Filtered Data', `${location.pathname}?${current.join('/')}`);
 });
 
 const RenderFilters = (filters: { [x: string]: any[]; }) => {
@@ -102,10 +88,9 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const haveGroupClosed = (key: string) => {return filterGroupsClosed.includes(key as never)};
     const toggleFilter = useStore(state => state.toggle);
     const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
-    const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
+    const reset = useStore(state => state.reset);
 
-    let priorFilters: any[] = [];
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>
@@ -143,7 +128,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                     ))}
                 </div>;
 
-    return( <div> 
+    return(<div> 
             {/* Tablet portrait+ */}
             <div className="hidden lg:block">
                 <div className="mr-2 flex justify-between">
@@ -170,12 +155,17 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                     onClick={(e)=>{ toggleFiltersOpen(false) }}>Apply</button>
             </div>
         </div>);
+
 }
+
 const FilteredItems = (filtersGrouped: {
         [x: string]: any[];
-    }, items: any[], ItemRenderer: React.ComponentType < ItemRendererProps >, mode?: string ) => {
-
-        const selectedFilters = useStore(state => state.currentFilters);
+    }, preSelectedFilters: string[], items: any[], ItemRenderer: React.ComponentType < ItemRendererProps >, mode?: string ) => {
+        
+        let selectedFilters = useStore(state => state.currentFilters);
+        if(selectedFilters.length === 0)
+            selectedFilters = preSelectedFilters as never[];
+        // console.log(preSelectedFilters, selectedFilters)
         const haveFilters = selectedFilters.length > 0;
         const reset = useStore(state => state.reset);
         const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
@@ -198,7 +188,6 @@ const FilteredItems = (filtersGrouped: {
 
             <div className="w-full">
                 {/* Mobile Filters/Clear button */}
-
                 <div className="lg:hidden inline-block w-full">
                     <button
                         className="rounded-full my-4 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"

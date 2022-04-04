@@ -33,7 +33,7 @@ const links: NavLink[] = [{
   },
   {
     label: 'Media Archive',
-    url: '/media-archive'
+    url: '/archive'
   },
   {
     label: 'Studios',

@@ -8,16 +8,17 @@ import { motion } from "framer-motion";
 import {
     query
 } from '.keystone/api';
-import FilteredItems, { MediaItem } from "../components/Filtering";
-import Image from "../components/Image";
-import Layout from "../components/Layout";
-import ImagePlaceholder from "../components/ImagePlaceholder";
+import FilteredItems, { MediaItem } from "../../components/Filtering";
+import Image from "../../components/Image";
+import Layout from "../../components/Layout";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
+import { useRouter } from "next/router";
 
 const renderItem = (props: { item: MediaItem }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full xl:basis-1/4 xl:flex-shrink-0 xl:flex-grow xl:max-w-xs xl:mx-5">
-            <Link href={`/media/${props.item.key}`} passHref>
+            <Link href={`/archive/${props.item.key}`} passHref>
                 <a>
                     {
                         props.item.thumbnail ?
@@ -35,6 +36,9 @@ const renderItem = (props: { item: MediaItem }) => {
 }
 
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
+    const router = useRouter();
+    const preSelectedFilters = Object.keys(router.query).length === 1 && Object.keys(router.query)[0].split('/');
+    console.log(preSelectedFilters)
     return (
         <Layout>
             <div
@@ -45,7 +49,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
                     gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
                     multi-year initiative and hosts 5-7 studios per year.</p>
                 
-                {FilteredItems(filtersGrouped, mediaItems, renderItem, 'media')} 
+                {FilteredItems(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media')} 
             
             </div>
         </Layout>
