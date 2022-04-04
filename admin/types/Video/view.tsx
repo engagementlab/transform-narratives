@@ -18,9 +18,7 @@ type Value =
   | { value: Option | null; kind: 'create' }
   | { value: Option | null; initial: Option | null; kind: 'update' };
 
-export const controller = (config: Config): FieldController<Value, Option[]> & {
-    options: Option[];
-} => {
+export const controller = (config: Config)  => {
 
     const optionsWithStringValues = config.fieldMeta.options.map(x => ({
     label: x.label,
@@ -30,77 +28,77 @@ export const controller = (config: Config): FieldController<Value, Option[]> & {
       options: optionsWithStringValues,
       label: config.label,
       graphqlSelection: config.path,
-      deserialize: data => {
-        const value = data[config.path];
-        return value;
-      },
-      serialize: value => ({ [config.path]: value }),
-      filter: {
-        Filter(props) {
-            return (
-              <MultiSelect
-                onChange={props.onChange}
-                options={optionsWithStringValues}
-                value={props.value}
-                autoFocus
-              />
-            );
-          },
-          graphql: ({ type, value: options }) => ({
-            [config.path]: { [type === 'not_matches' ? 'notIn' : 'in']: options.map(x => t(x.value)) },
-          }),
-          Label({ type, value }) {
-            if (!value.length) {
-              return type === 'not_matches' ? `is set` : `has no value`;
-            }
-            if (value.length > 1) {
-              const values = value.map(i => i.label).join(', ');
-              return type === 'not_matches' ? `is not in [${values}]` : `is in [${values}]`;
-            }
-            const optionLabel = value[0].label;
-            return type === 'not_matches' ? `is not ${optionLabel}` : `is ${optionLabel}`;
-          },
-          types: {
-            matches: {
-              label: 'Matches',
-              initialValue: [],
-            },
-            not_matches: {
-              label: 'Does not match',
-              initialValue: [],
-            },
-          },
+      // deserialize: data => {
+      //   const value = data[config.path];
+      //   return value;
+      // },
+      // serialize: value => ({ [config.path]: value }),
+      // filter: {
+        // Filter(props) {
+        //     return (
+        //       <MultiSelect
+        //         onChange={props.onChange}
+        //         options={optionsWithStringValues}
+        //         value={props.value}
+        //         autoFocus
+        //       />
+        //     );
+        //   },
+        //   graphql: ({ type, value: options }) => ({
+        //     [config.path]: { [type === 'not_matches' ? 'notIn' : 'in']: options.map(x => t(x.value)) },
+        //   }),
+        //   Label({ type, value }) {
+        //     if (!value.length) {
+        //       return type === 'not_matches' ? `is set` : `has no value`;
+        //     }
+        //     if (value.length > 1) {
+        //       const values = value.map(i => i.label).join(', ');
+        //       return type === 'not_matches' ? `is not in [${values}]` : `is in [${values}]`;
+        //     }
+        //     const optionLabel = value[0].label;
+        //     return type === 'not_matches' ? `is not ${optionLabel}` : `is ${optionLabel}`;
+        //   },
+        //   types: {
+        //     matches: {
+        //       label: 'Matches',
+        //       initialValue: [],
+        //     },
+        //     not_matches: {
+        //       label: 'Does not match',
+        //       initialValue: [],
+        //     },
+        //   },
     }
 }
 
-export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof controller>) => {
+// export const Field = ({ field, value, onChange, autoFocus }: FieldProps<typeof controller>) => {
 
-    const [hasChanged, setHasChanged] = useState(false);
-    return (
-        <FieldContainer>
-        <FieldLabel>{field.label}</FieldLabel>
-        {/* {onChange && ( */}
-        {/* <div className={styles.form.field}> */}
-                <Select
-                id={field.path}
-                isClearable
-                autoFocus={autoFocus}
-                options={field.options}
-                isDisabled={onChange === undefined}
-                onChange={newVal => {
-                    onChange?.({ ...value, value: newVal });
-                    setHasChanged(true);
-                  }}
-                value={value.value}
-                // className={styles.form.select}
-                components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+//     const [hasChanged, setHasChanged] = useState(false);
+//     return (
+//         <FieldContainer>
+//         <FieldLabel>{field.label}</FieldLabel>
+//         {/* {onChange && ( */}
+//         {/* <div className={styles.form.field}> */}
+//                 {/* <Select
+//                 id={field.path}
+//                 isClearable
+//                 autoFocus={autoFocus}
+//                 options={field.options}
+//                 isDisabled={onChange === undefined}
+//                 onChange={newVal => {
+//                     onChange?.({ ...value, value: newVal });
+//                     setHasChanged(true);
+//                   }}
+//                 value={value.value}
+//                 // className={styles.form.select}
+//                 components={{Option: CustomOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
     
-                />
-            {/* </div> */}
-        {/* )} */}
-        </FieldContainer>
-    );
-};
+//                 /> */}
+//             {/* </div> */}
+//         {/* )} */}
+//         </FieldContainer>
+//     );
+// };
 
 export const Cell: CellComponent = ({ item, field, linkTo }) => {
     let value = item[field.path] + '';
@@ -116,3 +114,7 @@ export const CardValue: CardValueComponent = ({ item, field }) => {
     </FieldContainer>
   );
 };
+
+function t(value: string): any {
+    throw new Error("Function not implemented.");
+  }

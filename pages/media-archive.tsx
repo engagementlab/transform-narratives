@@ -16,7 +16,7 @@ import ImagePlaceholder from "../components/ImagePlaceholder";
 const renderItem = (props: { item: MediaItem }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="w-full xl:w-1/4">
+        className="w-full xl:basis-1/4 xl:flex-shrink-0 xl:flex-grow xl:max-w-xs xl:mx-5">
             <Link href={`/media/${props.item.key}`} passHref>
                 <a>
                     {
@@ -60,7 +60,7 @@ export async function getStaticProps() {
         return filterMemo;
     }, {});
     console.log(filtersGrouped)
-    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { name } thumbnail { publicId }' }) as MediaItem[];
+    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }' }) as MediaItem[];
 
     return {
       props: {

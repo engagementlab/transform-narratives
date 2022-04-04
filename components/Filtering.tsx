@@ -82,7 +82,6 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
     const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
-    console.log(filters)
 
     const router = useRouter();
     // useStore.subscribe(state => state.currentFilters,  () => 
@@ -91,7 +90,7 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     // });
     useStore.subscribe((e => {
         console.log(e.currentFilters)
-        router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('-')} }, undefined, {shallow: true})
+        // router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('-')} }, undefined, {shallow: true})
     }))
     const menu = <div>
                     {Object.keys(filters).map((key) => (
@@ -109,14 +108,14 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
                             <ul className={`relative overflow-hidden transition-all ${haveGroupClosed(key) ? 'max-h-0' : 'max-h-96'}`}>
                                 {filters[key].map(filter => {
                                     return (
-                                        <li key={filter} className={`mt-4 text-lg xl:text-sm font-semibold
-                                            ${!haveSpecificFilter(filter) ? 'text-bluegreen' : 'text-purple' }`}>
-                                            <a href="#" onClick={(e)=>{ toggleFilter(filter); e.preventDefault() }}
+                                        <li key={filter.key} className={`mt-4 text-lg xl:text-sm font-semibold
+                                            ${!haveSpecificFilter(filter.key) ? 'text-bluegreen' : 'text-purple' }`}>
+                                            <a href="#" onClick={(e)=>{ toggleFilter(filter.key); e.preventDefault() }}
                                                 className='w-3/4 flex items-center justify-between'>
-                                                {filter}
+                                                {filter.name}
                                                 <svg viewBox="185.411 115.41 11 11" width="11" height="11"
                                                     className='flex-shrink-0'
-                                                    style={{visibility: !haveSpecificFilter(filter) ? 'hidden' : 'visible'}}>
+                                                    style={{visibility: !haveSpecificFilter(filter.key) ? 'hidden' : 'visible'}}>
                                                     <path
                                                         d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
                                                         className="fill-purple"></path>
@@ -170,7 +169,7 @@ const FilteredItems = (filtersGrouped: {
             // If selected filters empty, show all...
             item => selectedFilters.length === 0 ||
             // ...otherwise, item's filters must match ALL selected filters
-            _.every(selectedFilters, r => _.map(item.filters, 'name').indexOf(r) >= 0));
+            _.every(selectedFilters, r => _.map(item.filters, 'key').indexOf(r) >= 0));
 
         const count = filteredItems.length;
         // Decide plural of item count
@@ -197,7 +196,7 @@ const FilteredItems = (filtersGrouped: {
                 </div>
                 <span className="my-4 uppercase w-full block lg:text-right">{showing}</span>
                     
-                <div className={mode === 'media' ? 'xl:flex xl:ml-5 justify-between' : ''}>{
+                <div className={mode === 'media' ? 'xl:flex xl:ml-5' : ''}>{
                     count === 0 ?
                     <p className='w-full text-4xl text-center'>No matches! Please try other filters.</p> :
                             <AnimatePresence>
