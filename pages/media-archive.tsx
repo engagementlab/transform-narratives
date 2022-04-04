@@ -59,7 +59,6 @@ export async function getStaticProps() {
         (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
     }, {});
-    console.log(filtersGrouped)
     const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }' }) as MediaItem[];
 
     return {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from 'next/router'
-import create from 'zustand';
+import create, { Mutate, GetState, SetState, StoreApi } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import _ from 'lodash';
 import { AnimatePresence } from "framer-motion"
@@ -19,11 +19,10 @@ export type MediaItem = {
 type ItemRendererProps = {
     item: MediaItem;
 }
-
 type FilterState = {
-    currentFilters: any[];
+    currentFilters: never[];
     filtersNavOpen: boolean
-    filterGroupsClosed: string[]
+    filterGroupsClosed: never[]
     toggle: (filter: any) => void
     toggleFilterGroupClosed: (filterKey: string) => void
     toggleFiltersOpen: (open: boolean) => void
@@ -31,42 +30,65 @@ type FilterState = {
 }
 
 // Create store with Zustand
-const useStore = create<FilterState>(set => ({
-    currentFilters: [],
-    filtersNavOpen: false,
-    filterGroupsClosed: [],
-    toggle: (filter: any) => set((state) => {
-        return state.currentFilters.includes(filter) ?
-        {
-            ...state,
-            currentFilters: state.currentFilters.filter(e => e !== filter)
-        }
-        :
-        {
-            ...state,
-            currentFilters: [...state.currentFilters, filter]
-        }
-    }), 
-    toggleFilterGroupClosed: (filterGroupKey: string) => set((state) => {
-        return state.filterGroupsClosed.includes(filterGroupKey) ?
-        {
-            ...state,
-            filterGroupsClosed: state.filterGroupsClosed.filter(e => e !== filterGroupKey)
-        }
-        :
-        {
-            ...state,
-            filterGroupsClosed: [...state.filterGroupsClosed, filterGroupKey]
-        }
-    }),     
-    toggleFiltersOpen: (open: boolean) => set((state) => { 
-        document.body.style.overflow = open ? 'hidden' : 'visible';
-        if(open) window.scrollTo(0, 0);
-        return { ...state, filtersNavOpen:open }; 
-    }),
-    reset: () => set({ currentFilters: [] }),
-}));
+const useStore = create<
+    FilterState,
+    SetState<FilterState>,
+    GetState<FilterState>,
+    Mutate<StoreApi<FilterState>, [["zustand/subscribeWithSelector", never]]>
+    >(
+        subscribeWithSelector((set) => ({
+            currentFilters: [],
+            filtersNavOpen: false as boolean,
+            filterGroupsClosed: [] as never[],
+            toggle: (filter: any) => set((state) => {
+                return state.currentFilters.includes(filter as never) ?
+                {
+                    ...state,
+                    currentFilters: state.currentFilters.filter(e => e !== filter)
+                }
+                :
+                {
+                    ...state,
+                    currentFilters: [...state.currentFilters, filter as never]
+                }
+            }), 
+            toggleFilterGroupClosed: (filterGroupKey: string) => set((state) => {
+                return state.filterGroupsClosed.includes(filterGroupKey as never) ?
+                {
+                    ...state,
+                    filterGroupsClosed: state.filterGroupsClosed.filter(e => e !== filterGroupKey as never)
+                }
+                :
+                {
+                    ...state,
+                    filterGroupsClosed: [...state.filterGroupsClosed, filterGroupKey as never]
+                }
+            }),     
+            toggleFiltersOpen: (open: boolean) => set((state) => { 
+                document.body.style.overflow = open ? 'hidden' : 'visible';
+                if(open) window.scrollTo(0, 0);
+                return { ...state, filtersNavOpen:open }; 
+            }),
+            reset: () => set({ currentFilters: [] }),
+        }))
+    );
 
+useStore.subscribe(state => state.currentFilters,(c, p) => {
+// const router = useRouter();
+
+    // if(router.query.filters) {
+    //         return;
+    //     }
+        // router.replace({ pathname: router.asPath, query: {...router.query, filters: c.join('&')} }, undefined, {shallow: true})
+    //     router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('&')} }, undefined, {shallow: true})
+        console.log(c === p)
+        console.log(c, p)
+        const url = new URL(window.location.href);
+        url.searchParams.set('foo', 'bar');
+        window.history.pushState({}, '', url);
+
+        // priorFilters = state.currentFilters;
+});
 
 const RenderFilters = (filters: { [x: string]: any[]; }) => {
    
@@ -76,22 +98,14 @@ const RenderFilters = (filters: { [x: string]: any[]; }) => {
     const filterGroupsClosed = useStore(state => state.filterGroupsClosed)
     const haveFilters = selectedFilters.length > 0;
     
-    const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).includes(key)};
-    const haveGroupClosed = (key: string) => {return filterGroupsClosed.includes(key)};
+    const haveSpecificFilter = (key: string) => {return _.values(selectedFilters).includes(key as never)};
+    const haveGroupClosed = (key: string) => {return filterGroupsClosed.includes(key as never)};
     const toggleFilter = useStore(state => state.toggle);
     const toggleFilterGroupOpen = useStore(state => state.toggleFilterGroupClosed);
     const reset = useStore(state => state.reset);
     const toggleFiltersOpen = useStore(state => state.toggleFiltersOpen);
 
-    const router = useRouter();
-    // useStore.subscribe(state => state.currentFilters,  () => 
-    // {
-    //     router.push({ pathname: router.asPath, query: {filters: selectedFilters[0]} }, undefined, {shallow: true})
-    // });
-    useStore.subscribe((e => {
-        console.log(e.currentFilters)
-        // router.push({ pathname: router.asPath, query: {filters: e.currentFilters.join('-')} }, undefined, {shallow: true})
-    }))
+    let priorFilters: any[] = [];
     const menu = <div>
                     {Object.keys(filters).map((key) => (
                         <div key={key}>
