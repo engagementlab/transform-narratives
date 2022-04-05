@@ -27,6 +27,8 @@ type FilterState = {
     toggleFiltersOpen: (open: boolean) => void
     reset: () => void
 }
+
+// Replicated from https://github.com/pmndrs/zustand/blob/a418fd748077c453efbff2d03641ce0af780b3c7/src/middleware/subscribeWithSelector.ts
 interface StoreSubscribeWithSelector<T extends State> {
     subscribe: {
       (listener: (selectedState: T, previousSelectedState: T) => void): () => void
@@ -44,7 +46,7 @@ interface StoreSubscribeWithSelector<T extends State> {
 export class Filtering {
 
     useStore: UseBoundStore<FilterState, Omit<StoreApi<FilterState>, "subscribe"> & StoreSubscribeWithSelector<FilterState>>;
-    filtersGrouped;
+    filtersGrouped: {[x: string]: any[]};
     items;
     mode?: string;
     ItemRenderer: React.ComponentType < ItemRendererProps >;
@@ -66,6 +68,7 @@ export class Filtering {
             Mutate<StoreApi<FilterState>, [["zustand/subscribeWithSelector", never]]>
             >(
                 subscribeWithSelector((set) => ({
+                    // If defined, pre-populate filter store
                     currentFilters: preSelectedFilters || [],
                     filtersNavOpen: false as boolean,
                     filterGroupsClosed: [] as never[],
