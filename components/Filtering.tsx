@@ -43,7 +43,7 @@ interface StoreSubscribeWithSelector<T extends State> {
     }
   }
   
-export class Filtering {
+export default class Filtering {
 
     useStore: UseBoundStore<FilterState, Omit<StoreApi<FilterState>, "subscribe"> & StoreSubscribeWithSelector<FilterState>>;
     filtersGrouped: {[x: string]: any[]};

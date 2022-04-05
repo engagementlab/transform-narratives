@@ -8,10 +8,10 @@ import { motion } from "framer-motion";
 import {
     query
 } from '.keystone/api';
-import { Filtering, MediaItem } from "../../components/Filtering";
-import Image from "../../components/Image";
-import Layout from "../../components/Layout";
-import ImagePlaceholder from "../../components/ImagePlaceholder";
+import Filtering, {  MediaItem } from "../components/Filtering";
+import Image from "../components/Image";
+import Layout from "../components/Layout";
+import ImagePlaceholder from "../components/ImagePlaceholder";
 import { useRouter } from "next/router";
 
 const renderItem = (props: { item: MediaItem }) => {
@@ -37,7 +37,7 @@ const renderItem = (props: { item: MediaItem }) => {
 
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter();
-    const preSelectedFilters = Object.keys(router.query).length === 1 && Object.keys(router.query)[0].split('/');
+    const preSelectedFilters = Object.keys(router.query).length === 1 ? Object.keys(router.query)[0].split('/') as never[] : [];
     const filtering = new Filtering(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media');
     return (
         <Layout>

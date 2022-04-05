@@ -1,6 +1,7 @@
 import {
     InferGetStaticPropsType
 } from "next";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import _ from 'lodash';
 import {
@@ -10,9 +11,7 @@ import {
 import {
     query
 } from '.keystone/api';
-import FilteredItems, {
-    MediaItem
-} from "../components/Filtering";
+import Filtering, {  MediaItem } from "../components/Filtering";
 import Image from "../components/Image";
 import Layout from "../components/Layout";
 import ImagePlaceholder from "../components/ImagePlaceholder";
@@ -48,6 +47,10 @@ const renderItem = (props: {
 }
 
 export default function Studios({ filtersGrouped, studios }: InferGetStaticPropsType<typeof getStaticProps>) {
+    const router = useRouter();
+    const preSelectedFilters = Object.keys(router.query).length === 1 ? Object.keys(router.query)[0].split('/') as never[] : [];
+    const filtering = new Filtering(filtersGrouped, preSelectedFilters, studios, renderItem);
+    
     return (
         <Layout>
             <div
@@ -55,8 +58,7 @@ export default function Studios({ filtersGrouped, studios }: InferGetStaticProps
                 <h2 className="text-2xl text-bluegreen font-semibold">Studios at Emerson College</h2>
             
                 <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of gun violence as it is experienced locally. The <i>Transforming Narratives of Gun Violence Initiative</i> is a multi-year initiative and hosts 5-7 studios per year.</p>
-                
-                {FilteredItems(filtersGrouped, studios, renderItem)} 
+                <filtering.FilteredItems />
             
             </div>
         </Layout>
@@ -64,13 +66,13 @@ export default function Studios({ filtersGrouped, studios }: InferGetStaticProps
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ where: { section: {equals: 'studio'} }, query: 'name type' }) as any[];
+    const filters = await query.Filter.findMany({ where: { section: {equals: 'studio'} }, query: 'key name type' }) as any[];
     // Group filters by type
-    const filtersGrouped = filters.reduce((filterMemo, {type, name}) => {
-        (filterMemo[type] = filterMemo[type] || []).push(name);
+    const filtersGrouped = filters.reduce((filterMemo, {key, type, name}) => {
+        (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
     }, {})
-    const studios = await query.Studio.findMany({ query: 'name blurb key filters { name } thumbnail { publicId }' }) as MediaItem[];
+    const studios = await query.Studio.findMany({ query: 'name blurb key filters { key name } thumbnail { publicId }' }) as MediaItem[];
 
     return {
       props: {
