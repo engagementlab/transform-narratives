@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import {
     query
 } from '.keystone/api';
-import FilteredItems, { MediaItem } from "../../components/Filtering";
+import { Filtering, MediaItem } from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
@@ -38,7 +38,7 @@ const renderItem = (props: { item: MediaItem }) => {
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter();
     const preSelectedFilters = Object.keys(router.query).length === 1 && Object.keys(router.query)[0].split('/');
-    console.log(preSelectedFilters)
+    const filtering = new Filtering(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media');
     return (
         <Layout>
             <div
@@ -48,8 +48,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
                 <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
                     gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a
                     multi-year initiative and hosts 5-7 studios per year.</p>
-                
-                {FilteredItems(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media')} 
+                <filtering.FilteredItems />
             
             </div>
         </Layout>
