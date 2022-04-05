@@ -6,6 +6,9 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    border: {
+      1: '1px',
+    },
     borderRadius: {
       full: '100px',
     },

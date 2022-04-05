@@ -32,6 +32,10 @@ const LinkRender = (props: { link: string; label: string, pad?: boolean }) => {
 class Footer extends Component {
   render() {
     return (
+        <div>
+        <div className='p-2 text-center text-sm border-t-[1px] border-t-[#E589E0] border-b-[1px] border-b-[#F4B477]'>
+            If you or someone you know has been impacted by gun violence and are in need of support or services, please <span className='text-bluegreen'><Link href="/resources" passHref>click here</Link></span> for resources.
+        </div>
         <nav className="w-full px-6 xl:px-12 my-7 mb-24">
             <Link href="/" passHref>
             <svg viewBox="0 0.081 58 35.601" width="58" height="35.601">
@@ -167,6 +171,7 @@ class Footer extends Component {
                 </div>
             </div>
         </nav>
+        </div>
     );
   }
 }
