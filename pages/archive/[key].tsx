@@ -119,7 +119,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   
     const paths = items
       .filter(({ key }) => !!key)
-      .map(({ key }) => `/media/${key}`);
+      .map(({ key }) => `/archive/${key}`);
   
     return {
       paths,
