@@ -6,4 +6,4 @@ export AZURE_STORAGE_ACCOUNT=$AZURE_STORAGE_ACCOUNT
 export AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING
 
 # Upload app build to Azure
-az storage blob upload-batch -d '$web' -s ./public
+az storage blob upload-batch -d '$web' -s ./client/out
