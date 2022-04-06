@@ -224,6 +224,7 @@ const Header = () => {
               </g>
             </svg>
           </Link>
+          {/* Mobile/tablet */}
           <div id="lines" className='block xl:hidden relative z-50 cursor-pointer' onClick={(e)=>{
             toggleNavOpen(!navOpen) }}>
             <span className={`block relative h-[1px] w-12 bg-purple opacity-100 origin-center transition-all
@@ -238,10 +239,11 @@ const Header = () => {
           </div>
           </div>
           <div className={`xl:hidden block w-full fixed overflow-y-scroll top-0 left-full h-full p-5 pt-20 z-40 bg-lynx
-            transition-all ${customEase} ${!navOpen ? ''
-            : '-translate-x-full' }`}>
+            transition-all ${customEase} ${!navOpen ? 'opacity-0'
+            : '-translate-x-full opacity-100' }`}>
           {NavItems()}
         </div>
+        {/* Desktop */}
         <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-2/5 items-center">
           {NavItems()}
         </div>

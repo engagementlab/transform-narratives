@@ -4,6 +4,7 @@ import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-re
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
+import FlexLayout from '../../components/FlexLayout';
 
 type BigPicturePage = {
   content: any;
@@ -23,6 +24,9 @@ const renderers: DocumentRendererProps['renderers'] = {
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
     },
+    layout: ({layout, children}) => {
+        return FlexLayout(layout, children);
+    }
   },
 };
 
