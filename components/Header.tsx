@@ -93,7 +93,7 @@ const NavItems = () => {
               </svg></a>
 
             <ul
-            className={`xl:opacity-0 xl:p-3 xl:border-2 xl:translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
+            className={`absolute xl:opacity-0 xl:p-3 xl:border-2 xl:translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
               {link.subMenu.map((subLink: NavLink) => {
                 return (
                   <li className='mt-6 xl:mt-2' key={subLink.label}>

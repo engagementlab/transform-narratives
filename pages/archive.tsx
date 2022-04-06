@@ -42,7 +42,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
     return (
         <Layout>
             <div
-            className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
+            className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">      
                 <h2 className="text-2xl text-bluegreen font-semibold">Media Archive</h2>
             
                 <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of

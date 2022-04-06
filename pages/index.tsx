@@ -45,13 +45,19 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
   return (
     <Layout>
       <div>
-        <div className='w-3/4 lg:w-1/2 text-center mx-auto'>
+        <div className='w-3/4 lg:w-1/2 xl:mt-16 mx-auto flex flex-col items-center'>
+          
+          <svg viewBox="0 0 88 88" width="88" height="88" className='mb-16'>
+            <circle style={{fill: 'rgb(252, 225, 129)'}} cx="44" cy="44" r="44"></circle>
+          </svg>
           <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
           <Button link='/media-archive' label='Listen to our stories' className='relative z-10' />
+
         </div>
         <Fade {...slidesProps} className='-translate-y-40'>
           {homePage.slides.map((slide, i) => (
-            <div key={`slide-${i}`} className=' text-center'>
+            <div key={`slide-${i}`} className='text-center'>
+
               <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
               <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId}  />
             

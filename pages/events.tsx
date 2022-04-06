@@ -85,7 +85,7 @@ const Item = (props: ItemProps) => {
 export default function Events({ upcoming, past }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <Layout>
-            <div className="container mx-auto mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
+            <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
                 <h2 className="text-2xl text-bluegreen font-semibold">Upcoming Events</h2>
                 <div className='flex flex-col mt-6'>
                     {upcoming.map((event, i) => (
