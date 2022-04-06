@@ -77,9 +77,10 @@ export default function MediaItem({ item, relatedItems }: InferGetStaticPropsTyp
                 </div>
                 <div className='px-4 xl:px-8'>
                     <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                    {/*
                     <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>
 
-                    {/* {relatedItems &&
+                     {relatedItems &&
                         <div>
                         <div className='flex flex-col lg:flex-row justify-between items-center'>
                         <p>Browse other stories to keep learning</p>
