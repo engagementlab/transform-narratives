@@ -14,6 +14,10 @@
     },
     "folders": [
         {
+            "name": "API",
+            "path": "./api"
+        },
+        {
             "name": "Client",
             "path": "./client"
         },
