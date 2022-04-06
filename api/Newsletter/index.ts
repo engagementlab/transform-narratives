@@ -16,6 +16,20 @@ const newsletterSignup: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   const listId = process.env.MAILCHIMP_LIST_ID;
+  if (!listId) {
+    context.res = {
+      status: 500,
+      body: 'Missing MAILCHIMP_LIST_ID!',
+    };
+    return;
+  }
+  if (!process.env.MAILCHIMP_KEY) {
+    context.res = {
+      status: 500,
+      body: 'Missing MAILCHIMP_KEY!',
+    };
+    return;
+  }
 
   mailchimp.setConfig({
     apiKey: process.env.MAILCHIMP_KEY,
