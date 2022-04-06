@@ -14,8 +14,8 @@
     },
     "folders": [
         {
-            "name": "./",
-            "path": "."
+            "name": "Client",
+            "path": "./client"
         }
     ]
 }
