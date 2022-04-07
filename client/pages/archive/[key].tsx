@@ -1,17 +1,26 @@
-import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import {
+    GetStaticPathsResult,
+    GetStaticPropsContext,
+    InferGetStaticPropsType
+} from 'next';
 
 import {
     useRouter
-  } from 'next/router';
-import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
-import { query } from '.keystone/api';
+} from 'next/router';
+import {
+    DocumentRenderer,
+    DocumentRendererProps
+} from '@keystone-6/document-renderer';
+import {
+    query
+} from '.keystone/api';
 
 import _ from 'lodash';
 import create from 'zustand';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {
+    CopyToClipboard
+} from 'react-copy-to-clipboard';
 
-import { componentBlocks } from '../../admin/components/component-blocks';
 import Video from '../../components/Video';
 import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
@@ -34,23 +43,35 @@ type ShareState = {
     toggleCopied: (open: boolean) => void
 }
 // Create store with Zustand
-const useStore = create<ShareState>(set => ({
+const useStore = create < ShareState > (set => ({
     urlCopied: false,
-    toggleCopied: (open: boolean) => set({ urlCopied:open })
+    toggleCopied: (open: boolean) => set({
+        urlCopied: open
+    })
 }));
 
 const renderers: DocumentRendererProps['renderers'] = {
-  block: {
-    heading: ({ level, children, textAlign }) => {
-        return HeadingStyle(level, children, textAlign);
+    block: {
+        heading: ({
+            level,
+            children,
+            textAlign
+        }) => {
+            return HeadingStyle(level, children, textAlign);
+        },
+        layout: ({
+            layout,
+            children
+        }) => {
+            return FlexLayout(layout, children);
+        }
     },
-    layout: ({layout, children}) => {
-      return FlexLayout(layout, children);
-    }
-  },
 };
 
-export default function MediaItem({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function MediaItem({
+    item,
+    relatedItems
+}: InferGetStaticPropsType < typeof getStaticProps > ) {
     const thisUrl = `https://transformnarratives.org${useRouter().asPath}`;
     const toggleCopied = useStore(state => state.toggleCopied);
     const wasCopied = useStore(state => state.urlCopied);

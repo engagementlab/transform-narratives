@@ -51,7 +51,7 @@ const newsletterSignup: AzureFunction = async function (
   } catch (e) {
     if (e.response.body.title === 'Member Exists') {
       context.res = {
-        status: 400,
+        status: 409,
         body: 'already_subscribed',
       };
       return;
