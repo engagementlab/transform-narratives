@@ -195,7 +195,7 @@ export default class Filtering {
     FilteredItems = () => {
         
             let selectedFilters = this.useStore(state => state.currentFilters);
-            // console.log(preSelectedFilters, selectedFilters)
+
             const haveFilters = selectedFilters.length > 0;
             const reset = this.useStore(state => state.reset);
             const toggleFiltersOpen = this.useStore(state => state.toggleFiltersOpen);
