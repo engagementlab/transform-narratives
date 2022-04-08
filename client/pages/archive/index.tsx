@@ -8,10 +8,10 @@ import { motion } from "framer-motion";
 import {
     query
 } from '.keystone/api';
-import Filtering, {  MediaItem } from "../components/Filtering";
-import Image from "../components/Image";
-import Layout from "../components/Layout";
-import ImagePlaceholder from "../components/ImagePlaceholder";
+import Filtering, {  MediaItem } from "../../components/Filtering";
+import Image from "../../components/Image";
+import Layout from "../../components/Layout";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 import { useRouter } from "next/router";
 
 const renderItem = (props: { item: MediaItem }) => {

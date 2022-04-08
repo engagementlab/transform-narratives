@@ -11,10 +11,10 @@ import {
 import {
     query
 } from '.keystone/api';
-import Filtering, {  MediaItem } from "../components/Filtering";
-import Image from "../components/Image";
-import Layout from "../components/Layout";
-import ImagePlaceholder from "../components/ImagePlaceholder";
+import Filtering, {  MediaItem } from "../../components/Filtering";
+import Image from "../../components/Image";
+import Layout from "../../components/Layout";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 const renderItem = (props: {
         item: MediaItem

@@ -8,9 +8,9 @@ import _ from 'lodash';
 import {
     query
 } from '.keystone/api';
-import Image from "../components/Image";
-import Layout from "../components/Layout";
-import ImagePlaceholder from "../components/ImagePlaceholder";
+import Image from "../../components/Image";
+import Layout from "../../components/Layout";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 type Event = {
     name: string;

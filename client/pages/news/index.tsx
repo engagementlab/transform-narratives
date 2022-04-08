@@ -6,9 +6,9 @@ import Link from "next/link";
 import {
     query
 } from '.keystone/api';
-import Image from "../components/Image";
-import Layout from "../components/Layout";
-import ImagePlaceholder from "../components/ImagePlaceholder";
+import Image from "../../components/Image";
+import Layout from "../../components/Layout";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 type News = {
     title: string;
