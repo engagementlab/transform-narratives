@@ -28,7 +28,7 @@ export default function GetInvolved() {
   const setSubmitted = useStore(state => state.setSubmitted);
 
   const MailIcon =         
-                <svg className="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg className="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round"
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     style={{stroke: 'rgb(2, 102, 112)'}} />
@@ -75,7 +75,7 @@ export default function GetInvolved() {
         {/* Newsletter signup */}
         <div id="newsletter">
           <form onSubmit={SubmitEmail}>
-            <div className={`py-6 px-8 w-1/2 border-2 rounded-full transition-all ${status ? 'border-[#F4B477]' : 'border-bluegreen'
+            <div className={`py-6 px-8 w-4/5 md:w-1/2 border-2 rounded-full transition-all ${status ? 'border-[#F4B477]' : 'border-bluegreen'
               }`}>
               {status === 'already_subscribed' &&
               <span className='text-bluegreen'>

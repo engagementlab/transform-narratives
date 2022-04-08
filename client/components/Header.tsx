@@ -93,7 +93,7 @@ const NavItems = () => {
               </svg></a>
 
             <ul
-            className={`absolute xl:opacity-0 xl:p-3 xl:border-2 xl:translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
+            className={`xl:absolute xl:opacity-0 xl:p-3 xl:border-2 xl:translate-y-3 text-gray-700 border-purple text-right transition-all group-hover:opacity-100 group-hover:translate-y-0 ${customEase}`}>
               {link.subMenu.map((subLink: NavLink) => {
                 return (
                   <li className='mt-6 xl:mt-2' key={subLink.label}>
@@ -244,7 +244,7 @@ const Header = () => {
           {NavItems()}
         </div>
         {/* Desktop */}
-        <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-2/5 items-center">
+        <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-1/2 2xl:w-1/3 items-center">
           {NavItems()}
         </div>
       </nav>
