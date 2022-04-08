@@ -1,9 +1,9 @@
 import {
     InferGetStaticPropsType
 } from "next";
+import React, { useEffect } from 'react'
 import Link from "next/link";
 import _ from 'lodash';
-import { motion } from "framer-motion";
 
 import {
     query
@@ -32,6 +32,7 @@ type ItemProps = {
 }
 
 const Item = (props: ItemProps) => {
+
     return (
         <div className="w-full flex flex-col-reverse md:flex-row" key={`${props.past ? '' : 'upcoming'}-${props.index}`}>
             <div className="w-full md:w-1/3">
@@ -82,22 +83,29 @@ const Item = (props: ItemProps) => {
     )
 }
 
-export default function Events({ upcoming, past }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Events({ events }: InferGetStaticPropsType<typeof getStaticProps>) {
+
+    const today = new Date();
+    const upcoming = events.filter(e => {return new Date(e.eventDate) > today});
+    const past = events.filter(e => {return new Date(e.eventDate) < today});
+
     return (
         <Layout>
             <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
                 <h2 className="text-2xl text-bluegreen font-semibold">Upcoming Events</h2>
                 <div className='flex flex-col mt-6'>
-                    {upcoming.map((event, i) => (
-                        <Item key={i} event={event} index={i} past={false} />
-                        ))}
+                    {
+                        upcoming.length === 0 ? 
+                        <h3 className='text-purple'>No upcoming events currently. Please check back soon.</h3> :
+                        upcoming.map((event, i) => ( <Item key={i} event={event} index={i} past={false} /> ))
+                    }
                 </div>
 
                 <h2 className="text-2xl text-bluegreen font-semibold mt-12">Past Events</h2>
                 <div className='flex flex-col mt-6'>
                     {past.map((event, i) => (
                         <Item key={i} event={event} index={i} past={true} />
-                        ))}
+                    ))}
                 </div>
             </div>
         </Layout>
@@ -106,13 +114,12 @@ export default function Events({ upcoming, past }: InferGetStaticPropsType<typeo
 
 export async function getStaticProps() {
     const evtQuery = 'name key eventDate registrationLink address blurb thumbnail { publicId }';
-    const upcoming = await query.Event.findMany({ where: { eventDate: { gte: new Date().toISOString() }}, query: evtQuery  }) as Event[];
-    const past = await query.Event.findMany({ where: { eventDate: { lt: new Date().toISOString() }}, query: evtQuery  }) as Event[];
+    const events = await query.Event.findMany({ query: evtQuery  }) as Event[];
+    // const past = await query.Event.findMany({ where: { eventDate: { lt: new Date().toISOString() }}, query: evtQuery  }) as Event[];
 
     return {
       props: {
-        upcoming,
-        past,
+        events
       }
     };
   }

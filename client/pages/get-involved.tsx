@@ -34,12 +34,12 @@ export default function GetInvolved() {
                     style={{stroke: 'rgb(2, 102, 112)'}} />
                 </svg>;
 
-  const SubmitEmail = async e => {
+  const SubmitEmail = async(e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
     setSubmitted(true);
 
-    const email = e.target.email.value;
+    const email =  (e.currentTarget[0] as HTMLInputElement).value;
     const emailValid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
     
     if(emailValid) {
