@@ -35,9 +35,9 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
 export async function getStaticProps() {
   const page = await query.About.findOne({
     where: { name: 'About Page' },
-    query: `content { document } `
+    query: `content { document(hydrateRelationships: true) }`
   }) as AboutPage;
-
+  console.log(page.content.document[5].children[0].children[0])
   return {
     props: {
       page

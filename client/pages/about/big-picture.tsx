@@ -42,7 +42,7 @@ export default function BigPicture({ page }: InferGetStaticPropsType<typeof getS
 export async function getStaticProps() {
   const page = await query.BigPicture.findOne({
     where: { name: 'Big Picture Page' },
-    query: `content { document } `
+    query: `content { document(hydrateRelationships: true) } `
   }) as BigPicturePage;
 
   return {
