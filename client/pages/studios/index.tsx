@@ -57,7 +57,7 @@ export default function Studios({ filtersGrouped, studios }: InferGetStaticProps
             className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
                 <h2 className="text-2xl text-bluegreen font-semibold mb-8">Studios at Emerson College</h2>
 
-                <p className="w-full lg:w-1/2 xl:w-1/3">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of gun violence as it is experienced locally. The <i>Transforming Narratives of Gun Violence Initiative</i> is a multi-year initiative and hosts 5-7 studios per year.</p>
+                <p className="w-full lg:w-1/2 mb-14">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of gun violence as it is experienced locally. The <i>Transforming Narratives of Gun Violence Initiative</i> is a multi-year initiative and hosts 5-7 studios per year.</p>
                 <filtering.FilteredItems />
 
             </div>

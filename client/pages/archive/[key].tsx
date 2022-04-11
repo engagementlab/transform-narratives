@@ -83,7 +83,7 @@ export default function MediaItem({
                 {item.videos && <Video videoLabel={item.videos[0].label} videoUrl={item.videos[0].value} thumbUrl={item.videos[0].thumb} />}
                     <div className='flex justify-between px-8 py-10'>
                         <div>
-                            <h1 className="text-3xl">{item.title}</h1>
+                            <h1 className="text-2xl font-semibold">{item.title}</h1>
                             <p>{_.map(item.filters, 'name').join(', ')}</p>
                         </div>
                         <div>

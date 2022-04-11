@@ -36,8 +36,8 @@ return (
   !item ? 'Not found!' :
   <Layout>   
     <div>
-        <div className='px-4 xl:px-8'>
-            <h1 className="text-3xl">{item.name}</h1>
+        <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full'>
+            <h1 className="text-2xl font-semibold text-bluegreen mb-8">{item.name}</h1>
             <p>{_.map(item.filters, 'name').join(', ')}</p>
 
             <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
