@@ -142,21 +142,21 @@ export default function GetInvolved() {
 
             <div className='mt-4'>
               <ExternalLink label='Learn about upcoming social impact studios' href='https://elab.emerson.edu/studios' />
-              <p className='body'>
+              <p className='leading-7'>
                 Social impact studios are interdisciplinary classes at Emerson that work alongside community partners on issue-based
                 projects, like gun violence
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Learn about the Engagement Lab co-curricular</p>
-              <p className='body'>
+              <p className='leading-7'>
                 The ELab co-curricular is a one credit opportunity to work closely with ELab faculty on collaborative projects or
                 research
               </p>
             </div>
             <div className='mt-8'>
               <ExternalLink label='Work at the Engagement Lab' href='https://elab.emerson.edu/jobs' />
-              <p className='body'>
+              <p className='leading-7'>
                 ELab hires students every year across disciplines to contribute to the work of ELab in communications, visual design,
                 videography, coding, event planning, and more.
               </p>
@@ -171,13 +171,13 @@ export default function GetInvolved() {
 
             <div className='mt-4'>
               <p className='font-semibold'>Participate in the summer workshop in collaborative pedagogy</p>
-              <p className='body'>
+              <p className='leading-7'>
               Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson faculty interested in teaching social impact studios
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Become an Engagement Lab fellow</p>
-              <p className='body text-purple'>
+              <p className='leading-7 text-purple'>
             Engagement Lab fellows are ..........?
               </p>
             </div>
@@ -189,7 +189,7 @@ export default function GetInvolved() {
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Become an Initiative Captain</p>
-              <p className='body'>
+              <p className='leading-7'>
                 Initiative captains are one year appointments that place faculty in a leadership role within the initiative to work with the collaborative leadership team to shape priorities, onboard partners, and make connections to Emerson faculty and students.
               </p>
             </div>
@@ -201,19 +201,19 @@ export default function GetInvolved() {
 
             <div className='mt-4'>
               <p className='font-semibold'>Be a guest speaker</p>
-              <p className='body'>
+              <p className='leading-7'>
               How has your life been impacted by gun violence? How are you working toward peace, healing, and justice? Come share your story with an Emerson class.
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Collaborate with a studio</p>
-              <p className='body'>
+              <p className='leading-7'>
               We are looking for groups, organizations, or individuals with direct experience with the issue of gun violence to work alongside students and faculty over the course of a full semester. Studio collaborators help shape studio projects and are active participants in the co-creation process. Collaborators receive a certificate and honorarium for their participation.
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Tell us what you’re up to</p>
-              <p className='body'>
+              <p className='leading-7'>
               We are always seeking to learn more about the work happening on the ground.
               </p>
             </div>
