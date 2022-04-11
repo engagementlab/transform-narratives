@@ -95,7 +95,7 @@ export async function getStaticProps() {
     query: `values { document } `
   }) as CommunityPage;
   const people = await query.Person.findMany({
-    query: `name title blurb remembrance image { publicId } content { document } `
+    query: `name title blurb remembrance image { publicId } content { document }`, orderBy: {name: 'asc'}
   }) as Person[];
 
   return {
