@@ -37,7 +37,7 @@ export async function getStaticProps() {
     where: { name: 'About Page' },
     query: `content { document(hydrateRelationships: true) }`
   }) as AboutPage;
-  console.log(page.content.document[5].children[0].children[0])
+  // console.log(page.content.document[5].children[0].children[0])
   return {
     props: {
       page
