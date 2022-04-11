@@ -66,12 +66,12 @@ export default function GetInvolved() {
   return (
     <Layout>
       <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full xl:w-1/2">
-        <h2 className="text-2xl text-bluegreen font-extrabold">Get Involved with the <i>Transforming Narratives of Gun
-            Violence</i> Initiative</h2>
+        <h2 className="text-2xl text-bluegreen font-extrabold">Get Involved</h2>
 
-        <div className='mt-4'>
+        <div className='mt-12'>
+          If you would like to get involved with the <i>Transforming Narratives of Gun Violence</i> Initiative,&nbsp;
           <a href='mailto:engagementlab@emerson.edu&subject=Transforming Narratives of Gun Violence Initiative'>
-            Get in touch {MailIcon}
+            please get in touch! {MailIcon}
           </a>
         </div>
 
@@ -138,10 +138,7 @@ export default function GetInvolved() {
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>
-              <Link href='https://docs.google.com/forms/d/1crW6N7JI7C3fhkGwmlKKOiSQQz7h_wI-1aHA55JPmdM'><a>For students
-                {MailIcon}</a></Link>
-            </h3>
+            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>For students</h3>
 
             <div className='mt-4'>
               <ExternalLink label='Learn about upcoming social impact studios' href='https://elab.emerson.edu/studios' />
@@ -168,9 +165,7 @@ export default function GetInvolved() {
         <div className="mb-14 mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>
-              <Link href='https://docs.google.com/forms/d/1ZmC1CJfIquw2Ss-vWBT4auydgoGMKzlSKh13FgNtZ-M'><a>For Emerson faculty {MailIcon}</a></Link>
-            </h3>
+            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>For Emerson faculty</h3>
 
             <div className='mt-4'>
               <p className='font-semibold'>Teach a studio</p>
@@ -206,9 +201,7 @@ export default function GetInvolved() {
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>
-              <Link href='https://docs.google.com/forms/d/19dxzJJr15RTaitx0nAFkGAq0A5CtQfIglpw03mDQDUo/'><a>Boston-area community organizations and individuals {MailIcon}</a></Link>
-            </h3>
+            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
 
             <div className='mt-4'>
               <p className='font-semibold'>Be a guest speaker</p>
