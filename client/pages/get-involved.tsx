@@ -68,7 +68,7 @@ export default function GetInvolved() {
       <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12">
         <h2 className="text-2xl text-bluegreen font-extrabold">Get Involved</h2>
 
-        <div className='mt-12'>
+        <div>
           If you would like to get involved with the <i>Transforming Narratives of Gun Violence</i> Initiative,&nbsp;
           <a href='mailto:engagementlab@emerson.edu&subject=Transforming Narratives of Gun Violence Initiative'>
             please get in touch! {MailIcon}
@@ -77,8 +77,8 @@ export default function GetInvolved() {
 
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl text-bluegreen font-semibold'>General Public</h3>
+            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
 
             <p>Stay up-to-date on the latest by joining our mailing list</p>
 
@@ -137,8 +137,8 @@ export default function GetInvolved() {
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Emerson students</h3>
+            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College students</h3>
 
             <div className='mt-4'>
               <ExternalLink label='Learn about upcoming social impact studios' href='https://elab.emerson.edu/studios' />
@@ -166,18 +166,18 @@ export default function GetInvolved() {
 
         <div className="mb-14 mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Emerson faculty</h3>
+            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>
 
             <div className='mt-4'>
-              <p className='font-semibold'>Teach a studio</p>
+              <p className='font-semibold'>Participate in the summer workshop in collaborative pedagogy</p>
               <p className='body'>
-                The Engagement Lab supports faculty to design and teach studios within our social impact initiatives, including coordinating with partners
+              Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson faculty interested in teaching social impact studios
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Become an Engagement Lab fellow</p>
-              <p className='body'>
+              <p className='body text-purple'>
             Engagement Lab fellows are ..........?
               </p>
             </div>
@@ -188,22 +188,16 @@ export default function GetInvolved() {
               </p>
             </div>
             <div className='mt-8'>
-              <p className='font-semibold'>Become an initiative captain</p>
+              <p className='font-semibold'>Become an Initiative Captain</p>
               <p className='body'>
                 Initiative captains are one year appointments that place faculty in a leadership role within the initiative to work with the collaborative leadership team to shape priorities, onboard partners, and make connections to Emerson faculty and students.
-              </p>
-            </div>
-            <div className='mt-8'>
-              <p className='font-semibold'>Participate in the summer workshop in collaborative pedagogy</p>
-              <p className='body'>
-              Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson faculty interested in teaching social impact studios
               </p>
             </div>
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
+            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
 
             <div className='mt-4'>
               <p className='font-semibold'>Be a guest speaker</p>
