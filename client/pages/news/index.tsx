@@ -25,7 +25,7 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
     return (
         <Layout>
             <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-                <h2 className="text-2xl text-bluegreen font-semibold">Latest News</h2>
+                <h2 className="text-2xl text-bluegreen font-semibold mb-8">Latest News</h2>
                 <div className='flex flex-col mt-6'>
                     {items.map((item, i) => (
                         <div className="w-full flex flex-col-reverse md:flex-row" key={i}>
@@ -53,7 +53,7 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
                                 </a>
                             </Link>
                             <p>{item.blurb}</p>
-                 
+
                             {
                                 item.thumbnail ?
                                 <Image id={`thumb-${i}`} alt={`Thumbnail for blog post with title "${item.title}" `}

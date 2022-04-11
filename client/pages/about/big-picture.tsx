@@ -8,7 +8,7 @@ import FlexLayout from '../../components/FlexLayout';
 
 type BigPicturePage = {
   content: any;
-}; 
+};
 
 const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
@@ -20,7 +20,7 @@ const renderers: DocumentRendererProps['renderers'] = {
   block: {
     heading: ({ level, children, textAlign }) => {
       const customRenderers = {
-        3: 'text-2xl font-extrabold text-bluegreen'
+        3: 'text-2xl font-semibold text-bluegreen mb-8'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
     },

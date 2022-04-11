@@ -9,7 +9,7 @@ import HeadingStyle from '../../components/HeadingStyle';
 
 type CommunityPage = {
     values: any;
-}; 
+};
 
 type Person = {
     name: string;
@@ -18,7 +18,7 @@ type Person = {
     blurb: string;
     image: any;
     content: any;
-}; 
+};
 
 const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
@@ -45,12 +45,12 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
       <div>
           <div
           className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-              <h2 className="text-2xl text-bluegreen font-extrabold">About Our Community</h2>
+              <h2 className="text-2xl text-bluegreen font-semibold mb-8">About Our Community</h2>
               <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
           </div>
           <hr className='border-[#F4B477]' />
           <div className='px-4 xl:px-8 mt-7 w-full lg:w-7/12'>
-              <h2 className="text-xl text-bluegreen font-semibold">Our Community</h2>
+              <h2 className="text-xl text-bluegreen font-semibold my-12">Our Community</h2>
 
               {people.map((person, i) => (
                 <div key={i} className='flex flex-col lg:flex-row mt-5'>
@@ -84,7 +84,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
           </div>
       </div>
     </Layout>
-    
+
 
   );
 }

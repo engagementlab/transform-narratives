@@ -6,7 +6,7 @@ import Layout from '../../components/Layout';
 
 type AboutPage = {
   content: any;
-}; 
+};
 
 const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
@@ -17,7 +17,7 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 ? 'text-2xl font-extrabold' : 'text-xl font-semibold'} text-bluegreen`} style={{ textAlign }}>{children}</p>;
+      return <p className={`${level === 3 ? 'text-2xl mb-8' : 'text-xl'} font-semibold text-bluegreen`} style={{ textAlign }}>{children}</p>;
     },
   },
 };

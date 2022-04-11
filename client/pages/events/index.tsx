@@ -72,7 +72,7 @@ const Item = (props: ItemProps) => {
                         </a>
                         {
                             props.event.thumbnail ?
-                            <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `} 
+                            <Image id={`thumb-${props.index}-${props.past ? '' : 'upcoming'}`} alt={`Thumbnail for event with name "${props.event.name}" `}
                             imgId={props.event.thumbnail.publicId} width={335} /> :
                             <ImagePlaceholder imageLabel='Thumbnail' width={335} height={335} />
                         }
@@ -92,16 +92,16 @@ export default function Events({ events }: InferGetStaticPropsType<typeof getSta
     return (
         <Layout>
             <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-                <h2 className="text-2xl text-bluegreen font-semibold">Upcoming Events</h2>
+                <h2 className="text-2xl text-bluegreen font-semibold mb-8">Upcoming Events</h2>
                 <div className='flex flex-col mt-6'>
                     {
-                        upcoming.length === 0 ? 
-                        <h3 className='text-purple'>No upcoming events currently. Please check back soon.</h3> :
+                        upcoming.length === 0 ?
+                        <h3 className=''>No upcoming events currently. Please check back soon.</h3> :
                         upcoming.map((event, i) => ( <Item key={i} event={event} index={i} past={false} /> ))
                     }
                 </div>
 
-                <h2 className="text-2xl text-bluegreen font-semibold mt-12">Past Events</h2>
+                <h2 className="text-2xl text-bluegreen font-semibold mt-20">Past Events</h2>
                 <div className='flex flex-col mt-6'>
                     {past.map((event, i) => (
                         <Item key={i} event={event} index={i} past={true} />

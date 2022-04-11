@@ -66,7 +66,7 @@ export default function GetInvolved() {
   return (
     <Layout>
       <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12">
-        <h2 className="text-2xl text-bluegreen font-extrabold">Get Involved</h2>
+        <h2 className="text-2xl text-bluegreen font-semibold mb-8">Get Involved</h2>
 
         <div>
           If you would like to get involved with the <i>Transforming Narratives of Gun Violence</i> Initiative,&nbsp;
