@@ -53,6 +53,14 @@ const BigPicture: Lists.BigPicture = list({
                 views: path.join(process.cwd(), 'admin/components/component-blocks')
             },
             componentBlocks,
+
+            relationships: {
+              image: {
+                kind: 'prop',
+                listKey: 'BigPictureImage',
+                selection: 'imageName altText image {publicUrlTransformed publicId}',
+              },
+            },
         }),
         images: relationship({
           ref: 'BigPictureImage.bigPictureImages',
