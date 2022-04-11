@@ -78,9 +78,9 @@ export default function GetInvolved() {
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl text-bluegreen font-semibold'>For everyone</h3>
+            <h3 className='mt-5 text-xl text-bluegreen font-semibold'>General Public</h3>
 
-            <p>Join our mailing list</p>
+            <p>Stay up-to-date on the latest by joining our mailing list</p>
 
             {/* Newsletter signup */}
             <div id="newsletter">
@@ -125,20 +125,20 @@ export default function GetInvolved() {
               </div>
             </div>
 
-            <div className='mt-4'>
-              <ExternalLink label='Support our Initiative' href='https://giving.emerson.edu/give-now?fid=h0ZJD8gm3R4%3d&fdesc=i%2bI0v73Km%2bQCb1p7mjPYeYE68k%2f8URMG' />
-            </div>
-
+            <p className='mt-12'>Other ways to get involved</p>
             <div className='text-bluegreen'>
               <div className='mt-4'>
                 <Link href='/events'><a>Check out our latest events</a></Link>
               </div>
             </div>
+            <div className='mt-4'>
+              <ExternalLink label='Support our Initiative' href='https://giving.emerson.edu/give-now?fid=h0ZJD8gm3R4%3d&fdesc=i%2bI0v73Km%2bQCb1p7mjPYeYE68k%2f8URMG' />
+            </div>
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>For students</h3>
+            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Emerson students</h3>
 
             <div className='mt-4'>
               <ExternalLink label='Learn about upcoming social impact studios' href='https://elab.emerson.edu/studios' />
@@ -147,25 +147,27 @@ export default function GetInvolved() {
                 projects, like gun violence
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Learn about the Engagement Lab co-curricular</p>
               <p>
                 The ELab co-curricular is a one credit opportunity to work closely with ELab faculty on collaborative projects or
                 research
               </p>
             </div>
-            <ExternalLink label='Work at the Engagement Lab' href='https://elab.emerson.edu/jobs' />
-            <p>
-              ELab hires students every year across disciplines to contribute to the work of ELab in communications, visual design,
-              videography, coding, event planning, and more.
-            </p>
+            <div className='mt-8'>
+              <ExternalLink label='Work at the Engagement Lab' href='https://elab.emerson.edu/jobs' />
+              <p>
+                ELab hires students every year across disciplines to contribute to the work of ELab in communications, visual design,
+                videography, coding, event planning, and more.
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="mb-14 mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5" />
-            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>For Emerson faculty</h3>
+            <h3 className='mt-5 text-xl font-semibold text-bluegreen'>Emerson faculty</h3>
 
             <div className='mt-4'>
               <p className='font-semibold'>Teach a studio</p>
@@ -173,25 +175,25 @@ export default function GetInvolved() {
                 The Engagement Lab supports faculty to design and teach studios within our social impact initiatives, including coordinating with partners
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Become an Engagement Lab fellow</p>
               <p>
             Engagement Lab fellows are ..........?
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Teach a studio</p>
               <p>
                 The Engagement Lab supports faculty to design and teach studios within our social impact initiatives, including coordinating with partners
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Become an initiative captain</p>
               <p>
                 Initiative captains are one year appointments that place faculty in a leadership role within the initiative to work with the collaborative leadership team to shape priorities, onboard partners, and make connections to Emerson faculty and students.
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Participate in the summer workshop in collaborative pedagogy</p>
               <p>
               Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson faculty interested in teaching social impact studios
@@ -209,13 +211,13 @@ export default function GetInvolved() {
               How has your life been impacted by gun violence? How are you working toward peace, healing, and justice? Come share your story with an Emerson class.
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Collaborate with a studio</p>
               <p>
               We are looking for groups, organizations, or individuals with direct experience with the issue of gun violence to work alongside students and faculty over the course of a full semester. Studio collaborators help shape studio projects and are active participants in the co-creation process. Collaborators receive a certificate and honorarium for their participation.
               </p>
             </div>
-            <div className='mt-4'>
+            <div className='mt-8'>
               <p className='font-semibold'>Tell us what you’re up to</p>
               <p>
               We are always seeking to learn more about the work happening on the ground.
