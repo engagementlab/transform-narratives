@@ -65,7 +65,7 @@ export default function GetInvolved() {
 
   return (
     <Layout>
-      <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full xl:w-1/2">
+      <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12">
         <h2 className="text-2xl text-bluegreen font-extrabold">Get Involved</h2>
 
         <div className='mt-12'>
