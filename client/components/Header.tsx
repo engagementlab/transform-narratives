@@ -82,6 +82,8 @@ const ActiveLink = (href: string | undefined) => {
 }
 
 const NavItems = () => {
+  const toggleNavOpen = useStore(state => state.toggleNavOpen);
+
   return (
       <ul className="flex flex-col xl:flex-row justify-between w-full list-none text-purple text-2xl xl:text-lg text-right">
       {links.map((link: NavLink) => {
@@ -99,7 +101,7 @@ const NavItems = () => {
                   <li className='mt-6 xl:mt-2' key={subLink.label}>
                   {
                     ActiveLink(subLink.url) ? 
-                      <span className='opacity-40'>{subLink.label}</span> 
+                      <span onClick={()=>{toggleNavOpen(false) }} className='opacity-40'>{subLink.label}</span> 
                     :
                       <Link href={subLink.url || '' } passHref>
                         {subLink.label}
