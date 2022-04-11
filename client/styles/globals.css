@@ -22,3 +22,7 @@ body div {
 /* a {
   color: #026670;
 } */
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

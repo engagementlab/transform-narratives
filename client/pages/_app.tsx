@@ -17,7 +17,7 @@ function App({ Component, pageProps }: AppProps) {
           <Favicon />
         </Head>
       </div>
-      <main className='w-full my-7 mb-24 font-sans'>
+      <main className='w-full mb-24 font-sans antialiased'>
       <Header />
       <AnimatePresence 
                 exitBeforeEnter
