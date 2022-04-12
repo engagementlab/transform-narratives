@@ -18,11 +18,9 @@ body, html {
 }
 body div {
   white-space: pre-wrap;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 /* a {
   color: #026670;
 } */
-.antialiased {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}

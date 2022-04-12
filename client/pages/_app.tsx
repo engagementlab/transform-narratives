@@ -17,9 +17,9 @@ function App({ Component, pageProps }: AppProps) {
           <Favicon />
         </Head>
       </div>
-      <main className='w-full mb-24 font-sans antialiased'>
+      <main className='w-full mb-24 font-sans'>
       <Header />
-      <AnimatePresence 
+      <AnimatePresence
                 exitBeforeEnter
                 initial={false}
                 onExitComplete={() => window.scrollTo(0, 0)}>
@@ -29,7 +29,7 @@ function App({ Component, pageProps }: AppProps) {
       <Footer />
       </main>
     </div>
-  ) 
+  )
 }
 
 export default App
