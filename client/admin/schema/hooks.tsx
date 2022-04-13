@@ -20,6 +20,7 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
     }
 
     contentParsed.forEach((c: any) => { parseChildren(c) });
-    
+   
+    console.log(contentParsed )
     return JSON.stringify(contentParsed); 
  };
