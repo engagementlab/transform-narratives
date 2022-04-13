@@ -6,6 +6,7 @@ export function CreateKey(name: string) {
 export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInput) => { 
       
     // Hacky, but works for now to ensure that buttons in content get assigned props
+    console.log(resolvedData )
     let contentParsed = JSON.parse(resolvedData.content as string);
     let parseChildren = (c: any) => {
         if(c.component === 'button') {
@@ -21,6 +22,5 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
 
     contentParsed.forEach((c: any) => { parseChildren(c) });
    
-    console.log(contentParsed )
     return JSON.stringify(contentParsed); 
  };
