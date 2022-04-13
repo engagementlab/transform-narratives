@@ -246,7 +246,7 @@ const Header = () => {
           {NavItems()}
         </div>
         {/* Desktop */}
-        <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-1/2 2xl:w-1/3 items-center">
+        <div className="hidden xl:flex flex-shrink-0 px-4 mt-4 w-1/2 2xl:w-2/5 items-center">
           {NavItems()}
         </div>
       </nav>
