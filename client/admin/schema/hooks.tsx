@@ -6,8 +6,8 @@ export function CreateKey(name: string) {
 export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInput) => { 
       
     // Hacky, but works for now to ensure that buttons in content get assigned props
-    // Content may be object or string, it seems 
-    let contentParsed = typeof resolvedData.content === 'object' ? resolvedData.content : JSON.parse(resolvedData.content as string);
+    // Content may be object or string, it seems  (if object, make copy)
+    let contentParsed = typeof resolvedData.content === 'object' ? JSON.parse(JSON.stringify(resolvedData.content)) : JSON.parse(resolvedData.content as string);
     let parseChildren = (c: any) => {
         if(c.component === 'button') {
             c.props.label = c.children[0].children[0].text;
