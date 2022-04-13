@@ -14,6 +14,17 @@ const FlexLayout = (layout: [number, ...number[]], children: ReactElement<any, s
             </div>
         );
     }
+    else if(layout[0] === 1 && layout[1] === 1) {
+        return (
+            <div
+                className={flexClass}
+            >
+            {children.map((element, i) => (
+                <div key={i} className={`${i === 0 ? 'w-full lg:w-1/2' : ''}`}>{element}</div>
+            ))}
+            </div>
+        );
+    }
     else if(layout[0] === 1 && layout[1] === 1 && layout[2] === 1) {
         return (
             <div

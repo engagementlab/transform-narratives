@@ -45,7 +45,6 @@ export async function getStaticProps() {
     query: `content { document(hydrateRelationships: true) } `
   }) as BigPicturePage;
 
-  console.log(page.content.document[2].children[0])
   return {
     props: {
       page
