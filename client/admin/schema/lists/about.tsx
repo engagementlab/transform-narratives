@@ -15,6 +15,7 @@ import path from 'path';
 import {
     componentBlocks
 } from '../../components/component-blocks';
+import { FixButtons } from '../hooks';
 
 const About: Lists.About = list({
     fields: {
@@ -61,6 +62,20 @@ const About: Lists.About = list({
                 selection: 'imageName altText image {publicUrlTransformed publicId}',
               },
             },
+
+            hooks: {
+                resolveInput: async ({
+                    listKey,
+                    fieldKey,
+                    operation,
+                    inputData,
+                    item,
+                    resolvedData,
+                    context,
+                  }) => { 
+                      return FixButtons(resolvedData)
+                 },
+            }
         }),
         images: relationship({
           ref: 'AboutImage.aboutImages',

@@ -17,6 +17,7 @@ import _ from 'lodash';
 import {
     componentBlocks
 } from '../../components/component-blocks';
+import { FixButtons } from '../hooks';
 
 const BigPicture: Lists.BigPicture = list({
     fields: {
@@ -63,7 +64,7 @@ const BigPicture: Lists.BigPicture = list({
                 selection: 'imageName altText image {publicUrlTransformed publicId}',
               },
             },
-            hooks:{
+            hooks: {
                 resolveInput: async ({
                     listKey,
                     fieldKey,
@@ -73,24 +74,7 @@ const BigPicture: Lists.BigPicture = list({
                     resolvedData,
                     context,
                   }) => { 
-                      
-                
-                    // Hacky, but works for now to ensure that buttons in content get assigned props
-                    let contentParsed = JSON.parse(resolvedData.content as string);
-                    let btnIndices = _.keys(_.pickBy(contentParsed, (val, key) => val.component === 'button'));
-
-                    btnIndices.forEach((i: string) => {
-                        let ind = parseInt(i);
-                        let btn = contentParsed[ind];
-                        console.log(contentParsed[ind].children[0].children[0].text)
-
-                        btn.props.label = contentParsed[ind].children[0].children[0].text;
-                        btn.props.link = contentParsed[ind].children[1].children[0].text;
-                        
-                        contentParsed[ind] = btn;
-                    })
-                    return JSON.stringify(contentParsed)
-                    
+                      return FixButtons(resolvedData)
                  },
             }
         }),
