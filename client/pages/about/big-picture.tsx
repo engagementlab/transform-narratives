@@ -25,15 +25,25 @@ const renderers: DocumentRendererProps['renderers'] = {
       return HeadingStyle(level, children, textAlign, customRenderers);
     },
     layout: ({layout, children}) => {
-        return FlexLayout(layout, children);
-    }
+        // return FlexLayout(layout, children);
+        const flexClass = 'flex gap-x-10 flex-col lg:flex-row justify-between';
+            return (
+                <div
+                    className={flexClass}
+                >
+                {children.map((element, i) => (
+                    <div key={i} className={'w-full lg:w-3/4'}>{element}</div>
+                ))}
+                </div>
+            );
+        }
   },
 };
 
 export default function BigPicture({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12'>
+      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-7/12'>
         <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
       </div>
     </Layout>
