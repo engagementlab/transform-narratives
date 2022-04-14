@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
 
-import { Fade } from 'react-slideshow-image';
+import { Fade, SlideshowProps } from 'react-slideshow-image';
 
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
@@ -32,13 +32,14 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
 };
 
-const slidesProps = {
-  duration: 5000,
-  transitionDuration: 1500,
+const slidesProps: SlideshowProps = {
+  duration: 4000,
+  transitionDuration: 1000,
   infinite: true,
   easing: 'ease',
   prevArrow: <span></span>,
   nextArrow: <span></span>,
+  pauseOnHover: false,
 };
 
 export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
@@ -67,7 +68,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
             <div key={`slide-${i}`} className='text-center'>
             
             <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
-            <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId} width={1900} className='w-full' />
+            <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId} width={1900} className='w-full' lazy={false} />
 
           </div>
           ))}

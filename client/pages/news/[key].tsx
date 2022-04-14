@@ -37,8 +37,8 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
         <div>
             {
                 item.thumbnail ?
-                <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} /> :
-                <ImagePlaceholder imageLabel='Header' width={1280} height={350} />
+                <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} width={1900} className='w-full' /> :
+                <ImagePlaceholder imageLabel='Header' width={1280} height={1280} />
             }
             <div className='px-4 xl:px-8'>
                 <h1 className="text-coated text-2xl font-extrabold mt-5">{item.title}</h1>
