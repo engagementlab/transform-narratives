@@ -1,6 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
+
 import BlockRenderers from '../../components/BlockRenderers';
 import Image from '../../components/Image';
 import Layout from '../../components/Layout';
@@ -49,7 +50,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
               <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
           </div>
           <hr className='border-[#F4B477]' />
-          <div className='px-4 xl:px-8 mt-7 w-full lg:w-7/12'>
+          <div className='px-4 xl:px-8 mt-7 w-full lg:w-10/12 xl:w-7/12'>
               <h2 className="text-xl text-bluegreen font-semibold">Our Community</h2>
 
               {people.map((person, i) => (
@@ -60,7 +61,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                             <ImagePlaceholder imageLabel='Bio' width={300} height={300} />
                           }
                       </div>
-                      <div className='ml-4'>
+                      <div className='lg:ml-4'>
                           <h4 className='text-xl font-semibold'>{person.name}</h4>
                           <p>{person.title}</p>
                             {person.blurb && ( 
