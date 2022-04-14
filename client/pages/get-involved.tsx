@@ -153,7 +153,7 @@ export default function GetInvolved() {
           </div>
 
           <div className='mt-4'>
-            <a href='mailto:engagementlab@emerson.edu&subject=Transforming Narratives of Gun Violence Initiative'>
+            <a href='mailto:engagementlab@emerson.edu?subject=Transforming Narratives of Gun Violence Initiative'>
               Get in touch {MailIcon}
             </a>
           </div>
