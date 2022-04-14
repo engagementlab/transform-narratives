@@ -5,6 +5,7 @@ export function CreateKey(name: string) {
     return name.toLocaleLowerCase().replaceAll(/[^a-z+A-Z+0-9+]/ig, '-').replace(/-{2,}/g, '-')
 }
 export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInput) => {
+    if(!resolvedData.content) return resolvedData.content;
 
     // Hacky, but works for now to ensure that buttons in content get assigned props
     // Content may be object or string, it seems (copy it)
@@ -26,3 +27,5 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
 
     return typeof resolvedData.content === 'object' ? contentParsed : JSON.stringify(contentParsed);
  };
+
+
