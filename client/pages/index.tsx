@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
 
-import { Fade } from 'react-slideshow-image';
+import { Fade, SlideshowProps } from 'react-slideshow-image';
 
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
@@ -32,39 +32,46 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
 };
 
-const slidesProps = {
-  duration: 5000,
-  transitionDuration: 1500,
+const slidesProps: SlideshowProps = {
+  duration: 4000,
+  transitionDuration: 1000,
   infinite: true,
   easing: 'ease',
-  prevArrow: <span></span>,
-  nextArrow: <span></span>,
+  arrows: false,
+  pauseOnHover: false,
 };
 
 export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   return (
     <Layout>
-      <div>
-        <div className='w-3/4 lg:w-1/2 xl:mt-16 mx-auto flex flex-col items-center'>
-          
-          <svg viewBox="0 0 88 88" width="88" height="88" className='mb-16'>
-            <circle style={{fill: 'rgb(252, 225, 129)'}} cx="44" cy="44" r="44"></circle>
-          </svg>
-          <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
-          <Button link='/media-archive' label='Listen to our stories' className='relative z-10' />
+        <div className='w-3/4 lg:w-1/2 xl:mt-16 mx-auto'>
 
+          <div className=''>
+            <div className='flex flex-col items-center'>
+              <svg viewBox="0 0 88 88" width="88" height="88" className='mb-16'>
+                <circle style={{fill: 'rgb(252, 225, 129)'}} cx="44" cy="44" r="44"></circle>
+              </svg>
+
+              <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
+            </div>
+          </div>
+          
         </div>
-        <Fade {...slidesProps} className='-translate-y-40'>
+        <div className='w-full'>
+          <div className='w-full flex flex-col items-center -translate-y-10 xl:translate-y-0 absolute z-10'>
+            <Button link='/media-archive' label='Listen to our stories' />
+          </div>
+        <Fade {...slidesProps}>
           {homePage.slides.map((slide, i) => (
             <div key={`slide-${i}`} className='text-center'>
-
-              <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
-              <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId}  />
             
-            </div>
+            <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
+            <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full' lazy={false} />
+
+          </div>
           ))}
         </Fade>
-      </div>
+        </div>
     </Layout>
   );
 }

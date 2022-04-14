@@ -1,3 +1,4 @@
+export { default as AboutImage } from './lists/aboutImage';
 export { default as About } from './lists/about';
 export { default as BigPictureImage } from './lists/bigPictureImage';
 export { default as BigPicture } from './lists/bigPicture';

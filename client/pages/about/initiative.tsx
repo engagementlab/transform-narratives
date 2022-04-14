@@ -3,6 +3,7 @@ import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import FlexLayout from '../../components/FlexLayout';
 
 type AboutPage = {
   content: any;
@@ -19,7 +20,10 @@ const renderers: DocumentRendererProps['renderers'] = {
     heading: ({ level, children, textAlign }) => {
       return <p className={`${level === 3 ? 'text-2xl mb-8' : 'text-xl'} font-semibold text-bluegreen`} style={{ textAlign }}>{children}</p>;
     },
-  },
+    layout: ({layout, children}) => {
+        return FlexLayout(layout, children);
+    }
+  }
 };
 
 export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -35,9 +39,9 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
 export async function getStaticProps() {
   const page = await query.About.findOne({
     where: { name: 'About Page' },
-    query: `content { document } `
+    query: `content { document(hydrateRelationships: true) }`
   }) as AboutPage;
-
+  // console.log(page.content.document[5].children[0].children[0])
   return {
     props: {
       page

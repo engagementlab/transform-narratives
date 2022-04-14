@@ -198,10 +198,8 @@ export const componentBlocks = {
       label: 'Button',
       props: {
         label: fields.child({
-          kind: 'block',
+          kind: 'inline',
           placeholder: 'Label',
-          formatting: { inlineMarks: 'inherit', softBreaks: 'inherit' },
-          links: 'inherit',
         }),
         link: fields.child({ kind: 'inline', placeholder: '/link/here' }),
       },

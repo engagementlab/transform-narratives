@@ -1,13 +1,11 @@
 import React, {
     Component
 } from 'react';
-import PropTypes from 'prop-types';
 
 import {Cloudinary} from "@cloudinary/url-gen";
 import {
     AdvancedImage,
     lazyload,
-    accessibility,
     placeholder,
     responsive,
 } from '@cloudinary/react';

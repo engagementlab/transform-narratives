@@ -49,7 +49,7 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
                         <div className="flex-grow">
                             <Link href={`/news/${item.key}`} passHref>
                                 <a>
-                                    <h4 className="text-bluegreen text-xl font-semibold my-2">{item.title}</h4>
+                                    <h3 className="text-bluegreen text-xl font-semibold my-2">{item.title}</h3>
                                 </a>
                             </Link>
                             <p>{item.blurb}</p>
