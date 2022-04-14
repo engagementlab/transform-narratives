@@ -50,18 +50,18 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
               <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
           </div>
           <hr className='border-[#F4B477]' />
-          <div className='px-4 xl:px-8 mt-7 w-full lg:w-10/12 xl:w-7/12'>
+          <div className='px-4 xl:px-8 mt-7'>
               <h2 className="text-xl text-bluegreen font-semibold">Our Community</h2>
 
               {people.map((person, i) => (
                 <div key={i} className='flex flex-col lg:flex-row mt-5'>
-                      <div className='w-full lg:w-1/3 flex-shrink-0'>
+                      <div className='flex-shrink-0'>
                           {person.image ?
                             <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300} /> :
                             <ImagePlaceholder imageLabel='Bio' width={300} height={300} />
                           }
                       </div>
-                      <div className='lg:ml-4'>
+                      <div className='lg:ml-4 w-full lg:w-1/2 xl:w-1/3'>
                           <h4 className='text-xl font-semibold'>{person.name}</h4>
                           <p>{person.title}</p>
                             {person.blurb && ( 
