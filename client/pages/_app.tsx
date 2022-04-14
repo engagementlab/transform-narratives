@@ -9,7 +9,6 @@ import { AnimatePresence } from 'framer-motion';
 function App({ Component, pageProps }: AppProps) {
   return (
     <div>
-
       <div>
         <Head>
           <title>Transforming Narratives of Gun Violence</title>

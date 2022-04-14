@@ -68,7 +68,7 @@ const Item = (props: ItemProps) => {
                 <Link href={`/events/${props.event.key}`} passHref>
                     <div className="cursor-pointer">
                         <a>
-                            <h4 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h4>
+                            <h3 className="text-bluegreen text-xl font-semibold my-2">{props.event.name}</h3>
                         </a>
                         {
                             props.event.thumbnail ?

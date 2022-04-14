@@ -100,7 +100,7 @@ export default function GetInvolved() {
                 <input type="submit" value="Add your email" name="subscribe" id="mc-embedded-subscribe"
                   aria-hidden="true" className='hidden' />
                 {!submitted ?
-                <button type='submit'>
+                <button type='submit' aria-label="Subscribe to newletter">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="#026670" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -30,7 +30,7 @@ const renderItem = (props: {
                         `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
                         <ImagePlaceholder imageLabel='Studio' width={716} height={200} />
                     }
-                    <h4 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h4>
+                    <h3 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h3>
 
                     <div className="flex items-start">
                         <div className="w-2/3">

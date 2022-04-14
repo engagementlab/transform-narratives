@@ -62,7 +62,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                           }
                       </div>
                       <div className='lg:ml-4 w-full lg:w-1/2 xl:w-1/3'>
-                          <h4 className='text-xl font-semibold'>{person.name}</h4>
+                          <h3 className='text-xl font-semibold'>{person.name}</h3>
                           <p>{person.title}</p>
                             {person.blurb && ( 
                               <p>

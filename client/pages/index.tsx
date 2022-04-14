@@ -37,15 +37,13 @@ const slidesProps: SlideshowProps = {
   transitionDuration: 1000,
   infinite: true,
   easing: 'ease',
-  prevArrow: <span></span>,
-  nextArrow: <span></span>,
+  arrows: false,
   pauseOnHover: false,
 };
 
 export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   return (
     <Layout>
-      {/* <div> */}
         <div className='w-3/4 lg:w-1/2 xl:mt-16 mx-auto'>
 
           <div className=''>
@@ -68,7 +66,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
             <div key={`slide-${i}`} className='text-center'>
             
             <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
-            <Image id={'img-' + slide.image.publicId} alt={slide.image.altText} imgId={slide.image.publicId} width={1900} className='w-full' lazy={false} />
+            <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full' lazy={false} />
 
           </div>
           ))}
