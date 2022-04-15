@@ -59,7 +59,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
         </div>
         <div className='w-full'>
           <div className='w-full flex flex-col items-center -translate-y-10 xl:translate-y-0 absolute z-10'>
-            <Button link='/media-archive' label='Listen to our stories' />
+            <Button link='/archive' label='Listen to our stories' />
           </div>
         <Fade {...slidesProps}>
           {homePage.slides.map((slide, i) => (
