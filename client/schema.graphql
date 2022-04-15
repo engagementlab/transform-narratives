@@ -109,13 +109,7 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
-  mode: QueryMode
   not: NestedStringFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
 }
 
 input NestedStringFilter {
@@ -1261,6 +1255,7 @@ type Person {
   id: ID!
   name: String
   title: String
+  enabled: Boolean
   image: CloudinaryImage_File
   blurb: String
   remembrance: String
@@ -1282,14 +1277,21 @@ input PersonWhereInput {
   id: IDFilter
   name: StringFilter
   title: StringFilter
+  enabled: BooleanFilter
   blurb: StringFilter
   remembrance: StringFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input PersonOrderByInput {
   id: OrderDirection
   name: OrderDirection
   title: OrderDirection
+  enabled: OrderDirection
   blurb: OrderDirection
   remembrance: OrderDirection
 }
@@ -1297,6 +1299,7 @@ input PersonOrderByInput {
 input PersonUpdateInput {
   name: String
   title: String
+  enabled: Boolean
   image: Upload
   blurb: String
   remembrance: String
@@ -1311,6 +1314,7 @@ input PersonUpdateArgs {
 input PersonCreateInput {
   name: String
   title: String
+  enabled: Boolean
   image: Upload
   blurb: String
   remembrance: String
@@ -1859,6 +1863,11 @@ enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   read
   hidden
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type KeystoneAdminUISort {

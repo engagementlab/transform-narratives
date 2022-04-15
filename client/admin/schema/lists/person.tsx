@@ -2,7 +2,7 @@ import {
   list
 } from '@keystone-6/core';
 import {
-  relationship,
+  checkbox,
   text
 } from '@keystone-6/core/fields';
 import {
@@ -25,6 +25,9 @@ const Person: Lists.Person = list({
       validation: {
         isRequired: true
       }
+    }),
+    enabled: checkbox({
+      defaultValue: true,
     }),
     image: cloudinaryImage({
       cloudinary: {
