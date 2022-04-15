@@ -28,6 +28,7 @@ type ImageProps = {
     className ? : string,
     transforms ? : string,
     width ? : number,
+    height ? : number,
     lazy ? : boolean,
 };
 
@@ -38,6 +39,7 @@ const Image = ({
     imgId,
     transforms,
     width,
+    height,
     lazy
 }: ImageProps) => {
     // Instantiate a CloudinaryImage object for the image with public ID;
@@ -63,6 +65,7 @@ const Image = ({
                 alt={alt}
                 plugins={plugins}
                 style={{ maxWidth: width + `px` }}
+                height={height}
             />
             );
 }
