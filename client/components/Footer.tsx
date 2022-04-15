@@ -120,17 +120,17 @@ class Footer extends Component {
                 <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col sm:flex-row justify-between text-green-blue text-sm">
 
                     <ul className="list-none pt-2 md:pt-0">
-                        <LinkRender label='About the Initiative' link='/about/initiative' />
+                        <LinkRender label='The Big Picture' link='/about/big-picture' />
+                        <LinkRender label='About the Initiative' link='/about/initiative' pad={true} />
                         <LinkRender label='About Our Community' link='/about/community' pad={true} />
-                        <LinkRender label='The Big Picture' link='/about/big-picture' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">
                         <LinkRender label='Media Archive' link='/archive' />
                         <LinkRender label='Studios' link='/studios' pad={true} />
                     </ul>
                     <ul className="list-none pt-2 md:pt-0">
-                        <LinkRender label='Events' link='/events' />
-                        <LinkRender label='News' link='/news' pad={true} />
+                        <LinkRender label='News' link='/news' />
+                        <LinkRender label='Events' link='/events' pad={true} />
                         <LinkRender label='Get Involved' link='/get-involved' pad={true} />
                     </ul>
                     {/* <ul className="list-none pt-2 md:pt-0">
@@ -165,9 +165,9 @@ class Footer extends Component {
                             clipRule="evenodd"></path>
                     </svg>
                     <Image id="ldpni-logo" alt="Louis D. Brown Peace Institute (LDBPI) logo" imgId='tngvi/logos/ldpi'
-                        width={86} />
+                        width={86} className='aspect-[3/2.8]' />
                     <Image id="mgh-logo" alt="MGH Center for Gun Violence Prevention logo" imgId='tngvi/logos/mgh-cgvp'
-                        width={89} />
+                        width={89} className='aspect-[3/2]' />
                 </div>
             </div>
         </nav>

@@ -65,38 +65,43 @@ const Passport = () => {
     ) => {
       // Verify user allowed
       const email = profile.emails[0].value;
+      console.log(DB().userModel.findOneAndUpdate);
 
-      DB().userModel.findOneAndUpdate(
-        {
-          email,
-        },
-        (err: any, user: any) => {
-          if (err) {
-            console.error(`Login error: ${err}`);
-            return done(err);
+      try {
+        DB().userModel.findOne(
+          {
+            email,
+          },
+          (err: any, user: any) => {
+            if (err) {
+              console.error(`Login error: ${err}`);
+              return done(err);
+            }
+            if (!user) {
+              console.error(
+                `Login error: user not found for email ${profile.emails[0].value}`
+              );
+              return done(err);
+            }
+            // console.log(err, user);
+            return done(err, user);
           }
-          if (!user) {
-            console.error(
-              `Login error: user not found for email ${profile.emails[0].value}`
-            );
-            return done(err);
-          }
-          console.log(err, user);
-          return done(err, user);
-        }
-      );
+        );
+      } catch (err) {
+        console.error(err);
+      }
     }
   );
   /**
    * Google oauth2/passport config
    */
   passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-    console.log(user);
+    // console.log('user', user);
     done(null, user);
   });
   passport.deserializeUser(
     (user: any, done: (arg0: null, arg1: any) => void) => {
-      console.log('de', user);
+      // console.log('de', user);
       done(null, user);
     }
   );
@@ -157,11 +162,11 @@ let ksConfig = {
               (error: any, user: { permissions: any }, info: any) => {
                 if (error) {
                   console.log('oauth err', error);
-                  res.status(401).send(error);
-                  return;
+                  // res.status(401).send(error);
+                  // return;
                 }
                 if (!user) {
-                  console.log('info', info);
+                  // console.log('info', info);
                   res.status(401).send(info);
                   return;
                 }
@@ -172,6 +177,7 @@ let ksConfig = {
                     res.status(500).send(logInErr);
                     return logInErr;
                   }
+                  // console.log('info', req.session);
 
                   // Explicitly save the session before redirecting!
                   req.session.save(() => {
@@ -190,18 +196,16 @@ let ksConfig = {
         app.use(p.session());
         app.use((req, res, next) => {
           // Ignore API path
-          console.log('send to login', req.session);
           if (
             req.path !== '/api/__keystone_api_build' &&
             (!req.session.passport || !req.session.passport.user)
           ) {
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
-            // if (req.session.redirectTo) res.redirect(req.session.redirectTo);
-            // else {
-
-            res.redirect('/cms/login');
-            // }
+            if (req.session.redirectTo) res.redirect(req.session.redirectTo);
+            else {
+              res.redirect('/cms/login');
+            }
           } else if (req.session.passport && req.session.passport.user.isAdmin)
             next();
         });

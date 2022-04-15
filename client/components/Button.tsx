@@ -19,7 +19,7 @@ const Button = ({
         <button 
         className={`${
             margin !== undefined ? margin : `my-10`
-        } inline-block rounded-full px-10 py-7 uppercase bg-purple text-white transition-all duration-700 hover:bg-[#ab45f8] ${className} `}
+        } inline-block rounded-full px-10 py-7 uppercase bg-purple text-white transition-colors duration-700 hover:bg-[#ab45f8] ${className} `}
       >
         {label}</button>
         </Link>

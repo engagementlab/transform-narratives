@@ -58,7 +58,7 @@ return (
               </div>
             }
 
-            {relatedItems &&
+           {/*  {relatedItems &&
                 <div>
                   <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>
                   <div>
@@ -71,7 +71,7 @@ return (
                         </Link>
                     </div>
                     <div className='flex flex-col lg:flex-row'>
-                        {/* {relatedItems.map((relatedItem, i) => (
+                        {relatedItems.map((relatedItem, i) => (
                           <Link key={i} href={`/media/${relatedItem.key}`} passHref>
                           <a className="w-full lg:w-1/3">
                           <div>
@@ -82,11 +82,11 @@ return (
                           </div>
                           </a>
                           </Link>
-                        ))} */}
+                        ))
                     </div>
                   </div>
                 </div>
-            }
+            }} */}
         </div>
     </div>
   </Layout>

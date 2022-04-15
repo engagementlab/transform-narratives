@@ -28,6 +28,7 @@ type ImageProps = {
     className ? : string,
     transforms ? : string,
     width ? : number,
+    height ? : number,
     lazy ? : boolean,
 };
 
@@ -38,13 +39,13 @@ const Image = ({
     imgId,
     transforms,
     width,
+    height,
     lazy
 }: ImageProps) => {
     // Instantiate a CloudinaryImage object for the image with public ID;
     // TODO: append dir prefix if missing
     const cloudImage = cld.image(`${imgId}`);
-    let plugins: Plugins = [];
-
+    let plugins: Plugins = [responsive({steps: [800, 1000, 1400]})];
     // Create image transforms
     cloudImage.addTransformation(transforms || `f_auto,dpr_auto`);
 
@@ -52,7 +53,6 @@ const Image = ({
     if (lazy === undefined)
         plugins.push(
             lazyload(),
-            responsive({steps: [800, 1000, 1400]}),
             // accessibility(),
             placeholder({mode:'blur'})
         );
@@ -65,6 +65,7 @@ const Image = ({
                 alt={alt}
                 plugins={plugins}
                 style={{ maxWidth: width + `px` }}
+                height={height}
             />
             );
 }
