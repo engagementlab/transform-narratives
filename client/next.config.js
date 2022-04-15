@@ -7,6 +7,7 @@ const nextConfig = withKeystone({
     domains: ['i.vimeocdn.com'],
     loader: 'custom',
   },
+  trailingSlash: true,
 });
 
 module.exports = nextConfig;

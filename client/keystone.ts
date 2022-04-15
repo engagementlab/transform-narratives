@@ -83,7 +83,7 @@ const Passport = () => {
               );
               return done(err);
             }
-            console.log(err, user);
+            // console.log(err, user);
             return done(err, user);
           }
         );
@@ -96,12 +96,12 @@ const Passport = () => {
    * Google oauth2/passport config
    */
   passport.serializeUser((user: any, done: (arg0: null, arg1: any) => void) => {
-    console.log('user', user);
+    // console.log('user', user);
     done(null, user);
   });
   passport.deserializeUser(
     (user: any, done: (arg0: null, arg1: any) => void) => {
-      console.log('de', user);
+      // console.log('de', user);
       done(null, user);
     }
   );
@@ -166,7 +166,7 @@ let ksConfig = {
                   // return;
                 }
                 if (!user) {
-                  console.log('info', info);
+                  // console.log('info', info);
                   res.status(401).send(info);
                   return;
                 }
@@ -177,7 +177,7 @@ let ksConfig = {
                     res.status(500).send(logInErr);
                     return logInErr;
                   }
-                  console.log('info', req.session);
+                  // console.log('info', req.session);
 
                   // Explicitly save the session before redirecting!
                   req.session.save(() => {
@@ -196,18 +196,16 @@ let ksConfig = {
         app.use(p.session());
         app.use((req, res, next) => {
           // Ignore API path
-          console.log('send to login', req.session);
           if (
             req.path !== '/api/__keystone_api_build' &&
             (!req.session.passport || !req.session.passport.user)
           ) {
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
-            // if (req.session.redirectTo) res.redirect(req.session.redirectTo);
-            // else {
-
-            res.redirect('/cms/login');
-            // }
+            if (req.session.redirectTo) res.redirect(req.session.redirectTo);
+            else {
+              res.redirect('/cms/login');
+            }
           } else if (req.session.passport && req.session.passport.user.isAdmin)
             next();
         });
