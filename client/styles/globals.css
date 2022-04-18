@@ -25,6 +25,13 @@ body div {
   color: #026670;
 } */
 
+hr {
+  border-color: #F4B477;
+  margin: 3rem 0;
+}
+
+/* Studio and Media Archive page */
+
 .content-container .w-full p:not(.h3),
 .content-container .w-full li {
   line-height: 2;
@@ -49,4 +56,19 @@ body div {
   color: #026670;
   cursor: pointer;
   font-weight: 600;
+}
+
+/* About the Initiative and Big Picture pages */
+.about-container .w-full p:not(.h3) {
+  line-height: 2;
+}
+
+.about-container img {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.about-container .lg\:w-1\/2 {
+  margin-bottom: 6rem;
 }

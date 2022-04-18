@@ -43,7 +43,7 @@ const renderers: DocumentRendererProps['renderers'] = {
 export default function BigPicture({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-7/12'>
+      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
         <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
       </div>
     </Layout>

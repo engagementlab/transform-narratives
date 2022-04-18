@@ -19,8 +19,8 @@ const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> =
   button: (props: any) => {
     return ( 
       <Link href={props.link.props.node.children[0].text} passHref>
-          <button 
-          className='block lg:inline-block rounded-full px-9 py-7 mt-5 uppercase whitespace-nowrap bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx'>
+          <button
+          className='block lg:inline-block rounded-full px-9 py-7 mt-4 uppercase whitespace-nowrap bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx hover:border-green-blue'>
           {props.label}
           </button>
       </Link>
