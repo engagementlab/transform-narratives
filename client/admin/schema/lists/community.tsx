@@ -33,7 +33,7 @@ const Community: Lists.Community = list({
         }),
         values: document({
             formatting: {
-                headingLevels: [4],
+                headingLevels: [4, 5],
                 inlineMarks: true,
                 softBreaks: true,
             },
