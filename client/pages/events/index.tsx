@@ -34,7 +34,7 @@ type ItemProps = {
 const Item = (props: ItemProps) => {
 
     return (
-        <div className="w-full flex flex-col-reverse md:flex-row" key={`${props.past ? '' : 'upcoming'}-${props.index}`}>
+        <div className="w-full flex flex-col-reverse md:flex-row mb-20" key={`${props.past ? '' : 'upcoming'}-${props.index}`}>
             <div className="w-full md:w-1/3">
                 <div className="text-coated text-xl font-semibold leading-8 mt-3 md:mt-0">
                     {new Date(props.event.eventDate).toLocaleDateString('en-US', {

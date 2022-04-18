@@ -28,7 +28,7 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
                 <h2 className="text-2xl text-bluegreen font-semibold mb-8">Latest News</h2>
                 <div className='flex flex-col mt-6'>
                     {items.map((item, i) => (
-                        <div className="w-full flex flex-col-reverse md:flex-row" key={i}>
+                        <div className="w-full flex flex-col-reverse md:flex-row mb-20" key={i}>
                         <div className="w-full md:w-1/3">
                             <div className="text-coated text-xl font-semibold leading-8 mt-3 md:mt-0">
                                 {new Date(item.publishDate).toLocaleDateString('en-US', {

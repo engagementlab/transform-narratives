@@ -65,7 +65,7 @@ export default function GetInvolved() {
 
   return (
     <Layout>
-      <div className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12">
+      <div className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12">
         <h2 className="text-2xl text-bluegreen font-semibold mb-8">Get Involved</h2>
 
         <div>
@@ -75,7 +75,7 @@ export default function GetInvolved() {
           </a>
         </div>
 
-        <div className="mb-14 w-full xl:flex">
+        <div className="mb-14 w-full sm:grid grid-cols-2 sm:gap-10">
           <div className="mt-14 xl:mt-16 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
             <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
@@ -162,9 +162,7 @@ export default function GetInvolved() {
               </p>
             </div>
           </div>
-        </div>
 
-        <div className="mb-14 mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
             <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>
@@ -195,8 +193,8 @@ export default function GetInvolved() {
             </div>
           </div>
 
-          <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+          <div className="mt-14 xl:mt-16 w-full">
+          <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
 
             <div className='mt-4'>
