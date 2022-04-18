@@ -18,7 +18,7 @@ const renderers: DocumentRendererProps['renderers'] = {
   },
   block: {
     heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 ? 'text-2xl mb-8' : 'text-xl'} font-semibold text-bluegreen`} style={{ textAlign }}>{children}</p>;
+      return <p className={`${level === 3 && 'text-2xl text-bluegreen leading-none'} ${level === 4 && 'text-xl text-coated'} font-semibold mb-8`} style={{ textAlign }}>{children}</p>;
     },
     layout: ({layout, children}) => {
         return FlexLayout(layout, children);
@@ -29,7 +29,7 @@ const renderers: DocumentRendererProps['renderers'] = {
 export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12'>
+      <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
         <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
       </div>
     </Layout>

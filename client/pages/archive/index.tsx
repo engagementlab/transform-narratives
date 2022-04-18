@@ -45,7 +45,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
     return (
         <Layout>
             <div
-            className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
+            className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8">
                 <h2 className="text-2xl text-bluegreen font-semibold mb-8">Media Archive</h2>
 
                 <p className="w-full lg:w-1/2 mb-14">This expanding collection of media artifacts represents the outcomes of studio courses at Emerson College. Everything in this collection was created to be used by communities and organizations for the purpose of advocacy or activism. We ask, if you use the content, that you please give appropriate credit to TNGV and/or the individual creators.</p>

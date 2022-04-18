@@ -32,8 +32,8 @@ const renderers: DocumentRendererProps['renderers'] = {
     heading: ({ level, children, textAlign }) => {
 
       const customRenderers = {
-        3: 'text-2xl font-extrabold text-bluegreen',
-        4: 'text-xl font-semibold text-bluegreen',
+        4: 'text-xl font-semibold text-coated my-8',
+        5: 'text-lg font-extrabold text-purple'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
     },
@@ -46,12 +46,12 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
       <div>
           <div
           className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-              <h2 className="text-2xl text-bluegreen font-extrabold">About Our Community</h2>
+              <h2 className="text-2xl text-bluegreen font-semibold">About Our Community</h2>
               <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
           </div>
-          <hr className='border-[#F4B477]' />
-          <div className='px-4 xl:px-8 mt-7'>
-              <h2 className="text-xl text-bluegreen font-semibold">Our Community</h2>
+          <div className='container mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
+              <hr className='border-sorbet' />
+              <h2 className="text-xl text-coated font-semibold mt-14 mb-12">Our Community</h2>
 
               {people.map((person, i) => (
                 <div key={i} className='flex flex-col lg:flex-row mt-5'>
@@ -61,21 +61,21 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                             <ImagePlaceholder imageLabel='Bio' width={300} height={300} />
                           }
                       </div>
-                      <div className='lg:ml-4 w-full lg:w-1/2 xl:w-1/3'>
-                          <h3 className='text-xl font-semibold'>{person.name}</h3>
-                          <p>{person.title}</p>
-                            {person.blurb && ( 
+                      <div className='lg:ml-6 w-full lg:w-1/2 xl:w-1/3'>
+                          <h3 className='text-xl font-semibold text-coated'>{person.name}</h3>
+                          <p className="mt-2 mb-8">{person.title}</p>
+                            {person.blurb && (
                               <p>
-                                <strong>
+                                <span className="text-coated font-semibold">
                                 What brings you here?
-                                </strong>
+                                </span>
                                 <br />
                                 {person.blurb}
                               </p>
                             )}
                             {person.remembrance && (
-                              <p>
-                                In remembrance of {person.remembrance}
+                              <p className="text-green-blue font-semibold">
+                                Engaged in remembrance of {person.remembrance}.
                               </p>
                             )}
                           {/* <DocumentRenderer document={person.content.document} renderers={renderers} componentBlocks={BlockRenderers} /> */}

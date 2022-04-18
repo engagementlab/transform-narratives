@@ -36,7 +36,7 @@ return (
   !item ? 'Not found!' :
   <Layout>
     <div>
-        <div className='studio-container container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full'>
+        <div className='content-container container w-full mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
             <h1 className="text-2xl font-bold text-bluegreen mb-2">{item.name}</h1>
             <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p>
 
@@ -49,8 +49,8 @@ return (
                   return media.videos.map((video, i) => (
                       <div key={`video-${i}`}>
                         <Video videoLabel={video.label} videoUrl={video.value} thumbUrl={video.thumb} />
-                        <p className='font-semibold'>{video.label}</p>
-                        <p>{video.caption}</p>
+                        <h3 className="text-bluegreen text-xl font-semibold hover:text-green-blue group-hover:text-green-blue">{video.label}</h3>
+                        <p className="mt-2 mb-20">{video.caption}</p>
                       </div>
                   ));
                 })}

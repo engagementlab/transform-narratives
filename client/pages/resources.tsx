@@ -5,7 +5,7 @@ export default function Resources() {
 
   return (
       <Layout>
-          <div className="container mx-auto min-h-fit mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
+          <div className="container mx-auto min-h-fit mt-14 mb-24 xl:mt-16 px-4 xl:px-8">
 
               <h1 className="text-2xl text-bluegreen font-semibold">
                   Resources

@@ -91,7 +91,7 @@ export default function Events({ events }: InferGetStaticPropsType<typeof getSta
 
     return (
         <Layout>
-            <div className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
+            <div className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8">
                 <h2 className="text-2xl text-bluegreen font-semibold mb-8">Upcoming Events</h2>
                 <div className='flex flex-col mt-6'>
                     {
