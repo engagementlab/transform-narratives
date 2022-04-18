@@ -20,30 +20,44 @@ const renderers: DocumentRendererProps['renderers'] = {
   block: {
     heading: ({ level, children, textAlign }) => {
       const customRenderers = {
-        3: 'text-2xl font-semibold text-bluegreen mb-8'
+        3: 'text-2xl font-semibold text-bluegreen'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
     },
     layout: ({layout, children}) => {
         // return FlexLayout(layout, children);
-        const flexClass = 'flex gap-x-10 flex-col lg:flex-row justify-between';
+        const flexClass = 'flex gap-x-5 flex-col md:flex-row justify-between';
+        if(layout[0] === 2 && layout[1] === 1) {
             return (
                 <div
                     className={flexClass}
                 >
                 {children.map((element, i) => (
-                    <div key={i} className={'w-full lg:w-3/4'}>{element}</div>
+                    <div key={i} className={`${i === 0 ? 'w-full lg:w-3/4' : ''}`}>{element}</div>
                 ))}
                 </div>
             );
         }
+        else if(layout[0] === 1 && layout[1] === 1 && layout[2] === 1) {
+            return (
+                <div
+                    className={flexClass}
+                >
+                {children.map((element, i) => (
+                    <div key={i} className='w-full lg:w-1/3'>{element}</div>
+                ))}
+                </div>
+            );
+        }
+        else return <div>{children}</div>;
+      }
   },
 };
 
 export default function BigPicture({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
+      <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
         <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
       </div>
     </Layout>
