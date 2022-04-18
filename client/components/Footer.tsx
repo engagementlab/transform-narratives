@@ -117,7 +117,7 @@ class Footer extends Component {
             </svg>
             </Link>
             <div className="mt-4 w-full flex flex-col md:flex-row justify-between">
-                <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col sm:flex-row justify-between text-green-blue text-sm">
+                <div className="mt-4 w-full md:w-1/2 lg:w-1/3 flex flex-col sm:flex-row justify-between text-bluegreen text-md font-semibold">
 
                     <ul className="list-none pt-2 md:pt-0">
                         <LinkRender label='The Big Picture' link='/about/big-picture' />
