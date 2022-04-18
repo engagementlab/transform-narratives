@@ -96,7 +96,7 @@ export default function MediaItem({
                         </div>
                     </div>
                 </div>
-                <div className='content-container container w-full mt-14 mb-14 xl:mt-16 px-4 xl:px-8'>
+                <div className='content-container container w-full mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
                     <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
                     {/*
                     <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>

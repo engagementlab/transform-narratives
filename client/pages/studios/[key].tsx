@@ -36,7 +36,7 @@ return (
   !item ? 'Not found!' :
   <Layout>
     <div>
-        <div className='content-container container w-full mt-14 mb-14 xl:mt-16 px-4 xl:px-8'>
+        <div className='content-container container w-full mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
             <h1 className="text-2xl font-bold text-bluegreen mb-2">{item.name}</h1>
             <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p>
 
