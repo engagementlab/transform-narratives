@@ -17,20 +17,23 @@ import { useRouter } from "next/router";
 const renderItem = (props: { item: MediaItem }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="w-full xl:basis-1/4 xl:flex-shrink-0 xl:flex-grow xl:max-w-xs xl:mx-5">
+        className="w-full">
             <Link href={`/archive/${props.item.key}`} passHref>
                 <a>
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
-                            `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-xs" /> :
+                            `} imgId={props.item.thumbnail.publicId} lazy={true} className="w-full" /> :
                         <ImagePlaceholder imageLabel='Media' width={335} height={200} />
                     }
-                    <p>{props.item.title}</p>
-                    <p>{props.item.shortDescription}</p>
-                    <p className="uppercase">{_.map(props.item.filters, 'name').join(', ')}</p>
+                    <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.title}</h3>
+                    <div className="mt-2 mb-20">
+                      <p className="m-0">{props.item.shortDescription}</p>
+                      <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                    </div>
                 </a>
             </Link>
+
         </motion.div>
     );
 }
@@ -43,7 +46,7 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
         <Layout>
             <div
             className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
-                <h2 className="text-2xl text-bluegreen font-semibold mb-12">Media Archive</h2>
+                <h2 className="text-2xl text-bluegreen font-semibold mb-8">Media Archive</h2>
 
                 <p className="w-full lg:w-1/2 mb-14">Students and faculty work alongside community partners to co-create narrative interventions to the crisis of
                     gun violence as it is experienced locally. The Transforming Narratives of Gun Violence Initiative is a

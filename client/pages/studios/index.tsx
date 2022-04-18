@@ -19,7 +19,7 @@ import ImagePlaceholder from "../../components/ImagePlaceholder";
 const renderItem = (props: {
         item: MediaItem
     }) => {
-        const btnClass = 'inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-bluegreen hover:text-lynx group-hover:bg-bluegreen group-hover:text-lynx';
+        const btnClass = 'inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx group-hover:bg-green-blue group-hover:text-lynx hover:border-green-blue group-hover:border-green-blue';
         return (
             <Link href={`/studios/${props.item.key}`} passHref>
                 <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -27,15 +27,15 @@ const renderItem = (props: {
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
-                        `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
+                        `} imgId={props.item.thumbnail.publicId} lazy={true} className="w-full max-w-s" /> :
                         <ImagePlaceholder imageLabel='Studio' width={716} height={200} />
                     }
-                    <h3 className="text-bluegreen text-lg font-semibold mt-4">{props.item.name}</h3>
+                    <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.name}</h3>
 
                     <div className="flex items-start justify-between">
                         <div className="w-2/3">
                             <p className="m-0">{props.item.blurb}</p>
-                            <p className=" text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                            <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
                         </div>
                         <button
                             className={btnClass}>

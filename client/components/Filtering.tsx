@@ -213,7 +213,7 @@ export default class Filtering {
                                     `Studio${count === 1 ? '' : 's'}`}`;
 
             return <div className="flex">
-                <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
+                <div className='w-0 lg:w-1/5 flex-shrink-0 lg:border-r border-sorbet'>
                     {this.RenderFilters(this.filtersGrouped)}
                 </div>
 
@@ -236,7 +236,7 @@ export default class Filtering {
                     </div>
                     <span className="my-8 xl:my-4 uppercase w-full block text-right text-lg xl:text-sm font-semibold">{showing}</span>
 
-                    <div className={this.mode === 'media' ? 'xl:flex xl:ml-5' : ''}>{
+                    <div className={this.mode === 'media' ? 'lg:ml-5 grid xl:grid-cols-3 xl:gap-3 lg:grid-cols-2 lg:gap-2' : ''}>{
                         count === 0 ?
                         <p className='w-full text-xl my-20 text-center'>Sorry, no matches found. Please try other filters.</p> :
                                 <AnimatePresence>
