@@ -23,16 +23,16 @@ const renderItem = (props: {
         return (
             <Link href={`/studios/${props.item.key}`} passHref>
                 <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="ml-5 cursor-pointer group">
+                className="ml-5 mb-20 cursor-pointer group">
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
                         `} imgId={props.item.thumbnail.publicId} lazy={true} className="max-w-s" /> :
                         <ImagePlaceholder imageLabel='Studio' width={716} height={200} />
                     }
-                    <h3 className="text-bluegreen text-lg font-semibold mt-2">{props.item.name}</h3>
+                    <h3 className="text-bluegreen text-lg font-semibold mt-4">{props.item.name}</h3>
 
-                    <div className="flex items-start">
+                    <div className="flex items-start justify-between">
                         <div className="w-2/3">
                             <p className="m-0">{props.item.blurb}</p>
                             <p className=" text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
