@@ -34,17 +34,17 @@ block: {
 export default function Studio({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
 return (
   !item ? 'Not found!' :
-  <Layout>   
+  <Layout>
     <div>
         <div className='container mt-14 mb-14 xl:mt-16 px-4 xl:px-8 w-full'>
-            <h1 className="text-2xl font-semibold text-bluegreen mb-8">{item.name}</h1>
-            <p>{_.map(item.filters, 'name').join(', ')}</p>
+            <h1 className="text-2xl font-bold text-bluegreen mb-2">{item.name}</h1>
+            <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p>
 
             <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
 
-            {item.associatedMedia &&  
-              <div>
-                <h2 className='text-2xl text-bluegreen font-semibold'>Studio Outcomes</h2>
+            {item.associatedMedia &&
+              <div className='mt-14'>
+                <h2 className='mb-8 text-2xl leading-none text-coated font-semibold'>Studio Outcomes</h2>
                 {item.associatedMedia.map((media) => {
                   if(!media.videos) return;
                   return media.videos.map((video, i) => (

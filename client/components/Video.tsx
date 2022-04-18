@@ -32,7 +32,7 @@ const Video = ({
     const toggleOpen = useStore(state => state.toggleOpen);
     const videoOpen = useStore(state => state.videoOpen);
     return (
-      <div className='relative video w-full h-full'>
+      <div className='relative video w-full h-full lg:mb-8'>
 
         {videoOpen ? '' : (
           <a href='#' onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>
