@@ -79,24 +79,24 @@ export default function MediaItem({
       !item ? 'Not found!' :
         <Layout>
             <div>
-                <div className='pt-7 text-white bg-coated'>
+                <div className='mt-14 pt-14 text-white bg-coated'>
                 {item.videos && <Video videoLabel={item.videos[0].label} videoUrl={item.videos[0].value} thumbUrl={item.videos[0].thumb} />}
-                    <div className='flex justify-between px-8 py-10'>
+                    <div className='flex justify-between pt-8 pb-12 px-4 xl:px-8'>
                         <div>
-                            <h1 className="text-2xl font-semibold">{item.title}</h1>
+                            <h1 className="text-2xl font-bold mb-2">{item.title}</h1>
                             <p>{_.map(item.filters, 'name').join(', ')}</p>
                         </div>
                         <div>
                             <CopyToClipboard text={thisUrl} onCopy={()=> toggleCopied(true)}>
                                 <button disabled={wasCopied} className={`inline-block rounded-full px-10 py-7 uppercase
-                                    border-2 border-oasis text-white transition-all ${!wasCopied && 'hover:opacity-75' }`}>
-                                    {!wasCopied ? 'Share' : 'Copied URL!'}
+                                    border-2 border-oasis text-white text-sm lg:text-lg transition-all ${!wasCopied && 'hover:opacity-75' }`}>
+                                    {!wasCopied ? 'Copy URL to Share' : 'URL Copied!'}
                                 </button>
                             </CopyToClipboard>
                         </div>
                     </div>
                 </div>
-                <div className='px-4 xl:px-8'>
+                <div className='content-container container w-full mt-14 mb-14 xl:mt-16 px-4 xl:px-8'>
                     <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
                     {/*
                     <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>

@@ -25,27 +25,27 @@ body div {
   color: #026670;
 } */
 
-.studio-container .w-full p:not(.h3),
-.studio-container .w-full li {
+.content-container .w-full p:not(.h3),
+.content-container .w-full li {
   line-height: 2;
 }
 
-.studio-container .w-full p.h3:not(:first-child) {
+.content-container .w-full p.h3:not(:first-child) {
   margin: 3rem 0 1rem;
 }
 
-.studio-container .w-full ol,
-.studio-container .w-full ul {
+.content-container .w-full ol,
+.content-container .w-full ul {
   list-style: auto;
   margin: revert;
   padding: revert;
 }
 
-.studio-container .w-full + div p {
+.content-container .w-full + div p {
   line-height: 1.25;
 }
 
-.studio-container .w-full + div p a {
+.content-container .w-full + div p a {
   color: #026670;
   cursor: pointer;
   font-weight: 600;
