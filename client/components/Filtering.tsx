@@ -133,7 +133,7 @@ export default class Filtering {
                                         <svg height="10.0" width="14" className={`inline transition-transform ${haveGroupClosed(key) ? 'rotate-180' : ''}`}>
                                             <polygon points="0,0 14,0 7.0,9.0" style={{'fill':'#8D33D2'}}></polygon>
                                         </svg>
-                                        <span className="ml-2">    
+                                        <span className="ml-2 text-coated text-lg xl:text-sm font-semibold">
                                             {key}
                                         </span> 
                                     </div>
@@ -141,13 +141,13 @@ export default class Filtering {
                                 <ul className={`relative overflow-hidden transition-all ${haveGroupClosed(key) ? 'max-h-0' : 'max-h-96'}`}>
                                     {filters[key].map(filter => {
                                         return (
-                                            <li key={filter.key} className={`mt-4 text-lg xl:text-sm font-semibold
+                                            <li key={filter.key} className={`text-lg xl:text-sm font-semibold my-8 xl:my-4
                                                 ${!haveSpecificFilter(filter.key) ? 'text-bluegreen' : 'text-purple' }`}>
                                                 <a href="#" onClick={(e)=>{ toggleFilter(filter.key); e.preventDefault() }}
-                                                    className='w-3/4 flex items-center justify-between'>
+                                                    className='w-full flex items-center justify-between'>
                                                     {filter.name}
                                                     <svg viewBox="185.411 115.41 11 11" width="11" height="11"
-                                                        className='flex-shrink-0'
+                                                        className='flex-shrink-0 mx-6'
                                                         style={{visibility: !haveSpecificFilter(filter.key) ? 'hidden' : 'visible'}}>
                                                         <path
                                                             d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
@@ -165,9 +165,9 @@ export default class Filtering {
         return(<div> 
                 {/* Tablet portrait+ */}
                 <div className="hidden lg:block">
-                    <div className="mr-2 flex justify-between">
+                    <div className="mr-4 flex justify-between">
                         <span>Filters</span>
-                        <a href="#" className="text-bluegreen" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>Clear</a> 
+                        <a href="#" className="text-bluegreen" onClick={(e) =>{ reset(); e.preventDefault() }}  style={{visibility: !haveFilters ? 'hidden' : 'visible'}}>Clear</a>
                     </div>
                     {menu}
                 </div>
@@ -175,18 +175,19 @@ export default class Filtering {
                 <div className={`lg:hidden block w-full absolute overflow-y-scroll top-0 left-0 h-full z-50 p-10 pt-20 bg-lynx
                     transition-all ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300 ${filtersOpen ? ''
                     : '-translate-y-full' }`}>
-                    <a className="uppercase w-full flex justify-end" onClick={(e)=>{ toggleFiltersOpen(false);
+                    <a className="uppercase w-full flex justify-end cursor-pointer text-bluegreen" onClick={(e)=>{ toggleFiltersOpen(false);
                         e.preventDefault() }}>
-                        <svg viewBox="185.411 115.41 11 11" width="11" height="11" className='flex-shrink-0'>
+                        <svg viewBox="185.411 115.41 11 11" width="11" height="11" className='flex-shrink-0 my-1.5 mx-3'>
                             <path
                                 d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
-                                className="fill-purple"></path>
+                                className="fill-bluegreen"></path>
                         </svg>
+                        Close Filters
                     </a>
                     {menu}
                     <button
-                        className="my-4 w-full rounded-full px-6 py-2 uppercase bg-purple text-white transition-all hover:opacity-75"
-                        onClick={(e)=>{ toggleFiltersOpen(false) }}>Apply</button>
+                        className="my-4 w-full rounded-full px-8 py-5 uppercase bg-purple text-white transition-all hover:opacity-75"
+                        onClick={(e)=>{ toggleFiltersOpen(false) }}>Apply Filters</button>
                 </div>
             </div>);
 
@@ -207,12 +208,12 @@ export default class Filtering {
 
             const count = filteredItems.length;
             // Decide plural of item count
-            const showing = `Showing ${count} ${this.mode === 'media' ? 
-                                    `Stor${count === 1 ? 'y' : 'ies'}` : 
+            const showing = `Showing ${count} ${this.mode === 'media' ?
+                                    `Stor${count === 1 ? 'y' : 'ies'}` :
                                     `Studio${count === 1 ? '' : 's'}`}`;
 
             return <div className="flex">
-                <div className='w-0 lg:w-2/5 xl:w-1/5 flex-shrink-0 xl:border-r border-[#B9CCC7]'>
+                <div className='w-0 lg:w-1/5 flex-shrink-0 lg:border-r border-sorbet'>
                     {this.RenderFilters(this.filtersGrouped)}
                 </div>
 
@@ -220,18 +221,24 @@ export default class Filtering {
                     {/* Mobile Filters/Clear button */}
                     <div className="lg:hidden inline-block w-full">
                         <button
-                            className="rounded-full my-4 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
-                            onClick={(e)=>{ toggleFiltersOpen(true); e.preventDefault() }}>Filters</button>
-                        <button
-                            className="rounded-full my-2 px-6 py-2 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
-                            onClick={(e)=>{ reset(); e.preventDefault() }}
-                            style={{display: !haveFilters ? 'none' : 'block'}}>Clear</button>
+                            className="rounded-full my-4 px-8 py-5 w-full uppercase bg-purple text-white transition-all hover:opacity-75"
+                            onClick={(e)=>{ toggleFiltersOpen(true); e.preventDefault() }}>Open Filters</button>
+                        <a href="#"
+                            className="py-2 text-bluegreen mt-2 mb-4 text-right text-lg font-semibold"
+                            onClick={(e) =>{ reset(); e.preventDefault() }}
+                            style={{display: !haveFilters ? 'none' : 'block'}}>
+                              <svg viewBox="185.411 115.41 11 11" width="11" height="11" className='my-1.5 mx-3 inline-block'>
+                                  <path
+                                      d="M 195.198 115.41 L 190.911 119.695 L 186.624 115.41 L 185.411 116.623 L 189.696 120.91 L 185.411 125.197 L 186.624 126.41 L 190.911 122.125 L 195.198 126.41 L 196.411 125.197 L 192.126 120.91 L 196.411 116.623 Z"
+                                      className="fill-bluegreen"></path>
+                              </svg>
+                              Clear Filters</a>
                     </div>
-                    <span className="my-4 uppercase w-full block lg:text-right">{showing}</span>
-                        
-                    <div className={this.mode === 'media' ? 'xl:flex xl:ml-5' : ''}>{
+                    <span className="my-8 xl:my-4 uppercase w-full block text-right text-lg xl:text-sm font-semibold">{showing}</span>
+
+                    <div className={this.mode === 'media' ? 'lg:ml-5 grid xl:grid-cols-3 xl:gap-3 lg:grid-cols-2 lg:gap-2' : ''}>{
                         count === 0 ?
-                        <p className='w-full text-4xl text-center'>No matches! Please try other filters.</p> :
+                        <p className='w-full text-xl my-20 text-center'>Sorry, no matches found. Please try other filters.</p> :
                                 <AnimatePresence>
                                     {filteredItems.map((item: MediaItem, i: number) => (
                                         <this.ItemRenderer key={i} item={item} />

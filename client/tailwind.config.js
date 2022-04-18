@@ -30,6 +30,7 @@ module.exports = {
       oasis: '#9FEDD7',
       purple: '#8D33D2',
       white: '#FFF',
+      sorbet: '#F4B477'
     },
   },
   plugins: [],
