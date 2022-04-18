@@ -50,8 +50,8 @@ return (
                   return media.videos.map((video, i) => (
                       <div key={`video-${i}`}>
                         <Video videoLabel={video.label} videoUrl={video.value} thumbUrl={video.thumb} />
-                        <p className='font-semibold'>{video.label}</p>
-                        <p>{video.caption}</p>
+                        <h3 className="text-bluegreen text-xl font-semibold hover:text-green-blue group-hover:text-green-blue">{video.label}</h3>
+                        <p className="mt-2 mb-20">{video.caption}</p>
                       </div>
                   ));
                 })}

@@ -40,8 +40,8 @@ const Video = ({
 
             <span className='absolute top-[calc(50%-75px)] left-[calc(50%-75px)]'>
                 <svg viewBox="0 0 151 151" width="151" height="151">
-                    <circle style={{strokeWidth: '0.8px', stroke: '#EF943C', fill: 'rgba(239, 148, 60, .6)'}} cx="49.467" cy="49.467" r="49.467" transform="matrix(1.521806, 0, 0, 1.510012, 0, 0)"></circle>
-                    <path style={{strokeWidth: '0.8px', stroke: '#f7f7f7', fill: '#ffffff'}} d="M 214.012 155.256 L 252.117 221.256 L 175.907 221.256 L 214.012 155.256 Z" data-bx-shape="triangle 175.907 155.256 76.21 66 0.5 0 1@b1f3cbc1" transform="matrix(-0.000024, 1, -1, -0.000024, 268.262054, -141.660278)" data-bx-origin="0.53481 0.565042"></path>
+                    <circle style={{strokeWidth: '0.8px', stroke: '#B571E9', fill: 'rgba(141, 51, 210, .6)'}} cx="49.467" cy="49.467" r="49.467" transform="matrix(1.521806, 0, 0, 1.510012, 0, 0)"></circle>
+                    <path style={{strokeWidth: '0.8px', stroke: '#B571E9', fill: 'rgba(237, 234, 229, .8)'}} d="M 214.012 155.256 L 252.117 221.256 L 175.907 221.256 L 214.012 155.256 Z" data-bx-shape="triangle 175.907 155.256 76.21 66 0.5 0 1@b1f3cbc1" transform="matrix(-0.000024, 1, -1, -0.000024, 268.262054, -141.660278)" data-bx-origin="0.53481 0.565042"></path>
                 </svg>
             </span>
           </a>

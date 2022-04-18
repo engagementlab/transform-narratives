@@ -34,7 +34,7 @@ const renderItem = (props: {
 
                     <div className="flex items-start justify-between">
                         <div className="w-2/3">
-                            <p className="m-0">{props.item.blurb}</p>
+                            <p className="mt-2 mb-0">{props.item.blurb}</p>
                             <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
                         </div>
                         <button
