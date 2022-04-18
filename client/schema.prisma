@@ -107,19 +107,18 @@ model MediaImage {
 }
 
 model MediaItem {
-  id                          String       @id @default(cuid())
-  title                       String       @default("")
-  key                         String       @unique @default("")
-  thumbnail                   String?
-  shortDescription            String       @default("")
-  filters                     Filter[]     @relation("MediaItem_filters")
-  content                     String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  images                      MediaImage[] @relation("MediaImage_mediaImages")
-  galleryImages               MediaImage[] @relation("MediaImage_mediaGalleryImages")
-  videos                      String?
-  file_filename               String?
-  file_filesize               Int?
-  from_Studio_associatedMedia Studio[]     @relation("Studio_associatedMedia")
+  id               String       @id @default(cuid())
+  title            String       @default("")
+  key              String       @unique @default("")
+  thumbnail        String?
+  shortDescription String       @default("")
+  filters          Filter[]     @relation("MediaItem_filters")
+  content          String       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  images           MediaImage[] @relation("MediaImage_mediaImages")
+  galleryImages    MediaImage[] @relation("MediaImage_mediaGalleryImages")
+  videos           String?
+  file_filename    String?
+  file_filesize    Int?
 }
 
 model NewsImage {
@@ -164,13 +163,12 @@ model StudioImage {
 }
 
 model Studio {
-  id              String        @id @default(cuid())
-  name            String        @default("")
-  thumbnail       String?
-  blurb           String        @default("")
-  key             String        @unique @default("")
-  filters         Filter[]      @relation("Studio_filters")
-  content         String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos          StudioImage[] @relation("Studio_photos")
-  associatedMedia MediaItem[]   @relation("Studio_associatedMedia")
+  id        String        @id @default(cuid())
+  name      String        @default("")
+  thumbnail String?
+  blurb     String        @default("")
+  key       String        @unique @default("")
+  filters   Filter[]      @relation("Studio_filters")
+  content   String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos    StudioImage[] @relation("Studio_photos")
 }

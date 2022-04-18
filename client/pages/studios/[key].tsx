@@ -41,10 +41,9 @@ return (
             <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p>
 
             <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
-
+{/* 
             {item.associatedMedia &&
               <div className='mt-14'>
-                <h2 className='mb-8 text-2xl leading-none text-coated font-semibold'>Studio Outcomes</h2>
                 {item.associatedMedia.map((media) => {
                   if(!media.videos) return;
                   return media.videos.map((video, i) => (
@@ -56,7 +55,7 @@ return (
                   ));
                 })}
               </div>
-            }
+            } */}
 
            {/*  {relatedItems &&
                 <div>
@@ -111,7 +110,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const item = (await query.Studio.findOne({
       where: { key: params!.key as string },
-      query: 'name filters { name } content { document(hydrateRelationships: true) } associatedMedia { videos }',
+      query: 'name filters { name } content { document(hydrateRelationships: true) } ',
   })) as Studio;
   const relatedItems = (await query.Studio.findMany({
       query: 'name key filters { type name } thumbnail { publicId }',

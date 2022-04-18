@@ -111,13 +111,13 @@ const Studio: Lists.Studio = list({
         },
       },
     }),
-    associatedMedia: relationship({
-      ref: 'MediaItem',
-      many: true,
-      ui: {
-        displayMode: 'select',
-      }
-    }),
+    // associatedMedia: relationship({
+    //   ref: 'MediaItem',
+    //   many: true,
+    //   ui: {
+    //     displayMode: 'select',
+    //   }
+    // }),
 
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
   },
