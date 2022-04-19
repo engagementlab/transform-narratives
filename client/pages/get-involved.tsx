@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import create from 'zustand';
 import ExternalLink from '../components/ExternalLink';
+import Image from '../components/Image';
 import Layout from '../components/Layout';
 
 type FormState = {
@@ -65,7 +66,9 @@ export default function GetInvolved() {
 
   return (
     <Layout>
-      <div className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12">
+      {/* <Image id='community-img' imgId='tngvi/get-involved/backdrop' className="xl:w-1/4 right-1/3 -bottom-full absolute" /> */}
+
+      <div className="container relative mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12 z-10">
         <h2 className="text-2xl text-bluegreen font-semibold mb-8">Get Involved</h2>
 
         <div>
@@ -77,7 +80,10 @@ export default function GetInvolved() {
 
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+             */}
+            <Image id='community-img' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" />
+
             <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
 
             <p>Stay up-to-date on the latest by joining our mailing list</p>
@@ -137,7 +143,7 @@ export default function GetInvolved() {
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College students</h3>
 
             <div className='mt-4'>
@@ -166,7 +172,7 @@ export default function GetInvolved() {
 
         <div className="mb-14 mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            {/* <img alt='placeholder!!!' src='https://www.dishw/'asherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>
 
             <div className='mt-4'>
@@ -196,7 +202,8 @@ export default function GetInvolved() {
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
+
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
 
             <div className='mt-4'>
@@ -218,6 +225,7 @@ export default function GetInvolved() {
               </p>
             </div>
           </div>
+
         </div>
       </div>
     </Layout>
