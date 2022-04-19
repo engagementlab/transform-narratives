@@ -39,7 +39,7 @@ const renderItem = (props: {
                         </div>
                         <button
                             className={btnClass}>
-                            See More</button>
+                            See Details</button>
                     </div>
                 </motion.div>
             </Link>
