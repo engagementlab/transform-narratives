@@ -80,9 +80,7 @@ export default function GetInvolved() {
 
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
-             */}
-            <Image id='community-img' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" />
+            <Image id='community-img' alt='A drawing of two people in front of colorful circles' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" />
 
             <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
 
