@@ -37,7 +37,7 @@ export default function Event({ item, relatedItems }: InferGetStaticPropsType<ty
     return (
     !item ? 'Not found!' :
     <Layout>
-        <div>
+        <div className='mt-14'>
             {
                 item.thumbnail ?
                 <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} /> :

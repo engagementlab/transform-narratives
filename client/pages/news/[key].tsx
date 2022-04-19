@@ -34,7 +34,7 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
     return (
     !item ? 'Not found!' :
     <Layout>
-        <div>
+        <div className='mt-14'>
             {
                 item.thumbnail ?
                 <Image id='header-img' alt={item.thumbAltText} imgId={item.thumbnail.publicId} width={1900} className='w-full' /> :
