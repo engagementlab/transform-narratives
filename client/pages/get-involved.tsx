@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import create from 'zustand';
 import ExternalLink from '../components/ExternalLink';
+import Image from '../components/Image';
 import Layout from '../components/Layout';
 
 type FormState = {
@@ -65,7 +66,9 @@ export default function GetInvolved() {
 
   return (
     <Layout>
-      <div className="container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12">
+      {/* <Image id='community-img' imgId='tngvi/get-involved/backdrop' className="xl:w-1/4 right-1/3 -bottom-full absolute" /> */}
+
+      <div className="container relative mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-7/12 z-10">
         <h2 className="text-2xl text-bluegreen font-semibold mb-8">Get Involved</h2>
 
         <div>
@@ -75,9 +78,10 @@ export default function GetInvolved() {
           </a>
         </div>
 
-        <div className="mb-14 w-full sm:grid grid-cols-2 sm:gap-10">
+        <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            <Image id='community-img' alt='A drawing of two people in front of colorful circles' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" aspectDefault={true} />
+
             <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
 
             <p>Stay up-to-date on the latest by joining our mailing list</p>
@@ -102,20 +106,46 @@ export default function GetInvolved() {
                     Sorry, there was a problem. Try again later, please.
                   </span>
                   }
+
                   {!status &&
-                  <div className='flex w-full justify-between items-center'>
-                    <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"
-                      aria-label="Enter your email" minLength={5} required disabled={submitted}
-                      className='w-full bg-lynx placeholder:text-bluegreen' />
-                    <input type="submit" value="Add your email" name="subscribe" id="mc-embedded-subscribe"
-                      aria-hidden="true" className='hidden' />
-                    {!submitted &&
-                    <button type='submit'>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="#026670" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
+                  <div>
+                    {!submitted ?
+                    // Form
+                    <span className='flex w-full justify-between items-center'>
+                      <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"
+                        aria-label="Enter your email" minLength={5} required disabled={submitted}
+                        className='w-full bg-lynx placeholder:text-bluegreen' />
+                      <input type="submit" value="Add your email" name="subscribe" id="mc-embedded-subscribe"
+                        aria-hidden="true" className='hidden' />
+                      <button type='submit'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                          stroke="#026670" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </button> 
+                    </span>
+                    : 
+                    // Loading
+                    <svg width="60" height="24" viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg" fill="#026670">
+                      <circle cx="6" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="3;6;3" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="24" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="6;3;6" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="42" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="3;6;3" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
                     }
                   </div>
                   }
@@ -137,7 +167,6 @@ export default function GetInvolved() {
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College students</h3>
 
             <div className='mt-4'>
@@ -162,9 +191,11 @@ export default function GetInvolved() {
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+            {/* <img alt='placeholder!!!' src='https://www.dishw/'asherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>
 
             <div className='mt-4'>
@@ -193,8 +224,9 @@ export default function GetInvolved() {
             </div>
           </div>
 
-          <div className="mt-14 xl:mt-16 w-full">
-          <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" />
+          <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
+            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
+
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Boston-area community organizations and individuals</h3>
 
             <div className='mt-4'>
@@ -216,6 +248,7 @@ export default function GetInvolved() {
               </p>
             </div>
           </div>
+
         </div>
       </div>
     </Layout>

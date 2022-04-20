@@ -5,18 +5,25 @@ import _ from 'lodash';
 import { AnimatePresence } from "framer-motion"
 
 export type MediaItem = {
-    title?: string;
-    name?: string;
+    title: string;
     key: string;
-    shortDescription?: string;
-    blurb?: string;
+    shortDescription: string;
+    filters: string;
+    thumbnail: {
+        publicId: string;
+    }
+}
+export type StudioItem = {
+    name: string;
+    key: string;
+    blurb: string;
     filters: string;
     thumbnail: {
         publicId: string;
     }
 }
 type ItemRendererProps = {
-    item: MediaItem;
+    item: MediaItem & StudioItem;
 }
 type FilterState = {
     currentFilters: never[];
@@ -240,7 +247,7 @@ export default class Filtering {
                         count === 0 ?
                         <p className='w-full text-xl my-20 text-center'>Sorry, no matches found. Please try other filters.</p> :
                                 <AnimatePresence>
-                                    {filteredItems.map((item: MediaItem, i: number) => (
+                                    {filteredItems.map((item: MediaItem & StudioItem, i: number) => (
                                         <this.ItemRenderer key={i} item={item} />
                                     ))}
                                 </AnimatePresence>

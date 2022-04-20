@@ -1,0 +1,72 @@
+name: build
+on: 
+  repository_dispatch:
+    types: deploy-prod
+  push:
+    branches: [main]
+  pull_request:
+    branches: [production]
+env:
+  CI: true
+  DB_URI: ${{ secrets.DB_URI }}
+  NODE_ENV: staging
+  AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+jobs:
+  build-tests:
+    name: "Make production build, run a11y tests"
+    # Do not run on automated commits (interpretation of TravisCI feature)
+    if: "!contains(github.event.head_commit.message, 'skip ci') &&  github.actor != 'dependabot[bot]'"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
+    steps:
+      # - name: Login to Azure
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_LOGIN }}
+
+      - name: Checkout code on HEAD
+        uses: actions/checkout@v2
+        if: ${{ github.event_name != 'pull_request' }}
+
+      # Do this only for PR to production, since we need to work on main during later commit, and PR's work off of merge ref
+      - name: Checkout code of PR HEAD
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' }}
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      
+      - name: Setup node.js ${{ matrix.node-version }}
+      
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install global packages
+        run : npm install -g pa11y-ci http-server @lhci/cli@0.6.x yarn
+
+      - name: Make production build
+        working-directory: ./client  
+        env:
+          # AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          # AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          # AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          # AUTH0_CALLBACK_URL: ${{ secrets.AUTH0_CALLBACK_URL }}
+          # AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
+          # COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
+          # CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          DB_URI: ${{ secrets.DB_URI}}
+        run: |
+          yarn
+          yarn build
+
+      - name: Serve build 
+        working-directory: ./client  
+        run: http-server out/ > http.log 2>&1 &
+
+      - name: Output all build paths to .pa11yci config and run pa11y
+        working-directory: ./client  
+        run: |
+          node outputPaths.mjs
+          pa11y-ci

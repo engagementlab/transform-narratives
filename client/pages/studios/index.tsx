@@ -11,13 +11,13 @@ import {
 import {
     query
 } from '.keystone/api';
-import Filtering, {  MediaItem } from "../../components/Filtering";
+import Filtering, { StudioItem } from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 const renderItem = (props: {
-        item: MediaItem
+        item: StudioItem
     }) => {
         const btnClass = 'inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx group-hover:bg-green-blue group-hover:text-lynx hover:border-green-blue group-hover:border-green-blue';
         return (
@@ -26,20 +26,20 @@ const renderItem = (props: {
                 className="ml-5 mb-20 cursor-pointer group">
                     {
                         props.item.thumbnail ?
-                        <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.title}"
+                        <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.name}"
                         `} imgId={props.item.thumbnail.publicId} lazy={true} className="w-full max-w-s" /> :
                         <ImagePlaceholder imageLabel='Studio' width={716} height={200} />
                     }
                     <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.name}</h3>
 
-                    <div className="flex items-start justify-between">
-                        <div className="w-2/3">
-                            <p className="mt-2 mb-0">{props.item.blurb}</p>
+                    <div className="flex flex-col lg:flex-row items-start justify-between">
+                        <div className="w-full lg:w-2/3">
+                            <p className="mt-2 mb-0" dangerouslySetInnerHTML={{__html: props.item.blurb.replace('Facilitated by', '<i>Facilitated by</i>')}}></p>
                             <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
                         </div>
                         <button
                             className={btnClass}>
-                            See More</button>
+                            See Details</button>
                     </div>
                 </motion.div>
             </Link>
@@ -72,7 +72,7 @@ export async function getStaticProps() {
         (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
     }, {})
-    const studios = await query.Studio.findMany({ query: 'name blurb key filters { key name } thumbnail { publicId }' }) as MediaItem[];
+    const studios = await query.Studio.findMany({ query: 'name blurb key filters { key name } thumbnail { publicId }' }) as StudioItem[];
 
     return {
       props: {
