@@ -32,8 +32,8 @@ const renderItem = (props: {
                     }
                     <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.name}</h3>
 
-                    <div className="flex items-start justify-between">
-                        <div className="w-2/3">
+                    <div className="flex flex-col lg:flex-row items-start justify-between">
+                        <div className="w-full lg:w-2/3">
                             <p className="mt-2 mb-0" dangerouslySetInnerHTML={{__html: props.item.blurb.replace('Facilitated by', '<i>Facilitated by</i>')}}></p>
                             <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
                         </div>
