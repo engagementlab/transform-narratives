@@ -106,6 +106,7 @@ export default function GetInvolved() {
                     Sorry, there was a problem. Try again later, please.
                   </span>
                   }
+                  
                   {!status &&
                   <div className='flex w-full justify-between items-center'>
                     <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"
@@ -141,7 +142,6 @@ export default function GetInvolved() {
           </div>
 
           <div className="mt-14 xl:mt-16 xl:ml-12 w-full">
-            {/* <img alt='placeholder!!!' src='https://www.dishwasherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College students</h3>
 
             <div className='mt-4'>
@@ -168,7 +168,7 @@ export default function GetInvolved() {
           </div>
         </div>
 
-        <div className="mb-14 mb-14 w-full xl:flex">
+        <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
             {/* <img alt='placeholder!!!' src='https://www.dishw/'asherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>

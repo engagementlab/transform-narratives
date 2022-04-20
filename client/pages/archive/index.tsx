@@ -19,7 +19,7 @@ const renderItem = (props: { item: MediaItem }) => {
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full">
             <Link href={`/archive/${props.item.key}`} passHref>
-                <a>
+                <a className='group'>
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for media with name "${props.item.title}"
