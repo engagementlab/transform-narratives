@@ -80,7 +80,7 @@ export default function GetInvolved() {
 
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            <Image id='community-img' alt='A drawing of two people in front of colorful circles' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" />
+            <Image id='community-img' alt='A drawing of two people in front of colorful circles' imgId='tngvi/get-involved/public' className="xl:w-3/5 mx-auto" aspectDefault={true} />
 
             <h3 className='mt-8 text-xl text-bluegreen font-semibold'>General Public</h3>
 
@@ -106,7 +106,7 @@ export default function GetInvolved() {
                     Sorry, there was a problem. Try again later, please.
                   </span>
                   }
-                  
+
                   {!status &&
                   <div className='flex w-full justify-between items-center'>
                     <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"

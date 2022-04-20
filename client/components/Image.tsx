@@ -1,15 +1,17 @@
-import React, {
-    Component
-} from 'react';
+import React from 'react';
 
-import {Cloudinary} from "@cloudinary/url-gen";
+import {
+    Cloudinary
+} from "@cloudinary/url-gen";
 import {
     AdvancedImage,
     lazyload,
     placeholder,
     responsive,
 } from '@cloudinary/react';
-import { Plugins } from '@cloudinary/html';
+import {
+    Plugins
+} from '@cloudinary/html';
 
 // Cloudinary instance
 const cld = new Cloudinary({
@@ -30,32 +32,36 @@ type ImageProps = {
     width ? : number,
     height ? : number,
     lazy ? : boolean,
+    aspectDefault ? : boolean,
 };
 
 const Image = ({
-    alt,
-    className,
-    id,
-    imgId,
-    transforms,
-    width,
-    height,
-    lazy
-}: ImageProps) => {
-    // Instantiate a CloudinaryImage object for the image with public ID;
-    const cloudImage = cld.image(`${imgId}`);
-    const imgHeight = height || (width ? width*.75 : undefined);
-    let plugins: Plugins = [responsive({steps: [800, 1000, 1400]})];
-    // Create image transforms
-    cloudImage.addTransformation(transforms || `f_auto,dpr_auto,c_crop,g_center,ar_4:3`);
+        alt,
+        className,
+        id,
+        imgId,
+        transforms,
+        width,
+        lazy,
+        aspectDefault
+    }: ImageProps) => {
+        // Instantiate a CloudinaryImage object for the image with public ID;
+        const cloudImage = cld.image(`${imgId}`);
+        let plugins: Plugins = [responsive({
+            steps: [800, 1000, 1400]
+        })];
 
-    // If lazyload not set to false, enable
-    if (lazy === undefined)
-        plugins.push(
-            lazyload(),
-            // accessibility(),
-            placeholder({mode:'blur'})
-        );
+        // Create image transforms
+        cloudImage.addTransformation(transforms || `f_auto,dpr_auto,c_crop,g_center${aspectDefault ? '' : ',ar_4:3'}`);
+
+        // If lazyload not set to false, enable
+        if (lazy === undefined)
+            plugins.push(
+                lazyload(),
+                placeholder({
+                    mode: 'blur'
+                })
+            );
 
         return(        
             <AdvancedImage
