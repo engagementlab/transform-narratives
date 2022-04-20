@@ -108,19 +108,44 @@ export default function GetInvolved() {
                   }
 
                   {!status &&
-                  <div className='flex w-full justify-between items-center'>
-                    <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"
-                      aria-label="Enter your email" minLength={5} required disabled={submitted}
-                      className='w-full bg-lynx placeholder:text-bluegreen' />
-                    <input type="submit" value="Add your email" name="subscribe" id="mc-embedded-subscribe"
-                      aria-hidden="true" className='hidden' />
-                    {!submitted &&
-                    <button type='submit'>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="#026670" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
+                  <div>
+                    {!submitted ?
+                    // Form
+                    <span className='flex w-full justify-between items-center'>
+                      <input type="email" placeholder="ADD YOUR EMAIL" name="EMAIL" id="email" width="800"
+                        aria-label="Enter your email" minLength={5} required disabled={submitted}
+                        className='w-full bg-lynx placeholder:text-bluegreen' />
+                      <input type="submit" value="Add your email" name="subscribe" id="mc-embedded-subscribe"
+                        aria-hidden="true" className='hidden' />
+                      <button type='submit'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                          stroke="#026670" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </button> 
+                    </span>
+                    : 
+                    // Loading
+                    <svg width="60" height="24" viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg" fill="#026670">
+                      <circle cx="6" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="3;6;3" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="24" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="6;3;6" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="42" cy="12" r="3">
+                        <animate attributeName="r" from="3" to="3" begin="0s" dur="1s" values="3;6;3" calcMode="linear"
+                          repeatCount="indefinite" />
+                        <animate attributeName="fill-opacity" from="1" to="1" begin="0s" dur="1s" values="1;.5;1"
+                          calcMode="linear" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
                     }
                   </div>
                   }
