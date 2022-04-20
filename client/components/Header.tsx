@@ -77,7 +77,7 @@ const useStore = create<NavState>(set => ({
 const ActiveLink = (href: string | undefined) => {
 
   const router = useRouter();
-  return router.asPath === href;
+  return router.asPath === `${href}/`;
 
 }
 
