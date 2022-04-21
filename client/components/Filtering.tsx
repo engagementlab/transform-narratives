@@ -145,7 +145,7 @@ export default class Filtering {
                                         </span> 
                                     </div>
                                 </a>
-                                <ul className={`relative overflow-hidden transition-all ${haveGroupClosed(key) ? 'max-h-0' : 'max-h-96'}`}>
+                                <ul className={`relative overflow-hidden transition-all ${haveGroupClosed(key) ? 'max-h-0' : 'max-h-auto'}`}>
                                     {filters[key].map(filter => {
                                         return (
                                             <li key={filter.key} className={`text-lg xl:text-sm font-semibold my-8 xl:my-4
