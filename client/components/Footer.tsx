@@ -165,7 +165,7 @@ class Footer extends Component {
                             clipRule="evenodd"></path>
                     </svg>
                     <Image id="ldpni-logo" alt="Louis D. Brown Peace Institute (LDBPI) logo" imgId='tngvi/logos/ldpi'
-                        width={86} className='aspect-[3/2.8]' />
+                        width={86} />
                     <Image id="mgh-logo" alt="MGH Center for Gun Violence Prevention logo" imgId='tngvi/logos/mgh-cgvp'
                         width={89} className='aspect-[3/2]' />
                 </div>
