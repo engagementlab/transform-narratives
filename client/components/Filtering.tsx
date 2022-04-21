@@ -243,14 +243,14 @@ export default class Filtering {
                     </div>
                     <span className="my-8 xl:my-4 uppercase w-full block text-right text-lg xl:text-sm font-semibold">{showing}</span>
 
-                    <div className={this.mode === 'media' ? 'lg:ml-5 grid xl:grid-cols-3 xl:gap-3 lg:grid-cols-2 lg:gap-2' : ''}>{
+                    <div className={(this.mode === 'media' && count > 0) ? 'lg:ml-5 grid xl:grid-cols-3 xl:gap-3 lg:grid-cols-2 lg:gap-2' : ''}>{
                         count === 0 ?
                         <p className='w-full text-xl my-20 text-center'>Sorry, no matches found. Please try other filters.</p> :
-                                <AnimatePresence>
-                                    {filteredItems.map((item: MediaItem & StudioItem, i: number) => (
-                                        <this.ItemRenderer key={i} item={item} />
-                                    ))}
-                                </AnimatePresence>
+                        <AnimatePresence>
+                            {filteredItems.map((item: MediaItem & StudioItem, i: number) => (
+                                <this.ItemRenderer key={i} item={item} />
+                            ))}
+                        </AnimatePresence>
                         }
                     </div>
                 </div>
