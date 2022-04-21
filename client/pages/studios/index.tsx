@@ -35,7 +35,7 @@ const renderItem = (props: {
                     <div className="flex flex-col lg:flex-row items-start justify-between">
                         <div className="w-full lg:w-2/3">
                             <p className="mt-2 mb-0" dangerouslySetInnerHTML={{__html: props.item.blurb.replace('Facilitated by', '<i>Facilitated by</i>')}}></p>
-                            <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                            {/* <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p> */}
                         </div>
                         <button
                             className={btnClass}>
