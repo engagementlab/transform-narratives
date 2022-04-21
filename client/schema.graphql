@@ -630,6 +630,7 @@ type Filter {
   id: ID!
   name: String
   key: String
+  enabled: Boolean
   type: FilterTypeType
   section: FilterSectionType
 }
@@ -661,8 +662,14 @@ input FilterWhereInput {
   id: IDFilter
   name: StringFilter
   key: StringFilter
+  enabled: BooleanFilter
   type: FilterTypeTypeNullableFilter
   section: FilterSectionTypeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input FilterTypeTypeNullableFilter {
@@ -683,6 +690,7 @@ input FilterOrderByInput {
   id: OrderDirection
   name: OrderDirection
   key: OrderDirection
+  enabled: OrderDirection
   type: OrderDirection
   section: OrderDirection
 }
@@ -690,6 +698,7 @@ input FilterOrderByInput {
 input FilterUpdateInput {
   name: String
   key: String
+  enabled: Boolean
   type: FilterTypeType
   section: FilterSectionType
 }
@@ -702,6 +711,7 @@ input FilterUpdateArgs {
 input FilterCreateInput {
   name: String
   key: String
+  enabled: Boolean
   type: FilterTypeType
   section: FilterSectionType
 }
@@ -1280,11 +1290,6 @@ input PersonWhereInput {
   enabled: BooleanFilter
   blurb: StringFilter
   remembrance: StringFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input PersonOrderByInput {

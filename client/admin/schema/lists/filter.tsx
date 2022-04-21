@@ -2,6 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  checkbox,
   integer,
     json,
     relationship,
@@ -30,6 +31,9 @@ const Filter: Lists.Filter = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      enabled: checkbox({
+        defaultValue: true,
       }),
       type: select({
         type: 'enum',
