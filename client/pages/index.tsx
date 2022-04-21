@@ -46,26 +46,29 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
     <Layout>
         <div className='relative w-full mt-20 lg:max-h-screen overflow-clip'>
           <div className='flex flex-col items-center'>
-            <div className='w-2/3 max-w-md text-center absolute z-10'>
-              <h2 className='quote-shadow text-lg sm:text-xl font-semibold'>Nearly every person in the U.S. will know someone who has been shot in their lifetime.</h2>
-              <h1 className='quote-shadow text-xl sm:text-2xl font-bold text-purple mt-6'>Everyone has a story to tell.</h1>
+            <div className='w-2/3 lg:mt-6 max-w-md text-center z-10'>
+              <h2 className='sm:text-xl lg:text-2xl font-semibold'>Nearly every person in the U.S. will know someone who has been shot in their lifetime.</h2>
+              <h1 className='text-xl lg:text-[2rem] font-bold text-purple mt-6'>Everyone has a story to tell.</h1>
               <Button className='' link='/archive' label='Listen to our stories' />
             </div>
           </div>
 
-          <Fade {...slidesProps} className='max-h-screen sm:min-h-full lg:-mt-20 z-0'>
+
+        </div>
+        <div className='w-full'>
+          <Fade {...slidesProps}>
             {homePage.slides.map((slide, i) => (
-              <div key={`slide-${i}`}>
-                <div className='w-2/3 max-w-lg text-center mx-auto'>
-                  <p className='quote-shadow text-xl sm:text-2xl font-bold text-coated translate-y-96'>&ldquo;{slide.quote}&rdquo;</p>
-                </div>
-                <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='sm:w-full aspect-[3/2]' lazy={true} />
+              <div key={`slide-${i}`} className='text-center'>
+              
+                <p className='absolute md:relative md:px-44 text-xl lg:text-2xl text-purple translate-y-20 md:translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
+                <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
+
               </div>
             ))}
           </Fade>
-
-          <p className='absolute bottom-0 w-full text-sm px-4 m-0 text-bluegreen text-center quote-shadow font-semibold -translate-y-10 z-20 sm:-translate-y-12 lg:text-lg'>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
         </div>
+
+        <p className='w-full text-sm lg:text-lg px-4 m-8 text-bluegreen text-center quote-shadow font-semibold '>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
     </Layout>
   );
 }

@@ -3,9 +3,6 @@ import {
   } from '@keystone-6/core';
 import {
   checkbox,
-  integer,
-    json,
-    relationship,
     select,
     text
 } from '@keystone-6/core/fields';
