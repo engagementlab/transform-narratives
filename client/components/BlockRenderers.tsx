@@ -4,9 +4,11 @@ import { componentBlocks } from "../admin/components/component-blocks";
 import Image from "./Image";
 import Video from "./Video";
 
-const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
-  image: (props: any) => {
-    return (
+const BlockRenderers = (imageOveride?: { (props: any): JSX.Element; (arg0: any): any; }) => {
+  let blocks: InferRenderersForComponentBlocks<typeof componentBlocks>  = {
+  image:(props: any) => { 
+    return imageOveride ? imageOveride(props) : 
+    (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
         <p>{props.image.data.caption}</p>
@@ -26,6 +28,9 @@ const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> =
       </Link>
     );
   }
+  }
+  // if(imageOveride) blocks['image'] = imageOveride(props);
+  return blocks;
 };
 
 export default BlockRenderers;

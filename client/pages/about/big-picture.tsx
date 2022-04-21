@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-// import BlockRenderers from '../../components/BlockRenderers';
+import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
 import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
@@ -14,29 +14,31 @@ type BigPicturePage = {
   content: any;
 };
 
-const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
-  image: (props: any) => {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId} aspectDefault={true} />
-        <p>{props.image.data.caption}</p>
-      </div>
-    );
-  },
-  video: (props: any) => {
-    return <Video videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
-  },
-  button: (props: any) => {
-    return ( 
-      <Link href={props.link.props.node.children[0].text} passHref>
-          <button
-          className='block lg:inline-block rounded-full px-9 py-7 mt-4 uppercase whitespace-nowrap bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx hover:border-green-blue'>
-          {props.label}
-          </button>
-      </Link>
-    );
-  }
+const image = (props: any) => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId} aspectDefault={true} />
+      <p>{props.image.data.caption}</p>
+    </div>
+  );
 };
+
+// const BlockRenderers: InferRenderersForComponentBlocks<typeof componentBlocks> = {
+//   image: 
+//   video: (props: any) => {
+//     return <Video videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
+//   },
+//   button: (props: any) => {
+//     return ( 
+//       <Link href={props.link.props.node.children[0].text} passHref>
+//           <button
+//           className='block lg:inline-block rounded-full px-9 py-7 mt-4 uppercase whitespace-nowrap bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx hover:border-green-blue'>
+//           {props.label}
+//           </button>
+//       </Link>
+//     );
+//   }
+// };
 
 const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
@@ -86,7 +88,7 @@ export default function BigPicture({ page }: InferGetStaticPropsType<typeof getS
   return (
     <Layout>
       <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
-        <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers} />
+         <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers(image)} />
       </div>
     </Layout>
   );
