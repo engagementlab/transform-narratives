@@ -42,6 +42,10 @@ const slidesProps: SlideshowProps = {
 };
 
 export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+  const pseudoBlurBg = 'fixed bg-lynx block -z-10 blur-xl rounded-full w-full h-full md:blur-2xl md:h-20 md:-translate-y-1/4'.split(' ').map(c => {
+    return `before:${c}`
+  }).join(' ');
+
   return (
     <Layout>
         <div className='relative w-full mt-20 lg:max-h-screen overflow-clip'>
@@ -59,12 +63,8 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
           <Fade {...slidesProps}>
             {homePage.slides.map((slide, i) => (
               <div key={`slide-${i}`} className='text-center flex flex-col items-center'>
-                <p className=' absolute w-full md:relative md:px-44  translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple 
-                before:fixed before:bg-lynx before:block before:content-{""} 
-                before:-z-10 before:blur-xl before:rounded-full before:w-full 
-                before:h-full md:before:blur-2xl md:before:h-20 md:before:-translate-y-1/4'>&ldquo;{slide.quote}&rdquo;</p>
+                <p className={`absolute w-full md:relative md:px-44 translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple ${pseudoBlurBg}`}>&ldquo;{slide.quote}&rdquo;</p>
                 <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
-
               </div>
             ))}
           </Fade>
