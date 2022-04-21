@@ -55,10 +55,10 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
 
 
         </div>
-        <div className='w-full'>
+        <div className='w-full -translate-y-10 md:-translate-y-20 xl:-translate-y-40'>
           <Fade {...slidesProps}>
             {homePage.slides.map((slide, i) => (
-              <div key={`slide-${i}`} className='text-center'>
+              <div key={`slide-${i}`} className='text-center flex flex-col items-center'>
                 <p className=' absolute w-full md:relative md:px-44  translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple 
                 before:fixed before:bg-lynx before:block before:content-{""} 
                 before:-z-10 before:blur-xl before:rounded-full before:w-full 
