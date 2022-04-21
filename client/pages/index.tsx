@@ -59,8 +59,10 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
           <Fade {...slidesProps}>
             {homePage.slides.map((slide, i) => (
               <div key={`slide-${i}`} className='text-center'>
-              
-                <p className='absolute md:relative md:px-44 text-xl lg:text-2xl text-purple translate-y-20 md:translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
+                <p className=' absolute w-full md:relative md:px-44  translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple 
+                before:fixed before:bg-lynx before:block before:content-{""} 
+                before:-z-10 before:blur-xl before:rounded-full before:w-full 
+                before:h-full md:before:blur-2xl md:before:h-20 md:before:-translate-y-1/4'>&ldquo;{slide.quote}&rdquo;</p>
                 <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
 
               </div>
@@ -68,7 +70,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
           </Fade>
         </div>
 
-        <p className='w-full text-sm lg:text-lg px-4 m-8 text-bluegreen text-center quote-shadow font-semibold '>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
+        <p className='w-full text-sm lg:text-lg my-8 text-bluegreen text-center quote-shadow font-semibold '>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
     </Layout>
   );
 }
