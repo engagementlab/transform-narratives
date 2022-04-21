@@ -19,11 +19,11 @@ import ImagePlaceholder from "../../components/ImagePlaceholder";
 const renderItem = (props: {
         item: StudioItem
     }) => {
-        const btnClass = 'inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx group-hover:bg-green-blue group-hover:text-lynx hover:border-green-blue group-hover:border-green-blue';
+        const btnClass = 'my-4 lg:my-0 inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen transition-all hover:bg-green-blue hover:text-lynx group-hover:bg-green-blue group-hover:text-lynx hover:border-green-blue group-hover:border-green-blue';
         return (
             <Link href={`/studios/${props.item.key}`} passHref>
                 <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="ml-5 mb-20 cursor-pointer group">
+                className="ml-5 mb-32 cursor-pointer group">
                     {
                         props.item.thumbnail ?
                         <Image id={`thumb-${props.item.key}`} alt={`Thumbnail for studio with name "${props.item.name}"
