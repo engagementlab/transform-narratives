@@ -195,19 +195,25 @@ export default function GetInvolved() {
 
         <div className="mb-14 w-full xl:flex">
           <div className="mt-14 xl:mt-16 w-full">
-            {/* <img alt='placeholder!!!' src='https://www.dishw/'asherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
+            {/* <img alt='placeholder!!!' src='https://www.dishw/'
+              asherhero.com/wp-content/uploads/2020/01/orange-circle-background.png' className="xl:w-3/5 mx-auto" /> */}
             <h3 className='mt-8 text-xl font-semibold text-bluegreen'>Emerson College faculty</h3>
 
             <div className='mt-4'>
               <p className='font-semibold'>Participate in the summer workshop in collaborative pedagogy</p>
               <p className='leading-7'>
-              Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson faculty interested in teaching social impact studios
+                Each May, the Engagement Lab hosts a 3-day workshop on collaborative pedagogy, open for all Emerson
+                faculty interested in teaching social impact studios
               </p>
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Become an Engagement Lab fellow</p>
               <p className='leading-7 text-purple'>
-            Engagement Lab fellows are ..........?
+                <strong>The Engagement Lab Fellowship</strong> is open to faculty members who are teaching or developing
+                a course within one of the Engagement Lab initiatives, or conducting collaborative research relevant to
+                the initiatives. The fellowship provides an opportunity for faculty to connect with a small cohort to
+                advance their knowledge and practice of social impact teaching and research. <em>Fellowship
+                  opportunities are available to all faculty: full time and affiliate.</em>
               </p>
             </div>
             <div className='mt-8'>
