@@ -44,33 +44,27 @@ const slidesProps: SlideshowProps = {
 export default function Home({ homePage }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
   return (
     <Layout>
-        <div className='w-3/4 lg:w-1/2 xl:mt-16 mx-auto'>
-
-          <div className=''>
-            <div className='flex flex-col items-center'>
-              <svg viewBox="0 0 88 88" width="88" height="88" className='mb-16'>
-                <circle style={{fill: 'rgb(252, 225, 129)'}} cx="44" cy="44" r="44"></circle>
-              </svg>
-
-              <DocumentRenderer document={homePage.intro.document} renderers={renderers} />
+        <div className='relative w-full mt-20 lg:max-h-screen overflow-clip'>
+          <div className='flex flex-col items-center'>
+            <div className='w-2/3 max-w-md text-center absolute z-10'>
+              <h2 className='quote-shadow text-lg sm:text-xl font-semibold'>Nearly every person in the U.S. will know someone who has been shot in their lifetime.</h2>
+              <h1 className='quote-shadow text-xl sm:text-2xl font-bold text-purple mt-6'>Everyone has a story to tell.</h1>
+              <Button className='' link='/archive' label='Listen to our stories' />
             </div>
           </div>
-          
-        </div>
-        <div className='w-full'>
-          <div className='w-full flex flex-col items-center -translate-y-10 xl:translate-y-0 absolute z-10'>
-            <Button link='/archive' label='Listen to our stories' />
-          </div>
-        <Fade {...slidesProps}>
-          {homePage.slides.map((slide, i) => (
-            <div key={`slide-${i}`} className='text-center'>
-            
-              <p className='text-xl lg:text-2xl text-purple translate-y-40'>&ldquo;{slide.quote}&rdquo;</p>
-              <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
 
-            </div>
-          ))}
-        </Fade>
+          <Fade {...slidesProps} className='max-h-screen sm:min-h-full lg:-mt-20 z-0'>
+            {homePage.slides.map((slide, i) => (
+              <div key={`slide-${i}`}>
+                <div className='w-2/3 max-w-lg text-center mx-auto'>
+                  <p className='quote-shadow text-xl sm:text-2xl font-bold text-coated translate-y-96'>&ldquo;{slide.quote}&rdquo;</p>
+                </div>
+                <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='sm:w-full aspect-[3/2]' lazy={true} />
+              </div>
+            ))}
+          </Fade>
+
+          <p className='absolute bottom-0 w-full text-sm px-4 m-0 text-bluegreen text-center quote-shadow font-semibold -translate-y-10 z-20 sm:-translate-y-12 lg:text-lg'>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
         </div>
     </Layout>
   );
