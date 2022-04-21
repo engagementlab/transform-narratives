@@ -63,7 +63,7 @@ export async function getStaticProps() {
         (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
     }, {});
-    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }' }) as MediaItem[];
+    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }', where: { enabled: { equals: true } }}) as MediaItem[];
 
     return {
       props: {

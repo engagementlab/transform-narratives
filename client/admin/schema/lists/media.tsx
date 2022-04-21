@@ -2,6 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  checkbox,
     json,
     relationship,
     select,
@@ -39,6 +40,9 @@ const MediaItem: Lists.MediaItem = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      enabled: checkbox({
+        defaultValue: true,
       }),
       thumbnail: cloudinaryImage({
         cloudinary: {

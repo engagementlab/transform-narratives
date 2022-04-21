@@ -71,7 +71,7 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
 }
 
 export async function getStaticProps() {
-    const items = await query.NewsItem.findMany({ query: 'title key publishDate blurb thumbnail { publicId }', orderBy: {publishDate: 'desc'}  }) as News[];
+    const items = await query.NewsItem.findMany({ query: 'title key publishDate blurb thumbnail { publicId }', orderBy: {publishDate: 'desc'}, where: { enabled: { equals: true }  }}) as News[];
 
     return {
       props: {

@@ -2,6 +2,7 @@ import {
   list
 } from '@keystone-6/core';
 import {
+  checkbox,
   json,
   relationship,
   text
@@ -26,6 +27,21 @@ const Studio: Lists.Studio = list({
         isRequired: true
       }
     }),
+    key: text({
+      isIndexed: 'unique',
+      isFilterable: true,
+      ui: {
+        createView: {
+          fieldMode:'hidden'
+        },
+        itemView: {
+          fieldMode: 'hidden'
+        }
+      }
+    }),
+    enabled: checkbox({
+      defaultValue: true,
+    }),
     thumbnail: cloudinaryImage({
       label: 'Thumbnail (need to be sized consistently)',
       cloudinary: {
@@ -42,18 +58,6 @@ const Studio: Lists.Studio = list({
       },
       ui: {
         displayMode: 'textarea'
-      }
-    }),
-    key: text({
-      isIndexed: 'unique',
-      isFilterable: true,
-      ui: {
-        createView: {
-          fieldMode:'hidden'
-        },
-        itemView: {
-          fieldMode: 'hidden'
-        }
       }
     }),
     filters: relationship({

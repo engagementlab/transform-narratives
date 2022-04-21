@@ -512,6 +512,7 @@ type Event {
   id: ID!
   name: String
   key: String
+  enabled: Boolean
   thumbnail: CloudinaryImage_File
   thumbAltText: String
   eventDate: DateTime
@@ -547,12 +548,18 @@ input EventWhereInput {
   id: IDFilter
   name: StringFilter
   key: StringFilter
+  enabled: BooleanFilter
   thumbAltText: StringFilter
   eventDate: DateTimeFilter
   registrationLink: StringFilter
   address: StringFilter
   blurb: StringFilter
   images: EventImageManyRelationFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input DateTimeFilter {
@@ -576,6 +583,7 @@ input EventOrderByInput {
   id: OrderDirection
   name: OrderDirection
   key: OrderDirection
+  enabled: OrderDirection
   thumbAltText: OrderDirection
   eventDate: OrderDirection
   registrationLink: OrderDirection
@@ -586,6 +594,7 @@ input EventOrderByInput {
 input EventUpdateInput {
   name: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   thumbAltText: String
   eventDate: DateTime
@@ -611,6 +620,7 @@ input EventUpdateArgs {
 input EventCreateInput {
   name: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   thumbAltText: String
   eventDate: DateTime
@@ -665,11 +675,6 @@ input FilterWhereInput {
   enabled: BooleanFilter
   type: FilterTypeTypeNullableFilter
   section: FilterSectionTypeNullableFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input FilterTypeTypeNullableFilter {
@@ -948,6 +953,7 @@ type MediaItem {
   id: ID!
   title: String
   key: String
+  enabled: Boolean
   thumbnail: CloudinaryImage_File
   shortDescription: String
   filters(
@@ -1006,6 +1012,7 @@ input MediaItemWhereInput {
   id: IDFilter
   title: StringFilter
   key: StringFilter
+  enabled: BooleanFilter
   shortDescription: StringFilter
   filters: FilterManyRelationFilter
   images: MediaImageManyRelationFilter
@@ -1028,12 +1035,14 @@ input MediaItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
   key: OrderDirection
+  enabled: OrderDirection
   shortDescription: OrderDirection
 }
 
 input MediaItemUpdateInput {
   title: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   shortDescription: String
   filters: FilterRelateToManyForUpdateInput
@@ -1071,6 +1080,7 @@ input MediaItemUpdateArgs {
 input MediaItemCreateInput {
   title: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   shortDescription: String
   filters: FilterRelateToManyForCreateInput
@@ -1171,6 +1181,7 @@ type NewsItem {
   id: ID!
   title: String
   key: String
+  enabled: Boolean
   thumbnail: CloudinaryImage_File
   thumbAltText: String
   publishDate: DateTime
@@ -1201,6 +1212,7 @@ input NewsItemWhereInput {
   id: IDFilter
   title: StringFilter
   key: StringFilter
+  enabled: BooleanFilter
   thumbAltText: StringFilter
   publishDate: DateTimeFilter
   blurb: StringFilter
@@ -1217,6 +1229,7 @@ input NewsItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
   key: OrderDirection
+  enabled: OrderDirection
   thumbAltText: OrderDirection
   publishDate: OrderDirection
   blurb: OrderDirection
@@ -1225,6 +1238,7 @@ input NewsItemOrderByInput {
 input NewsItemUpdateInput {
   title: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   thumbAltText: String
   publishDate: DateTime
@@ -1248,6 +1262,7 @@ input NewsItemUpdateArgs {
 input NewsItemCreateInput {
   title: String
   key: String
+  enabled: Boolean
   thumbnail: Upload
   thumbAltText: String
   publishDate: DateTime
@@ -1405,9 +1420,10 @@ input StudioRelateToManyForCreateInput {
 type Studio {
   id: ID!
   name: String
+  key: String
+  enabled: Boolean
   thumbnail: CloudinaryImage_File
   blurb: String
-  key: String
   filters(
     where: FilterWhereInput! = {}
     orderBy: [FilterOrderByInput!]! = []
@@ -1440,8 +1456,9 @@ input StudioWhereInput {
   NOT: [StudioWhereInput!]
   id: IDFilter
   name: StringFilter
-  blurb: StringFilter
   key: StringFilter
+  enabled: BooleanFilter
+  blurb: StringFilter
   filters: FilterManyRelationFilter
   photos: StudioImageManyRelationFilter
 }
@@ -1455,15 +1472,17 @@ input StudioImageManyRelationFilter {
 input StudioOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  blurb: OrderDirection
   key: OrderDirection
+  enabled: OrderDirection
+  blurb: OrderDirection
 }
 
 input StudioUpdateInput {
   name: String
+  key: String
+  enabled: Boolean
   thumbnail: Upload
   blurb: String
-  key: String
   filters: FilterRelateToManyForUpdateInput
   content: JSON
   photos: StudioImageRelateToManyForUpdateInput
@@ -1483,9 +1502,10 @@ input StudioUpdateArgs {
 
 input StudioCreateInput {
   name: String
+  key: String
+  enabled: Boolean
   thumbnail: Upload
   blurb: String
-  key: String
   filters: FilterRelateToManyForCreateInput
   content: JSON
   photos: StudioImageRelateToManyForCreateInput

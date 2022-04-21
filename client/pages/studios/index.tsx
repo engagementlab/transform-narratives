@@ -66,13 +66,13 @@ export default function Studios({ filtersGrouped, studios }: InferGetStaticProps
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ where: { section: {equals: 'studio'}, enabled: { equals: true } }, query: 'key name type' }) as any[];
+    const filters = await query.Filter.findMany({ query: 'key name type', where: { section: {equals: 'studio'}, enabled: { equals: true } } }) as any[];
     // Group filters by type
     const filtersGrouped = filters.reduce((filterMemo, {key, type, name}) => {
         (filterMemo[type] = filterMemo[type] || []).push({key, name});
         return filterMemo;
     }, {})
-    const studios = await query.Studio.findMany({ query: 'name blurb key filters { key name } thumbnail { publicId }' }) as StudioItem[];
+    const studios = await query.Studio.findMany({ query: 'name blurb key filters { key name } thumbnail { publicId }', where: { enabled: { equals: true } } }) as StudioItem[];
 
     return {
       props: {

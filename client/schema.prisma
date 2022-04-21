@@ -61,6 +61,7 @@ model Event {
   id               String       @id @default(cuid())
   name             String       @default("")
   key              String       @unique @default("")
+  enabled          Boolean      @default(true)
   thumbnail        String?
   thumbAltText     String       @default("")
   eventDate        DateTime
@@ -111,6 +112,7 @@ model MediaItem {
   id               String       @id @default(cuid())
   title            String       @default("")
   key              String       @unique @default("")
+  enabled          Boolean      @default(true)
   thumbnail        String?
   shortDescription String       @default("")
   filters          Filter[]     @relation("MediaItem_filters")
@@ -135,6 +137,7 @@ model NewsItem {
   id           String      @id @default(cuid())
   title        String      @default("")
   key          String      @unique @default("")
+  enabled      Boolean     @default(true)
   thumbnail    String?
   thumbAltText String      @default("")
   publishDate  DateTime
@@ -166,9 +169,10 @@ model StudioImage {
 model Studio {
   id        String        @id @default(cuid())
   name      String        @default("")
+  key       String        @unique @default("")
+  enabled   Boolean       @default(true)
   thumbnail String?
   blurb     String        @default("")
-  key       String        @unique @default("")
   filters   Filter[]      @relation("Studio_filters")
   content   String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   photos    StudioImage[] @relation("Studio_photos")

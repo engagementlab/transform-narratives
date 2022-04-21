@@ -2,6 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  checkbox,
     json,
     relationship,
     text,
@@ -36,6 +37,9 @@ const NewsItem: Lists.NewsItem = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      enabled: checkbox({
+        defaultValue: true,
       }),
       thumbnail: cloudinaryImage({
         label: 'Thumbnail/Header Image',
