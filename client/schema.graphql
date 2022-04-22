@@ -109,13 +109,7 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
-  mode: QueryMode
   not: NestedStringFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
 }
 
 input NestedStringFilter {
@@ -1428,6 +1422,7 @@ type Studio {
   name: String
   key: String
   enabled: Boolean
+  order: Int
   thumbnail: CloudinaryImage_File
   blurb: String
   filters(
@@ -1464,9 +1459,21 @@ input StudioWhereInput {
   name: StringFilter
   key: StringFilter
   enabled: BooleanFilter
+  order: IntNullableFilter
   blurb: StringFilter
   filters: FilterManyRelationFilter
   photos: StudioImageManyRelationFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
 }
 
 input StudioImageManyRelationFilter {
@@ -1480,6 +1487,7 @@ input StudioOrderByInput {
   name: OrderDirection
   key: OrderDirection
   enabled: OrderDirection
+  order: OrderDirection
   blurb: OrderDirection
 }
 
@@ -1487,6 +1495,7 @@ input StudioUpdateInput {
   name: String
   key: String
   enabled: Boolean
+  order: Int
   thumbnail: Upload
   blurb: String
   filters: FilterRelateToManyForUpdateInput
@@ -1510,6 +1519,7 @@ input StudioCreateInput {
   name: String
   key: String
   enabled: Boolean
+  order: Int
   thumbnail: Upload
   blurb: String
   filters: FilterRelateToManyForCreateInput
@@ -1884,6 +1894,11 @@ enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   read
   hidden
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type KeystoneAdminUISort {

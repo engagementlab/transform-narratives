@@ -3,6 +3,7 @@ import {
 } from '@keystone-6/core';
 import {
   checkbox,
+  integer,
   json,
   relationship,
   text
@@ -41,6 +42,9 @@ const Studio: Lists.Studio = list({
     }),
     enabled: checkbox({
       defaultValue: true,
+    }),
+    order: integer({
+      label: 'Order on index page',
     }),
     thumbnail: cloudinaryImage({
       label: 'Thumbnail (need to be sized consistently)',
@@ -124,6 +128,12 @@ const Studio: Lists.Studio = list({
     // }),
 
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
+  },
+  ui: {
+    listView: { 
+      initialColumns: ['name', 'order', 'thumbnail',],
+      initialSort: { field: 'order', direction: 'ASC' }
+    }
   },
   hooks: {
     resolveInput: async ({
