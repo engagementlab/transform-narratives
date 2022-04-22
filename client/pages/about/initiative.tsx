@@ -23,7 +23,7 @@ const renderers: DocumentRendererProps['renderers'] = {
   inline: {
     bold: ({ children }) => {
       return <strong>{children}</strong>;
-    },
+    }
   },
   block: {
     heading: ({ level, children, textAlign }) => {

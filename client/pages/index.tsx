@@ -1,36 +1,17 @@
 import { InferGetStaticPropsType } from 'next';
-
 import { Fade, SlideshowProps } from 'react-slideshow-image';
 
 import { query } from '.keystone/api';
-import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
+
 import Image from '../components/Image';
 import Button from '../components/Button';
 import Layout from '../components/Layout';
-import HeadingStyle from '../components/HeadingStyle';
 
 type HomePage = {
   id: string;
   intro: any;
   slides: any[];
 }; 
-
-const renderers: DocumentRendererProps['renderers'] = {
-  // use your editor's autocomplete to see what other renderers you can override
-  inline: {
-    bold: ({ children }) => {
-      return <strong>{children}</strong>;
-    },
-  },
-  block: {
-    heading: ({ level, children, textAlign }) => {
-      const customRenderers = {
-        2: 'text-2xl text-coated font-semibold'
-      };
-      return HeadingStyle(level, children, textAlign, customRenderers);
-    },
-  },
-};
 
 const slidesProps: SlideshowProps = {
   duration: 5000,

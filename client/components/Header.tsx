@@ -58,6 +58,7 @@ const links: NavLink[] = [{
 ];
 
 const customEase = 'ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300';
+const linkClass = 'text-purple no-underline border-b-2 border-b-[rgba(141,51,210,0)] hover:border-b-[rgba(141,51,210,1)] transition-all';
 
 type NavState = {
     navOpen: boolean
@@ -104,7 +105,9 @@ const NavItems = () => {
                       <span onClick={()=>{toggleNavOpen(false) }} className='opacity-40'>{subLink.label}</span> 
                     :
                       <Link href={subLink.url || '' } passHref>
-                        {subLink.label}
+                        <a className={linkClass}>
+                          {subLink.label}
+                        </a>
                       </Link>
                   }
                   </li>
@@ -121,7 +124,9 @@ const NavItems = () => {
                   <span className='opacity-40'>{link.label}</span> 
                   : 
                   <Link href={link.url || '' } passHref>
-                    {link.label}
+                    <a className={linkClass}>
+                     {link.label}
+                    </a> 
                   </Link>
               }
             </li>

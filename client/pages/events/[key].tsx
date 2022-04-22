@@ -20,6 +20,11 @@ type Event = {
   thumbAltText: string;
 };
 const renderers: DocumentRendererProps['renderers'] = {
+    inline: {
+        link: ({ children, href }) => {
+          return <strong>{children}</strong>;
+        }
+    },
     block: {
         heading: ({ level, children, textAlign }) => {
             const customRenderers = {
