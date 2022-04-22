@@ -208,7 +208,7 @@ export default function GetInvolved() {
             </div>
             <div className='mt-8'>
               <p className='font-semibold'>Become an Engagement Lab fellow</p>
-              <p className='leading-7 text-purple'>
+              <p className='leading-7'>
                 <strong>The Engagement Lab Fellowship</strong> is open to faculty members who are teaching or developing
                 a course within one of the Engagement Lab initiatives, or conducting collaborative research relevant to
                 the initiatives. The fellowship provides an opportunity for faculty to connect with a small cohort to
