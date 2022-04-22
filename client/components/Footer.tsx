@@ -150,7 +150,6 @@ class Footer extends Component {
                     </ul> */}
                 </div>
                 <div className="grid grid-cols-2 grid-rows-2 sm:grid-cols-4 mt-7 xl:mt-0 w-full md:w-1/2 lg:w-2/5 xl:w-1/3 list-none">
-                {/* <div className="flex flex-col md:flex-row mt-7 xl:mt-0 w-full md:w-1/2 xl:w-1/4 md:items-center justify-between list-none"> */}
                     <svg viewBox="0 0 75 26.578" width="75" height="26.578" className=''>
                         <title>Engagement Lab logo</title>
                         <path fill="#F6A536" fillRule="evenodd"

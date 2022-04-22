@@ -4,11 +4,20 @@ import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-re
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import FlexLayout from '../../components/FlexLayout';
+import Image from '../../components/Image';
 
 type AboutPage = {
   content: any;
 };
 
+const image = (props: any) => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId} aspectDefault={true} />
+      <p>{props.image.data.caption}</p>
+    </div>
+  );
+};
 const renderers: DocumentRendererProps['renderers'] = {
   // use your editor's autocomplete to see what other renderers you can override
   inline: {
@@ -30,7 +39,7 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
   return (
     <Layout>
       <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
-        <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers()} />
+        <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers(image)} />
       </div>
     </Layout>
   );
