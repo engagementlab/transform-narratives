@@ -40,7 +40,7 @@ return (
             <h1 className="text-2xl font-bold text-bluegreen mb-2">{item.name}</h1>
             {/* <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p> */}
 
-            <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+            <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers()} renderers={renderers} />
 {/* 
             {item.associatedMedia &&
               <div className='mt-14'>

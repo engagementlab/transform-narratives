@@ -58,7 +58,7 @@ export default function Event({ item, relatedItems }: InferGetStaticPropsType<ty
                     })}
                 </div>
   
-                <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers()} renderers={renderers} />
 
                 {relatedItems &&
                     <div>

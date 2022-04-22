@@ -49,12 +49,9 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
                         month: 'long',
                         day: 'numeric',
                         year: 'numeric',
-                    })}, {new Date(item.publishDate).toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
                     })}
                 </div>
-                <DocumentRenderer document={item.body.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                <DocumentRenderer document={item.body.document} componentBlocks={BlockRenderers()} renderers={renderers} />
 
                 {relatedItems &&
                     <div>

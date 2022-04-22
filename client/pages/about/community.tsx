@@ -47,7 +47,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
           <div
           className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
               <h2 className="text-2xl text-bluegreen font-semibold">About Our Community</h2>
-              <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
+              <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers()} />
           </div>
           <div className='container mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
               <hr className='border-sorbet' />

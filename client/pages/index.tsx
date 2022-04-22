@@ -33,8 +33,8 @@ const renderers: DocumentRendererProps['renderers'] = {
 };
 
 const slidesProps: SlideshowProps = {
-  duration: 4000,
-  transitionDuration: 1000,
+  duration: 5000,
+  transitionDuration: 2000,
   infinite: true,
   easing: 'ease',
   arrows: false,
