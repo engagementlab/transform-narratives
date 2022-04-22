@@ -29,7 +29,7 @@ const renderItem = (props: { item: MediaItem }) => {
                     <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.title}</h3>
                     <div className="mt-2 mb-20">
                       <p className="m-0">{props.item.shortDescription}</p>
-                      <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
+                      {/* <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p> */}
                     </div>
                 </a>
             </Link>
