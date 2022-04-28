@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import _ from 'lodash';
 import Image from './Image';
-import { UrlObject } from 'url';
 
 const ActiveLink = (href: string | undefined) => {
 
@@ -13,7 +12,7 @@ const ActiveLink = (href: string | undefined) => {
 }
 
 const LinkRender = (props: { link: string; label: string, pad?: boolean }) => {
-
+    const linkClass = 'text-bluegreen no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
     return (
         <li className={props.pad ? 'pt-2' : ''}>
             {
@@ -21,7 +20,9 @@ const LinkRender = (props: { link: string; label: string, pad?: boolean }) => {
                 <span className='opacity-40'>{props.label}</span> 
                 :
                 <Link href={props.link} passHref>
-                    {props.label}
+                    <a className={linkClass}>
+                        {props.label}
+                    </a>
                 </Link>
             }
         </li>
