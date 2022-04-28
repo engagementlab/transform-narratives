@@ -2,6 +2,7 @@ import {
     InferGetStaticPropsType
 } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import _ from 'lodash';
 import { motion } from "framer-motion";
 
@@ -12,9 +13,9 @@ import Filtering, {  MediaItem } from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
-import { useRouter } from "next/router";
 
-const renderItem = (props: { item: MediaItem }) => {
+const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
+const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => void }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full">
@@ -27,13 +28,20 @@ const renderItem = (props: { item: MediaItem }) => {
                         <ImagePlaceholder imageLabel='Media' width={335} height={200} />
                     }
                     <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.title}</h3>
-                    <div className="mt-2 mb-20">
-                      <p className="m-0">{props.item.shortDescription}</p>
-                      {/* <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p> */}
-                    </div>
                 </a>
             </Link>
-
+            <div className="mt-2 mb-20">
+                <p className="m-0">{props.item.shortDescription}</p>
+                {/* Filters for item */}
+                <p className='text-bluegreen'>
+                    {props.item.filters.map((filter, i) => {
+                        return <span key={`filter-${i}`}>
+                                    <a href="#" onClick={(e)=>{e.preventDefault(); props.toggleFilter(filter.key)}} className={linkClass}>{filter.name}</a>
+                                    {props.item.filters.length-1 > i && <span>,&nbsp;</span>} 
+                               </span>;
+                    })}
+                </p>
+            </div>
         </motion.div>
     );
 }
