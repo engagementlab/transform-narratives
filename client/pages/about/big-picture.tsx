@@ -1,16 +1,13 @@
+import { ReactNode } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
 import { DocumentRenderer, } from '@keystone-6/document-renderer';
+
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
-import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks';
-import Link from 'next/link';
-import { componentBlocks } from '../../admin/components/component-blocks';
-import Video from '../../components/Video';
 import Image from '../../components/Image';
 import DocRenderers from '../../components/DocRenderers';
-import { ReactChild, ReactFragment, ReactPortal } from 'react';
 
 type BigPicturePage = {
   content: any;
@@ -25,23 +22,21 @@ const image = (props: any) => {
   );
 };
 
-
-const renderers = {
-    heading: (level: number, children: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined, textAlign: string | undefined) => {
+const rendererOverrides = {
+    heading: (level: number, children: ReactNode, textAlign: any) => {
       const customRenderers = {
         3: 'text-2xl font-semibold text-bluegreen'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
     },
-    layout: (layout, children) => {
-        // return FlexLayout(layout, children);
+    layout: (layout: any, children: any) => {
         const flexClass = 'flex gap-x-5 flex-col md:flex-row justify-between';
         if(layout[0] === 2 && layout[1] === 1) {
             return (
                 <div
                     className={flexClass}
                 >
-                {children.map((element, i) => (
+                {children.map((element: any, i: number) => (
                     <div key={i} className={`${i === 0 ? 'w-full lg:w-3/4' : ''}`}>{element}</div>
                 ))}
                 </div>
@@ -52,7 +47,7 @@ const renderers = {
                 <div
                     className={flexClass}
                 >
-                {children.map((element, i) => (
+                {children.map((element: any, i: number) => (
                     <div key={i} className='w-full lg:w-1/3'>{element}</div>
                 ))}
                 </div>
@@ -66,7 +61,7 @@ export default function BigPicture({ page }: InferGetStaticPropsType<typeof getS
   return (
     <Layout>
       <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
-         <DocumentRenderer document={page.content.document} componentBlocks={BlockRenderers(image)} renderers={DocRenderers(renderers)} />
+         <DocumentRenderer document={page.content.document} componentBlocks={BlockRenderers(image)} renderers={DocRenderers(rendererOverrides)} />
       </div>
     </Layout>
   );

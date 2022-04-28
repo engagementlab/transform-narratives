@@ -5,6 +5,8 @@ import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import FlexLayout from '../../components/FlexLayout';
 import Image from '../../components/Image';
+import DocRenderers from '../../components/DocRenderers';
+import { ReactNode } from 'react';
 
 type AboutPage = {
   content: any;
@@ -18,20 +20,9 @@ const image = (props: any) => {
     </div>
   );
 };
-const renderers: DocumentRendererProps['renderers'] = {
-  // use your editor's autocomplete to see what other renderers you can override
-  inline: {
-    bold: ({ children }) => {
-      return <strong>{children}</strong>;
-    }
-  },
-  block: {
-    heading: ({ level, children, textAlign }) => {
-      return <p className={`${level === 3 && 'text-2xl text-bluegreen leading-none'} ${level === 4 && 'text-xl text-coated'} font-semibold mb-8`} style={{ textAlign }}>{children}</p>;
-    },
-    layout: ({layout, children}) => {
-        return FlexLayout(layout, children);
-    }
+const rendererOverrides = {
+  heading: (level: number, children: ReactNode, textAlign: any) => {
+    return <p className={`${level === 3 && 'text-2xl text-bluegreen leading-none'} ${level === 4 && 'text-xl text-coated'} font-semibold mb-8`} style={{ textAlign }}>{children}</p>;
   }
 };
 
@@ -39,7 +30,7 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
   return (
     <Layout>
       <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
-        <DocumentRenderer document={page.content.document} renderers={renderers} componentBlocks={BlockRenderers(image)} />
+        <DocumentRenderer document={page.content.document} renderers={DocRenderers(rendererOverrides)} componentBlocks={BlockRenderers(image)} />
       </div>
     </Layout>
   );

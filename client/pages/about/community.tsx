@@ -7,6 +7,8 @@ import Image from '../../components/Image';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import HeadingStyle from '../../components/HeadingStyle';
+import DocRenderers from '../../components/DocRenderers';
+import { ReactNode } from 'react';
 
 type CommunityPage = {
     values: any;
@@ -21,22 +23,14 @@ type Person = {
     content: any;
 }; 
 
-const renderers: DocumentRendererProps['renderers'] = {
-  // use your editor's autocomplete to see what other renderers you can override
-  inline: {
-    bold: ({ children }) => {
-      return <strong>{children}</strong>;
-    },
-  },
-  block: {
-    heading: ({ level, children, textAlign }) => {
+const rendererOverrides = {
+    heading: (level: number, children: ReactNode, textAlign: any) => {
 
       const customRenderers = {
         4: 'text-xl font-semibold text-coated my-8',
         5: 'text-lg font-extrabold text-purple'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
-    },
   },
 };
 
@@ -47,7 +41,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
           <div
           className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
               <h2 className="text-2xl text-bluegreen font-semibold">About Our Community</h2>
-              <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers()} />
+              <DocumentRenderer document={page.values.document} renderers={DocRenderers(rendererOverrides)} componentBlocks={BlockRenderers()} />
           </div>
           <div className='container mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
               <hr className='border-sorbet' />
