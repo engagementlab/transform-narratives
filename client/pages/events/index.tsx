@@ -114,7 +114,7 @@ export default function Events({ events }: InferGetStaticPropsType<typeof getSta
 
 export async function getStaticProps() {
     const evtQuery = 'name key eventDate registrationLink address blurb thumbnail { publicId }';
-    const events = await query.Event.findMany({ query: evtQuery , where: { enabled: { equals: true } }}) as Event[];
+    const events = await query.Event.findMany({ query: evtQuery , where: { enabled: { equals: true } }, orderBy: {eventDate: 'desc'}}) as Event[];
 
     return {
       props: {
