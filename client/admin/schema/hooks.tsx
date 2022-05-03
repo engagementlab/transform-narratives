@@ -2,7 +2,7 @@ import { AboutCreateInput, BigPictureCreateInput } from ".keystone/types";
 import _ from 'lodash';
 
 export function CreateKey(name: string) {
-    let keyGen = name.toLocaleLowerCase().replaceAll(/[^a-z+A-Z+0-9+]/ig, '-').replace(/-{2,}/g, '-')
+    let keyGen = name.toLocaleLowerCase().replaceAll(/[^\w ]/g, '').replaceAll(/[^a-z+A-Z+0-9+]/ig, '-').replace(/-{2,}/g, '-')
     if(keyGen.lastIndexOf('-') === keyGen.length-1) 
         keyGen = keyGen.slice(0, keyGen.length - 1)
     return keyGen;
@@ -31,4 +31,8 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
     return typeof resolvedData.content === 'object' ? contentParsed : JSON.stringify(contentParsed);
  };
 
-
+export const CreatedDate = (resolvedData: any) => {
+    
+    if(!resolvedData.content) return resolvedData.content;
+    
+}
