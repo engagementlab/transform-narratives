@@ -6,7 +6,8 @@ import {
     json,
     relationship,
     select,
-    text
+    text,
+    timestamp
 } from '@keystone-6/core/fields';
 import {
     document
@@ -38,6 +39,30 @@ const MediaItem: Lists.MediaItem = list({
           },
           itemView: {
             fieldMode: 'hidden'
+          }
+        }
+      }),
+      createdDate: timestamp({
+        ui: {
+          createView: {
+            fieldMode:'hidden'
+          },
+          itemView: {
+            fieldMode: 'hidden'
+          }
+        },
+        hooks: {
+          resolveInput: async ({
+            listKey,
+            operation,
+            inputData,
+            item,
+            resolvedData,
+            context,
+          }) => {
+            if(operation === 'create') {
+              return new Date().toISOString();
+            }
           }
         }
       }),

@@ -112,6 +112,7 @@ model MediaItem {
   id               String       @id @default(cuid())
   title            String       @default("")
   key              String       @unique @default("")
+  createdDate      DateTime?
   enabled          Boolean      @default(true)
   thumbnail        String?
   shortDescription String       @default("")

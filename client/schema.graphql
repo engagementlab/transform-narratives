@@ -953,6 +953,7 @@ type MediaItem {
   id: ID!
   title: String
   key: String
+  createdDate: DateTime
   enabled: Boolean
   thumbnail: CloudinaryImage_File
   shortDescription: String
@@ -1012,11 +1013,23 @@ input MediaItemWhereInput {
   id: IDFilter
   title: StringFilter
   key: StringFilter
+  createdDate: DateTimeNullableFilter
   enabled: BooleanFilter
   shortDescription: StringFilter
   filters: FilterManyRelationFilter
   images: MediaImageManyRelationFilter
   galleryImages: MediaImageManyRelationFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input FilterManyRelationFilter {
@@ -1035,6 +1048,7 @@ input MediaItemOrderByInput {
   id: OrderDirection
   title: OrderDirection
   key: OrderDirection
+  createdDate: OrderDirection
   enabled: OrderDirection
   shortDescription: OrderDirection
 }
@@ -1042,6 +1056,7 @@ input MediaItemOrderByInput {
 input MediaItemUpdateInput {
   title: String
   key: String
+  createdDate: DateTime
   enabled: Boolean
   thumbnail: Upload
   shortDescription: String
@@ -1080,6 +1095,7 @@ input MediaItemUpdateArgs {
 input MediaItemCreateInput {
   title: String
   key: String
+  createdDate: DateTime
   enabled: Boolean
   thumbnail: Upload
   shortDescription: String
