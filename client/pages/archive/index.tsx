@@ -65,16 +65,43 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ where: { section: {equals: 'media'}, enabled: { equals: true } }, query: 'key name type' }) as any[];
-    // Group filters by type
-    const filtersGrouped = filters.reduce((filterMemo, {type, key, name}) => {
-        (filterMemo[type] = filterMemo[type] || []).push({key, name});
-        return filterMemo;
-    }, {});
-    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }', where: { enabled: { equals: true } }}) as MediaItem[];
+const filters = await query.Filter.findMany({
+    where: {
+        section: {
+            equals: 'media'
+        },
+        enabled: {
+            equals: true
+        }
+    },
+    query: 'key name type'
+}) as any[];
+// Group filters by type
+const filtersGrouped = filters.reduce((filterMemo, {
+    type,
+    key,
+    name
+}) => {
+    (filterMemo[type] = filterMemo[type] || []).push({
+        key,
+        name
+    });
+    return filterMemo;
+}, {});
+const mediaItems = await query.MediaItem.findMany({
+    query: 'title key shortDescription filters { key name } thumbnail { publicId }',
+    where: {
+        enabled: {
+            equals: true
+        }
+    },
+    orderBy: {
+        createdDate: 'desc'
+    }
+}) as MediaItem[];
 
-    return {
-      props: {
+return {
+    props: {
         filtersGrouped,
         mediaItems,
       }
