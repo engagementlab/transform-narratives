@@ -212,6 +212,10 @@ let ksConfig = {
       }
     },
   },
+  graphql: {
+    debug: process.env.NODE_ENV !== 'production',
+    // path: process.env.APOLLO_CLIENT_GRAPHQL_URI || '/api/graphql',
+  },
 };
 
 export default (() => {

@@ -14,6 +14,9 @@ import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 
+import { gql } from "@apollo/client";
+import client from "../../apollo-client";
+
 const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
 const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => void }) => {
     return (
@@ -65,45 +68,59 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-const filters = await query.Filter.findMany({
-    where: {
-        section: {
-            equals: 'media'
-        },
-        enabled: {
-            equals: true
-        }
-    },
-    query: 'key name type'
-}) as any[];
-// Group filters by type
-const filtersGrouped = filters.reduce((filterMemo, {
-    type,
-    key,
-    name
-}) => {
-    (filterMemo[type] = filterMemo[type] || []).push({
+    const { data } = await client.query({
+        query: gql`
+          query Filters {
+                filters(where: {section:{equals: media}})
+                {
+                  key
+                  name
+                  type
+                }
+          }
+        `,
+      });
+      const filters = data.filters;
+    // const filters = await query.Filter.findMany({
+    //     where: {
+    //         section: {
+    //             equals: 'media'
+    //         },
+    //         enabled: {
+    //             equals: true
+    //         }
+    //     },
+    //     query: 'key name type'
+    // }) as any[];
+    // Group filters by type
+    const filtersGrouped = filters.reduce((filterMemo: { [x: string]: any[]; }, {
+        type,
         key,
         name
-    });
-    return filterMemo;
-}, {});
-const mediaItems = await query.MediaItem.findMany({
-    query: 'title key shortDescription filters { key name } thumbnail { publicId }',
-    where: {
-        enabled: {
-            equals: true
+    }: any) => {
+        (filterMemo[type] = filterMemo[type] || []).push({
+            key,
+            name
+        });
+        return filterMemo;
+    }, {});
+    const mediaItems = await query.MediaItem.findMany({
+        query: 'title key shortDescription filters { key name } thumbnail { publicId }',
+        where: {
+            enabled: {
+                equals: true
+            }
+        },
+        orderBy: {
+            createdDate: 'desc'
         }
-    },
-    orderBy: {
-        createdDate: 'desc'
-    }
-}) as MediaItem[];
+    }) as MediaItem[];
 
-return {
-    props: {
-        filtersGrouped,
-        mediaItems,
-      }
-    };
-  }
+    return {
+            props: {
+                filtersGrouped,
+                mediaItems,
+            },
+            revalidate: 5,
+        };
+}
