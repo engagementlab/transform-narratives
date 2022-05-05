@@ -13,6 +13,7 @@ import { CreateKey } from '../hooks';
 
 const Filter: Lists.Filter = list({
     fields: {
+    //   mediaRef: relationship({ ref: 'MediaItem.filters', many: true }),
       name: text({
         validation: {
           isRequired: true
