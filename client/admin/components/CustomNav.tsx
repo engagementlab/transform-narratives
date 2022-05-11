@@ -19,7 +19,9 @@ export function CustomNavigation({ authenticatedItem, lists }: NavigationProps) 
                 <NavItem key={i} href={`/${list.path}`}>{listMapping.get(list.label) ? listMapping.get(list.label) : list.label}</NavItem>
               )
           }
-          )};
+          )}
+          <hr style={{width: '85%', borderWidth: '1px', borderColor: 'grey'}} />
+          {/* <NavItem href="/deploy">Deploy</NavItem> */}
     </NavigationContainer>
   )
 }
