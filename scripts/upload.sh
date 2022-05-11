@@ -6,4 +6,7 @@ export AZURE_STORAGE_ACCOUNT=$AZURE_STORAGE_ACCOUNT
 export AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING
 
 # Upload app build to Azure
-az storage blob upload-batch -d '$web' -s ./client/out
+az storage blob upload-batch --overwrite true -d '$web' -s ./client/out
+
+# Clear CDN cache
+az cdn endpoint purge -g web -n tngvi --content-paths '/*' --profile-name web-apps
