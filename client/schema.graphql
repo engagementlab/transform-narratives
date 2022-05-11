@@ -1201,6 +1201,7 @@ type NewsItem {
   thumbnail: CloudinaryImage_File
   thumbAltText: String
   publishDate: DateTime
+  externalLink: String
   blurb: String
   body: NewsItem_body_Document
   images(
@@ -1231,6 +1232,7 @@ input NewsItemWhereInput {
   enabled: BooleanFilter
   thumbAltText: StringFilter
   publishDate: DateTimeFilter
+  externalLink: StringFilter
   blurb: StringFilter
   images: NewsImageManyRelationFilter
 }
@@ -1248,6 +1250,7 @@ input NewsItemOrderByInput {
   enabled: OrderDirection
   thumbAltText: OrderDirection
   publishDate: OrderDirection
+  externalLink: OrderDirection
   blurb: OrderDirection
 }
 
@@ -1258,6 +1261,7 @@ input NewsItemUpdateInput {
   thumbnail: Upload
   thumbAltText: String
   publishDate: DateTime
+  externalLink: String
   blurb: String
   body: JSON
   images: NewsImageRelateToManyForUpdateInput
@@ -1282,6 +1286,7 @@ input NewsItemCreateInput {
   thumbnail: Upload
   thumbAltText: String
   publishDate: DateTime
+  externalLink: String
   blurb: String
   body: JSON
   images: NewsImageRelateToManyForCreateInput

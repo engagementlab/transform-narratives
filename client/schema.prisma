@@ -142,6 +142,7 @@ model NewsItem {
   thumbnail    String?
   thumbAltText String      @default("")
   publishDate  DateTime
+  externalLink String      @default("")
   blurb        String      @default("")
   body         String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   images       NewsImage[] @relation("NewsImage_newsImages")
