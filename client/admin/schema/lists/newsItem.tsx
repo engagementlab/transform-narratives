@@ -61,6 +61,15 @@ const NewsItem: Lists.NewsItem = list({
               isRequired: true,
           }
       }),
+      externalLink: text({
+        validation: {
+          match: { 
+            regex: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm,
+            explanation: 'Not a valid URL'
+          }
+        },
+        label: 'External link'
+      }),
       blurb: text({
         label: 'Blurb (appears on News index page)',
         validation: {
@@ -136,6 +145,9 @@ const NewsItem: Lists.NewsItem = list({
         }
         return resolvedData;
       }
+    },
+    ui: {
+      description: 'If external link is used, body is not required.',
     }
   });
   export default NewsItem;
