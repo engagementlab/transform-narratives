@@ -49,13 +49,9 @@ jobs:
       - name: Make production build
         working-directory: ./client  
         env:
-          # AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-          # AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          # AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
-          # AUTH0_CALLBACK_URL: ${{ secrets.AUTH0_CALLBACK_URL }}
-          # AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
-          # COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
-          # CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+          AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
           DB_URI: ${{ secrets.DB_URI}}
         run: |
           yarn
