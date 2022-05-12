@@ -9,7 +9,7 @@ on:
 env:
   CI: true
   DB_URI: ${{ secrets.DB_URI }}
-  NODE_ENV: staging
+  NODE_ENV: production
   AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
 jobs:
   build-tests:
@@ -49,7 +49,6 @@ jobs:
       - name: Make production build
         working-directory: ./client  
         env:
-          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
           AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
           DB_URI: ${{ secrets.DB_URI}}
