@@ -55,6 +55,7 @@ jobs:
           DB_URI: ${{ secrets.DB_URI}}
         run: |
           yarn
+          yarn build-ks
           yarn build
 
       - name: Serve build 
