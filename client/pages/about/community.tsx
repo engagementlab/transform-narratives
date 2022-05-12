@@ -71,7 +71,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                               </p>
                             )}
                             {person.remembrance && (
-                              <p className="text-green-blue font-semibold">
+                              <p className="text-purple font-semibold">
                                 Engaged in remembrance of {person.remembrance}.
                               </p>
                             )}
