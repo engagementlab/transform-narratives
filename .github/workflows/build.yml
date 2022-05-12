@@ -19,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [14]
     steps:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_LOGIN }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Checkout code on HEAD
         uses: actions/checkout@v2
