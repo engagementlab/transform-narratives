@@ -19,6 +19,7 @@ type News = {
     thumbnail: {
         publicId: string;
     }
+    externalLink?: string;
 }
 
 export default function News({ items }: InferGetStaticPropsType<typeof getStaticProps>) {
