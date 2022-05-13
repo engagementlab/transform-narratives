@@ -60,8 +60,10 @@ const httpTrigger: AzureFunction = async function (
           if (workflowResponse.status === 200) {
             context.res = {
               status: 200,
-              repo: repoName,
-              id: workflowResponse.data.workflow_runs[0].id,
+              body: {
+                repo: repoName,
+                id: workflowResponse.data.workflow_runs[0].id,
+              },
             };
           } else {
             context.res = {
