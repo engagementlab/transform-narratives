@@ -17,6 +17,7 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   const repoName = req.query.name;
+  const workflowError = `We were unable to get the status of this deployment, however you should be able to find its status here: https://github.com/engagementlab/${repoName}/actions`;
 
   if (!repoName) {
     context.res = {
@@ -33,8 +34,6 @@ const httpTrigger: AzureFunction = async function (
     },
   });
 
-  const workflowError = `We were unable to get the status of this deployment, however you should be able to find its status here: https://github.com/engagementlab/${repoName}/actions`;
-
   try {
     const dispatchResponse = await requestWithAuth(
       'POST /repos/{owner}/{repo}/dispatches',
@@ -47,37 +46,44 @@ const httpTrigger: AzureFunction = async function (
 
     // If dispatch to trigger workflow succeeded, get all action runs and pull latest ID after a brief delay, send
     if (dispatchResponse.status === 204) {
-      setTimeout(async () => {
-        try {
-          const workflowResponse = await requestWithAuth(
-            'GET /repos/{owner}/{repo}/actions/runs?event=repository_dispatch',
-            {
-              owner: 'engagementlab',
-              repo: repoName,
-            }
-          );
+      const getStatus = () =>
+        new Promise<void>((resolve, reject) => {
+          setTimeout(async () => {
+            try {
+              const workflowResponse = await requestWithAuth(
+                'GET /repos/{owner}/{repo}/actions/runs?event=repository_dispatch',
+                {
+                  owner: 'engagementlab',
+                  repo: repoName,
+                }
+              );
 
-          if (workflowResponse.status === 200) {
-            context.res = {
-              status: 200,
-              body: {
-                repo: repoName,
-                id: workflowResponse.data.workflow_runs[0].id,
-              },
-            };
-          } else {
-            context.res = {
-              status: 500,
-              body: workflowError,
-            };
-          }
-        } catch (e) {
-          context.res = {
-            status: 500,
-            body: workflowError,
-          };
-        }
-      }, 5000);
+              if (workflowResponse.status === 200) {
+                context.res = {
+                  status: 200,
+                  body: {
+                    repo: repoName,
+                    id: workflowResponse.data.workflow_runs[0].id,
+                  },
+                };
+                resolve();
+              } else {
+                context.res = {
+                  status: 500,
+                  body: workflowError,
+                };
+                reject();
+              }
+            } catch (e) {
+              context.res = {
+                status: 500,
+                body: workflowError,
+              };
+            }
+          }, 5000);
+        });
+
+      await getStatus();
     }
   } catch (e) {
     context.res = {
