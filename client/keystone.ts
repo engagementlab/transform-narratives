@@ -1,5 +1,6 @@
 import { config } from '@keystone-6/core';
 import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
+import axios from 'axios';
 
 import 'dotenv/config';
 import e from 'express';
@@ -120,6 +121,17 @@ let ksConfig = {
   lists,
   server: {
     extendExpressApp: (app: e.Express) => {
+      app.get('/prod-deploy', async (req, res, next) => {
+        try {
+          const response = await axios.get(
+            `${process.env.DEPLOY_API_PATH}&name=transform-narratives`
+          );
+          res.status(200).send(response.data);
+        } catch (err: any) {
+          res.status(500).send(err.message);
+        }
+      });
+
       if (process.env.ENABLE_AUTH === 'true') {
         let p = Passport();
         // Session store (mongostore for prod)
