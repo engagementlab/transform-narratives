@@ -55,7 +55,8 @@ const Passport = () => {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.AUTH_CALLBACK_URL,
-      state: true,
+      // state: true,
+      // skipUserProfile: true,
     },
     (
       request: any,
@@ -66,7 +67,6 @@ const Passport = () => {
     ) => {
       // Verify user allowed
       const email = profile.emails[0].value;
-      console.log(DB().userModel.findOneAndUpdate);
 
       try {
         DB().userModel.findOne(
@@ -89,7 +89,7 @@ const Passport = () => {
           }
         );
       } catch (err) {
-        console.error(err);
+        throw new Error(err as string);
       }
     }
   );
@@ -147,7 +147,6 @@ let ksConfig = {
           const mongooseConnection = DB().connection;
           if (!process.env.SESSION_COOKIE) {
             throw new Error('Need SESSION_COOKIE in .env!');
-            return;
           }
           app.use(
             session({
@@ -163,25 +162,17 @@ let ksConfig = {
         app.get(
           '/cms/login',
           p.authenticate('google', {
-            scope: ['profile', 'openid', 'email'],
+            scope: ['openid', 'email'],
           })
         );
 
         app.get('/cms/callback', (req, res, next) => {
           try {
+            console.log('------ auth', req.originalUrl);
             p.authenticate(
               'google',
               (error: any, user: { permissions: any }, info: any) => {
-                if (error) {
-                  console.log('oauth err', error);
-                  // res.status(401).send(error);
-                  // return;
-                }
-                if (!user) {
-                  // console.log('info', info);
-                  res.status(401).send(info);
-                  return;
-                }
+                if (!user) return;
 
                 // Log user in
                 req.logIn(user, (logInErr: any) => {
@@ -189,7 +180,6 @@ let ksConfig = {
                     res.status(500).send(logInErr);
                     return logInErr;
                   }
-                  // console.log('info', req.session);
 
                   // Explicitly save the session before redirecting!
                   req.session.save(() => {
@@ -212,12 +202,14 @@ let ksConfig = {
             req.path !== '/api/__keystone_api_build' &&
             (!req.session.passport || !req.session.passport.user)
           ) {
+            // console.log(req.session.redirectTo);
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
-            if (req.session.redirectTo) res.redirect(req.session.redirectTo);
-            else {
-              res.redirect('/cms/login');
-            }
+            // if (req.session.redirectTo) res.redirect(req.session.redirectTo);
+            // else {
+            console.log('redirecting to ' + req.originalUrl);
+            res.redirect('/cms/login');
+            // }
           } else if (req.session.passport && req.session.passport.user.isAdmin)
             next();
         });
