@@ -168,7 +168,6 @@ let ksConfig = {
 
         app.get('/cms/callback', (req, res, next) => {
           try {
-            console.log('------ auth', req.originalUrl);
             p.authenticate(
               'google',
               (error: any, user: { permissions: any }, info: any) => {
