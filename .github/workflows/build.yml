@@ -46,15 +46,17 @@ jobs:
       - name: Install global packages
         run : npm install -g pa11y-ci http-server @lhci/cli@0.6.x yarn
 
-      - name: Make production build
-        working-directory: ./client  
-        env:
-          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
-          AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
-          DB_URI: ${{ secrets.DB_URI}}
-        run: |
-          yarn add typescript @types/node
-          yarn build
+      # - name: Make production build
+      #   working-directory: ./client  
+      #   env:
+      #     AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+      #     AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_STORAGE_ACCESS_KEY }}
+      #     DB_URI: ${{ secrets.DB_URI}}
+      #   run: |
+      #     yarn add typescript @types/node
+      #     yarn
+      #     yarn build-ks
+      #     yarn build
 
       - name: Serve build 
         working-directory: ./client  
