@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Commit generated static app."
+echo "------- Commit generated static app. -------"
 
 git config --global user.name "ELDevBot"
 git config --global user.email engagementlab@emerson.edu
