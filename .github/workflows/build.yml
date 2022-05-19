@@ -54,8 +54,6 @@ jobs:
           DB_URI: ${{ secrets.DB_URI}}
         run: |
           yarn add typescript @types/node
-          yarn
-          yarn build-ks
           yarn build
 
       - name: Serve build 
@@ -84,11 +82,13 @@ jobs:
           chmod 777 ./scripts/upload.sh && ./scripts/upload.sh
           chmod 777 ./scripts/commit.sh && ./scripts/commit.sh
 
-      - name: Send Slack message
+      - name: Send Slack message on success
         id: slack
+        if: ${{ success() }}
+        # if: ${{ (github.event_name == 'pull_request' || github.event_name == 'repository_dispatch') && job.status  == 'success' }}
         uses: slackapi/slack-github-action@v1.18.0
         with:
-          # For posting a rich message using Block Kit
+          # Build succeeded
           payload: |
             {
               "blocks": [
@@ -96,22 +96,41 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>."
+                    "text": "The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>. _(Build #${{ github.run_number }})_"
                   },
                   "accessory": {
                     "type": "image",
                     "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/cool.png",
                     "alt_text": "cool face"
                   }
-                },
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Send Slack message on failure
+        id: slack-failure
+        if: ${{ failure() }}
+        # if: ${{ (github.event_name == 'pull_request' || github.event_name == 'repository_dispatch') && job.status  == 'success' }}
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          # Build failed
+          payload: |
+            {
+              "blocks": [
                 {
                   "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Build:*\n#${{ github.run_number }}"
-                    }
-                  ]
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "The latest build of TNGVI just failed. _(Build #${{ github.run_number }})_"
+                  },
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/sad.png",
+                    "alt_text": "sad face"
+                  }
                 }
               ]
             }
