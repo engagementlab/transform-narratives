@@ -1,4 +1,3 @@
-import Image from "../components/Image"
 import { CustomNavigation } from "./components/CustomNav"
 import { Global, css } from '@emotion/core'
 

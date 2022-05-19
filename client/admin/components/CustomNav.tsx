@@ -21,7 +21,7 @@ export function CustomNavigation({ authenticatedItem, lists }: NavigationProps) 
           }
           )}
           <hr style={{width: '85%', borderWidth: '1px', borderColor: 'grey'}} />
-          {/* <NavItem href="/deploy">Deploy</NavItem> */}
+          <NavItem href="/deploy"><span style={{color: '#f6a536'}}>Deploy</span></NavItem>
     </NavigationContainer>
   )
 }
