@@ -92,29 +92,28 @@ jobs:
           payload: |
             {
               "blocks": [
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": "The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>."
-                    },
-                    "accessory": {
-                      "type": "image",
-                      "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/cool.png",
-                      "alt_text": "cool face"
-                    }
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>."
                   },
-                  {
-                    "type": "section",
-                    "fields": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Build:*\n#${{ github.run_number }}"
-                      }
-                    ]
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/cool.png",
+                    "alt_text": "cool face"
                   }
-                ]
-              }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Build:*\n#${{ github.run_number }}"
+                    }
+                  ]
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
