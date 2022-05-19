@@ -6,7 +6,6 @@ import Switch from '@mui/material/Switch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 
-
 import axios from 'axios';
 
 import create, {
@@ -97,20 +96,20 @@ export default function Deploy () {
                     caused by missing or poor-quality content (e.g. images). This action is not easily reversible, and
                     all content from QA will generally be immediately viewable by all users.</p>
                 <Switch defaultChecked={false} onClick={()=> { toggleConfirm(); } } /> I Understand
-                    <br />
+                <br />
 
-                        {(confirmed && !waiting) &&
-                            <Button variant="outlined" onClick={()=>{deployFetch()}}>Deploy</Button>
-                        }
-                        {waiting &&
-                            <LoadingButton
-                            loading
-                            loadingPosition="start"
-                            startIcon={<SaveIcon />}
-                            variant="outlined"
-                            >
-                            Deploy
-                            </LoadingButton>}</>
+                {(confirmed && !waiting) &&
+                    <Button variant="outlined" onClick={()=>{deployFetch()}}>Deploy</Button>
+                }
+                {waiting &&
+                    <LoadingButton
+                    loading
+                    loadingPosition="start"
+                    startIcon={<SaveIcon />}
+                    variant="outlined"
+                    >
+                    Deploy
+                    </LoadingButton>}</>
             }
         </PageContainer>
     )
