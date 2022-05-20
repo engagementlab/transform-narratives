@@ -133,6 +133,15 @@ jobs:
                     "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/sad.png",
                     "alt_text": "sad face"
                   }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "<@U044WFR24> please look at the <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|build logs>."
+                    }
+                  ]
                 }
               ]
             }
