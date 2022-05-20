@@ -98,12 +98,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>. _(Build #${{ github.run_number }})_"
-                  },
-                  "accessory": {
-                    "type": "image",
-                    "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/cool.png",
-                    "alt_text": "cool face"
+                    "text": ":white_check_mark: The latest build of TNGVI has successfully been published to <https://transformnarratives.org/|production>. _(Build #${{ github.run_number }})_"
                   }
                 }
               ]
@@ -126,12 +121,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "The latest build of TNGVI just failed. _(Build #${{ github.run_number }})_"
-                  },
-                  "accessory": {
-                    "type": "image",
-                    "image_url": "https://res.cloudinary.com/engagement-lab-home/image/upload/v1652989255/github/sad.png",
-                    "alt_text": "sad face"
+                    "text": ":x: The latest build of TNGVI just failed. _(Build #${{ github.run_number }})_"
                   }
                 },
                 {
