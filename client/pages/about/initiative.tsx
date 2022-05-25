@@ -13,10 +13,11 @@ type AboutPage = {
 };
 
 const image = (props: any) => {
+  console.log(props)
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId} aspectDefault={true} />
-      <p>{props.image.data.caption}</p>
+      <Image id={'img-' + props.image[0].data.image.publicId} alt={props.image[0].data.altText} imgId={props.image[0].data.image.publicId} aspectDefault={true} />
+      <p>{props.image[0].data.caption}</p>
     </div>
   );
 };

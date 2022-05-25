@@ -55,13 +55,13 @@ const About: Lists.About = list({
             },
             componentBlocks,
             
-            relationships: {
-              image: {
-                kind: 'prop',
-                listKey: 'AboutImage',
-                selection: 'imageName altText image {publicUrlTransformed publicId}',
-              },
-            },
+            // relationships: {
+            //   image: {
+            //     label: 'Image',
+            //     listKey: 'AboutImage',
+            //     selection: 'imageName altText image {publicUrlTransformed publicId}',
+            //   },
+            // },
 
             hooks: {
                 resolveInput: async ({

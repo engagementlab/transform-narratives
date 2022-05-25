@@ -99,7 +99,7 @@ const Studio: Lists.Studio = list({
 
       relationships: {
         image: {
-          kind: 'prop',
+          label: 'Image',
           listKey: 'StudioImage',
           selection: 'imageName altText image {publicUrlTransformed publicId}',
         },

@@ -109,7 +109,7 @@ const Event: Lists.Event = list({
   
         relationships: {
           image: {
-            kind: 'prop',
+            label: 'Image',
             listKey: 'EventImage',
             selection: 'imageName altText caption image {publicUrlTransformed publicId}',
           },

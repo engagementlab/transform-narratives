@@ -59,7 +59,7 @@ const BigPicture: Lists.BigPicture = list({
 
             relationships: {
               image: {
-                kind: 'prop',
+                label: 'Image',
                 listKey: 'BigPictureImage',
                 selection: 'imageName altText image {publicUrlTransformed publicId}',
               },

@@ -126,9 +126,10 @@ function videoSelect({
 export const componentBlocks = {
   image: component({
      component: (props) => {
-      if(!props.image.value) return null;
+      if(props.image.value.length < 1) return null;
 
-      const data = (props.image.value as unknown as HydratedRelationshipData).data;
+      console.log(props)
+      const data = (props.image.value[0] as unknown as HydratedRelationshipData).data;
       return (
           <img
             style={{width:'100%'}}
@@ -140,9 +141,11 @@ export const componentBlocks = {
      },
      label: 'Image',
      props: {
-       image: fields.relationship<'many'>({
+       image: fields.relationship({
          label: 'Images',
-         relationship: 'image',
+         listKey: 'AboutImage',
+         many: true,
+         selection: 'image { publicUrlTransformed publicId } imageName'
        }),
      },
    }),

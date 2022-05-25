@@ -105,7 +105,7 @@ const NewsItem: Lists.NewsItem = list({
 
           relationships: {
             image: {
-              kind: 'prop',
+              label: 'Image',
               listKey: 'NewsImage',
               selection: 'imageName altText caption image {publicUrlTransformed publicId}',
             },
