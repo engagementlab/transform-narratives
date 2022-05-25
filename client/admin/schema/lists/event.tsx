@@ -17,7 +17,7 @@ import {
 import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const Event: Lists.Event = list({
     fields: {
@@ -38,6 +38,7 @@ const Event: Lists.Event = list({
           }
         }
       }),
+      createdDate: CreatedTimestamp,
       enabled: checkbox({
         defaultValue: true,
       }),
@@ -153,6 +154,12 @@ const Event: Lists.Event = list({
   
         }
         return resolvedData;
+      }
+    },
+    ui: {
+      listView: { 
+        initialColumns: ['name', 'eventDate', 'thumbnail'],
+        initialSort: { field: 'eventDate', direction: 'DESC' },
       }
     }
   });

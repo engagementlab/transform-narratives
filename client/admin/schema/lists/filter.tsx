@@ -77,6 +77,11 @@ const Filter: Lists.Filter = list({
         }
         return resolvedData;
       }
+    },
+    ui: {
+      listView: { 
+        initialColumns: ['name', 'section']
+      }
     }
   });
   export default Filter;

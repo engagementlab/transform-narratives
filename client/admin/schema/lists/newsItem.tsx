@@ -17,7 +17,7 @@ import {
 import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const NewsItem: Lists.NewsItem = list({
     fields: {
@@ -38,6 +38,7 @@ const NewsItem: Lists.NewsItem = list({
           }
         }
       }),
+      createdDate: CreatedTimestamp,
       enabled: checkbox({
         defaultValue: true,
       }),
@@ -148,6 +149,10 @@ const NewsItem: Lists.NewsItem = list({
     },
     ui: {
       description: 'If external link is used, body is not required.',
-    }
+      listView: { 
+        initialColumns: ['title', 'publishDate', 'thumbnail'],
+        initialSort: { field: 'publishDate', direction: 'DESC' },
+      }
+    },
   });
   export default NewsItem;

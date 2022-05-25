@@ -1,4 +1,5 @@
 import { AboutCreateInput, BigPictureCreateInput } from ".keystone/types";
+import { timestamp } from "@keystone-6/core/fields";
 import _ from 'lodash';
 
 export function CreateKey(name: string) {
@@ -31,8 +32,27 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
     return typeof resolvedData.content === 'object' ? contentParsed : JSON.stringify(contentParsed);
  };
 
-export const CreatedDate = (resolvedData: any) => {
-    
-    if(!resolvedData.content) return resolvedData.content;
-    
-}
+export const CreatedTimestamp = timestamp({
+    ui: {
+    createView: {
+        fieldMode:'hidden'
+    },
+    itemView: {
+        fieldMode: 'hidden'
+    }
+    },
+    hooks: {
+    resolveInput: async ({
+        listKey,
+        operation,
+        inputData,
+        item,
+        resolvedData,
+        context,
+    }) => {
+        if(operation === 'create') {
+        return new Date().toISOString();
+        }
+    }
+    }
+});

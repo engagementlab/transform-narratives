@@ -61,6 +61,7 @@ model Event {
   id               String       @id @default(cuid())
   name             String       @default("")
   key              String       @unique @default("")
+  createdDate      DateTime?
   enabled          Boolean      @default(true)
   thumbnail        Json?
   thumbAltText     String       @default("")
@@ -138,6 +139,7 @@ model NewsItem {
   id           String      @id @default(cuid())
   title        String      @default("")
   key          String      @unique @default("")
+  createdDate  DateTime?
   enabled      Boolean     @default(true)
   thumbnail    Json?
   thumbAltText String      @default("")
@@ -149,14 +151,15 @@ model NewsItem {
 }
 
 model Person {
-  id          String  @id @default(cuid())
-  name        String  @default("")
-  title       String  @default("")
-  enabled     Boolean @default(true)
+  id          String    @id @default(cuid())
+  name        String    @default("")
+  title       String    @default("")
+  createdDate DateTime?
+  enabled     Boolean   @default(true)
   image       Json?
-  blurb       String  @default("")
-  remembrance String  @default("")
-  content     Json    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  blurb       String    @default("")
+  remembrance String    @default("")
+  content     Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model StudioImage {
@@ -169,16 +172,17 @@ model StudioImage {
 }
 
 model Studio {
-  id        String        @id @default(cuid())
-  name      String        @default("")
-  key       String        @unique @default("")
-  enabled   Boolean       @default(true)
-  order     Int?
-  thumbnail Json?
-  blurb     String        @default("")
-  filters   Filter[]      @relation("Studio_filters")
-  content   Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos    StudioImage[] @relation("Studio_photos")
+  id          String        @id @default(cuid())
+  name        String        @default("")
+  key         String        @unique @default("")
+  createdDate DateTime?
+  enabled     Boolean       @default(true)
+  order       Int?
+  thumbnail   Json?
+  blurb       String        @default("")
+  filters     Filter[]      @relation("Studio_filters")
+  content     Json          @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos      StudioImage[] @relation("Studio_photos")
 }
 
 enum FilterTypeType {

@@ -46,6 +46,9 @@ const Community: Lists.Community = list({
     ui: {
         hideCreate: true,
         hideDelete: true,
+        listView: { 
+            initialColumns: ['name']
+        }
     },
   });
   export default Community;

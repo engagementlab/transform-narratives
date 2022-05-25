@@ -19,7 +19,7 @@ import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const videoData = require('../../../videoData');
 
@@ -42,30 +42,7 @@ const MediaItem: Lists.MediaItem = list({
           }
         }
       }),
-      createdDate: timestamp({
-        ui: {
-          createView: {
-            fieldMode:'hidden'
-          },
-          itemView: {
-            fieldMode: 'hidden'
-          }
-        },
-        hooks: {
-          resolveInput: async ({
-            listKey,
-            operation,
-            inputData,
-            item,
-            resolvedData,
-            context,
-          }) => {
-            if(operation === 'create') {
-              return new Date().toISOString();
-            }
-          }
-        }
-      }),
+      createdDate: CreatedTimestamp,
       enabled: checkbox({
         defaultValue: true,
       }),

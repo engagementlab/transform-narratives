@@ -97,6 +97,9 @@ const BigPicture: Lists.BigPicture = list({
     ui: {
         hideCreate: true,
         hideDelete: true,
+        listView: { 
+            initialColumns: ['name']
+        }
     },
     // hooks: {
     //     beforeOperation: async ({

@@ -19,7 +19,7 @@ import {
   componentBlocks
 } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const Studio: Lists.Studio = list({
   fields: {
@@ -40,6 +40,7 @@ const Studio: Lists.Studio = list({
         }
       }
     }),
+    createdDate: CreatedTimestamp,
     enabled: checkbox({
       defaultValue: true,
     }),
