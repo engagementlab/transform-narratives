@@ -9,6 +9,10 @@ import Select, { GroupBase, OptionProps } from 'react-select'
 const videoData = require('../../videoData');
 
 
+interface RelatedImage {
+  publicId: string;
+}
+
 interface RelatedVideo {
   label: string;
   videoUrl: string;
@@ -122,6 +126,48 @@ function videoSelect({
     },
   };
 }
+function imageSelect({
+  label,
+  current,
+  defaultValue = {
+    publicId: ''
+  }
+}: {
+  label: string;
+  current?: RelatedImage;
+  defaultValue: RelatedImage;
+}): FormField<RelatedImage, undefined> {
+  
+  return {
+    kind: 'form',
+
+    Input({ value, onChange, autoFocus }) {
+      return (
+        <FieldContainer>
+            <Select
+            id='image'
+            isClearable
+            autoFocus={autoFocus}
+            options={videoData}
+            isDisabled={onChange === undefined}
+            onChange={event => {
+              onChange(event as RelatedImage)
+            }}
+            value={current}
+            className={styles.form.select}
+            components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+
+          />        
+      </FieldContainer>
+      )
+    },
+    options: undefined,
+    defaultValue,
+    validate(value) {
+      return typeof value === 'object';
+    },
+  };
+}
 
 export const componentBlocks = {
   image: component({
@@ -163,6 +209,33 @@ export const componentBlocks = {
      label: 'Video',
      props: {
        video: videoSelect({
+        label: 'Video',
+        defaultValue: {
+          label: 'Click "Edit" and select.',
+          videoUrl: '',
+          thumbSm: '',
+        }
+       })
+     },
+     chromeless: false,
+  }),
+  cdnImage: component({
+    component: ({image}) => {
+      return (
+          <div>
+            {image.value.label}
+            <br />
+            <img
+              style={{width:'150px'}}
+              src={image.value.thumbSm}
+              // alt="Document image"
+            />
+          </div>
+       );
+     },
+     label: 'Video',
+     props: {
+       image: videoSelect({
         label: 'Video',
         defaultValue: {
           label: 'Click "Edit" and select.',

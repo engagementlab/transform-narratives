@@ -4,16 +4,18 @@ import axios from 'axios';
 
 import 'dotenv/config';
 import e from 'express';
-
 import session from 'express-session';
 
-export const cloudinary = {
-  cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
-  apiKey: `${process.env.CLOUDINARY_KEY}`,
-  apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-  folder: 'tngvi',
-};
+import { v2 as cloudinary } from 'cloudinary';
+
 import * as lists from './admin/schema';
+
+cloudinary.config({
+  cloud_name: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+  api_key: `${process.env.CLOUDINARY_KEY}`,
+  api_secret: `${process.env.CLOUDINARY_SECRET}`,
+  secure: true,
+});
 
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
@@ -129,6 +131,17 @@ let ksConfig = {
           res.status(200).send(response.data);
         } catch (err: any) {
           res.status(500).send(err.message);
+        }
+      });
+
+      app.get('/media/get/:type', async (req, res) => {
+        try {
+          cloudinary.api.resources(
+            { prefix: 'tngvi', resource_type: 'image', type: req.params.type },
+            (e, response) => res.status(200).send(response)
+          );
+        } catch (err: any) {
+          res.status(500).send(err);
         }
       });
 
