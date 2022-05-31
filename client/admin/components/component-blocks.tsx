@@ -6,11 +6,15 @@ import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document
 import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
 import { css as emCss } from '@emotion/css';
 import Select, { GroupBase, OptionProps } from 'react-select'
+import { IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
+import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
+
 const videoData = require('../../videoData');
+const imageData = require('../../imageData');
 
 
 interface RelatedImage {
-  publicId: string;
+  publicId: null | string;
 }
 
 interface RelatedVideo {
@@ -144,20 +148,42 @@ function imageSelect({
     Input({ value, onChange, autoFocus }) {
       return (
         <FieldContainer>
-            <Select
-            id='image'
-            isClearable
-            autoFocus={autoFocus}
-            options={videoData}
-            isDisabled={onChange === undefined}
-            onChange={event => {
-              onChange(event as RelatedImage)
-            }}
-            value={current}
-            className={styles.form.select}
-            components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+          <Modal
+  open={true}
+  // onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+          <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+            {imageData.map((item) => (
+              <ImageListItem key={item.version}>
+                <img
+                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto/v${item.version}/${item.public_id}`}
+                />
+                <ImageListItemBar
+                  sx={{
+                    background:
+                      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                  }}
+                  position="top"
+                  actionIcon={
+                    <div
+                      onClick={(e) => {onChange({publicId: item.public_id})}}>
 
-          />        
+                    <IconButton
+                      sx={{ color: 'white' }}
+                      >
+                      <AttachFileRoundedIcon />
+                    </IconButton>
+                      </div>
+                  }
+                  actionPosition="left"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+          </Modal>
       </FieldContainer>
       )
     },
@@ -223,28 +249,25 @@ export const componentBlocks = {
     component: ({image}) => {
       return (
           <div>
-            {image.value.label}
-            <br />
+            {!image.value.publicId ? <span>Click <em>Edit</em></span> 
+            :
             <img
-              style={{width:'150px'}}
-              src={image.value.thumbSm}
-              // alt="Document image"
-            />
+                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto/${image.value.publicId}`}
+                />
+            }
           </div>
        );
      },
-     label: 'Video',
+     label: 'Image',
      props: {
-       image: videoSelect({
-        label: 'Video',
+       image: imageSelect({
+        label: 'Image',
         defaultValue: {
-          label: 'Click "Edit" and select.',
-          videoUrl: '',
-          thumbSm: '',
+          publicId: null,
         }
        })
      },
-     chromeless: false,
+    //  chromeless: false,
   }),
    button: component({
       component: ({label, link}) => {
