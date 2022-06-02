@@ -9,7 +9,7 @@ import session from 'express-session';
 import { v2 as cloudinary } from 'cloudinary';
 
 import * as lists from './admin/schema';
-
+import * as base64 from 'byte-base64';
 cloudinary.config({
   cloud_name: `${process.env.CLOUDINARY_CLOUD_NAME}`,
   api_key: `${process.env.CLOUDINARY_KEY}`,
@@ -17,6 +17,7 @@ cloudinary.config({
   secure: true,
 });
 
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
@@ -123,6 +124,7 @@ let ksConfig = {
   lists,
   server: {
     extendExpressApp: (app: e.Express) => {
+      app.use(bodyParser.json());
       app.get('/prod-deploy', async (req, res, next) => {
         try {
           const response = await axios.get(
@@ -143,6 +145,19 @@ let ksConfig = {
         } catch (err: any) {
           res.status(500).send(err);
         }
+      });
+
+      app.post('/media/upload', async (req, res) => {
+        console.log(req.body);
+        // try {
+        //   const response = await cloudinary.uploader.upload(
+        //     req.body.files.replace(/(\r\n|\n|\r)/gm, '')
+        //   );
+        //   res.status(200).send(response);
+        // } catch (err: any) {
+        //   console.error(err);
+        //   res.status(500).send(err);
+        // }
       });
 
       if (process.env.ENABLE_AUTH === 'true') {

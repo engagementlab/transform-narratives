@@ -15,6 +15,14 @@ const BlockRenderers = (imageOveride?: { (props: any): JSX.Element; (arg0: any):
       </div>
     );
   },
+  cdnImage:(props: any) => { 
+    return  (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Image id={'img-' + props.image.publicId} alt={props.image.alt} imgId={props.image.publicId} aspectDefault={true} />
+      {/* <p>{props.image.data.caption}</p> */}
+    </div>
+    );
+  },
   video: (props: any) => {
     return <Video videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
   },

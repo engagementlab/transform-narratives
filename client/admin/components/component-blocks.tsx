@@ -6,15 +6,25 @@ import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document
 import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
 import { css as emCss } from '@emotion/css';
 import Select, { GroupBase, OptionProps } from 'react-select'
-import { IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import AttachFileRoundedIcon from '@mui/icons-material/AttachFileRounded';
+// import { IconButton, ImageList, ImageListItem, ImageListItemBar, Modal, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Box, Grid, TextField } from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+import create from 'zustand';
+
+type ImageGridState = {
+  id: string;
+  alt: string;
+  setId: (id: string) => void
+  setAlt: (id: string) => void
+}   
 
 const videoData = require('../../videoData');
 const imageData = require('../../imageData');
 
-
 interface RelatedImage {
   publicId: null | string;
+  alt?: null | string;
 }
 
 interface RelatedVideo {
@@ -115,7 +125,7 @@ function videoSelect({
             onChange={event => {
               onChange(event as RelatedVideo)
             }}
-            value={current}
+            value={value}
             className={styles.form.select}
             components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
 
@@ -134,7 +144,8 @@ function imageSelect({
   label,
   current,
   defaultValue = {
-    publicId: ''
+    publicId: '',
+    alt: '',
   }
 }: {
   label: string;
@@ -146,45 +157,56 @@ function imageSelect({
     kind: 'form',
 
     Input({ value, onChange, autoFocus }) {
+    // Create store with Zustand
+    const [useStore] = useState(() =>
+        create<ImageGridState>(set => ({
+          id: value?.publicId || '',
+          alt: value?.alt || '',
+          setId: (id: string) => set((state) => {
+              return {
+                  ...state,
+                  id,
+              }
+          }),
+          setAlt: (alt: string) => set((state) => {
+            return {
+                ...state,
+                alt,
+            }
+          }),
+        })
+    ));
+    const setId = useStore(state => state.setId);
+    const setAlt = useStore(state => state.setAlt);
+    const currentId = useStore(state => state.id);
+    const currentAlt = useStore(state => state.alt);
+
       return (
         <FieldContainer>
-          <Modal
-  open={true}
-  // onClose={handleClose}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-          <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-            {imageData.map((item) => (
-              <ImageListItem key={item.version}>
-                <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto/v${item.version}/${item.public_id}`}
-                />
-                <ImageListItemBar
-                  sx={{
-                    background:
-                      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                  }}
-                  position="top"
-                  actionIcon={
-                    <div
-                      onClick={(e) => {onChange({publicId: item.public_id})}}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              {imageData.map((item) => (
+                <Grid item xs={4}>
+                  <a style={{ position: 'relative'}}
+                    onClick={(e) => {
+                      setId(item.public_id); 
+                      onChange({publicId: item.public_id});
+                      // document.getElementById('alt-field').focus();
+                    }}>
+                    <div style={{position: 'absolute', top: 0, left: 0}}>
+                      {item.public_id === currentId && <CheckCircleOutlineIcon htmlColor='#f6a536' />}
+                    </div>
+                    <img
+                      src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
+                    />
+                  </a>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
 
-                    <IconButton
-                      sx={{ color: 'white' }}
-                      >
-                      <AttachFileRoundedIcon />
-                    </IconButton>
-                      </div>
-                  }
-                  actionPosition="left"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          </Modal>
-      </FieldContainer>
+          <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e) => {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+        </FieldContainer>
       )
     },
     options: undefined,
@@ -240,7 +262,7 @@ export const componentBlocks = {
           label: 'Click "Edit" and select.',
           videoUrl: '',
           thumbSm: '',
-        }
+        },
        })
      },
      chromeless: false,
@@ -251,14 +273,17 @@ export const componentBlocks = {
           <div>
             {!image.value.publicId ? <span>Click <em>Edit</em></span> 
             :
-            <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto/${image.value.publicId}`}
+            <div>
+              <img
+                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
                 />
+              {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
+            </div>
             }
           </div>
        );
      },
-     label: 'Image',
+     label: 'CDN Image',
      props: {
        image: imageSelect({
         label: 'Image',

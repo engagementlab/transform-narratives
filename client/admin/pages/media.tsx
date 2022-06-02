@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 
 import axios from 'axios';
-
 import create from 'zustand';
-import { Box, ButtonBase, Grid, IconButton, Paper, Typography } from '@mui/material';
+import {useDropzone} from 'react-dropzone';
+
+import { Box, Button, ButtonBase, Card, CardActions, CardContent, Fab, Grid, IconButton, Paper, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import Image from '../../components/Image';
@@ -16,22 +18,71 @@ type NavState = {
     setData: (imgData: any[]) => void
 } 
 export default function Media () {  
-// Create store with Zustand
-const [useStore] = useState(() =>
-    create<NavState>(set => ({
-        waiting: true,
-        data: [],
-        toggleWaiting: () => set((state) => { 
-            return { waiting: !state.waiting }; 
-        }),
-        setData: (imgData: any[]) => set((state) => {
-            return {
-                ...state,
-                data: imgData,
-            }
+    const {
+        acceptedFiles,
+        fileRejections,
+        getRootProps,
+        getInputProps
+      } = useDropzone({
+        accept: {
+          'image/jpeg': [],
+          'image/png': []
+        },
+      });
+    
+      const acceptedFileItems = acceptedFiles.map(file => (
+        <li key={file.path}>
+          {file.path} - {file.size} bytes
+        </li>
+      ));
+    
+      const fileRejectionItems = fileRejections.map(({ file, errors }) => (
+        <li key={file.path}>
+          {file.path} - {file.size} bytes
+          <ul>
+            {errors.map(e => (
+              <li key={e.code}>{e.message}</li>
+            ))}
+          </ul>
+        </li>
+      ));
+    
+    const upload =  () => {
+        // console.log()
+        const reader = new FileReader()
+
+        reader.onabort = () => console.log('file reading was aborted')
+        reader.onerror = () => console.log('file reading has failed')
+        reader.onload = () => {
+        // Do whatever you want with the file contents
+          const binaryStr = reader.result as ArrayBuffer;
+
+            const data = new FormData();
+            const blob = new Blob([binaryStr],{type : 'multipart/form-data'});
+            data.append('data', blob)
+          console.log(binaryStr)
+          axios.post('/media/upload', data).then((response) =>{
+            console.log(response);
+            });         
+        }
+        reader.readAsArrayBuffer(acceptedFiles[0])
+    }
+            // Create store with Zustand
+    const [useStore] = useState(() =>
+        create<NavState>(set => ({
+            waiting: true,
+            data: [],
+            toggleWaiting: () => set((state) => { 
+                return { waiting: !state.waiting }; 
+            }),
+            setData: (imgData: any[]) => set((state) => {
+                return {
+                    ...state,
+                    data: imgData,
+                }
+            })
         })
-    })
-));
+    ));
 
     const toggleWaiting = useStore(state => state.toggleWaiting);
     const setData = useStore(state => state.setData);
@@ -201,26 +252,51 @@ const [useStore] = useState(() =>
     })
    
     return (
-        <PageContainer header="Media Library">
-                           
+        <PageContainer header="Media Library">     
+
+            <section className="container">
+                <div {...getRootProps({ className: 'dropzone' })}>
+                    <input {...getInputProps()} />
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <em>(Only *.jpeg and *.png images will be accepted)</em>
+                </div>
+                <aside>
+                    <h4>Accepted files</h4>
+                    <ul>{acceptedFileItems}</ul>
+                    <h4>Rejected files</h4>
+                    <ul>{fileRejectionItems}</ul>
+                </aside>
+                <Button variant="contained" color="success" onClick={() =>{ upload();} }>Done</Button>
+            </section>
+
             {
             !waiting ?
-
+            <div>
+            <Fab color="primary" aria-label="add">
+                <AddIcon />
+            </Fab>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                {data.map(d => {
-                    return (
-                        <Grid item xs={4}>
-                            <Image id='x' alt='hi' imgId={d.public_id} width={350} />
-                            <IconButton aria-label="delete">
-                                <DeleteIcon />
-                            </IconButton>
+                    {data.map(d => {
+                        return (
+                            <Grid item xs={4}>
+                        <Card sx={{ maxWidth: 345 }}>
+
+                            <CardContent>
+                                <Image id='x' alt='hi' imgId={d.public_id} width={350} />
+                            </CardContent>
+                            <CardActions disableSpacing>
+                                <IconButton aria-label="add to favorites">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </CardActions>
+                        </Card>
                         </Grid>
                         )
-                })}
-            </Grid>
-
-          </Box>
+                    })}
+                </Grid>
+            </Box>
+            </div>
             :
             <></>
             }
