@@ -48,24 +48,27 @@ export default function Media () {
       ));
     
     const upload =  () => {
-        // console.log()
         const reader = new FileReader()
 
         reader.onabort = () => console.log('file reading was aborted')
         reader.onerror = () => console.log('file reading has failed')
         reader.onload = () => {
-        // Do whatever you want with the file contents
-          const binaryStr = reader.result as ArrayBuffer;
+        // // Do whatever you want with the file contents
+      
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/media/upload', true);
+            xhr.onprogress = function(e) { console.log(e) };
+        
+            var formData = new FormData();
+            formData.append('img', reader.result as string);
+            // console.log(binaryStr)
+            xhr.send(formData);
 
-            const data = new FormData();
-            const blob = new Blob([binaryStr],{type : 'multipart/form-data'});
-            data.append('data', blob)
-          console.log(binaryStr)
-          axios.post('/media/upload', data).then((response) =>{
-            console.log(response);
-            });         
+            
         }
-        reader.readAsArrayBuffer(acceptedFiles[0])
+        // console.log('file',acceptedFiles)
+        reader.readAsDataURL(acceptedFiles[0])
+        // const binaryStr =  as ArrayBuffer;
     }
             // Create store with Zustand
     const [useStore] = useState(() =>

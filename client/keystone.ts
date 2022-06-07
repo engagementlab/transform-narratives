@@ -9,7 +9,9 @@ import session from 'express-session';
 import { v2 as cloudinary } from 'cloudinary';
 
 import * as lists from './admin/schema';
-import * as base64 from 'byte-base64';
+const multer = require('multer');
+const upload = multer();
+
 cloudinary.config({
   cloud_name: `${process.env.CLOUDINARY_CLOUD_NAME}`,
   api_key: `${process.env.CLOUDINARY_KEY}`,
@@ -125,6 +127,8 @@ let ksConfig = {
   server: {
     extendExpressApp: (app: e.Express) => {
       app.use(bodyParser.json());
+      app.use(bodyParser.urlencoded({ extended: true }));
+
       app.get('/prod-deploy', async (req, res, next) => {
         try {
           const response = await axios.get(
@@ -147,17 +151,16 @@ let ksConfig = {
         }
       });
 
-      app.post('/media/upload', async (req, res) => {
-        console.log(req.body);
-        // try {
-        //   const response = await cloudinary.uploader.upload(
-        //     req.body.files.replace(/(\r\n|\n|\r)/gm, '')
-        //   );
-        //   res.status(200).send(response);
-        // } catch (err: any) {
-        //   console.error(err);
-        //   res.status(500).send(err);
-        // }
+      app.post('/media/upload', upload.none(), async (req, res) => {
+        try {
+          const response = await cloudinary.uploader.upload(req.body.img, {
+            folder: 'tngvi',
+          });
+          res.status(200).send(response);
+        } catch (err: any) {
+          console.error(err);
+          res.status(500).send(err);
+        }
       });
 
       if (process.env.ENABLE_AUTH === 'true') {
