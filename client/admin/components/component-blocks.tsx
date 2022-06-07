@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ComponentType, Fragment, useState } from 'react';
+import React, { ComponentType, Fragment, useEffect, useState } from 'react';
 import { NotEditable, component, fields } from '@keystone-6/fields-document/component-blocks';
 import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
 
@@ -7,16 +7,24 @@ import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
 import { css as emCss } from '@emotion/css';
 import Select, { GroupBase, OptionProps } from 'react-select'
 // import { IconButton, ImageList, ImageListItem, ImageListItemBar, Modal, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, Grid, Pagination, TextField } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 import create from 'zustand';
+import axios from 'axios';
 
 type ImageGridState = {
   id: string;
   alt: string;
+  data: any[];
+  index: number;
+  waiting: boolean;
+
+  toggleWaiting: () => void
   setId: (id: string) => void
   setAlt: (id: string) => void
+  setData: (imgData: any[]) => void
+  setIndex: (imgIndex: number) => void
 }   
 
 const videoData = require('../../videoData');
@@ -33,6 +41,7 @@ interface RelatedVideo {
   thumbSm: string;
   caption?: string;
 }
+
 const styles = {
   form: {
     field: emCss`
@@ -71,6 +80,11 @@ const styles = {
       }
     `
   },
+  imageEditor: {
+    pagination: emCss`
+      list-style-type: none;
+    `
+  }
 };
   
 const VideoOptionComponent = (props: OptionProps) => {
@@ -158,10 +172,16 @@ function imageSelect({
 
     Input({ value, onChange, autoFocus }) {
     // Create store with Zustand
-    const [useStore] = useState(() =>
+    const [useStore] = useState(() => 
         create<ImageGridState>(set => ({
+          waiting: true,
+          data: [],
+          index: 0,
           id: value?.publicId || '',
           alt: value?.alt || '',
+          toggleWaiting: () => set((state) => { 
+              return { waiting: !state.waiting }; 
+          }),
           setId: (id: string) => set((state) => {
               return {
                   ...state,
@@ -174,40 +194,72 @@ function imageSelect({
                 alt,
             }
           }),
+          setData: (imgData: any[]) => set((state) => {
+              return {
+                  ...state,
+                  data: imgData,
+              }
+          }),
+          setIndex: (imgIndex: number) => set((state) => {
+              return {
+                  ...state,
+                  index: imgIndex,
+              }
+          })
         })
     ));
+
     const setId = useStore(state => state.setId);
     const setAlt = useStore(state => state.setAlt);
+    const toggleWaiting = useStore(state => state.toggleWaiting);
+    const setData = useStore(state => state.setData);
+    const setIndex = useStore(state => state.setIndex);
+
     const currentId = useStore(state => state.id);
     const currentAlt = useStore(state => state.alt);
+    const data = useStore(state => state.data);
+    const waiting = useStore(state => state.waiting);
+    const index = useStore(state => state.index);
+    const beginIndex = index * 30;
+    const endIndex = beginIndex + 30;
 
-      return (
-        <FieldContainer>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              {imageData.map((item) => (
-                <Grid item xs={4}>
-                  <a style={{ position: 'relative'}}
-                    onClick={(e) => {
-                      setId(item.public_id); 
-                      onChange({publicId: item.public_id});
-                      // document.getElementById('alt-field').focus();
-                    }}>
-                    <div style={{position: 'absolute', top: 0, left: 0}}>
-                      {item.public_id === currentId && <CheckCircleOutlineIcon htmlColor='#f6a536' />}
-                    </div>
-                    <img
-                      src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
-                    />
-                  </a>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
+    // useEffect(() => {
+    //   if(data && data.length > 1) return;
+    //     axios.get('/media/get/upload').then((response) =>{
+    //       //   setData(localData);
+    //         setData(response.data);
+    //         toggleWaiting();
+    //   }); 
+    // })
 
-          <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e) => {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
-        </FieldContainer>
-      )
+    return (
+      <FieldContainer>
+        <Pagination className={styles.imageEditor.pagination} count={Math.floor(imageData.length / 30)} page={index} onChange={((e, pg) => { setIndex(pg) })} />
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            {imageData.slice(beginIndex, endIndex).map((item) => (
+              <Grid item xs={4}>
+                <a style={{ position: 'relative'}}
+                  onClick={(e) => {
+                    setId(item.public_id); 
+                    onChange({publicId: item.public_id});
+                    // document.getElementById('alt-field').focus();
+                  }}>
+                  <div style={{position: 'absolute', top: 0, left: 0}}>
+                    {item.public_id === currentId && <CheckCircleOutlineIcon htmlColor='#f6a536' />}
+                  </div>
+                  <img
+                    src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
+                  />
+                </a>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e) => {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+      </FieldContainer>
+    )
     },
     options: undefined,
     defaultValue,

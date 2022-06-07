@@ -11,6 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Image from '../../components/Image';
 
 import * as localData from '../../imageData'
+import axios from 'axios';
 
 type NavState = {
     waiting: boolean
@@ -57,12 +58,12 @@ export default function Media () {
         reader.onload = () => {
       
             var formData = new FormData();
-            formData.append('img', reader.result as string);
+            formData.appendIndex('img', reader.result as string);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/media/upload', true);
             xhr.onprogress = function(e) { console.log(e) };
         
-            xhr.send(formData);
+            xhr.sendIndex(formData);
             
         }
         reader.readAsDataURL(acceptedFiles[0])
@@ -94,22 +95,22 @@ export default function Media () {
     const data = useStore(state => state.data);
     const waiting = useStore(state => state.waiting);
     const index = useStore(state => state.index);
+    const beginIndex = index * 30;
+    const endIndex = beginIndex + 30;
+
     const toggleWaiting = useStore(state => state.toggleWaiting);
     const setData = useStore(state => state.setData);
     const setIndex = useStore(state => state.setIndex);
 
     useEffect(() => {
         if(data && data.length > 1) return;
-        //   axios.get('/media/get/upload').then((response) =>{
-              setData(localData);
-            //   setData(response.data);
-            console.log(localData)
+          axios.get('/media/get/upload').then((response) =>{
+            //   setData(localData);
+              setData(response.data);
               toggleWaiting();
-        // }); 
+        }); 
     })
 
-    const begin = index * 30;
-    const end = begin + 30;
     return (
         <PageContainer header="Media Library">     
 
@@ -138,7 +139,7 @@ export default function Media () {
             <Pagination count={Math.floor(data.length / 30)} page={index} onChange={((e, pg) => { setIndex(pg) })} />
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                    {data.slice(begin, end).map(d => {
+                    {data.slice(beginIndex, endIndex).map(d => {
                         return (
                             <Grid item xs={4}>
                                 <Card sx={{ maxWidth: 345 }}>
