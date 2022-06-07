@@ -143,8 +143,13 @@ let ksConfig = {
       app.get('/media/get/:type', async (req, res) => {
         try {
           cloudinary.api.resources(
-            { prefix: 'tngvi', resource_type: 'image', type: req.params.type },
-            (e, response) => res.status(200).send(response)
+            {
+              prefix: 'tngvi',
+              resource_type: 'image',
+              type: req.params.type,
+              max_results: 500,
+            },
+            (e, response) => res.status(200).send(response.resources.reverse())
           );
         } catch (err: any) {
           res.status(500).send(err);
