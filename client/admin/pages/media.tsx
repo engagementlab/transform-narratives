@@ -113,21 +113,19 @@ export default function Media () {
 
     return (
         <PageContainer header="Media Library">     
-
+{/* 
             <section className="container">
                 <div {...getRootProps({ className: 'dropzone' })}>
                     <input {...getInputProps()} />
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <p>Drag and drop some images here, or click to select some.</p>
                     <em>(Only *.jpeg and *.png images will be accepted)</em>
                 </div>
                 <aside>
                     <h4>Accepted files</h4>
                     <ul>{acceptedFileItems}</ul>
-                    <h4>Rejected files</h4>
-                    <ul>{fileRejectionItems}</ul>
                 </aside>
                 <Button variant="contained" color="success" onClick={() =>{ upload();} }>Done</Button>
-            </section>
+            </section> */}
 
             {
             !waiting ?
