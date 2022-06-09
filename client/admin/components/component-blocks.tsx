@@ -31,7 +31,7 @@ type ImageGridState = {
 }   
 
 const videoData = require('../../videoData');
-const imageData = require('../../imageData');
+// const imageData = require('../../imageData');
 
 interface RelatedImage {
   publicId: null | string;
@@ -216,7 +216,6 @@ function imageSelect({
     const currentId = useStore(state => state.id);
     const currentAlt = useStore(state => state.alt);
     const data = useStore(state => state.data);
-    const waiting = useStore(state => state.waiting);
     const index = useStore(state => state.index);
     const beginIndex = index * 15;
     const endIndex = beginIndex + 15;
@@ -225,7 +224,6 @@ function imageSelect({
     useEffect(() => {
       if(data && data.length > 1) return;
         axios.get('/media/get/upload').then((response) =>{
-          //   setData(localData);
             setData(response.data);
             toggleWaiting();
       }); 
@@ -243,8 +241,8 @@ function imageSelect({
               onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
               >
               {[...new Array(dataLength)].map((v, i) => (
-            <MenuItem value={i}>{i+1}</MenuItem>
-            ))}
+                <MenuItem value={i}>{i+1}</MenuItem>
+              ))}
           </MUISelect>
           <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
             <ArrowCircleRightOutlinedIcon fontSize='large' />
@@ -276,7 +274,8 @@ function imageSelect({
           </Grid>
         </Box>
 
-        <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e) => {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+        <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e)=>
+          {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
       </FieldContainer>
     )
     },
