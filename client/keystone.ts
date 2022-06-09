@@ -125,10 +125,8 @@ let ksConfig = {
   },
   lists,
   server: {
+    maxFileSize: 1024 * 1024 * 50,
     extendExpressApp: (app: e.Express) => {
-      app.use(bodyParser.json());
-      app.use(bodyParser.urlencoded({ extended: true }));
-
       app.get('/prod-deploy', async (req, res, next) => {
         try {
           const response = await axios.get(
@@ -149,7 +147,28 @@ let ksConfig = {
               type: req.params.type,
               max_results: 500,
             },
-            (e, response) => res.status(200).send(response.resources.reverse())
+            (e, response) => {
+              const sorted = response.resources.sort(
+                (a: { created_at: number }, b: { created_at: number }) => {
+                  return (
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime()
+                  );
+                }
+              );
+              console.log(sorted);
+              res.status(200).send(sorted);
+            }
+          );
+        } catch (err: any) {
+          res.status(500).send(err);
+        }
+      });
+
+      app.get('/media/delete', async (req, res) => {
+        try {
+          cloudinary.uploader.destroy(req.query.id as string, (e, response) =>
+            res.status(200).send(response)
           );
         } catch (err: any) {
           res.status(500).send(err);
@@ -242,7 +261,6 @@ let ksConfig = {
             req.session.redirectTo = req.originalUrl;
             // if (req.session.redirectTo) res.redirect(req.session.redirectTo);
             // else {
-            console.log('redirecting to ' + req.originalUrl);
             res.redirect('/cms/login');
             // }
           } else if (req.session.passport && req.session.passport.user.isAdmin)
