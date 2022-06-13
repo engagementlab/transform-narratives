@@ -51,6 +51,7 @@ if (process.env.DB_URI) {
   dbConfig = {
     provider: 'postgresql',
     url: process.env.DB_URI,
+    enableLogging: true,
   };
 }
 
@@ -156,7 +157,7 @@ let ksConfig = {
                   );
                 }
               );
-              console.log(sorted);
+
               res.status(200).send(sorted);
             }
           );

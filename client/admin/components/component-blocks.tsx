@@ -3,15 +3,15 @@ import React, { ComponentType, Fragment, useEffect, useState } from 'react';
 import { NotEditable, component, fields } from '@keystone-6/fields-document/component-blocks';
 import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
 
-import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
-import { css as emCss } from '@emotion/css';
 import Select, { GroupBase, OptionProps } from 'react-select'
-// import { IconButton, ImageList, ImageListItem, ImageListItemBar, Modal, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { Box, Grid, IconButton, InputLabel, MenuItem, Pagination, Select as MUISelect, TextField } from '@mui/material';
+import { FieldContainer } from '@keystone-ui/fields';
+import { css as emCss } from '@emotion/css';
+import { Box, Grid, IconButton, MenuItem, Modal, Select as MUISelect, TextField } from '@mui/material';
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 
 import create from 'zustand';
 import axios from 'axios';
@@ -22,12 +22,14 @@ type ImageGridState = {
   data: any[];
   index: number;
   waiting: boolean;
+  gridOpen: boolean;
 
   toggleWaiting: () => void
   setId: (id: string) => void
   setAlt: (id: string) => void
   setData: (imgData: any[]) => void
   setIndex: (imgIndex: number) => void
+  setGridOpen: (open: boolean) => void
 }   
 
 const videoData = require('../../videoData');
@@ -81,7 +83,9 @@ const styles = {
         background: #2D3130;
         color: white;
       }
-    `
+    `,
+
+       
   }
 };
   
@@ -173,6 +177,7 @@ function imageSelect({
     const [useStore] = useState(() => 
         create<ImageGridState>(set => ({
           waiting: true,
+          gridOpen: true,
           data: [],
           index: 0,
           id: value?.publicId || '',
@@ -203,7 +208,13 @@ function imageSelect({
                   ...state,
                   index: imgIndex,
               }
-          })
+          }),
+          setGridOpen: (open: boolean) => set((state) => {
+              return {
+                  ...state,
+                  gridOpen: open
+              }
+          }),
         })
     ));
 
@@ -212,9 +223,11 @@ function imageSelect({
     const toggleWaiting = useStore(state => state.toggleWaiting);
     const setData = useStore(state => state.setData);
     const setIndex = useStore(state => state.setIndex);
+    const setGridOpen = useStore(state => state.setGridOpen);
 
     const currentId = useStore(state => state.id);
     const currentAlt = useStore(state => state.alt);
+    const gridOpen = useStore(state => state.gridOpen);
     const data = useStore(state => state.data);
     const index = useStore(state => state.index);
     const beginIndex = index * 15;
@@ -231,6 +244,22 @@ function imageSelect({
 
     return (
       <FieldContainer>
+        Click <em>Done</em> for image preview.
+      <Modal
+            open={gridOpen}
+            onClose={() => {setGridOpen(false); }}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >  
+            <Box sx={ {position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 900,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4}}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
             <ArrowCircleLeftOutlinedIcon fontSize='large' />
@@ -276,6 +305,12 @@ function imageSelect({
 
         <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e)=>
           {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+          <br />
+          <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
+            <CheckTwoToneIcon fontSize='large' color='success' />
+          </IconButton>
+        </Box>
+        </Modal>
       </FieldContainer>
     )
     },
@@ -288,28 +323,28 @@ function imageSelect({
 }
 
 export const componentBlocks = {
-  image: component({
-     component: (props) => {
-      if(!props.image.value) return null;
+  // image: component({
+  //    component: (props) => {
+  //     if(!props.image.value) return null;
 
-      const data = (props.image.value as unknown as HydratedRelationshipData).data;
-      return (
-          <img
-            style={{width:'100%'}}
-            className="body-image"
-            src={data.image?.publicUrlTransformed}
-            alt="Document image"
-          />
-       );
-     },
-     label: 'Image',
-     props: {
-       image: fields.relationship<'many'>({
-         label: 'Images',
-         relationship: 'image',
-       }),
-     },
-   }),
+  //     const data = (props.image.value as unknown as HydratedRelationshipData).data;
+  //     return (
+  //         <img
+  //           style={{width:'100%'}}
+  //           className="body-image"
+  //           src={data.image?.publicUrlTransformed}
+  //           alt="Document image"
+  //         />
+  //      );
+  //    },
+  //    label: 'Image',
+  //    props: {
+  //      image: fields.relationship<'many'>({
+  //        label: 'Images',
+  //        relationship: 'image',
+  //      }),
+  //    },
+  //  }),
   video: component({
     component: ({video}) => {
       return (
@@ -337,8 +372,9 @@ export const componentBlocks = {
      },
      chromeless: false,
   }),
-  cdnImage: component({
+  image: component({
     component: ({image}) => {
+      console.log(image);
       return (
           <div>
             {!image.value.publicId ? <span>Click <em>Edit</em></span> 
@@ -353,7 +389,7 @@ export const componentBlocks = {
           </div>
        );
      },
-     label: 'CDN Image',
+     label: 'Image',
      props: {
        image: imageSelect({
         label: 'Image',
