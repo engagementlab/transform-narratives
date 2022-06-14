@@ -23,6 +23,7 @@ import BlockRenderers from '../../components/BlockRenderers';
 import DocRenderers from '../../components/DocRenderers';
 import Layout from '../../components/Layout';
 import Video from '../../components/Video';
+import Link from 'next/link';
 
 type MediaItem = {
     title: string;
@@ -51,7 +52,11 @@ export default function MediaItem({
     item,
     relatedItems
 }: InferGetStaticPropsType < typeof getStaticProps > ) {
-    const thisUrl = `https://transformnarratives.org${useRouter().asPath}`;
+    const origin =
+        typeof window !== 'undefined' && window.location.origin
+            ? window.location.origin
+            : '';
+    const thisUrl = `${origin}${useRouter().asPath}`;
     const toggleCopied = useStore(state => state.toggleCopied);
     const wasCopied = useStore(state => state.urlCopied);
     return (
@@ -63,7 +68,15 @@ export default function MediaItem({
                     <div className='flex justify-between pt-8 pb-12 px-4 xl:px-8'>
                         <div>
                             <h1 className="text-2xl font-bold mb-2">{item.title}</h1>
-                            <p>{_.map(item.filters, 'name').join(', ')}</p>
+                            <p>{item.filters.map((filter, i) => {
+                                return filter.enabled ? (
+                                <>
+                                   <Link href={`${origin}/archive/?${filter.key}`}>{filter.name}</Link>
+                                   {/* {i < item.filters.length-1 }&nbsp; */}
+                                </>
+                                ) : ''
+                            })}</p>
+                            {/* <p>{_.map(item.filters, 'name').join(', ')}</p> */}
                         </div>
                         <div>
                             <CopyToClipboard text={thisUrl} onCopy={()=> toggleCopied(true)}>
@@ -131,7 +144,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
     const item = (await query.MediaItem.findOne({
         where: { key: params!.key as string },
-        query: 'title filters { name } content { document(hydrateRelationships: true) } videos thumbnail { publicId }',
+        query: 'title filters { name key enabled } content { document(hydrateRelationships: true) } videos thumbnail { publicId }',
     })) as MediaItem;
     const relatedItems = (await query.MediaItem.findMany({
         where: { 
@@ -144,7 +157,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
                 } 
             }
         },
-        query: 'title key filters { type name } shortDescription thumbnail { publicId }',
+        query: 'title key filters { key name } shortDescription thumbnail { publicId }',
     })) as MediaItem[];
     return { props: { item, relatedItems } };
 }
