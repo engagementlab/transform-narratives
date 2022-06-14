@@ -337,33 +337,33 @@ export const componentBlocks = {
      },
      chromeless: false,
   }),
-  cdnImage: component({
-    component: ({image}) => {
-      return (
-          <div>
-            {!image.value.publicId ? <span>Click <em>Edit</em></span> 
-            :
-            <div>
-              <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
-                />
-              {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
-            </div>
-            }
-          </div>
-       );
-     },
-     label: 'CDN Image',
-     props: {
-       image: imageSelect({
-        label: 'Image',
-        defaultValue: {
-          publicId: null,
-        }
-       })
-     },
-    //  chromeless: false,
-  }),
+  // cdnImage: component({
+  //   component: ({image}) => {
+  //     return (
+  //         <div>
+  //           {!image.value.publicId ? <span>Click <em>Edit</em></span> 
+  //           :
+  //           <div>
+  //             <img
+  //                 src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
+  //               />
+  //             {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
+  //           </div>
+  //           }
+  //         </div>
+  //      );
+  //    },
+  //    label: 'CDN Image',
+  //    props: {
+  //      image: imageSelect({
+  //       label: 'Image',
+  //       defaultValue: {
+  //         publicId: null,
+  //       }
+  //      })
+  //    },
+  //   //  chromeless: false,
+  // }),
    button: component({
       component: ({label, link}) => {
         return (      
