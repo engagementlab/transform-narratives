@@ -61,6 +61,8 @@ model Event {
   id               String       @id @default(cuid())
   name             String       @default("")
   key              String       @unique @default("")
+  createdDate      DateTime?
+  enabled          Boolean      @default(true)
   thumbnail        String?
   thumbAltText     String       @default("")
   eventDate        DateTime
@@ -75,6 +77,7 @@ model Filter {
   id                     String      @id @default(cuid())
   name                   String      @default("")
   key                    String      @default("")
+  enabled                Boolean     @default(true)
   type                   String
   section                String?
   from_MediaItem_filters MediaItem[] @relation("MediaItem_filters")
@@ -110,6 +113,8 @@ model MediaItem {
   id               String       @id @default(cuid())
   title            String       @default("")
   key              String       @unique @default("")
+  createdDate      DateTime?
+  enabled          Boolean      @default(true)
   thumbnail        String?
   shortDescription String       @default("")
   filters          Filter[]     @relation("MediaItem_filters")
@@ -134,23 +139,27 @@ model NewsItem {
   id           String      @id @default(cuid())
   title        String      @default("")
   key          String      @unique @default("")
+  createdDate  DateTime?
+  enabled      Boolean     @default(true)
   thumbnail    String?
   thumbAltText String      @default("")
   publishDate  DateTime
+  externalLink String      @default("")
   blurb        String      @default("")
   body         String      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   images       NewsImage[] @relation("NewsImage_newsImages")
 }
 
 model Person {
-  id          String  @id @default(cuid())
-  name        String  @default("")
-  title       String  @default("")
-  enabled     Boolean @default(true)
+  id          String    @id @default(cuid())
+  name        String    @default("")
+  title       String    @default("")
+  createdDate DateTime?
+  enabled     Boolean   @default(true)
   image       String?
-  blurb       String  @default("")
-  remembrance String  @default("")
-  content     String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  blurb       String    @default("")
+  remembrance String    @default("")
+  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model StudioImage {
@@ -163,12 +172,15 @@ model StudioImage {
 }
 
 model Studio {
-  id        String        @id @default(cuid())
-  name      String        @default("")
-  thumbnail String?
-  blurb     String        @default("")
-  key       String        @unique @default("")
-  filters   Filter[]      @relation("Studio_filters")
-  content   String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  photos    StudioImage[] @relation("Studio_photos")
+  id          String        @id @default(cuid())
+  name        String        @default("")
+  key         String        @unique @default("")
+  createdDate DateTime?
+  enabled     Boolean       @default(true)
+  order       Int?
+  thumbnail   String?
+  blurb       String        @default("")
+  filters     Filter[]      @relation("Studio_filters")
+  content     String        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  photos      StudioImage[] @relation("Studio_photos")
 }

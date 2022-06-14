@@ -2,6 +2,8 @@ import {
   list
 } from '@keystone-6/core';
 import {
+  checkbox,
+  integer,
   json,
   relationship,
   text
@@ -17,7 +19,7 @@ import {
   componentBlocks
 } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const Studio: Lists.Studio = list({
   fields: {
@@ -25,6 +27,25 @@ const Studio: Lists.Studio = list({
       validation: {
         isRequired: true
       }
+    }),
+    key: text({
+      isIndexed: 'unique',
+      isFilterable: true,
+      ui: {
+        createView: {
+          fieldMode:'hidden'
+        },
+        itemView: {
+          fieldMode: 'hidden'
+        }
+      }
+    }),
+    createdDate: CreatedTimestamp,
+    enabled: checkbox({
+      defaultValue: true,
+    }),
+    order: integer({
+      label: 'Order on index page',
     }),
     thumbnail: cloudinaryImage({
       label: 'Thumbnail (need to be sized consistently)',
@@ -42,18 +63,6 @@ const Studio: Lists.Studio = list({
       },
       ui: {
         displayMode: 'textarea'
-      }
-    }),
-    key: text({
-      isIndexed: 'unique',
-      isFilterable: true,
-      ui: {
-        createView: {
-          fieldMode:'hidden'
-        },
-        itemView: {
-          fieldMode: 'hidden'
-        }
       }
     }),
     filters: relationship({
@@ -120,6 +129,12 @@ const Studio: Lists.Studio = list({
     // }),
 
     // file: azureStorageFile({ azureStorageConfig: azConfig }),
+  },
+  ui: {
+    listView: { 
+      initialColumns: ['name', 'order', 'thumbnail',],
+      initialSort: { field: 'order', direction: 'ASC' }
+    }
   },
   hooks: {
     resolveInput: async ({

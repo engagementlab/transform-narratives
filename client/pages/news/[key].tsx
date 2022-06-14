@@ -1,16 +1,16 @@
+import { ReactNode } from 'react';
 import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
+import { DocumentRenderer, } from '@keystone-6/document-renderer';
 import Link from 'next/link';
 import _ from 'lodash';
 
 import { query } from '.keystone/api';
 
 import Image from '../../components/Image';
-import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
-import HeadingStyle from '../../components/HeadingStyle';
+import DocRenderers from '../../components/DocRenderers';
 
 type NewsItem = {
   title: string;
@@ -18,16 +18,6 @@ type NewsItem = {
   body: any;
   thumbnail: any;
   thumbAltText: string;
-};
-const renderers: DocumentRendererProps['renderers'] = {
-    block: {
-        heading: ({ level, children, textAlign }) => {
-            return HeadingStyle(level, children, textAlign);
-        },
-        layout: ({layout, children}) => {
-            return FlexLayout(layout, children);
-        }
-    },
 };
 
 export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -49,12 +39,9 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
                         month: 'long',
                         day: 'numeric',
                         year: 'numeric',
-                    })}, {new Date(item.publishDate).toLocaleTimeString('en-US', {
-                        hour: '2-digit',
-                        minute: '2-digit',
                     })}
                 </div>
-                <DocumentRenderer document={item.body.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                <DocumentRenderer document={item.body.document} componentBlocks={BlockRenderers()} renderers={DocRenderers()} />
 
                 {relatedItems &&
                     <div>

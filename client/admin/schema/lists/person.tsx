@@ -12,6 +12,7 @@ import {
   cloudinaryImage
 } from '../../components/cloudinary';
 import { document } from '@keystone-6/fields-document';
+import { CreatedTimestamp } from '../hooks';
 
 const Person: Lists.Person = list({
   fields: {
@@ -26,6 +27,7 @@ const Person: Lists.Person = list({
         isRequired: true
       }
     }),
+    createdDate: CreatedTimestamp,
     enabled: checkbox({
       defaultValue: true,
     }),
@@ -51,6 +53,11 @@ const Person: Lists.Person = list({
         formatting: true,
         label: 'Full Bio/Content'
     }),
+  },
+  ui: {
+    listView: { 
+      initialColumns: ['name', 'title', 'image']
+    }
   }
 });
 export default Person;

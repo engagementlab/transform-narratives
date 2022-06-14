@@ -2,10 +2,12 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  checkbox,
     json,
     relationship,
     select,
-    text
+    text,
+    timestamp
 } from '@keystone-6/core/fields';
 import {
     document
@@ -17,7 +19,7 @@ import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { azConfig, azureStorageFile } from '../azure';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const videoData = require('../../../videoData');
 
@@ -39,6 +41,10 @@ const MediaItem: Lists.MediaItem = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      createdDate: CreatedTimestamp,
+      enabled: checkbox({
+        defaultValue: true,
       }),
       thumbnail: cloudinaryImage({
         cloudinary: {

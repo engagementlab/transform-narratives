@@ -2,6 +2,7 @@ import {
     InferGetStaticPropsType
 } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import _ from 'lodash';
 import { motion } from "framer-motion";
 
@@ -12,9 +13,9 @@ import Filtering, {  MediaItem } from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
-import { useRouter } from "next/router";
 
-const renderItem = (props: { item: MediaItem }) => {
+const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
+const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => void }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         className="w-full">
@@ -27,13 +28,11 @@ const renderItem = (props: { item: MediaItem }) => {
                         <ImagePlaceholder imageLabel='Media' width={335} height={200} />
                     }
                     <h3 className="text-bluegreen text-xl font-semibold mt-4 hover:text-green-blue group-hover:text-green-blue">{props.item.title}</h3>
-                    <div className="mt-2 mb-20">
-                      <p className="m-0">{props.item.shortDescription}</p>
-                      <p className="text-bluegreen">{_.map(props.item.filters, 'name').join(', ')}</p>
-                    </div>
                 </a>
             </Link>
-
+            <div className="mt-2 mb-20">
+                <p className="m-0">{props.item.shortDescription}</p>
+            </div>
         </motion.div>
     );
 }
@@ -57,16 +56,43 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ where: { section: {equals: 'media'} }, query: 'key name type' }) as any[];
-    // Group filters by type
-    const filtersGrouped = filters.reduce((filterMemo, {type, key, name}) => {
-        (filterMemo[type] = filterMemo[type] || []).push({key, name});
-        return filterMemo;
-    }, {});
-    const mediaItems = await query.MediaItem.findMany({ query: 'title key shortDescription filters { key name } thumbnail { publicId }' }) as MediaItem[];
+const filters = await query.Filter.findMany({
+    where: {
+        section: {
+            equals: 'media'
+        },
+        enabled: {
+            equals: true
+        }
+    },
+    query: 'key name type'
+}) as any[];
+// Group filters by type
+const filtersGrouped = filters.reduce((filterMemo, {
+    type,
+    key,
+    name
+}) => {
+    (filterMemo[type] = filterMemo[type] || []).push({
+        key,
+        name
+    });
+    return filterMemo;
+}, {});
+const mediaItems = await query.MediaItem.findMany({
+    query: 'title key shortDescription filters { key name } thumbnail { publicId }',
+    where: {
+        enabled: {
+            equals: true
+        }
+    },
+    orderBy: {
+        createdDate: 'desc'
+    }
+}) as MediaItem[];
 
-    return {
-      props: {
+return {
+    props: {
         filtersGrouped,
         mediaItems,
       }

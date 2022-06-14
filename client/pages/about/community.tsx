@@ -7,6 +7,8 @@ import Image from '../../components/Image';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import HeadingStyle from '../../components/HeadingStyle';
+import DocRenderers from '../../components/DocRenderers';
+import { ReactNode } from 'react';
 
 type CommunityPage = {
     values: any;
@@ -21,22 +23,14 @@ type Person = {
     content: any;
 }; 
 
-const renderers: DocumentRendererProps['renderers'] = {
-  // use your editor's autocomplete to see what other renderers you can override
-  inline: {
-    bold: ({ children }) => {
-      return <strong>{children}</strong>;
-    },
-  },
-  block: {
-    heading: ({ level, children, textAlign }) => {
+const rendererOverrides = {
+    heading: (level: number, children: ReactNode, textAlign: any) => {
 
       const customRenderers = {
         4: 'text-xl font-semibold text-coated my-8',
         5: 'text-lg font-extrabold text-purple'
       };
       return HeadingStyle(level, children, textAlign, customRenderers);
-    },
   },
 };
 
@@ -47,7 +41,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
           <div
           className="container mt-14 mb-14 xl:mt-16 px-4 xl:px-8">
               <h2 className="text-2xl text-bluegreen font-semibold">About Our Community</h2>
-              <DocumentRenderer document={page.values.document} renderers={renderers} componentBlocks={BlockRenderers} />
+              <DocumentRenderer document={page.values.document} renderers={DocRenderers(rendererOverrides)} componentBlocks={BlockRenderers()} />
           </div>
           <div className='container mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
               <hr className='border-sorbet' />
@@ -57,8 +51,11 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                 <div key={i} className='flex flex-col lg:flex-row mt-5'>
                       <div className='flex-shrink-0'>
                           {person.image ?
-                            <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300} /> :
-                            <ImagePlaceholder imageLabel='Bio' width={300} height={300} />
+                            <Image id={`thumb-${i}`} alt={`Thumbnail for person with name "${person.name}"`} imgId={person.image.publicId} width={300} transforms='f_auto,dpr_auto,c_thumb,g_face,ar_4:3' /> :
+                            <svg viewBox="0 0 300 255" width="300" height="255" stroke="#000000" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#000000">
+                              <title>{`Missing image of person with name "${person.name}"`}</title>
+                              <path d="M 57.509 200 C 57.509 165.5 103.509 165.5 126.509 142.5 C 138.009 131 103.509 131 103.509 73.5 C 103.509 35.17 118.838 16 149.509 16 C 180.179 16 195.509 35.17 195.509 73.5 C 195.509 131 161.009 131 172.509 142.5 C 195.509 165.5 241.509 165.5 241.509 200" style={{stroke: 'rgb(141, 51, 210)', strokeOpacity: 0.36, strokeWidth: '7px'}}></path>
+                            </svg>
                           }
                       </div>
                       <div className='lg:ml-6 w-full lg:w-1/2 xl:w-1/3'>
@@ -74,7 +71,7 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
                               </p>
                             )}
                             {person.remembrance && (
-                              <p className="text-green-blue font-semibold">
+                              <p className="text-purple font-semibold">
                                 Engaged in remembrance of {person.remembrance}.
                               </p>
                             )}

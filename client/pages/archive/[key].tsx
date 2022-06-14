@@ -3,13 +3,11 @@ import {
     GetStaticPropsContext,
     InferGetStaticPropsType
 } from 'next';
-
 import {
     useRouter
 } from 'next/router';
 import {
     DocumentRenderer,
-    DocumentRendererProps
 } from '@keystone-6/document-renderer';
 import {
     query
@@ -21,11 +19,11 @@ import {
     CopyToClipboard
 } from 'react-copy-to-clipboard';
 
-import Video from '../../components/Video';
-import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
+import DocRenderers from '../../components/DocRenderers';
 import Layout from '../../components/Layout';
-import HeadingStyle from '../../components/HeadingStyle';
+import Video from '../../components/Video';
+import Link from 'next/link';
 
 type MediaItem = {
     title: string;
@@ -50,29 +48,15 @@ const useStore = create < ShareState > (set => ({
     })
 }));
 
-const renderers: DocumentRendererProps['renderers'] = {
-    block: {
-        heading: ({
-            level,
-            children,
-            textAlign
-        }) => {
-            return HeadingStyle(level, children, textAlign);
-        },
-        layout: ({
-            layout,
-            children
-        }) => {
-            return FlexLayout(layout, children);
-        }
-    },
-};
-
 export default function MediaItem({
     item,
     relatedItems
 }: InferGetStaticPropsType < typeof getStaticProps > ) {
-    const thisUrl = `https://transformnarratives.org${useRouter().asPath}`;
+    const origin =
+        typeof window !== 'undefined' && window.location.origin
+            ? window.location.origin
+            : '';
+    const thisUrl = `${origin}${useRouter().asPath}`;
     const toggleCopied = useStore(state => state.toggleCopied);
     const wasCopied = useStore(state => state.urlCopied);
     return (
@@ -84,7 +68,15 @@ export default function MediaItem({
                     <div className='flex justify-between pt-8 pb-12 px-4 xl:px-8'>
                         <div>
                             <h1 className="text-2xl font-bold mb-2">{item.title}</h1>
-                            <p>{_.map(item.filters, 'name').join(', ')}</p>
+                            <p>{item.filters.map((filter, i) => {
+                                return filter.enabled ? (
+                                <>
+                                   <Link href={`${origin}/archive/?${filter.key}`}>{filter.name}</Link>
+                                   {/* {i < item.filters.length-1 }&nbsp; */}
+                                </>
+                                ) : ''
+                            })}</p>
+                            {/* <p>{_.map(item.filters, 'name').join(', ')}</p> */}
                         </div>
                         <div>
                             <CopyToClipboard text={thisUrl} onCopy={()=> toggleCopied(true)}>
@@ -97,7 +89,7 @@ export default function MediaItem({
                     </div>
                 </div>
                 <div className='content-container container w-full mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
-                    <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                    <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers()} renderers={DocRenderers()} />
                     {/*
                     <h3 className='text-2xl text-bluegreen font-semibold'>Explore Related Media</h3>
 
@@ -152,7 +144,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 export async function getStaticProps({ params }: GetStaticPropsContext) {
     const item = (await query.MediaItem.findOne({
         where: { key: params!.key as string },
-        query: 'title filters { name } content { document(hydrateRelationships: true) } videos thumbnail { publicId }',
+        query: 'title filters { name key enabled } content { document(hydrateRelationships: true) } videos thumbnail { publicId }',
     })) as MediaItem;
     const relatedItems = (await query.MediaItem.findMany({
         where: { 
@@ -165,7 +157,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
                 } 
             }
         },
-        query: 'title key filters { type name } shortDescription thumbnail { publicId }',
+        query: 'title key filters { key name } shortDescription thumbnail { publicId }',
     })) as MediaItem[];
     return { props: { item, relatedItems } };
 }

@@ -1,16 +1,12 @@
 import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import { InferRenderersForComponentBlocks } from '@keystone-6/fields-document/component-blocks'
-import Link from 'next/link';
+import { DocumentRenderer } from '@keystone-6/document-renderer';
 import _ from 'lodash';
 
 import { query } from '.keystone/api';
 
-import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
-import HeadingStyle from '../../components/HeadingStyle';
-import Video from '../../components/Video';
+import DocRenderers from '../../components/DocRenderers';
 
 type Studio = {
   id: string;
@@ -20,16 +16,6 @@ type Studio = {
   content: any;
   associatedMedia:[{ videos: any[]}];
 };
-const renderers: DocumentRendererProps['renderers'] = {
-block: {
-  heading: ({ level, children, textAlign }) => {
-    return HeadingStyle(level, children, textAlign);
-  },
-  layout: ({layout, children}) => {
-    return FlexLayout(layout, children);
-  }
-},
-};
 
 export default function Studio({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
 return (
@@ -38,9 +24,9 @@ return (
     <div>
         <div className='content-container container w-full mt-14 mb-24 xl:mt-16 px-4 xl:px-8'>
             <h1 className="text-2xl font-bold text-bluegreen mb-2">{item.name}</h1>
-            <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p>
+            {/* <p className="text-bluegreen mb-10">{_.map(item.filters, 'name').join(', ')}</p> */}
 
-            <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+            <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers()} renderers={DocRenderers()} />
 {/* 
             {item.associatedMedia &&
               <div className='mt-14'>

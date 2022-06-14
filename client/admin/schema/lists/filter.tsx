@@ -2,9 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
-  integer,
-    json,
-    relationship,
+  checkbox,
     select,
     text
 } from '@keystone-6/core/fields';
@@ -30,6 +28,9 @@ const Filter: Lists.Filter = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      enabled: checkbox({
+        defaultValue: true,
       }),
       type: select({
         type: 'enum',
@@ -75,6 +76,11 @@ const Filter: Lists.Filter = list({
   
         }
         return resolvedData;
+      }
+    },
+    ui: {
+      listView: { 
+        initialColumns: ['name', 'section']
       }
     }
   });

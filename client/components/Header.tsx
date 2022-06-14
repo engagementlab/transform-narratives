@@ -58,6 +58,7 @@ const links: NavLink[] = [{
 ];
 
 const customEase = 'ease-[cubic-bezier(0.075, 0.820, 0.165, 1.000)] duration-300';
+const linkClass = 'text-purple no-underline border-b-2 border-b-[rgba(141,51,210,0)] hover:border-b-[rgba(141,51,210,1)] transition-all';
 
 type NavState = {
     navOpen: boolean
@@ -104,7 +105,9 @@ const NavItems = () => {
                       <span onClick={()=>{toggleNavOpen(false) }} className='opacity-40'>{subLink.label}</span> 
                     :
                       <Link href={subLink.url || '' } passHref>
-                        {subLink.label}
+                        <a className={linkClass}>
+                          {subLink.label}
+                        </a>
                       </Link>
                   }
                   </li>
@@ -121,7 +124,9 @@ const NavItems = () => {
                   <span className='opacity-40'>{link.label}</span> 
                   : 
                   <Link href={link.url || '' } passHref>
-                    {link.label}
+                    <a className={linkClass}>
+                     {link.label}
+                    </a> 
                   </Link>
               }
             </li>
@@ -150,6 +155,7 @@ const Header = () => {
         <div className="w-full px-6 xl:px-0 flex justify-between">
           <Link href="/" passHref>
             <svg viewBox="0 0.081 81.459 50" width="81.459" height="50" className='cursor-pointer'>
+              <title>Transforming Narratives of Gun Violence logo</title>
               <g transform="matrix(0.159112, 0, 0, 0.159112, 0, 0.068195)">
                 <path style={{fill: '#8D33D2'}}
                   d="M149,61.7V17.8H0v43.9h32.2c3.9,0,11.1-0.8,14.4,0.2v132.7H102V74.4c0-3.5-0.7-9.8,0.2-12.7H149z" />

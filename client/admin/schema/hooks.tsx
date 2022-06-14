@@ -1,8 +1,12 @@
 import { AboutCreateInput, BigPictureCreateInput } from ".keystone/types";
+import { timestamp } from "@keystone-6/core/fields";
 import _ from 'lodash';
 
 export function CreateKey(name: string) {
-    return name.toLocaleLowerCase().replaceAll(/[^a-z+A-Z+0-9+]/ig, '-').replace(/-{2,}/g, '-')
+    let keyGen = name.toLocaleLowerCase().replaceAll(/[^\w ]/g, '').replaceAll(/[^a-z+A-Z+0-9+]/ig, '-').replace(/-{2,}/g, '-')
+    if(keyGen.lastIndexOf('-') === keyGen.length-1) 
+        keyGen = keyGen.slice(0, keyGen.length - 1)
+    return keyGen;
 }
 export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInput) => {
     if(!resolvedData.content) return resolvedData.content;
@@ -28,4 +32,27 @@ export const FixButtons = (resolvedData: AboutCreateInput | BigPictureCreateInpu
     return typeof resolvedData.content === 'object' ? contentParsed : JSON.stringify(contentParsed);
  };
 
-
+export const CreatedTimestamp = timestamp({
+    ui: {
+    createView: {
+        fieldMode:'hidden'
+    },
+    itemView: {
+        fieldMode: 'hidden'
+    }
+    },
+    hooks: {
+    resolveInput: async ({
+        listKey,
+        operation,
+        inputData,
+        item,
+        resolvedData,
+        context,
+    }) => {
+        if(operation === 'create') {
+        return new Date().toISOString();
+        }
+    }
+    }
+});

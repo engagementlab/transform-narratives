@@ -12,7 +12,10 @@ function App({ Component, pageProps }: AppProps) {
       <div>
         <Head>
           <title>Transforming Narratives of Gun Violence</title>
+          {/* Block indexing on non-prod */}
+          {process.env.NODE_ENV !== 'production' && <meta name="robots" content="noindex" />}
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="description" content={process.env.NODE_ENV} />
           <Favicon />
         </Head>
       </div>

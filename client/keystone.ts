@@ -1,19 +1,25 @@
 import { config } from '@keystone-6/core';
 import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
+import axios from 'axios';
 
 import 'dotenv/config';
 import e from 'express';
-
 import session from 'express-session';
 
-export const cloudinary = {
-  cloudName: `${process.env.CLOUDINARY_CLOUD_NAME}`,
-  apiKey: `${process.env.CLOUDINARY_KEY}`,
-  apiSecret: `${process.env.CLOUDINARY_SECRET}`,
-  folder: 'tngvi',
-};
-import * as lists from './admin/schema';
+import { v2 as cloudinary } from 'cloudinary';
 
+import * as lists from './admin/schema';
+const multer = require('multer');
+const upload = multer();
+
+cloudinary.config({
+  cloud_name: `${process.env.CLOUDINARY_CLOUD_NAME}`,
+  api_key: `${process.env.CLOUDINARY_KEY}`,
+  api_secret: `${process.env.CLOUDINARY_SECRET}`,
+  secure: true,
+});
+
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
@@ -54,7 +60,8 @@ const Passport = () => {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.AUTH_CALLBACK_URL,
-      state: true,
+      // state: true,
+      // skipUserProfile: true,
     },
     (
       request: any,
@@ -65,7 +72,6 @@ const Passport = () => {
     ) => {
       // Verify user allowed
       const email = profile.emails[0].value;
-      console.log(DB().userModel.findOneAndUpdate);
 
       try {
         DB().userModel.findOne(
@@ -88,7 +94,7 @@ const Passport = () => {
           }
         );
       } catch (err) {
-        console.error(err);
+        throw new Error(err as string);
       }
     }
   );
@@ -119,7 +125,68 @@ let ksConfig = {
   },
   lists,
   server: {
+    maxFileSize: 1024 * 1024 * 50,
     extendExpressApp: (app: e.Express) => {
+      app.get('/prod-deploy', async (req, res, next) => {
+        try {
+          const response = await axios.get(
+            `${process.env.DEPLOY_API_PATH}&name=transform-narratives`
+          );
+          res.status(200).send(response.data);
+        } catch (err: any) {
+          res.status(500).send(err.message);
+        }
+      });
+
+      app.get('/media/get/:type', async (req, res) => {
+        try {
+          cloudinary.api.resources(
+            {
+              prefix: 'tngvi',
+              resource_type: 'image',
+              type: req.params.type,
+              max_results: 500,
+            },
+            (e, response) => {
+              const sorted = response.resources.sort(
+                (a: { created_at: number }, b: { created_at: number }) => {
+                  return (
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime()
+                  );
+                }
+              );
+              console.log(sorted);
+              res.status(200).send(sorted);
+            }
+          );
+        } catch (err: any) {
+          res.status(500).send(err);
+        }
+      });
+
+      app.get('/media/delete', async (req, res) => {
+        try {
+          cloudinary.uploader.destroy(req.query.id as string, (e, response) =>
+            res.status(200).send(response)
+          );
+        } catch (err: any) {
+          res.status(500).send(err);
+        }
+      });
+
+      app.post('/media/upload', upload.none(), async (req, res) => {
+        try {
+          const response = await cloudinary.uploader.upload(req.body.img, {
+            folder: 'tngvi',
+          });
+          res.status(200).send(response);
+        } catch (err: any) {
+          console.error(err);
+          res.status(500).send(err);
+        }
+      });
+
       if (process.env.ENABLE_AUTH === 'true') {
         let p = Passport();
         // Session store (mongostore for prod)
@@ -135,7 +202,6 @@ let ksConfig = {
           const mongooseConnection = DB().connection;
           if (!process.env.SESSION_COOKIE) {
             throw new Error('Need SESSION_COOKIE in .env!');
-            return;
           }
           app.use(
             session({
@@ -151,7 +217,7 @@ let ksConfig = {
         app.get(
           '/cms/login',
           p.authenticate('google', {
-            scope: ['profile', 'openid', 'email'],
+            scope: ['openid', 'email'],
           })
         );
 
@@ -160,16 +226,7 @@ let ksConfig = {
             p.authenticate(
               'google',
               (error: any, user: { permissions: any }, info: any) => {
-                if (error) {
-                  console.log('oauth err', error);
-                  // res.status(401).send(error);
-                  // return;
-                }
-                if (!user) {
-                  // console.log('info', info);
-                  res.status(401).send(info);
-                  return;
-                }
+                if (!user) return;
 
                 // Log user in
                 req.logIn(user, (logInErr: any) => {
@@ -177,7 +234,6 @@ let ksConfig = {
                     res.status(500).send(logInErr);
                     return logInErr;
                   }
-                  // console.log('info', req.session);
 
                   // Explicitly save the session before redirecting!
                   req.session.save(() => {
@@ -200,12 +256,13 @@ let ksConfig = {
             req.path !== '/api/__keystone_api_build' &&
             (!req.session.passport || !req.session.passport.user)
           ) {
+            // console.log(req.session.redirectTo);
             // Cache URL to bring user to after auth
             req.session.redirectTo = req.originalUrl;
-            if (req.session.redirectTo) res.redirect(req.session.redirectTo);
-            else {
-              res.redirect('/cms/login');
-            }
+            // if (req.session.redirectTo) res.redirect(req.session.redirectTo);
+            // else {
+            res.redirect('/cms/login');
+            // }
           } else if (req.session.passport && req.session.passport.user.isAdmin)
             next();
         });

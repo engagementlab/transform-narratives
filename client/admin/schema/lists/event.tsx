@@ -2,6 +2,7 @@ import {
     list
   } from '@keystone-6/core';
 import {
+  checkbox,
     json,
     relationship,
     text,
@@ -16,7 +17,7 @@ import {
 import path from 'path';
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
-import { CreateKey } from '../hooks';
+import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const Event: Lists.Event = list({
     fields: {
@@ -36,6 +37,10 @@ const Event: Lists.Event = list({
             fieldMode: 'hidden'
           }
         }
+      }),
+      createdDate: CreatedTimestamp,
+      enabled: checkbox({
+        defaultValue: true,
       }),
       thumbnail: cloudinaryImage({
         label: 'Thumbnail/Header Image',
@@ -149,6 +154,12 @@ const Event: Lists.Event = list({
   
         }
         return resolvedData;
+      }
+    },
+    ui: {
+      listView: { 
+        initialColumns: ['name', 'eventDate', 'thumbnail'],
+        initialSort: { field: 'eventDate', direction: 'DESC' },
       }
     }
   });

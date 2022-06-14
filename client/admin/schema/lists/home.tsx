@@ -50,6 +50,9 @@ const Home: Lists.Filter = list({
     ui: {
         hideCreate: true,
         hideDelete: true,
+        listView: { 
+            initialColumns: ['name']
+        }
     },
     graphql: {
         plural: 'HomePage'

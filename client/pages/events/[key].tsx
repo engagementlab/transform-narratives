@@ -1,16 +1,17 @@
+import { ReactNode } from 'react';
 import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
+import { DocumentRenderer } from '@keystone-6/document-renderer';
 import Link from 'next/link';
 import _ from 'lodash';
 
 import { query } from '.keystone/api';
 
 import Image from '../../components/Image';
-import FlexLayout from '../../components/FlexLayout';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import HeadingStyle from '../../components/HeadingStyle';
+import DocRenderers from '../../components/DocRenderers';
 
 type Event = {
   name: string;
@@ -19,18 +20,14 @@ type Event = {
   thumbnail: any;
   thumbAltText: string;
 };
-const renderers: DocumentRendererProps['renderers'] = {
-    block: {
-        heading: ({ level, children, textAlign }) => {
-            const customRenderers = {
-                4: 'font-semibold text-[18px] text-coated'
-            };
-            return HeadingStyle(level, children, textAlign, customRenderers);
-        },
-        layout: ({layout, children}) => {
-            return FlexLayout(layout, children);
-        }
-    },
+
+const rendererOverrides = {
+    heading: (level: number, children: ReactNode, textAlign: any) => {
+        const customRenderers = {
+            4: 'font-semibold text-[18px] text-coated'
+        };
+        return HeadingStyle(level, children, textAlign, customRenderers);
+    }
 };
 
 export default function Event({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -58,7 +55,7 @@ export default function Event({ item, relatedItems }: InferGetStaticPropsType<ty
                     })}
                 </div>
   
-                <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers} renderers={renderers} />
+                <DocumentRenderer document={item.content.document} componentBlocks={BlockRenderers()} renderers={DocRenderers(rendererOverrides)} />
 
                 {relatedItems &&
                     <div>

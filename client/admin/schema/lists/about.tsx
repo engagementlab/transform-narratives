@@ -96,6 +96,9 @@ const About: Lists.About = list({
     ui: {
         hideCreate: true,
         hideDelete: true,
+        listView: { 
+            initialColumns: ['name']
+        }
     },
   });
   export default About;

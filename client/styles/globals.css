@@ -72,3 +72,12 @@ hr {
 .about-container .lg\:w-1\/2 {
   margin-bottom: 6rem;
 }
+
+.quote-shadow {
+  text-shadow: 1px 1px 1px #f7f7f7,
+            -1px 1px 1px #f7f7f7,
+            -1px -1px 1px #f7f7f7,
+            1px -1px 1px #f7f7f7,
+            2px 1px 3px rgba(247, 247, 247, 0.5),
+            2px -1px 3px rgba(247, 247, 247, 0.5);
+}

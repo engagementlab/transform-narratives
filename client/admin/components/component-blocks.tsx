@@ -1,13 +1,42 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { ComponentType, Fragment, useState } from 'react';
+import React, { ComponentType, Fragment, useEffect, useState } from 'react';
 import { NotEditable, component, fields } from '@keystone-6/fields-document/component-blocks';
 import { FormField, HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
 
 import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields';
 import { css as emCss } from '@emotion/css';
 import Select, { GroupBase, OptionProps } from 'react-select'
-const videoData = require('../../videoData');
+// import { IconButton, ImageList, ImageListItem, ImageListItemBar, Modal, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Box, Grid, IconButton, InputLabel, MenuItem, Pagination, Select as MUISelect, TextField } from '@mui/material';
 
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+
+import create from 'zustand';
+import axios from 'axios';
+
+type ImageGridState = {
+  id: string;
+  alt: string;
+  data: any[];
+  index: number;
+  waiting: boolean;
+
+  toggleWaiting: () => void
+  setId: (id: string) => void
+  setAlt: (id: string) => void
+  setData: (imgData: any[]) => void
+  setIndex: (imgIndex: number) => void
+}   
+
+const videoData = require('../../videoData');
+// const imageData = require('../../imageData');
+
+interface RelatedImage {
+  publicId: null | string;
+  alt?: null | string;
+}
 
 interface RelatedVideo {
   label: string;
@@ -15,6 +44,7 @@ interface RelatedVideo {
   thumbSm: string;
   caption?: string;
 }
+
 const styles = {
   form: {
     field: emCss`
@@ -52,7 +82,7 @@ const styles = {
         color: white;
       }
     `
-  },
+  }
 };
   
 const VideoOptionComponent = (props: OptionProps) => {
@@ -107,13 +137,147 @@ function videoSelect({
             onChange={event => {
               onChange(event as RelatedVideo)
             }}
-            value={current}
+            value={value}
             className={styles.form.select}
             components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
 
           />        
       </FieldContainer>
       )
+    },
+    options: undefined,
+    defaultValue,
+    validate(value) {
+      return typeof value === 'object';
+    },
+  };
+}
+function imageSelect({
+  label,
+  current,
+  defaultValue = {
+    publicId: '',
+    alt: '',
+  }
+}: {
+  label: string;
+  current?: RelatedImage;
+  defaultValue: RelatedImage;
+}): FormField<RelatedImage, undefined> {
+  
+  return {
+    kind: 'form',
+
+    Input({ value, onChange, autoFocus }) {
+    // Create store with Zustand
+    const [useStore] = useState(() => 
+        create<ImageGridState>(set => ({
+          waiting: true,
+          data: [],
+          index: 0,
+          id: value?.publicId || '',
+          alt: value?.alt || '',
+          toggleWaiting: () => set((state) => { 
+              return { waiting: !state.waiting }; 
+          }),
+          setId: (id: string) => set((state) => {
+              return {
+                  ...state,
+                  id,
+              }
+          }),
+          setAlt: (alt: string) => set((state) => {
+            return {
+                ...state,
+                alt,
+            }
+          }),
+          setData: (imgData: any[]) => set((state) => {
+              return {
+                  ...state,
+                  data: imgData,
+              }
+          }),
+          setIndex: (imgIndex: number) => set((state) => {
+              return {
+                  ...state,
+                  index: imgIndex,
+              }
+          })
+        })
+    ));
+
+    const setId = useStore(state => state.setId);
+    const setAlt = useStore(state => state.setAlt);
+    const toggleWaiting = useStore(state => state.toggleWaiting);
+    const setData = useStore(state => state.setData);
+    const setIndex = useStore(state => state.setIndex);
+
+    const currentId = useStore(state => state.id);
+    const currentAlt = useStore(state => state.alt);
+    const data = useStore(state => state.data);
+    const index = useStore(state => state.index);
+    const beginIndex = index * 15;
+    const endIndex = beginIndex + 15;
+    const dataLength = Math.floor(data.length / 15)+1;
+
+    useEffect(() => {
+      if(data && data.length > 1) return;
+        axios.get('/media/get/upload').then((response) =>{
+            setData(response.data);
+            toggleWaiting();
+      }); 
+    })
+
+    return (
+      <FieldContainer>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
+            <ArrowCircleLeftOutlinedIcon fontSize='large' />
+          </IconButton>
+            <MUISelect
+              value={index}
+              label="Page"
+              onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
+              >
+              {[...new Array(dataLength)].map((v, i) => (
+                <MenuItem value={i}>{i+1}</MenuItem>
+              ))}
+          </MUISelect>
+          <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
+            <ArrowCircleRightOutlinedIcon fontSize='large' />
+          </IconButton>
+        </div>
+        
+        <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
+
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            {data.slice(beginIndex, endIndex).map((item) => (
+              <Grid item xs={3}>
+                <a style={{ position: 'relative'}}
+                  onClick={(e) => {
+                    setId(item.public_id); 
+                    onChange({publicId: item.public_id});
+                    // document.getElementById('alt-field').focus();
+                  }}>
+                  <div style={{position: 'absolute', top: 0, left: 0}}>
+                    {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
+                  </div>
+                  <img
+                    src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
+                    style={{opacity: item.public_id === currentId ? .5 : 1}}
+                  />
+                </a>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e)=>
+          {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+      </FieldContainer>
+    )
     },
     options: undefined,
     defaultValue,
@@ -168,11 +332,38 @@ export const componentBlocks = {
           label: 'Click "Edit" and select.',
           videoUrl: '',
           thumbSm: '',
-        }
+        },
        })
      },
      chromeless: false,
   }),
+  // cdnImage: component({
+  //   component: ({image}) => {
+  //     return (
+  //         <div>
+  //           {!image.value.publicId ? <span>Click <em>Edit</em></span> 
+  //           :
+  //           <div>
+  //             <img
+  //                 src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
+  //               />
+  //             {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
+  //           </div>
+  //           }
+  //         </div>
+  //      );
+  //    },
+  //    label: 'CDN Image',
+  //    props: {
+  //      image: imageSelect({
+  //       label: 'Image',
+  //       defaultValue: {
+  //         publicId: null,
+  //       }
+  //      })
+  //    },
+  //   //  chromeless: false,
+  // }),
    button: component({
       component: ({label, link}) => {
         return (      
