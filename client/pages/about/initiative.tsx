@@ -1,8 +1,9 @@
 import { InferGetStaticPropsType } from 'next';
 import { query } from '.keystone/api';
-import { DocumentRenderer } from '@keystone-6/document-renderer';
+import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
+import FlexLayout from '../../components/FlexLayout';
 import Image from '../../components/Image';
 import DocRenderers from '../../components/DocRenderers';
 import { ReactNode } from 'react';
@@ -11,11 +12,10 @@ type AboutPage = {
   content: any;
 };
 
-const cdnImage = (props: any) => {
-  console.log(props)
+const image = (props: any) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Image id={'img-' + props.image.publicId} alt={props.image.data.alt} imgId={props.image.publicId} aspectDefault={true} />
+      <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId} aspectDefault={true} />
       <p>{props.image.data.caption}</p>
     </div>
   );
@@ -30,7 +30,7 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
   return (
     <Layout>
       <div className='about-container container mt-14 mb-24 xl:mt-16 px-4 xl:px-8 w-full lg:w-10/12 xl:w-9/12'>
-        <DocumentRenderer document={page.content.document} renderers={DocRenderers(rendererOverrides)} componentBlocks={BlockRenderers(cdnImage)} />
+        <DocumentRenderer document={page.content.document} renderers={DocRenderers(rendererOverrides)} componentBlocks={BlockRenderers(image)} />
       </div>
     </Layout>
   );
@@ -41,7 +41,7 @@ export async function getStaticProps() {
     where: { name: 'About Page' },
     query: `content { document(hydrateRelationships: true) }`
   }) as AboutPage;
-  console.log(page.content.document[1])
+  // console.log(page.content.document[5].children[0].children[0])
   return {
     props: {
       page
