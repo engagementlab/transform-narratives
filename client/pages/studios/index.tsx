@@ -11,12 +11,12 @@ import {
 import {
     query
 } from '.keystone/api';
+
 import Filtering, { StudioItem } from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 
-const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
 const renderItem = (props: {
         item: StudioItem, toggleFilter: (filter: string) => void 
     }) => {

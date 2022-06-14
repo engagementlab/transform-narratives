@@ -155,6 +155,8 @@ export default class Filtering {
             const toggleFilterGroupOpen = this.useStore(state => state.toggleFilterGroupClosed);
             const toggleFiltersOpen = this.useStore(state => state.toggleFiltersOpen);
             const reset = this.useStore(state => state.reset);
+            
+            const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
 
             const menu = <div>
                             {Object.keys(filters).map((key) => (
@@ -176,7 +178,9 @@ export default class Filtering {
                                                     ${!haveSpecificFilter(filter.key) ? 'text-bluegreen' : 'text-purple' }`}>
                                                     <a href="#" onClick={(e)=>{ toggleFilter(filter.key); e.preventDefault() }}
                                                         className='w-full flex items-center justify-between'>
-                                                        {filter.name}
+                                                        <span className={!haveSpecificFilter(filter.key) ? linkClass : ''}>
+                                                            {filter.name}
+                                                        </span>
                                                         <svg viewBox="185.411 115.41 11 11" width="11" height="11"
                                                             className='flex-shrink-0 mx-6'
                                                             style={{visibility: !haveSpecificFilter(filter.key) ? 'hidden' : 'visible'}}>
