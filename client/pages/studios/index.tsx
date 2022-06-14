@@ -36,15 +36,6 @@ const renderItem = (props: {
                     <div className="flex flex-col lg:flex-row items-start justify-between">
                         <div className="w-full lg:w-2/3">
                             <p className="mt-2 mb-0" dangerouslySetInnerHTML={{__html: props.item.blurb.replace('Facilitated by', '<i>Facilitated by</i>')}}></p>
-                            {/* Filters for item */}
-                            <p className='text-bluegreen'>
-                                {props.item.filters.map((filter, i) => {
-                                    return <span key={`filter-${i}`}>
-                                                <a href="#" onClick={(e)=>{e.preventDefault(); props.toggleFilter(filter.key)}} className={linkClass}>{filter.name}</a>
-                                                {props.item.filters.length-1 > i && <span>,&nbsp;</span>} 
-                                        </span>;
-                                })}
-                            </p>
                         </div>
                         <button
                             className={btnClass}>

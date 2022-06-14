@@ -32,15 +32,6 @@ const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => 
             </Link>
             <div className="mt-2 mb-20">
                 <p className="m-0">{props.item.shortDescription}</p>
-                {/* Filters for item */}
-                <p className='text-bluegreen'>
-                    {props.item.filters.map((filter, i) => {
-                        return <span key={`filter-${i}`}>
-                                    <a href="#" onClick={(e)=>{e.preventDefault(); props.toggleFilter(filter.key)}} className={linkClass}>{filter.name}</a>
-                                    {props.item.filters.length-1 > i && <span>,&nbsp;</span>} 
-                               </span>;
-                    })}
-                </p>
             </div>
         </motion.div>
     );
