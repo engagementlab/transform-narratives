@@ -59,6 +59,9 @@ export default function MediaItem({
     const thisUrl = `${origin}${useRouter().asPath}`;
     const toggleCopied = useStore(state => state.toggleCopied);
     const wasCopied = useStore(state => state.urlCopied);
+
+    const filterClass = 'no-underline border-b-2 border-b-[rgba(255,255,255,0)] hover:border-b-[rgba(255,255,255,1)] transition-all';
+    
     return (
       !item ? 'Not found!' :
         <Layout>
@@ -68,15 +71,17 @@ export default function MediaItem({
                     <div className='flex justify-between pt-8 pb-12 px-4 xl:px-8'>
                         <div>
                             <h1 className="text-2xl font-bold mb-2">{item.title}</h1>
+                            {/* Render filters as links */}
                             <p>{item.filters.map((filter, i) => {
-                                return filter.enabled ? (
-                                <>
-                                   <Link href={`${origin}/archive/?${filter.key}`}>{filter.name}</Link>
-                                   {/* {i < item.filters.length-1 }&nbsp; */}
-                                </>
-                                ) : ''
+                                return filter.enabled ? 
+                                (
+                                    <>
+                                        <Link href={`${origin}/archive/?${filter.key}`}><a className={filterClass}>{filter.name}</a></Link>{i < item.filters.length-1 && ','}&nbsp;
+                                    </>
+                                )
+                                : 
+                                    ''
                             })}</p>
-                            {/* <p>{_.map(item.filters, 'name').join(', ')}</p> */}
                         </div>
                         <div>
                             <CopyToClipboard text={thisUrl} onCopy={()=> toggleCopied(true)}>
