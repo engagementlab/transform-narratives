@@ -83,9 +83,7 @@ const styles = {
         background: #2D3130;
         color: white;
       }
-    `,
-
-       
+    `,       
   },
   imagesModal: {
       position: 'absolute',
@@ -168,6 +166,7 @@ function videoSelect({
     },
   };
 }
+
 function imageSelect({
   label,
   current,
@@ -248,9 +247,16 @@ function imageSelect({
 
     useEffect(() => {
       if(data && data.length > 1) return;
-        axios.get('/media/get/upload').then((response) =>{
-            setData(response.data);
-            toggleWaiting();
+      // Get CDN data
+      axios.get('/media/get/upload').then((response) =>{
+        let data = response.data;
+        // If image pre-selected, move it to the front of array
+        if(currentId.length > 0) {
+          const itemIndex = data.findIndex((item: { public_id: string; }) => item.public_id === currentId);
+          data.splice(0, 0, data.splice(itemIndex, 1)[0]);
+        }
+        setData(data);
+        toggleWaiting();
       }); 
     })
 
@@ -292,7 +298,6 @@ function imageSelect({
                   onClick={(e) => {
                     setId(item.public_id); 
                     onChange({publicId: item.public_id});
-                    // document.getElementById('alt-field').focus();
                   }}>
                   <div style={{position: 'absolute', top: 0, left: 0}}>
                     {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
