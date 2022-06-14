@@ -16,6 +16,9 @@ import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
 import create from 'zustand';
 import axios from 'axios';
 
+const videoData = require('../../videoData');
+// const imageData = require('../../imageData');
+
 type ImageGridState = {
   id: string;
   alt: string;
@@ -31,9 +34,6 @@ type ImageGridState = {
   setIndex: (imgIndex: number) => void
   setGridOpen: (open: boolean) => void
 }   
-
-const videoData = require('../../videoData');
-// const imageData = require('../../imageData');
 
 interface RelatedImage {
   publicId: null | string;
@@ -86,7 +86,18 @@ const styles = {
     `,
 
        
-  }
+  },
+  imagesModal: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 900,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4
+  },
 };
   
 const VideoOptionComponent = (props: OptionProps) => {
@@ -112,6 +123,7 @@ const VideoOptionComponent = (props: OptionProps) => {
     
   )
 }
+
 function videoSelect({
   label,
   current,
@@ -251,15 +263,7 @@ function imageSelect({
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             >  
-            <Box sx={ {position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 900,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4}}>
+        <Box sx={styles.imagesModal}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
           <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
             <ArrowCircleLeftOutlinedIcon fontSize='large' />
@@ -303,8 +307,19 @@ function imageSelect({
           </Grid>
         </Box>
 
-        <TextField id="alt-field" label="Alt Text" variant="standard" value={currentAlt} onChange={(e)=>
-          {setAlt(e.target.value); onChange({publicId: currentId, alt: e.target.value})}}/>
+        <TextField 
+        id="alt-field" 
+          multiline
+          fullWidth
+          rows={4}
+          label="Alt Text" 
+          variant="standard" 
+          value={currentAlt} 
+          onChange={(e)=> {
+              setAlt(e.target.value); 
+              onChange({publicId: currentId, alt: e.target.value});
+          }}
+        />
           <br />
           <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
             <CheckTwoToneIcon fontSize='large' color='success' />
@@ -323,28 +338,33 @@ function imageSelect({
 }
 
 export const componentBlocks = {
-  // image: component({
-  //    component: (props) => {
-  //     if(!props.image.value) return null;
-
-  //     const data = (props.image.value as unknown as HydratedRelationshipData).data;
-  //     return (
-  //         <img
-  //           style={{width:'100%'}}
-  //           className="body-image"
-  //           src={data.image?.publicUrlTransformed}
-  //           alt="Document image"
-  //         />
-  //      );
-  //    },
-  //    label: 'Image',
-  //    props: {
-  //      image: fields.relationship<'many'>({
-  //        label: 'Images',
-  //        relationship: 'image',
-  //      }),
-  //    },
-  //  }),
+  image: component({
+    component: ({image}) => {
+      return (
+          <div>
+            {!image.value.publicId ? <span>Click <em>Edit</em></span> 
+            :
+            <div>
+              <img
+                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
+                />
+              {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
+            </div>
+            }
+          </div>
+       );
+     },
+     label: 'Image',
+     props: {
+       image: imageSelect({
+        label: 'Image',
+        defaultValue: {
+          publicId: null,
+        }
+       })
+     },
+    //  chromeless: false,
+  }),
   video: component({
     component: ({video}) => {
       return (
@@ -371,34 +391,6 @@ export const componentBlocks = {
        })
      },
      chromeless: false,
-  }),
-  image: component({
-    component: ({image}) => {
-      console.log(image);
-      return (
-          <div>
-            {!image.value.publicId ? <span>Click <em>Edit</em></span> 
-            :
-            <div>
-              <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
-                />
-              {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
-            </div>
-            }
-          </div>
-       );
-     },
-     label: 'Image',
-     props: {
-       image: imageSelect({
-        label: 'Image',
-        defaultValue: {
-          publicId: null,
-        }
-       })
-     },
-    //  chromeless: false,
   }),
    button: component({
       component: ({label, link}) => {
