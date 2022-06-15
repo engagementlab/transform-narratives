@@ -78,21 +78,6 @@ const BigPicture: Lists.BigPicture = list({
                  },
             }
         }),
-        images: relationship({
-          ref: 'BigPictureImage.bigPictureImages',
-          many: true,
-          label: "Images (add here for use in 'Content' field)",
-          ui: {
-            displayMode: 'cards',
-            cardFields: ['image', 'imageName', 'altText'],
-            inlineCreate: {
-              fields: ['image', 'imageName', 'altText']
-            },
-            inlineEdit: {
-              fields: ['image', 'imageName', 'altText']
-            },
-          },
-        }),
     },
     ui: {
         hideCreate: true,

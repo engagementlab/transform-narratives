@@ -51,7 +51,6 @@ if (process.env.DB_URI) {
   dbConfig = {
     provider: 'postgresql',
     url: process.env.DB_URI,
-    enableLogging: true,
   };
 }
 

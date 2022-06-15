@@ -111,21 +111,6 @@ const NewsItem: Lists.NewsItem = list({
             },
           },
       }),
-      images: relationship({
-        ref: 'NewsImage.newsImages',
-        many: true,
-        label: "Images (add here for use in 'Body' field)",
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['image', 'imageName', 'altText', 'caption'],
-          inlineCreate: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-          inlineEdit: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-        },
-      }),
     },
     hooks: {
       resolveInput: async ({

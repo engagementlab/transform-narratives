@@ -96,29 +96,6 @@ const Studio: Lists.Studio = list({
       },
 
       componentBlocks,
-
-      relationships: {
-        image: {
-          kind: 'prop',
-          listKey: 'StudioImage',
-          selection: 'imageName altText image {publicUrlTransformed publicId}',
-        },
-      },
-    }),
-    photos: relationship({
-      ref: 'StudioImage.studioImages',
-      many: true,
-      label: "Images (add here for use in 'Content' field)",
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['image', 'imageName', 'altText', 'caption'],
-        inlineCreate: {
-          fields: ['image', 'imageName', 'altText', 'caption']
-        },
-        inlineEdit: {
-          fields: ['image', 'imageName', 'altText', 'caption']
-        },
-      },
     }),
     // associatedMedia: relationship({
     //   ref: 'MediaItem',
