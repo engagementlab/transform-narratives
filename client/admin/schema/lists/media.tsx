@@ -93,36 +93,21 @@ const MediaItem: Lists.MediaItem = list({
           },
         },
       }),
-      images: relationship({
-        ref: 'MediaImage.mediaImages',
-        many: true,
-        label: "Document Images (add here for use in 'Content' field)",
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['image', 'imageName', 'altText'],
-          inlineCreate: {
-            fields: ['image', 'imageName', 'altText']
-          },
-          inlineEdit: {
-            fields: ['image', 'imageName', 'altText']
-          },
-        },
-      }),
-      galleryImages: relationship({
-        ref: 'MediaImage.mediaGalleryImages',
-        many: true,
-        label: "Gallery Images",
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['image', 'altText', 'caption'],
-          inlineCreate: {
-            fields: ['image', 'altText', 'caption']
-          },
-          inlineEdit: {
-            fields: ['image', 'altText', 'caption']
-          },
-        },
-      }),
+      // galleryImages: relationship({
+      //   ref: 'MediaImage.mediaGalleryImages',
+      //   many: true,
+      //   label: "Gallery Images",
+      //   ui: {
+      //     displayMode: 'cards',
+      //     cardFields: ['image', 'altText', 'caption'],
+      //     inlineCreate: {
+      //       fields: ['image', 'altText', 'caption']
+      //     },
+      //     inlineEdit: {
+      //       fields: ['image', 'altText', 'caption']
+      //     },
+      //   },
+      // }),
       videos: json({
         ui: {
           views: path.join(process.cwd(), '/admin/components/video/components.tsx'),

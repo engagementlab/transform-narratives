@@ -7,22 +7,13 @@ import Video from "./Video";
 const BlockRenderers = (imageOveride?: { (props: any): JSX.Element; (arg0: any): any; }) => {
   let blocks: InferRenderersForComponentBlocks<typeof componentBlocks>  = {
   image:(props: any) => { 
-    return imageOveride ? imageOveride(props) : 
-    (
+    return  (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Image id={'img-' + props.image.data.image.publicId} alt={props.image.data.altText} imgId={props.image.data.image.publicId}  />
-        <p>{props.image.data.caption}</p>
-      </div>
+      <Image id={'img-' + props.image.publicId} alt={props.image.alt} imgId={props.image.publicId} aspectDefault={true} />
+      {/* <p>{props.image.data.caption}</p> */}
+    </div>
     );
   },
-  // cdnImage:(props: any) => { 
-  //   return  (
-  //     <div style={{ display: 'flex', flexDirection: 'column' }}>
-  //     <Image id={'img-' + props.image.publicId} alt={props.image.alt} imgId={props.image.publicId} aspectDefault={true} />
-  //     {/* <p>{props.image.data.caption}</p> */}
-  //   </div>
-  //   );
-  // },
   video: (props: any) => {
     return <Video videoLabel={props.video.label} videoUrl={props.video.value} thumbUrl={props.video.thumb} />
   },

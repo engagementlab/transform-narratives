@@ -156,7 +156,7 @@ let ksConfig = {
                   );
                 }
               );
-              console.log(sorted);
+
               res.status(200).send(sorted);
             }
           );
