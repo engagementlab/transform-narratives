@@ -21,7 +21,7 @@ import {
 import { cloudinaryImage } from '../../components/cloudinary';
 import { CreatedTimestamp, CreateKey } from '../hooks';
 
-const Studio: Lists.Studio = list({
+export const Studio: Lists.Studio = list({
   fields: {
     name: text({
       validation: {
@@ -134,4 +134,3 @@ const Studio: Lists.Studio = list({
     }
   }
 });
-export default Studio;

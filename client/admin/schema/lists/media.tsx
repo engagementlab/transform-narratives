@@ -23,7 +23,7 @@ import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const videoData = require('../../../videoData');
 
-const MediaItem: Lists.MediaItem = list({
+export const MediaItem: Lists.MediaItem = list({
     fields: {
       title: text({
         validation: {
@@ -84,14 +84,6 @@ const MediaItem: Lists.MediaItem = list({
         },
   
         componentBlocks,
-  
-        relationships: {
-          image: {
-            kind: 'prop',
-            listKey: 'MediaImage',
-            selection: 'imageName altText image {publicUrlTransformed publicId}',
-          },
-        },
       }),
       // galleryImages: relationship({
       //   ref: 'MediaImage.mediaGalleryImages',
@@ -139,4 +131,3 @@ const MediaItem: Lists.MediaItem = list({
       }
     }
   });
-  export default MediaItem;

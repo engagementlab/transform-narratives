@@ -16,7 +16,7 @@ import {
     componentBlocks
 } from '../../components/component-blocks';
 
-const Community: Lists.Community = list({
+export const Community: Lists.Community = list({
     fields: {
         name: text({
             isIndexed: 'unique',
@@ -51,4 +51,3 @@ const Community: Lists.Community = list({
         }
     },
   });
-  export default Community;

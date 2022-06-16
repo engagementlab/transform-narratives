@@ -106,14 +106,6 @@ const Event: Lists.Event = list({
         },
   
         componentBlocks,
-  
-        relationships: {
-          image: {
-            kind: 'prop',
-            listKey: 'EventImage',
-            selection: 'imageName altText caption image {publicUrlTransformed publicId}',
-          },
-        },
       }),
       // speakers: relationship({
       //   ref: 'Person',

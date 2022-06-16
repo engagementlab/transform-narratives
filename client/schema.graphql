@@ -180,177 +180,6 @@ input CommunityCreateInput {
   values: JSON
 }
 
-type Event {
-  id: ID!
-  name: String
-  key: String
-  createdDate: DateTime
-  enabled: Boolean
-  thumbnail: CloudinaryImage_File
-  thumbAltText: String
-  eventDate: DateTime
-  registrationLink: String
-  address: String
-  blurb: String
-  content: Event_content_Document
-}
-
-scalar DateTime
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
-
-type CloudinaryImage_File {
-  id: ID
-  filename: String
-  originalFilename: String
-  mimetype: String
-  encoding: String
-  publicId: String
-  publicUrl: String
-  publicUrlTransformed(transformation: CloudinaryImageFormat): String
-}
-
-"""
-Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
-All options are strings as they ultimately end up in a URL.
-"""
-input CloudinaryImageFormat {
-  """
-   Rewrites the filename to be this pretty string. Do not include `/` or `.`
-  """
-  prettyName: String
-  width: String
-  height: String
-  crop: String
-  aspect_ratio: String
-  gravity: String
-  zoom: String
-  x: String
-  y: String
-  format: String
-  fetch_format: String
-  quality: String
-  radius: String
-  angle: String
-  effect: String
-  opacity: String
-  border: String
-  background: String
-  overlay: String
-  underlay: String
-  default_image: String
-  delay: String
-  color: String
-  color_space: String
-  dpr: String
-  page: String
-  density: String
-  flags: String
-  transformation: String
-}
-
-type Event_content_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
-}
-
-input EventWhereUniqueInput {
-  id: ID
-  key: String
-}
-
-input EventWhereInput {
-  AND: [EventWhereInput!]
-  OR: [EventWhereInput!]
-  NOT: [EventWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  key: StringFilter
-  createdDate: DateTimeNullableFilter
-  enabled: BooleanFilter
-  thumbAltText: StringFilter
-  eventDate: DateTimeFilter
-  registrationLink: StringFilter
-  address: StringFilter
-  blurb: StringFilter
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
-input DateTimeFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeFilter
-}
-
-input EventOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  key: OrderDirection
-  createdDate: OrderDirection
-  enabled: OrderDirection
-  thumbAltText: OrderDirection
-  eventDate: OrderDirection
-  registrationLink: OrderDirection
-  address: OrderDirection
-  blurb: OrderDirection
-}
-
-input EventUpdateInput {
-  name: String
-  key: String
-  createdDate: DateTime
-  enabled: Boolean
-  thumbnail: Upload
-  thumbAltText: String
-  eventDate: DateTime
-  registrationLink: String
-  address: String
-  blurb: String
-  content: JSON
-}
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
-
-input EventUpdateArgs {
-  where: EventWhereUniqueInput!
-  data: EventUpdateInput!
-}
-
-input EventCreateInput {
-  name: String
-  key: String
-  createdDate: DateTime
-  enabled: Boolean
-  thumbnail: Upload
-  thumbAltText: String
-  eventDate: DateTime
-  registrationLink: String
-  address: String
-  blurb: String
-  content: JSON
-}
-
 type Filter {
   id: ID!
   name: String
@@ -390,6 +219,11 @@ input FilterWhereInput {
   enabled: BooleanFilter
   type: FilterTypeTypeNullableFilter
   section: FilterSectionTypeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input FilterTypeTypeNullableFilter {
@@ -434,77 +268,6 @@ input FilterCreateInput {
   enabled: Boolean
   type: FilterTypeType
   section: FilterSectionType
-}
-
-type HomeSlide {
-  id: ID!
-  homeSlides(
-    where: HomeWhereInput! = {}
-    orderBy: [HomeOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Home!]
-  homeSlidesCount(where: HomeWhereInput! = {}): Int
-  image: CloudinaryImage_File
-  altText: String
-  quote: String
-}
-
-input HomeSlideWhereUniqueInput {
-  id: ID
-}
-
-input HomeSlideWhereInput {
-  AND: [HomeSlideWhereInput!]
-  OR: [HomeSlideWhereInput!]
-  NOT: [HomeSlideWhereInput!]
-  id: IDFilter
-  homeSlides: HomeManyRelationFilter
-  altText: StringFilter
-  quote: StringFilter
-}
-
-input HomeManyRelationFilter {
-  every: HomeWhereInput
-  some: HomeWhereInput
-  none: HomeWhereInput
-}
-
-input HomeSlideOrderByInput {
-  id: OrderDirection
-  altText: OrderDirection
-  quote: OrderDirection
-}
-
-input HomeSlideUpdateInput {
-  homeSlides: HomeRelateToManyForUpdateInput
-  image: Upload
-  altText: String
-  quote: String
-}
-
-input HomeRelateToManyForUpdateInput {
-  disconnect: [HomeWhereUniqueInput!]
-  set: [HomeWhereUniqueInput!]
-  create: [HomeCreateInput!]
-  connect: [HomeWhereUniqueInput!]
-}
-
-input HomeSlideUpdateArgs {
-  where: HomeSlideWhereUniqueInput!
-  data: HomeSlideUpdateInput!
-}
-
-input HomeSlideCreateInput {
-  homeSlides: HomeRelateToManyForCreateInput
-  image: Upload
-  altText: String
-  quote: String
-}
-
-input HomeRelateToManyForCreateInput {
-  create: [HomeCreateInput!]
-  connect: [HomeWhereUniqueInput!]
 }
 
 type Home {
@@ -578,6 +341,132 @@ input HomeSlideRelateToManyForCreateInput {
   connect: [HomeSlideWhereUniqueInput!]
 }
 
+type HomeSlide {
+  id: ID!
+  homeSlides(
+    where: HomeWhereInput! = {}
+    orderBy: [HomeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Home!]
+  homeSlidesCount(where: HomeWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  altText: String
+  quote: String
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicId: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input HomeSlideWhereUniqueInput {
+  id: ID
+}
+
+input HomeSlideWhereInput {
+  AND: [HomeSlideWhereInput!]
+  OR: [HomeSlideWhereInput!]
+  NOT: [HomeSlideWhereInput!]
+  id: IDFilter
+  homeSlides: HomeManyRelationFilter
+  altText: StringFilter
+  quote: StringFilter
+}
+
+input HomeManyRelationFilter {
+  every: HomeWhereInput
+  some: HomeWhereInput
+  none: HomeWhereInput
+}
+
+input HomeSlideOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+  quote: OrderDirection
+}
+
+input HomeSlideUpdateInput {
+  homeSlides: HomeRelateToManyForUpdateInput
+  image: Upload
+  altText: String
+  quote: String
+}
+
+input HomeRelateToManyForUpdateInput {
+  disconnect: [HomeWhereUniqueInput!]
+  set: [HomeWhereUniqueInput!]
+  create: [HomeCreateInput!]
+  connect: [HomeWhereUniqueInput!]
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input HomeSlideUpdateArgs {
+  where: HomeSlideWhereUniqueInput!
+  data: HomeSlideUpdateInput!
+}
+
+input HomeSlideCreateInput {
+  homeSlides: HomeRelateToManyForCreateInput
+  image: Upload
+  altText: String
+  quote: String
+}
+
+input HomeRelateToManyForCreateInput {
+  create: [HomeCreateInput!]
+  connect: [HomeWhereUniqueInput!]
+}
+
 type MediaItem {
   id: ID!
   title: String
@@ -597,6 +486,9 @@ type MediaItem {
   videos: JSON
   file: AzureStorageFileFieldOutput
 }
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 type MediaItem_content_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
@@ -632,6 +524,17 @@ input MediaItemWhereInput {
   enabled: BooleanFilter
   shortDescription: StringFilter
   filters: FilterManyRelationFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input FilterManyRelationFilter {
@@ -733,6 +636,17 @@ input NewsItemWhereInput {
   publishDate: DateTimeFilter
   externalLink: StringFilter
   blurb: StringFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
 }
 
 input NewsItemOrderByInput {
@@ -973,18 +887,18 @@ type Mutation {
   updateCommunities(data: [CommunityUpdateArgs!]!): [Community]
   deleteCommunity(where: CommunityWhereUniqueInput!): Community
   deleteCommunities(where: [CommunityWhereUniqueInput!]!): [Community]
-  createEvent(data: EventCreateInput!): Event
-  createEvents(data: [EventCreateInput!]!): [Event]
-  updateEvent(where: EventWhereUniqueInput!, data: EventUpdateInput!): Event
-  updateEvents(data: [EventUpdateArgs!]!): [Event]
-  deleteEvent(where: EventWhereUniqueInput!): Event
-  deleteEvents(where: [EventWhereUniqueInput!]!): [Event]
   createFilter(data: FilterCreateInput!): Filter
   createFilters(data: [FilterCreateInput!]!): [Filter]
   updateFilter(where: FilterWhereUniqueInput!, data: FilterUpdateInput!): Filter
   updateFilters(data: [FilterUpdateArgs!]!): [Filter]
   deleteFilter(where: FilterWhereUniqueInput!): Filter
   deleteFilters(where: [FilterWhereUniqueInput!]!): [Filter]
+  createHome(data: HomeCreateInput!): Home
+  createHomePage(data: [HomeCreateInput!]!): [Home]
+  updateHome(where: HomeWhereUniqueInput!, data: HomeUpdateInput!): Home
+  updateHomePage(data: [HomeUpdateArgs!]!): [Home]
+  deleteHome(where: HomeWhereUniqueInput!): Home
+  deleteHomePage(where: [HomeWhereUniqueInput!]!): [Home]
   createHomeSlide(data: HomeSlideCreateInput!): HomeSlide
   createHomeSlides(data: [HomeSlideCreateInput!]!): [HomeSlide]
   updateHomeSlide(
@@ -994,12 +908,6 @@ type Mutation {
   updateHomeSlides(data: [HomeSlideUpdateArgs!]!): [HomeSlide]
   deleteHomeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
   deleteHomeSlides(where: [HomeSlideWhereUniqueInput!]!): [HomeSlide]
-  createHome(data: HomeCreateInput!): Home
-  createHomePage(data: [HomeCreateInput!]!): [Home]
-  updateHome(where: HomeWhereUniqueInput!, data: HomeUpdateInput!): Home
-  updateHomePage(data: [HomeUpdateArgs!]!): [Home]
-  deleteHome(where: HomeWhereUniqueInput!): Home
-  deleteHomePage(where: [HomeWhereUniqueInput!]!): [Home]
   createMediaItem(data: MediaItemCreateInput!): MediaItem
   createMediaItems(data: [MediaItemCreateInput!]!): [MediaItem]
   updateMediaItem(
@@ -1057,14 +965,6 @@ type Query {
   ): [Community!]
   community(where: CommunityWhereUniqueInput!): Community
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  events(
-    where: EventWhereInput! = {}
-    orderBy: [EventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Event!]
-  event(where: EventWhereUniqueInput!): Event
-  eventsCount(where: EventWhereInput! = {}): Int
   filters(
     where: FilterWhereInput! = {}
     orderBy: [FilterOrderByInput!]! = []
@@ -1073,14 +973,6 @@ type Query {
   ): [Filter!]
   filter(where: FilterWhereUniqueInput!): Filter
   filtersCount(where: FilterWhereInput! = {}): Int
-  homeSlides(
-    where: HomeSlideWhereInput! = {}
-    orderBy: [HomeSlideOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [HomeSlide!]
-  homeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
-  homeSlidesCount(where: HomeSlideWhereInput! = {}): Int
   homePage(
     where: HomeWhereInput! = {}
     orderBy: [HomeOrderByInput!]! = []
@@ -1089,6 +981,14 @@ type Query {
   ): [Home!]
   home(where: HomeWhereUniqueInput!): Home
   homePageCount(where: HomeWhereInput! = {}): Int
+  homeSlides(
+    where: HomeSlideWhereInput! = {}
+    orderBy: [HomeSlideOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HomeSlide!]
+  homeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
+  homeSlidesCount(where: HomeSlideWhereInput! = {}): Int
   mediaItems(
     where: MediaItemWhereInput! = {}
     orderBy: [MediaItemOrderByInput!]! = []

@@ -15,11 +15,12 @@ import {
     Lists
 } from '.keystone/types';
 import path from 'path';
+
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
 import { CreatedTimestamp, CreateKey } from '../hooks';
 
-const NewsItem: Lists.NewsItem = list({
+export const NewsItem: Lists.NewsItem = list({
     fields: {
       title: text({
         validation: {
@@ -102,14 +103,6 @@ const NewsItem: Lists.NewsItem = list({
               views: path.join(process.cwd(), 'admin/components/component-blocks')
           },
           componentBlocks,
-
-          relationships: {
-            image: {
-              kind: 'prop',
-              listKey: 'NewsImage',
-              selection: 'imageName altText caption image {publicUrlTransformed publicId}',
-            },
-          },
       }),
     },
     hooks: {
@@ -140,4 +133,3 @@ const NewsItem: Lists.NewsItem = list({
       }
     },
   });
-  export default NewsItem;

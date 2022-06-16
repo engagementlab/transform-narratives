@@ -19,7 +19,7 @@ import {
 } from '../../components/component-blocks';
 import { FixButtons } from '../hooks';
 
-const BigPicture: Lists.BigPicture = list({
+export const BigPicture: Lists.BigPicture = list({
     fields: {
         name: text({
             isIndexed: 'unique',
@@ -56,14 +56,6 @@ const BigPicture: Lists.BigPicture = list({
                 views: path.join(process.cwd(), 'admin/components/component-blocks')
             },
             componentBlocks,
-
-            relationships: {
-              image: {
-                kind: 'prop',
-                listKey: 'BigPictureImage',
-                selection: 'imageName altText image {publicUrlTransformed publicId}',
-              },
-            },
             hooks: {
                 resolveInput: async ({
                     listKey,
@@ -107,4 +99,3 @@ const BigPicture: Lists.BigPicture = list({
     //   }
     // }
   });
-  export default BigPicture;

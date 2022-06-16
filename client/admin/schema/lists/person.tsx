@@ -14,7 +14,7 @@ import {
 import { document } from '@keystone-6/fields-document';
 import { CreatedTimestamp } from '../hooks';
 
-const Person: Lists.Person = list({
+export const Person: Lists.Person = list({
   fields: {
     name: text({
       validation: {
@@ -60,4 +60,3 @@ const Person: Lists.Person = list({
     }
   }
 });
-export default Person;

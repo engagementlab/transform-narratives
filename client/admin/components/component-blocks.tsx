@@ -36,15 +36,19 @@ type ImageGridState = {
 }   
 
 interface RelatedImage {
-  publicId: null | string;
-  alt?: null | string;
+  [key: string]: {
+    publicId: null | string;
+    alt?: null | string;
+  }
 }
 
 interface RelatedVideo {
-  label: string;
-  videoUrl: string;
-  thumbSm: string;
-  caption?: string;
+  [key: string]: {
+    label: string;
+    videoUrl: string;
+    thumbSm: string;
+    caption?: string;
+  }
 }
 
 const styles = {
@@ -126,9 +130,11 @@ function videoSelect({
   label,
   current,
   defaultValue = {
-    label: 'PICK VIDEO',
-    videoUrl: '',
-    thumbSm: '',
+    video: {
+      label: 'PICK VIDEO',
+      videoUrl: '',
+      thumbSm: '',
+    }
   }
 }: {
   label: string;
@@ -171,8 +177,10 @@ function imageSelect({
   label,
   current,
   defaultValue = {
-    publicId: '',
-    alt: '',
+    'image': {
+      publicId: '',
+      alt: '',
+    }
   }
 }: {
   label: string;
@@ -184,155 +192,155 @@ function imageSelect({
     kind: 'form',
 
     Input({ value, onChange, autoFocus }) {
-    // Create store with Zustand
-    const [useStore] = useState(() => 
-        create<ImageGridState>(set => ({
-          waiting: true,
-          gridOpen: true,
-          data: [],
-          index: 0,
-          id: value?.publicId || '',
-          alt: value?.alt || '',
-          toggleWaiting: () => set((state) => { 
-              return { waiting: !state.waiting }; 
-          }),
-          setId: (id: string) => set((state) => {
+      // Create store with Zustand
+      const [useStore] = useState(() => 
+          create<ImageGridState>(set => ({
+            waiting: true,
+            gridOpen: true,
+            data: [],
+            index: 0,
+            id: value?.image.publicId || '',
+            alt: value?.image.alt || '',
+            toggleWaiting: () => set((state) => { 
+                return { waiting: !state.waiting }; 
+            }),
+            setId: (id: string) => set((state) => {
+                return {
+                    ...state,
+                    id,
+                }
+            }),
+            setAlt: (alt: string) => set((state) => {
               return {
                   ...state,
-                  id,
+                  alt,
               }
-          }),
-          setAlt: (alt: string) => set((state) => {
-            return {
-                ...state,
-                alt,
-            }
-          }),
-          setData: (imgData: any[]) => set((state) => {
-              return {
-                  ...state,
-                  data: imgData,
-              }
-          }),
-          setIndex: (imgIndex: number) => set((state) => {
-              return {
-                  ...state,
-                  index: imgIndex,
-              }
-          }),
-          setGridOpen: (open: boolean) => set((state) => {
-              return {
-                  ...state,
-                  gridOpen: open
-              }
-          }),
-        })
-    ));
+            }),
+            setData: (imgData: any[]) => set((state) => {
+                return {
+                    ...state,
+                    data: imgData,
+                }
+            }),
+            setIndex: (imgIndex: number) => set((state) => {
+                return {
+                    ...state,
+                    index: imgIndex,
+                }
+            }),
+            setGridOpen: (open: boolean) => set((state) => {
+                return {
+                    ...state,
+                    gridOpen: open
+                }
+            }),
+          })
+      ));
 
-    const setId = useStore(state => state.setId);
-    const setAlt = useStore(state => state.setAlt);
-    const toggleWaiting = useStore(state => state.toggleWaiting);
-    const setData = useStore(state => state.setData);
-    const setIndex = useStore(state => state.setIndex);
-    const setGridOpen = useStore(state => state.setGridOpen);
+      const setId = useStore(state => state.setId);
+      const setAlt = useStore(state => state.setAlt);
+      const toggleWaiting = useStore(state => state.toggleWaiting);
+      const setData = useStore(state => state.setData);
+      const setIndex = useStore(state => state.setIndex);
+      const setGridOpen = useStore(state => state.setGridOpen);
 
-    const currentId = useStore(state => state.id);
-    const currentAlt = useStore(state => state.alt);
-    const gridOpen = useStore(state => state.gridOpen);
-    const data = useStore(state => state.data);
-    const index = useStore(state => state.index);
-    const beginIndex = index * 15;
-    const endIndex = beginIndex + 15;
-    const dataLength = Math.floor(data.length / 15)+1;
+      const currentId = useStore(state => state.id);
+      const currentAlt = useStore(state => state.alt);
+      const gridOpen = useStore(state => state.gridOpen);
+      const data = useStore(state => state.data);
+      const index = useStore(state => state.index);
+      const beginIndex = index * 15;
+      const endIndex = beginIndex + 15;
+      const dataLength = Math.floor(data.length / 15)+1;
 
-    useEffect(() => {
-      if(data && data.length > 1) return;
-      // Get CDN data
-      axios.get('/media/get/upload').then((response) =>{
-        let data = response.data;
-        // If image pre-selected, move it to the front of array
-        if(currentId.length > 0) {
-          const itemIndex = data.findIndex((item: { public_id: string; }) => item.public_id === currentId);
-          data.splice(0, 0, data.splice(itemIndex, 1)[0]);
-        }
-        setData(data);
-        toggleWaiting();
-      }); 
-    })
+      useEffect(() => {
+        if(data && data.length > 1) return;
+        // Get CDN data
+        axios.get('/media/get/upload').then((response) =>{
+          let data = response.data;
+          // If image pre-selected, move it to the front of array
+          if(currentId.length > 0) {
+            const itemIndex = data.findIndex((item: { public_id: string; }) => item.public_id === currentId);
+            data.splice(0, 0, data.splice(itemIndex, 1)[0]);
+          }
+          setData(data);
+          toggleWaiting();
+        }); 
+      })
 
-    return (
-      <FieldContainer>
-        Click <em>Done</em> for image preview.
-      <Modal
-            open={gridOpen}
-            onClose={() => {setGridOpen(false); }}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            >  
-        <Box sx={styles.imagesModal}>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
-            <ArrowCircleLeftOutlinedIcon fontSize='large' />
-          </IconButton>
-            <MUISelect
-              value={index}
-              label="Page"
-              onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
-              >
-              {[...new Array(dataLength)].map((v, i) => (
-                <MenuItem value={i}>{i+1}</MenuItem>
+      return (
+        <FieldContainer>
+          Click <em>Done</em> for image preview.
+        <Modal
+              open={gridOpen}
+              onClose={() => {setGridOpen(false); }}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+              >  
+          <Box sx={styles.imagesModal}>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
+              <ArrowCircleLeftOutlinedIcon fontSize='large' />
+            </IconButton>
+              <MUISelect
+                value={index}
+                label="Page"
+                onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
+                >
+                {[...new Array(dataLength)].map((v, i) => (
+                  <MenuItem value={i}>{i+1}</MenuItem>
+                ))}
+            </MUISelect>
+            <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
+              <ArrowCircleRightOutlinedIcon fontSize='large' />
+            </IconButton>
+          </div>
+          
+          <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
+
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              {data.slice(beginIndex, endIndex).map((item) => (
+                <Grid item xs={3}>
+                  <a style={{ position: 'relative'}}
+                    onClick={(e) => {
+                      setId(item.public_id); 
+                      onChange({publicId: item.public_id});
+                    }}>
+                    <div style={{position: 'absolute', top: 0, left: 0}}>
+                      {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
+                    </div>
+                    <img
+                      src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
+                      style={{opacity: item.public_id === currentId ? .5 : 1}}
+                    />
+                  </a>
+                </Grid>
               ))}
-          </MUISelect>
-          <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
-            <ArrowCircleRightOutlinedIcon fontSize='large' />
-          </IconButton>
-        </div>
-        
-        <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
+            </Grid>
+          </Box>
 
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            {data.slice(beginIndex, endIndex).map((item) => (
-              <Grid item xs={3}>
-                <a style={{ position: 'relative'}}
-                  onClick={(e) => {
-                    setId(item.public_id); 
-                    onChange({publicId: item.public_id});
-                  }}>
-                  <div style={{position: 'absolute', top: 0, left: 0}}>
-                    {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
-                  </div>
-                  <img
-                    src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
-                    style={{opacity: item.public_id === currentId ? .5 : 1}}
-                  />
-                </a>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-
-        <TextField 
-        id="alt-field" 
-          multiline
-          fullWidth
-          rows={4}
-          label="Alt Text" 
-          variant="standard" 
-          value={currentAlt} 
-          onChange={(e)=> {
-              setAlt(e.target.value); 
-              onChange({publicId: currentId, alt: e.target.value});
-          }}
-        />
-          <br />
-          <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
-            <CheckTwoToneIcon fontSize='large' color='success' />
-          </IconButton>
-        </Box>
-        </Modal>
-      </FieldContainer>
-    )
+          <TextField 
+          id="alt-field" 
+            multiline
+            fullWidth
+            rows={4}
+            label="Alt Text" 
+            variant="standard" 
+            value={currentAlt} 
+            onChange={(e)=> {
+                setAlt(e.target.value); 
+                onChange({image: {publicId: currentId, alt: e.target.value}});
+            }}
+          />
+            <br />
+            <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
+              <CheckTwoToneIcon fontSize='large' color='success' />
+            </IconButton>
+          </Box>
+          </Modal>
+        </FieldContainer>
+      )
     },
     options: undefined,
     defaultValue,
@@ -344,66 +352,71 @@ function imageSelect({
 
 export const componentBlocks = {
   image: component({
-    component: ({image}) => {
+    preview: props => {
       return (
           <div>
-            {!image.value.publicId ? <span>Click <em>Edit</em></span> 
+            {!props.fields.image.value.publicId ? <span>Click <em>Edit</em></span> 
             :
             <div>
               <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${image.value.publicId}`}
+                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${props.fields.image.value.publicId}`}
                 />
-              {image.value.alt && <div><em>(Alt: {image.value.alt})</em></div>}
+              {props.fields.image.value.alt && <div><em>(Alt: {props.fields.image.value.alt})</em></div>}
             </div>
             }
           </div>
        );
      },
      label: 'Image',
-     props: {
+     schema: {
        image: imageSelect({
         label: 'Image',
         defaultValue: {
-          publicId: null,
+          image: {
+            publicId: null,
+          }
         }
        })
      },
-    //  chromeless: false,
   }),
   video: component({
-    component: ({video}) => {
+    preview: props => {
       return (
           <div>
-            {video.value.label}
+            {props.fields.video.value.label}
             <br />
             <img
               style={{width:'150px'}}
-              src={video.value.thumbSm}
+              src={props.fields.video.value.video.thumbSm}
               // alt="Document image"
             />
           </div>
        );
      },
      label: 'Video',
-     props: {
+      schema: {
        video: videoSelect({
         label: 'Video',
         defaultValue: {
-          label: 'Click "Edit" and select.',
-          videoUrl: '',
-          thumbSm: '',
+          video: {
+            label: 'Click "Edit" and select.',
+            videoUrl: '',
+            thumbSm: '',
+          }
         },
        })
      },
      chromeless: false,
   }),
    button: component({
-      component: ({label, link}) => {
+      preview: props => {
+        console.log(props)
         return (      
          <div
            style={{ backgroundColor: 'rgb(247 247 247)', display: 'inline-block', borderRadius: '38px', padding: '1rem'}}
            className='inline-block rounded-full px-8 py-5 uppercase bg-lynx text-bluegreen border-2 border-bluegreen'>
-           <div style={{ fontWeight: 'bold', color: '#718096' }}>{label}</div>
+             <div style={{ fontWeight: 'bold', color: '#718096' }}>{props.fields.label}</div>
+           {/* 
            <div style={{ fontStyle: 'italic', color: '#4A5568' }}>
              <NotEditable><svg viewBox="70.001 0.006 10 10" width="10" height="10">
                  <g transform="matrix(0.017858, 0, 0, 0.017858, 68.750916, 0.006137)">
@@ -414,13 +427,13 @@ export const componentBlocks = {
                      d="m389.27 433.96c-21.121 0-41.832-3.418-61.691-10.152l-47.543 47.543c-16.199 16.234-37.766 25.156-60.699 25.156-22.934 0-44.465-8.918-60.699-25.156-16.234-16.203-25.156-37.766-25.156-60.699 0-22.934 8.9219-44.504 25.156-60.734l92.383-92.383c16.234-16.199 37.766-25.121 60.699-25.121 22.969 0 44.5 8.9219 60.715 25.121 7.8984 7.8945 14.062 17.055 18.32 27.035 10.562-0.54688 20.422-4.957 27.941-12.473l24.574-24.609c-6.7344-12.512-15.398-24.266-25.941-34.828-58.309-58.309-152.88-58.309-211.19 0l-92.383 92.418c-58.34 58.312-58.34 152.84 0 211.19 58.309 58.312 152.84 58.312 211.15 0l83.188-83.191c-6.2031 0.57813-12.473 0.89063-18.797 0.89063z">
                    </path>
                  </g>
-               </svg></NotEditable>{link}
-           </div>
+               </svg></NotEditable>{props.fields.link}
+           </div> */}
          </div>
         );
       },
       label: 'Button',
-      props: {
+      schema: {
         label: fields.child({
           kind: 'inline',
           placeholder: 'Label',
