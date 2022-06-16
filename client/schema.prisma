@@ -29,6 +29,21 @@ model Community {
   values Json   @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
+model Event {
+  id               String    @id @default(cuid())
+  name             String    @default("")
+  key              String    @unique @default("")
+  createdDate      DateTime?
+  enabled          Boolean   @default(true)
+  thumbnail        Json?
+  thumbAltText     String    @default("")
+  eventDate        DateTime
+  registrationLink String    @default("")
+  address          String    @default("")
+  blurb            String    @default("")
+  content          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+}
+
 model Filter {
   id                     String             @id @default(cuid())
   name                   String             @default("")

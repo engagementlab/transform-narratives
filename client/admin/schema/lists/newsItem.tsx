@@ -15,12 +15,11 @@ import {
     Lists
 } from '.keystone/types';
 import path from 'path';
-
 import { componentBlocks } from '../../components/component-blocks';
 import { cloudinaryImage } from '../../components/cloudinary';
 import { CreatedTimestamp, CreateKey } from '../hooks';
 
-export const NewsItem: Lists.NewsItem = list({
+const NewsItem: Lists.NewsItem = list({
     fields: {
       title: text({
         validation: {
@@ -133,3 +132,4 @@ export const NewsItem: Lists.NewsItem = list({
       }
     },
   });
+  export default NewsItem;

@@ -17,7 +17,7 @@ import {
 } from '../../components/component-blocks';
 import { FixButtons } from '../hooks';
 
-export const About: Lists.About = list({
+const About: Lists.About = list({
     fields: {
         name: text({
             isIndexed: 'unique',
@@ -54,7 +54,7 @@ export const About: Lists.About = list({
                 views: path.join(process.cwd(), 'admin/components/component-blocks')
             },
             componentBlocks,
-
+            
             hooks: {
                 resolveInput: async ({
                     listKey,
@@ -78,3 +78,4 @@ export const About: Lists.About = list({
         }
     },
   });
+  export default About;

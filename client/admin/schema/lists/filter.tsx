@@ -11,7 +11,7 @@ import {
 } from '.keystone/types';
 import { CreateKey } from '../hooks';
 
-export const Filter: Lists.Filter = list({
+const Filter: Lists.Filter = list({
     fields: {
     //   mediaRef: relationship({ ref: 'MediaItem.filters', many: true }),
       name: text({
@@ -84,4 +84,4 @@ export const Filter: Lists.Filter = list({
       }
     }
   });
-  
+  export default Filter;

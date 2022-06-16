@@ -23,7 +23,7 @@ import { CreatedTimestamp, CreateKey } from '../hooks';
 
 const videoData = require('../../../videoData');
 
-export const MediaItem: Lists.MediaItem = list({
+const MediaItem: Lists.MediaItem = list({
     fields: {
       title: text({
         validation: {
@@ -131,3 +131,4 @@ export const MediaItem: Lists.MediaItem = list({
       }
     }
   });
+  export default MediaItem;

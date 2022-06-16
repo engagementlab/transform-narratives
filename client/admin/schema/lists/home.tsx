@@ -14,7 +14,7 @@ import {
     Lists
 } from '.keystone/types';
 
-export const Home: Lists.Home = list({
+const Home: Lists.Home = list({
     fields: {
         name: text({
             isIndexed: 'unique',
@@ -58,3 +58,4 @@ export const Home: Lists.Home = list({
         plural: 'HomePage'
     }
   });
+  export default Home;

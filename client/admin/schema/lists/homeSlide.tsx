@@ -12,7 +12,7 @@ import {
   cloudinaryImage
 } from '../../components/cloudinary';
 
-export const HomeSlide: Lists.HomeSlide = list({
+const HomeSlide: Lists.HomeSlide = list({
     fields: {
       homeSlides: relationship({
         ref: 'Home.slides',
@@ -45,3 +45,4 @@ export const HomeSlide: Lists.HomeSlide = list({
       // labelField: 'imageName',
     },
   });
+export default HomeSlide;

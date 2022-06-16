@@ -19,7 +19,7 @@ import {
 } from '../../components/component-blocks';
 import { FixButtons } from '../hooks';
 
-export const BigPicture: Lists.BigPicture = list({
+const BigPicture: Lists.BigPicture = list({
     fields: {
         name: text({
             isIndexed: 'unique',
@@ -99,3 +99,4 @@ export const BigPicture: Lists.BigPicture = list({
     //   }
     // }
   });
+  export default BigPicture;
