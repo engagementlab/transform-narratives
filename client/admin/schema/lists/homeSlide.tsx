@@ -12,7 +12,7 @@ import {
   cloudinaryImage
 } from '../../components/cloudinary';
 
-const HomeSlide: Lists.MediaImage = list({
+const HomeSlide: Lists.HomeSlide = list({
   fields: {
     homeSlides: relationship({
       ref: 'Home.slides',
