@@ -14,7 +14,7 @@ import {
     Lists
 } from '.keystone/types';
 
-const Home: Lists.Filter = list({
+const Home: Lists.Home = list({
     fields: {
         name: text({
             isIndexed: 'unique',

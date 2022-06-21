@@ -55,19 +55,19 @@ model Filter {
   from_Studio_filters    Studio[]           @relation("Studio_filters")
 }
 
+model Home {
+  id     String      @id @default(cuid())
+  name   String      @unique @default("Home Page")
+  intro  Json        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  slides HomeSlide[] @relation("Home_slides")
+}
+
 model HomeSlide {
   id         String @id @default(cuid())
   homeSlides Home[] @relation("Home_slides")
   image      Json?
   altText    String @default("")
   quote      String @default("")
-}
-
-model Home {
-  id     String      @id @default(cuid())
-  name   String      @unique @default("Home Page")
-  intro  Json        @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  slides HomeSlide[] @relation("Home_slides")
 }
 
 model MediaItem {

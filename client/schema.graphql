@@ -436,77 +436,6 @@ input FilterCreateInput {
   section: FilterSectionType
 }
 
-type HomeSlide {
-  id: ID!
-  homeSlides(
-    where: HomeWhereInput! = {}
-    orderBy: [HomeOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Home!]
-  homeSlidesCount(where: HomeWhereInput! = {}): Int
-  image: CloudinaryImage_File
-  altText: String
-  quote: String
-}
-
-input HomeSlideWhereUniqueInput {
-  id: ID
-}
-
-input HomeSlideWhereInput {
-  AND: [HomeSlideWhereInput!]
-  OR: [HomeSlideWhereInput!]
-  NOT: [HomeSlideWhereInput!]
-  id: IDFilter
-  homeSlides: HomeManyRelationFilter
-  altText: StringFilter
-  quote: StringFilter
-}
-
-input HomeManyRelationFilter {
-  every: HomeWhereInput
-  some: HomeWhereInput
-  none: HomeWhereInput
-}
-
-input HomeSlideOrderByInput {
-  id: OrderDirection
-  altText: OrderDirection
-  quote: OrderDirection
-}
-
-input HomeSlideUpdateInput {
-  homeSlides: HomeRelateToManyForUpdateInput
-  image: Upload
-  altText: String
-  quote: String
-}
-
-input HomeRelateToManyForUpdateInput {
-  disconnect: [HomeWhereUniqueInput!]
-  set: [HomeWhereUniqueInput!]
-  create: [HomeCreateInput!]
-  connect: [HomeWhereUniqueInput!]
-}
-
-input HomeSlideUpdateArgs {
-  where: HomeSlideWhereUniqueInput!
-  data: HomeSlideUpdateInput!
-}
-
-input HomeSlideCreateInput {
-  homeSlides: HomeRelateToManyForCreateInput
-  image: Upload
-  altText: String
-  quote: String
-}
-
-input HomeRelateToManyForCreateInput {
-  create: [HomeCreateInput!]
-  connect: [HomeWhereUniqueInput!]
-}
-
 type Home {
   id: ID!
   name: String
@@ -576,6 +505,77 @@ input HomeCreateInput {
 input HomeSlideRelateToManyForCreateInput {
   create: [HomeSlideCreateInput!]
   connect: [HomeSlideWhereUniqueInput!]
+}
+
+type HomeSlide {
+  id: ID!
+  homeSlides(
+    where: HomeWhereInput! = {}
+    orderBy: [HomeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Home!]
+  homeSlidesCount(where: HomeWhereInput! = {}): Int
+  image: CloudinaryImage_File
+  altText: String
+  quote: String
+}
+
+input HomeSlideWhereUniqueInput {
+  id: ID
+}
+
+input HomeSlideWhereInput {
+  AND: [HomeSlideWhereInput!]
+  OR: [HomeSlideWhereInput!]
+  NOT: [HomeSlideWhereInput!]
+  id: IDFilter
+  homeSlides: HomeManyRelationFilter
+  altText: StringFilter
+  quote: StringFilter
+}
+
+input HomeManyRelationFilter {
+  every: HomeWhereInput
+  some: HomeWhereInput
+  none: HomeWhereInput
+}
+
+input HomeSlideOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+  quote: OrderDirection
+}
+
+input HomeSlideUpdateInput {
+  homeSlides: HomeRelateToManyForUpdateInput
+  image: Upload
+  altText: String
+  quote: String
+}
+
+input HomeRelateToManyForUpdateInput {
+  disconnect: [HomeWhereUniqueInput!]
+  set: [HomeWhereUniqueInput!]
+  create: [HomeCreateInput!]
+  connect: [HomeWhereUniqueInput!]
+}
+
+input HomeSlideUpdateArgs {
+  where: HomeSlideWhereUniqueInput!
+  data: HomeSlideUpdateInput!
+}
+
+input HomeSlideCreateInput {
+  homeSlides: HomeRelateToManyForCreateInput
+  image: Upload
+  altText: String
+  quote: String
+}
+
+input HomeRelateToManyForCreateInput {
+  create: [HomeCreateInput!]
+  connect: [HomeWhereUniqueInput!]
 }
 
 type MediaItem {
@@ -985,6 +985,12 @@ type Mutation {
   updateFilters(data: [FilterUpdateArgs!]!): [Filter]
   deleteFilter(where: FilterWhereUniqueInput!): Filter
   deleteFilters(where: [FilterWhereUniqueInput!]!): [Filter]
+  createHome(data: HomeCreateInput!): Home
+  createHomePage(data: [HomeCreateInput!]!): [Home]
+  updateHome(where: HomeWhereUniqueInput!, data: HomeUpdateInput!): Home
+  updateHomePage(data: [HomeUpdateArgs!]!): [Home]
+  deleteHome(where: HomeWhereUniqueInput!): Home
+  deleteHomePage(where: [HomeWhereUniqueInput!]!): [Home]
   createHomeSlide(data: HomeSlideCreateInput!): HomeSlide
   createHomeSlides(data: [HomeSlideCreateInput!]!): [HomeSlide]
   updateHomeSlide(
@@ -994,12 +1000,6 @@ type Mutation {
   updateHomeSlides(data: [HomeSlideUpdateArgs!]!): [HomeSlide]
   deleteHomeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
   deleteHomeSlides(where: [HomeSlideWhereUniqueInput!]!): [HomeSlide]
-  createHome(data: HomeCreateInput!): Home
-  createHomePage(data: [HomeCreateInput!]!): [Home]
-  updateHome(where: HomeWhereUniqueInput!, data: HomeUpdateInput!): Home
-  updateHomePage(data: [HomeUpdateArgs!]!): [Home]
-  deleteHome(where: HomeWhereUniqueInput!): Home
-  deleteHomePage(where: [HomeWhereUniqueInput!]!): [Home]
   createMediaItem(data: MediaItemCreateInput!): MediaItem
   createMediaItems(data: [MediaItemCreateInput!]!): [MediaItem]
   updateMediaItem(
@@ -1073,14 +1073,6 @@ type Query {
   ): [Filter!]
   filter(where: FilterWhereUniqueInput!): Filter
   filtersCount(where: FilterWhereInput! = {}): Int
-  homeSlides(
-    where: HomeSlideWhereInput! = {}
-    orderBy: [HomeSlideOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [HomeSlide!]
-  homeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
-  homeSlidesCount(where: HomeSlideWhereInput! = {}): Int
   homePage(
     where: HomeWhereInput! = {}
     orderBy: [HomeOrderByInput!]! = []
@@ -1089,6 +1081,14 @@ type Query {
   ): [Home!]
   home(where: HomeWhereUniqueInput!): Home
   homePageCount(where: HomeWhereInput! = {}): Int
+  homeSlides(
+    where: HomeSlideWhereInput! = {}
+    orderBy: [HomeSlideOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HomeSlide!]
+  homeSlide(where: HomeSlideWhereUniqueInput!): HomeSlide
+  homeSlidesCount(where: HomeSlideWhereInput! = {}): Int
   mediaItems(
     where: MediaItemWhereInput! = {}
     orderBy: [MediaItemOrderByInput!]! = []

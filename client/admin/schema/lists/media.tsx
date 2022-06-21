@@ -84,14 +84,6 @@ const MediaItem: Lists.MediaItem = list({
         },
   
         componentBlocks,
-  
-        relationships: {
-          image: {
-            kind: 'prop',
-            listKey: 'MediaImage',
-            selection: 'imageName altText image {publicUrlTransformed publicId}',
-          },
-        },
       }),
       // galleryImages: relationship({
       //   ref: 'MediaImage.mediaGalleryImages',
