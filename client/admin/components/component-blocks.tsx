@@ -17,7 +17,16 @@ import create from 'zustand';
 import axios from 'axios';
 
 const videoData = require('../../videoData');
-// const imageData = require('../../imageData');
+
+type VideoGridState = {
+  pgIndex: number;
+  videoUrl: string;
+  gridOpen: boolean;
+
+  setPageIndex: (pgIndex: number) => void
+  setVideoUrl: (videoUrl: string) => void
+  setGridOpen: (open: boolean) => void
+}
 
 type ImageGridState = {
   id: string;
@@ -33,7 +42,7 @@ type ImageGridState = {
   setData: (imgData: any[]) => void
   setIndex: (imgIndex: number) => void
   setGridOpen: (open: boolean) => void
-}   
+}
 
 interface RelatedImage {
   [key: string]: {
@@ -43,9 +52,9 @@ interface RelatedImage {
 }
 
 interface RelatedVideo {
-  [key: string]: {
+  [key: string]: { 
     label: string;
-    videoUrl: string;
+    value: string;
     thumbSm: string;
     caption?: string;
   }
@@ -101,38 +110,14 @@ const styles = {
       p: 4
   },
 };
-  
-const VideoOptionComponent = (props: OptionProps) => {
-  return (
-    <div>        
-          <div
-            className={props.cx(
-              {
-                option: true,
-              },
-              props.className
-            ) + ' ' + styles.form.option}
-            ref={props.innerRef}
-            aria-disabled={props.isDisabled}
-            {...props.innerProps}
-          >
-            <p>
-              {props.children}
-            </p>
-            <img alt={`Thumbnail image for video with title "${props.label}"`} src={(props.data as any).thumbSm} />
-          </div>
-    </div>
-    
-  )
-}
 
 function videoSelect({
   label,
   current,
   defaultValue = {
-    video: {
-      label: 'PICK VIDEO',
-      videoUrl: '',
+    'video': {
+      label: '',
+      value: '',
       thumbSm: '',
     }
   }
@@ -146,23 +131,109 @@ function videoSelect({
     kind: 'form',
 
     Input({ value, onChange, autoFocus }) {
-      return (
-        <FieldContainer>
-            <Select
-            id='video'
-            isClearable
-            autoFocus={autoFocus}
-            options={videoData}
-            isDisabled={onChange === undefined}
-            onChange={event => {
-              onChange(event as RelatedVideo)
-            }}
-            value={value}
-            className={styles.form.select}
-            components={{Option: VideoOptionComponent as ComponentType<OptionProps<RelatedVideo, boolean, GroupBase<RelatedVideo>>>}}
+        // Create store with Zustand
+        const [useStore] = useState(() => 
+            create<VideoGridState>(set => ({
+              gridOpen: true,
+              pgIndex: 0,
+              videoUrl: (value?.value as unknown) as string || '',
+              setPageIndex: (index: number) => set((state) => {
+                  return {
+                      ...state,
+                      pgIndex: index,
+                  }
+              }),
+              setVideoUrl: (url: string) => set((state) => {
+                  return {
+                      ...state,
+                      videoUrl: url,
+                  }
+              }),
+              setGridOpen: (open: boolean) => set((state) => {
+                  return {
+                      ...state,
+                      gridOpen: open
+                  }
+              }),
+            })
+        ));
+  
+        const setPageIndex = useStore(state => state.setPageIndex);
+        const setVideoUrl = useStore(state => state.setVideoUrl);
+        const setGridOpen = useStore(state => state.setGridOpen);
+  
+        const gridOpen = useStore(state => state.gridOpen);
+        const pgIndex = useStore(state => state.pgIndex);
+        const videoUrl = useStore(state => state.videoUrl);
+        const beginIndex = pgIndex * 8;
+        const endIndex = beginIndex + 8;
+        const dataLength = Math.floor(videoData.length / 8)+1;
+  
+        return (
+          <FieldContainer>
+            Click <em>Done</em> for video preview.
+            <Modal
+                open={gridOpen}
+                onClose={() => {setGridOpen(false); }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >  
+            <Box sx={styles.imagesModal}>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <IconButton aria-label="go to last page" disabled={pgIndex === 0} onClick={((val) => { setPageIndex(pgIndex-1) })}>
+                  <ArrowCircleLeftOutlinedIcon fontSize='large' />
+                </IconButton>
+                  <MUISelect
+                    value={pgIndex}
+                    label="Page"
+                    onChange={((val) => { setPageIndex(!val ? 0 : val.target.value as number) })}
+                    >
+                    {[...new Array(dataLength)].map((v, i) => (
+                      <MenuItem value={i}>{i+1}</MenuItem>
+                    ))}
+                </MUISelect>
+                <IconButton aria-label="go to right page" disabled={pgIndex === dataLength-1} onClick={((val) => { setPageIndex(pgIndex+1) })}>
+                  <ArrowCircleRightOutlinedIcon fontSize='large' />
+                </IconButton>
+              </div>
+              
+              <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
 
-          />        
-      </FieldContainer>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  {videoData.slice(beginIndex, endIndex).map((item: any, i: number) => (
+                    <Grid item xs={3}>
+                      <a style={{ position: 'relative', cursor: 'pointer'}}
+                        onClick={(e) => {
+                          onChange({ 
+                            label: item.label,
+                            value: item.value, 
+                            thumb: item.thumb, 
+                            thumbSm: item.thumbSm, 
+                          });
+                          setVideoUrl(item.value);
+                        }}>
+                        <div style={{position: 'absolute', top: 0, left: 0}}>
+                          {videoUrl === item.value && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
+                        </div>
+                        <img
+                          src={item.thumbSm}
+                          style={{opacity: videoUrl === item.value ? .5 : 1}}
+                        />
+                        <p>{item.label}</p>
+                      </a>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+
+              <br />
+              <IconButton aria-label="done" disabled={videoUrl === ''} onClick={(() => { setGridOpen(false); })}>
+                <CheckTwoToneIcon fontSize='large' color='success' />
+              </IconButton>
+            </Box>
+          </Modal>
+          </FieldContainer>
       )
     },
     options: undefined,
@@ -271,73 +342,73 @@ function imageSelect({
       return (
         <FieldContainer>
           Click <em>Done</em> for image preview.
-        <Modal
-              open={gridOpen}
-              onClose={() => {setGridOpen(false); }}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-              >  
-          <Box sx={styles.imagesModal}>
-          <div style={{display: 'flex', flexDirection: 'row'}}>
-            <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
-              <ArrowCircleLeftOutlinedIcon fontSize='large' />
-            </IconButton>
-              <MUISelect
-                value={index}
-                label="Page"
-                onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
-                >
-                {[...new Array(dataLength)].map((v, i) => (
-                  <MenuItem value={i}>{i+1}</MenuItem>
-                ))}
-            </MUISelect>
-            <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
-              <ArrowCircleRightOutlinedIcon fontSize='large' />
-            </IconButton>
-          </div>
-          
-          <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
+          <Modal
+                open={gridOpen}
+                onClose={() => {setGridOpen(false); }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                >  
+            <Box sx={styles.imagesModal}>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <IconButton aria-label="go to last page" disabled={index === 0} onClick={((val) => { setIndex(index-1) })}>
+                  <ArrowCircleLeftOutlinedIcon fontSize='large' />
+                </IconButton>
+                  <MUISelect
+                    value={index}
+                    label="Page"
+                    onChange={((val) => { setIndex(!val ? 0 : val.target.value as number) })}
+                    >
+                    {[...new Array(dataLength)].map((v, i) => (
+                      <MenuItem value={i}>{i+1}</MenuItem>
+                    ))}
+                </MUISelect>
+                <IconButton aria-label="go to right page" disabled={index === dataLength-1} onClick={((val) => { setIndex(index+1) })}>
+                  <ArrowCircleRightOutlinedIcon fontSize='large' />
+                </IconButton>
+              </div>
+              
+              <hr style={{borderTopWidth: '2px', borderColor: '#f6a536'}} />
 
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              {data.slice(beginIndex, endIndex).map((item) => (
-                <Grid item xs={3}>
-                  <a style={{ position: 'relative'}}
-                    onClick={(e) => {
-                      setId(item.public_id); 
-                      onChange({publicId: item.public_id});
-                    }}>
-                    <div style={{position: 'absolute', top: 0, left: 0}}>
-                      {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
-                    </div>
-                    <img
-                      src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
-                      style={{opacity: item.public_id === currentId ? .5 : 1}}
-                    />
-                  </a>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  {data.slice(beginIndex, endIndex).map((item) => (
+                    <Grid item xs={3}>
+                      <a style={{ position: 'relative'}}
+                        onClick={(e) => {
+                          setId(item.public_id); 
+                          onChange({publicId: item.public_id});
+                        }}>
+                        <div style={{position: 'absolute', top: 0, left: 0}}>
+                          {item.public_id === currentId && <CheckCircleOutlineIcon fontSize='large' htmlColor='#f6a536' />}
+                        </div>
+                        <img
+                          src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_100/v${item.version}/${item.public_id}`}
+                          style={{opacity: item.public_id === currentId ? .5 : 1}}
+                        />
+                      </a>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-          </Box>
+              </Box>
 
-          <TextField 
-          id="alt-field" 
-            multiline
-            fullWidth
-            rows={4}
-            label="Alt Text" 
-            variant="standard" 
-            value={currentAlt} 
-            onChange={(e)=> {
-                setAlt(e.target.value); 
-                onChange({image: {publicId: currentId, alt: e.target.value}});
-            }}
-          />
-            <br />
-            <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
-              <CheckTwoToneIcon fontSize='large' color='success' />
-            </IconButton>
-          </Box>
+              <TextField 
+              id="alt-field" 
+                multiline
+                fullWidth
+                rows={4}
+                label="Alt Text" 
+                variant="standard" 
+                value={currentAlt} 
+                onChange={(e)=> {
+                    setAlt(e.target.value); 
+                    onChange({image: {publicId: currentId, alt: e.target.value}});
+                }}
+              />
+              <br />
+              <IconButton aria-label="done" disabled={currentId === ''} onClick={(() => { setGridOpen(false); })}>
+                <CheckTwoToneIcon fontSize='large' color='success' />
+              </IconButton>
+            </Box>
           </Modal>
         </FieldContainer>
       )
@@ -381,15 +452,13 @@ export const componentBlocks = {
   }),
   video: component({    
     preview: props => {
-      console.log(props);
       return (
           <div>
-            {props.fields.video.value.video.label}
+            {props.fields.video.value.label}
             <br />
             <img
               style={{width:'150px'}}
-              src={props.fields.video.value.video.thumbSm}
-              // alt="Document image"
+              src={(props.fields.video.value.thumbSm as unknown) as string}
             />
           </div>
        );
@@ -401,13 +470,12 @@ export const componentBlocks = {
         defaultValue: {
           video: {
             label: 'Click "Edit" and select.',
-            videoUrl: '',
+            value: '',
             thumbSm: '',
           }
         },
        })
      },
-     chromeless: false,
   }),
    button: component({
       preview: props => {
