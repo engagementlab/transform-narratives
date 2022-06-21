@@ -12,7 +12,7 @@ let blocks: DocumentRendererProps['renderers'] = {
         },
         link: ({ children, href }) => {
             const label = (children as any).at(0).props.node.text;
-            return renderOverrides?.link ? renderOverrides.link(children, href) : <a href={href} className='text-purple no-underline border-b-2 border-b-[rgba(141,51,210,0)] hover:border-b-[rgba(141,51,210,1)] transition-all'>{label}</a>;
+            return renderOverrides?.link ? renderOverrides.link(children, href) : <a href={href} target="_blank" className='text-purple no-underline border-b-2 border-b-[rgba(141,51,210,0)] hover:border-b-[rgba(141,51,210,1)] transition-all'>{label}</a>;
         }
     }, 
     block: {

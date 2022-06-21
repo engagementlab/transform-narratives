@@ -454,12 +454,17 @@ export const componentBlocks = {
     preview: props => {
       return (
           <div>
-            {props.fields.video.value.label}
-            <br />
-            <img
-              style={{width:'150px'}}
-              src={(props.fields.video.value.thumbSm as unknown) as string}
-            />
+            {!props.fields.video.value.label ? <span>Click <em>Edit</em></span> :
+              <div>
+
+                {props.fields.video.value.label}
+                <br />
+                <img
+                  style={{width:'150px'}}
+                  src={(props.fields.video.value.thumbSm as unknown) as string}
+                  />
+              </div>
+            }
           </div>
        );
      },
