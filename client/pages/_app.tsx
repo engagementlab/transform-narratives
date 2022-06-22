@@ -15,7 +15,7 @@ function App({ Component, pageProps }: AppProps) {
           {/* Block indexing on non-prod */}
           {process.env.NODE_ENV !== 'production' && <meta name="robots" content="noindex" />}
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <meta name="description" content={process.env.NODE_ENV} />
+          <meta name="description" content="Transforming Narratives of Gun Violence is a multi-year initiative at Emerson in collaboration with the MGH Center for Gun Violence Prevention and the Louis D. Brown Peace Institute." />
           <Favicon />
         </Head>
       </div>
