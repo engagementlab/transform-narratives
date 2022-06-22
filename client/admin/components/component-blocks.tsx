@@ -425,17 +425,23 @@ export const componentBlocks = {
   image: component({
     preview: props => {
       return (
-          <div>
-            {!props.fields.image.value.publicId ? <span>Click <em>Edit</em></span> 
-            :
-            <div>
-              <img
-                  src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${props.fields.image.value.publicId}`}
-                />
-              {props.fields.image.value.alt && <div><em>(Alt: {props.fields.image.value.alt})</em></div>}
-            </div>
+          <>
+            {
+              !props.fields.image.value.publicId ? 
+                <span>Click <em>Edit</em></span> 
+              :
+                <>
+                  <img
+                      src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${props.fields.image.value.publicId}`}
+                    />
+                  {props.fields.image.value.alt && 
+                      <em>
+                        {`Alt: ${props.fields.image.value.alt}`}
+                      </em>
+                  }
+                </>
             }
-          </div>
+          </>
        );
      },
      label: 'Image',
@@ -455,15 +461,14 @@ export const componentBlocks = {
       return (
           <div>
             {!props.fields.video.value.label ? <span>Click <em>Edit</em></span> :
-              <div>
-
+              <>
                 {props.fields.video.value.label}
                 <br />
                 <img
                   style={{width:'150px'}}
                   src={(props.fields.video.value.thumbSm as unknown) as string}
                   />
-              </div>
+              </>
             }
           </div>
        );
