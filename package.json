@@ -1,0 +1,15 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "postinstall": "preconstruct dev"
+  },
+  "devDependencies": {
+    "@preconstruct/cli": "^2.1.5",
+    "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
