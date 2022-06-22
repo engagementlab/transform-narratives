@@ -1,6 +1,6 @@
 import { InferRenderersForComponentBlocks } from "@keystone-6/fields-document/component-blocks";
 import Link from "next/link";
-import { componentBlocks } from "../admin/components/component-blocks";
+import { componentBlocks } from "../../cms/admin/components/component-blocks";
 import Image from "./Image";
 import Video from "./Video";
 

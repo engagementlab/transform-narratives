@@ -10,9 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@cloudinary/base": "^1.0.0-beta.4",
-    "@cloudinary/react": "^1.1.0",
-    "@cloudinary/url-gen": "^1.6.0",
     "@emotion/core": "10.3.1",
     "@emotion/css": "^11.7.1",
     "@emotion/styled": "^11.8.1",
@@ -33,7 +30,6 @@
     "byte-base64": "^1.1.0",
     "cloudinary-react": "^1.7.1",
     "connect-mongo": "3",
-    "express-session": "^1.17.2",
     "framer-motion": "^6.2.8",
     "lodash": "^4.17.21",
     "mongoose": "^6.2.1",

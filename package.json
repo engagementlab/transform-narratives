@@ -3,13 +3,28 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "build": "preconstruct build",
+    "fix": "preconstruct fix",
     "postinstall": "preconstruct dev"
   },
   "devDependencies": {
     "@preconstruct/cli": "^2.1.5",
     "lerna": "^3.22.1"
   },
+  "workspaces": {
+    "packages": [
+      "packages/components"
+    ]
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/components"
+    ]
+  },
   "dependencies": {
-    "axios": "^0.27.2"
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/preset-typescript": "^7.17.12"
   }
 }

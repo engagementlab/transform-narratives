@@ -39,7 +39,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import FileUploadTwoToneIcon from '@mui/icons-material/FileUploadTwoTone';
 
-import Image from '../../components/Image';
+import Image from '../../../tgnvi/components/Image';
 
 type NavState = {
     data: any[]
