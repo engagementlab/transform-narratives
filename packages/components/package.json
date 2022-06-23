@@ -7,10 +7,10 @@
     "build": "tsc",
     "dev": "tsc -w"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "@types/react": "^18.0.14",
     "react": "^18.2.0",
-    "typescript": "^4.7.4"
+    "react/jsx-runtime": "^18.0.14"
   },
   "preconstruct": {
     "entrypoints": [
