@@ -1,4 +1,4 @@
-const config = require('@keystone-6/core/config');
+import { config } from '@keystone-6/core';
 import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
 import axios from 'axios';
 
