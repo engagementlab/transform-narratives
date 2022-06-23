@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 // const { withKeystone } = require('@keystone-6/core/next');
-
-const nextConfig = {
+const withPreconstruct = require('@preconstruct/next');
+const nextConfig = withPreconstruct({
   reactStrictMode: true,
   images: {
     domains: ['i.vimeocdn.com'],
     loader: 'custom',
   },
   trailingSlash: true,
-};
+});
 
 module.exports = nextConfig;

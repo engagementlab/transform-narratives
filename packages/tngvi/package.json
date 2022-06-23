@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "@el-next/tngvi",
   "private": true,
   "scripts": {
     "postinstall": "keystone postinstall --fix",
