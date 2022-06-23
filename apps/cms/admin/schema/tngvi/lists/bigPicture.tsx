@@ -16,8 +16,8 @@ import _ from 'lodash';
 
 import {
     componentBlocks
-} from '../../components/component-blocks';
-import { FixButtons } from '../hooks';
+} from '../../../components/component-blocks';
+import { FixButtons } from '../../hooks';
 
 const BigPicture: Lists.BigPicture = list({
     fields: {

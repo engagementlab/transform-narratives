@@ -16,12 +16,10 @@ import {
     Lists
 } from '.keystone/types';
 import path from 'path';
-import { componentBlocks } from '../../components/component-blocks';
-import { azConfig, azureStorageFile } from '../azure';
-import { cloudinaryImage } from '../../components/cloudinary';
-import { CreatedTimestamp, CreateKey } from '../hooks';
-
-const videoData = require('../../../videoData');
+import { componentBlocks } from '../../../components/component-blocks';
+import { azConfig, azureStorageFile } from '../../azure';
+import { cloudinaryImage } from '../../../components/cloudinary';
+import { CreatedTimestamp, CreateKey } from '../../hooks';
 
 const MediaItem: Lists.MediaItem = list({
     fields: {

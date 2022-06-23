@@ -15,9 +15,9 @@ import {
     Lists
 } from '.keystone/types';
 import path from 'path';
-import { componentBlocks } from '../../components/component-blocks';
-import { cloudinaryImage } from '../../components/cloudinary';
-import { CreatedTimestamp, CreateKey } from '../hooks';
+import { componentBlocks } from '../../../components/component-blocks';
+import { cloudinaryImage } from '../../../components/cloudinary';
+import { CreatedTimestamp, CreateKey } from '../../hooks';
 
 const NewsItem: Lists.NewsItem = list({
     fields: {

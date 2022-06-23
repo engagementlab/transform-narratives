@@ -9,7 +9,7 @@ import {
 import {
     Lists
 } from '.keystone/types';
-import { CreateKey } from '../hooks';
+import { CreateKey } from '../../hooks';
 
 const Filter: Lists.Filter = list({
     fields: {

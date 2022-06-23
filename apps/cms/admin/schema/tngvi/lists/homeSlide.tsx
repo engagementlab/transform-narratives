@@ -10,7 +10,7 @@ import {
 } from '.keystone/types';
 import {
   cloudinaryImage
-} from '../../components/cloudinary';
+} from '../../../components/cloudinary';
 
 const HomeSlide: Lists.HomeSlide = list({
     fields: {

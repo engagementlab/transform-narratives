@@ -14,7 +14,7 @@ import {
 import path from 'path';
 import {
     componentBlocks
-} from '../../components/component-blocks';
+} from '../../../components/component-blocks';
 
 const Community: Lists.Community = list({
     fields: {

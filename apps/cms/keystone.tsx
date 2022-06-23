@@ -8,7 +8,7 @@ import session from 'express-session';
 
 import { v2 as cloudinary } from 'cloudinary';
 
-import * as lists from './admin/schema';
+import * as lists from './admin/schema/tngvi';
 const multer = require('multer');
 const upload = multer();
 
@@ -60,8 +60,6 @@ const Passport = () => {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.AUTH_CALLBACK_URL,
-      // state: true,
-      // skipUserProfile: true,
     },
     (
       request: any,

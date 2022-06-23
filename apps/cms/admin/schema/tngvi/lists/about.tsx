@@ -14,8 +14,8 @@ import {
 import path from 'path';
 import {
     componentBlocks
-} from '../../components/component-blocks';
-import { FixButtons } from '../hooks';
+} from '../../../components/component-blocks';
+import { FixButtons } from '../../hooks';
 
 const About: Lists.About = list({
     fields: {

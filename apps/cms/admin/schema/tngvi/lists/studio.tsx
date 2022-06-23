@@ -17,9 +17,9 @@ import {
 import path from 'path';
 import {
   componentBlocks
-} from '../../components/component-blocks';
-import { cloudinaryImage } from '../../components/cloudinary';
-import { CreatedTimestamp, CreateKey } from '../hooks';
+} from '../../../components/component-blocks';
+import { cloudinaryImage } from '../../../components/cloudinary';
+import { CreatedTimestamp, CreateKey } from '../../hooks';
 
 const Studio: Lists.Studio = list({
   fields: {
