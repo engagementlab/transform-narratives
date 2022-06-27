@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     PageContainer
 } from '@keystone-6/core/admin-ui/components';
@@ -39,7 +39,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import FileUploadTwoToneIcon from '@mui/icons-material/FileUploadTwoTone';
 
-import Image from '../../../tgnvi/components/Image';
+import { Image } from '@el-next/components';
 
 type NavState = {
     data: any[]

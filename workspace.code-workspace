@@ -12,6 +12,7 @@
         "yaml.schemas": {
             "https://json.schemastore.org/github-workflow.json": "file:///Users/john_richardson/Documents/Projects/transform-narratives/.github/workflows/build.yml"
         },
+        "typescript.tsdk": "node_modules/typescript/lib",
         // "WillLuke.nextjs.addTypesOnSave": true,
         // "WillLuke.nextjs.hasPrompted": true,
     },

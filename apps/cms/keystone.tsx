@@ -1,6 +1,7 @@
-import { config } from '@keystone-6/core';
 import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
 import axios from 'axios';
+
+import yargs from 'yargs/yargs';
 
 import 'dotenv/config';
 import e from 'express';
@@ -8,7 +9,21 @@ import session from 'express-session';
 
 import { v2 as cloudinary } from 'cloudinary';
 
-import * as lists from './admin/schema/tngvi';
+import {elab, tngvi} from './admin/schema';
+
+type schemaIndexType = { 
+  [key: string]: object,
+}
+const argv: any = yargs(process.argv.slice(2)).options({
+  app: { type: 'string', demandOption: true },
+  port: { type: 'number', },
+}).argv;
+
+const schemaMap: schemaIndexType = {
+  'elab': elab,
+  'tngvi': tngvi,
+}
+
 const multer = require('multer');
 const upload = multer();
 
@@ -24,6 +39,7 @@ const passport = require('passport');
 const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
 const DB = require('./db');
+
 declare module 'express-serve-static-core' {
   interface Request {
     logIn: any;
@@ -50,7 +66,7 @@ let dbConfig: DatabaseConfig<BaseKeystoneTypeInfo> = {
 if (process.env.DB_URI) {
   dbConfig = {
     provider: 'postgresql',
-    url: process.env.DB_URI,
+    url: `${process.env.DB_URI}/${argv.app}`,
   };
 }
 
@@ -115,7 +131,8 @@ const Passport = () => {
   return passport;
 };
 
-let ksConfig = {
+let ksConfig = (lists: any) => {
+  return {
   db: dbConfig,
   experimental: {
     generateNextGraphqlAPI: true,
@@ -123,6 +140,7 @@ let ksConfig = {
   },
   lists,
   server: {
+    port: argv.port || 3000,
     maxFileSize: 1024 * 1024 * 50,
     extendExpressApp: (app: e.Express) => {
       app.get('/prod-deploy', async (req, res, next) => {
@@ -267,8 +285,8 @@ let ksConfig = {
       }
     },
   },
-};
+};}
 
 export default (() => {
-  return config(ksConfig);
+  return ksConfig(schemaMap[argv.app])
 })();
