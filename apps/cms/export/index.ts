@@ -18,6 +18,7 @@ const join = path.join;
 // const glob = require('glob');
 
 let appNames: string[] = [];
+let appPort = 3000;
 let spawnIndex = 0;
 
 const spawnBuild = () => {
@@ -28,25 +29,22 @@ const spawnBuild = () => {
     `--app=${appNames[spawnIndex]}`,
   ]);
 
-  schemaFixChild.on('exit', (err, info) => {
+  schemaFixChild.on('exit', (err: any, info: any) => {
     console.log('done', err, info);
     const child = spawn('npm', [
       'run',
       'build',
       '--',
       `--app=${appNames[spawnIndex]}`,
+      `--port=${appPort}`,
     ]);
 
     console.log(`Building ${appNames[spawnIndex]}`);
-    // if (fs.existsSync(join(__dirname, '../schema.graphql'))) {
-    //   fs.unlinkSync(join(__dirname, '../schema.graphql'));
-    //   fs.unlinkSync(join(__dirname, '../schema.prisma'));
-    // }
     child.stderr.pipe(process.stderr);
-    child.on('error', (chunk) => {
+    child.on('error', (chunk: any) => {
       console.error(chunk);
     });
-    child.stderr.on('data', (errout) => {
+    child.stderr.on('data', (errout: { toString: () => any }) => {
       console.error(errout.toString());
     });
     child.on('exit', (err: any, info: any) => {
@@ -57,20 +55,53 @@ const spawnBuild = () => {
       );
 
       spawnIndex++;
-      // console.log(spawnIndex, appNames.length);
+      appPort++;
       if (spawnIndex < appNames.length) spawnBuild();
     });
   });
 };
 // Get all current CMS schemas from '../admin'
 (async () => {
-  const schemasDir = join(__dirname, '../admin/schema');
-  const schemaItems = await fs.readdir(schemasDir);
-  const schemaDirs = schemaItems.filter((schemaItem: any) => {
-    return fs.statSync(`${schemasDir}/${schemaItem}`).isDirectory();
+  const pm2 = require('pm2');
+
+  pm2.connect(function (err: any) {
+    if (err) {
+      console.error(err);
+      process.exit(2);
+    }
+    pm2.list((err: any, list: any[]) => {
+      // console.log(err, list);
+
+      if (list.find((el) => el.name === 'cms-elab')) {
+        pm2.restart('cms-elab', (err: any, proc: any) => {
+          // Disconnects from PM2
+          pm2.disconnect();
+        });
+      } else {
+        pm2.start(
+          {
+            script: join(process.cwd(), '/export/start.js'),
+            name: 'cms-elab',
+            args: ' --app=elab --port=3001',
+          },
+          function (err: any, apps: any) {
+            if (err) {
+              console.error(err);
+            }
+            pm2.disconnect();
+          }
+        );
+      }
+    });
   });
-  appNames = schemaDirs;
-  spawnBuild();
+
+  // const schemasDir = join(__dirname, '../admin/schema');
+  // const schemaItems = await fs.readdir(schemasDir);
+  // const schemaDirs = schemaItems.filter((schemaItem: any) => {
+  //   return fs.statSync(`${schemasDir}/${schemaItem}`).isDirectory();
+  // });
+  // appNames = schemaDirs;
+  // spawnBuild();
 
   //     if (err !== 0) {
   //         global.logger.error(
