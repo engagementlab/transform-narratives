@@ -15,7 +15,7 @@ type schemaIndexType = {
   [key: string]: object,
 }
 const argv: any = yargs(process.argv.slice(2)).options({
-  app: { type: 'string', demandOption: true },
+  app: { type: 'string' },
   port: { type: 'number', },
 }).argv;
 

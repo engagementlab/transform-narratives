@@ -8,7 +8,7 @@
     "start": "keystone start",
     "build": "keystone build",
     "webpack": "webpack",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
     "@emotion/core": "10.3.1",
