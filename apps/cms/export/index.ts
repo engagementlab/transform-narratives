@@ -10,7 +10,6 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { spawn } = require('child_process');
-const { argv } = require('yargs');
 
 const join = path.join;
 
@@ -22,12 +21,22 @@ let appPort = 3000;
 let spawnIndex = 0;
 
 const spawnBuild = () => {
+  fs.writeFileSync(
+    join(process.cwd(), '/currentApp.tsx'),
+    `export default '${appNames[spawnIndex]}'`
+  );
   const schemaFixChild = spawn('npm', [
     'run',
     'postinstall',
     '--',
     `--app=${appNames[spawnIndex]}`,
   ]);
+  schemaFixChild.on('error', (chunk: any) => {
+    console.error(chunk);
+  });
+  schemaFixChild.stderr.on('data', (errout: { toString: () => any }) => {
+    console.error(errout.toString());
+  });
 
   schemaFixChild.on('exit', (err: any, info: any) => {
     console.log('done', err, info);
@@ -62,63 +71,48 @@ const spawnBuild = () => {
 };
 // Get all current CMS schemas from '../admin'
 (async () => {
-  const pm2 = require('pm2');
+  // const pm2 = require('pm2');
 
-  pm2.connect(function (err: any) {
-    if (err) {
-      console.error(err);
-      process.exit(2);
-    }
-    pm2.list((err: any, list: any[]) => {
-      // console.log(err, list);
+  // pm2.connect(function (err: any) {
+  //   if (err) {
+  //     console.error(err);
+  //     process.exit(2);
+  //   }
+  //   pm2.list((err: any, list: any[]) => {
+  //     // console.log(err, list);
 
-      if (list.find((el) => el.name === 'cms-elab')) {
-        pm2.restart('cms-elab', (err: any, proc: any) => {
-          // Disconnects from PM2
-          pm2.disconnect();
-        });
-      } else {
-        pm2.start(
-          {
-            script: join(process.cwd(), '/export/start.js'),
-            name: 'cms-elab',
-            args: ' --app=elab --port=3001',
-          },
-          function (err: any, apps: any) {
-            if (err) {
-              console.error(err);
-            }
-            pm2.disconnect();
-          }
-        );
-      }
-    });
-  });
-
-  // const schemasDir = join(__dirname, '../admin/schema');
-  // const schemaItems = await fs.readdir(schemasDir);
-  // const schemaDirs = schemaItems.filter((schemaItem: any) => {
-  //   return fs.statSync(`${schemasDir}/${schemaItem}`).isDirectory();
-  // });
-  // appNames = schemaDirs;
-  // spawnBuild();
-
-  //     if (err !== 0) {
-  //         global.logger.error(
-  //             `⛔ Uncaught error for ${colors.yellow(pkg.name)} process (code: ${err}) ${info}.`
-  //         );
+  //     if (list.find((el) => el.name === 'cms-elab')) {
+  //       pm2.restart('cms-elab', (err: any, proc: any) => {
+  //         // Disconnects from PM2
+  //         pm2.disconnect();
+  //       });
   //     } else {
-  //         global.logger.info(
-  //             `🍺 CMS bundle exported for ${colors.yellow(pkg.name)}.`
-  //         );
-  //         exportsDone.push(outDir);
-
-  //         if (exportsDone.length === keys.length) {
-  //             global.logger.info(
-  //                 '✨    All bundles done, organizing directories.    ✨'
-  //             );
-  //             postBuild(exportsDone);
+  //       pm2.start(
+  //         {
+  //           script: join(process.cwd(), '/export/start.js'),
+  //           name: 'cms-elab',
+  //           args: ' --app=elab --port=3001',
+  //         },
+  //         function (err: any, apps: any) {
+  //           if (err) {
+  //             console.error(err);
+  //           }
+  //           pm2.disconnect();
   //         }
+  //       );
   //     }
+  //   });
   // });
+
+  fs.rmSync(path.join(process.cwd(), '/.keystone'), {
+    recursive: true,
+    force: true,
+  });
+  const schemasDir = join(__dirname, '../admin/schema');
+  const schemaItems = await fs.readdir(schemasDir);
+  const schemaDirs = schemaItems.filter((schemaItem: any) => {
+    return fs.statSync(`${schemasDir}/${schemaItem}`).isDirectory();
+  });
+  appNames = schemaDirs;
+  spawnBuild();
 })();

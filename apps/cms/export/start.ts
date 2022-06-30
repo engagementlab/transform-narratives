@@ -8,7 +8,8 @@
 import path from 'path';
 import fs from 'fs';
 import yargs from 'yargs/yargs';
-
+import vhost from 'vhost';
+var express = require('express');
 import {
   createSystem,
   createExpressServer,
@@ -58,19 +59,29 @@ export default (async () => {
   console.log(`✅ GraphQL API ready`);
   if (!config.ui?.isDisabled) {
     console.log('✨ Preparing Admin UI Next.js app');
+    const middleware = await createAdminUIMiddleware(
+      config,
+      keystone.createContext,
+      false,
+      path.join(process.cwd(), `.keystone/${argv.app}`)
+    );
+    console.log(middleware);
     expressServer.use(
-      await createAdminUIMiddleware(
-        config,
-        keystone.createContext,
-        false,
-        path.join(process.cwd(), `.keystone/${argv.app}`)
+      '/_next/static/',
+      express.static(
+        path.join(process.cwd(), `.keystone/${argv.app}/.next/static`)
       )
     );
+    expressServer.use('/elab', (req, res) => middleware(req, res));
+    expressServer.use((req, res) => {
+      console.log(req.path);
+    });
+
     console.log(`✅ Admin UI ready`);
   }
 
   const port = argv.port || process.env.PORT || 3000;
-  httpServer.listen(port, (err?: any) => {
+  expressServer.listen(port, (err?: any) => {
     if (err) throw err;
     console.log(`⭐️ Server Ready on http://localhost:${port}`);
   });

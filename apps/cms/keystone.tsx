@@ -1,4 +1,4 @@
-import { BaseKeystoneTypeInfo, DatabaseConfig } from '@keystone-6/core/types';
+import { BaseKeystoneTypeInfo, DatabaseConfig, KeystoneConfig } from '@keystone-6/core/types';
 import axios from 'axios';
 
 import yargs from 'yargs/yargs';
@@ -18,7 +18,6 @@ const argv: any = yargs(process.argv.slice(2)).options({
   app: { type: 'string' },
   port: { type: 'number', },
 }).argv;
-
 const schemaMap: schemaIndexType = {
   'elab': elab,
   'tngvi': tngvi,
@@ -132,6 +131,7 @@ const Passport = () => {
 };
 
 let ksConfig = (lists: any) => {
+  console.log(lists);
   return {
   db: dbConfig,
   experimental: {

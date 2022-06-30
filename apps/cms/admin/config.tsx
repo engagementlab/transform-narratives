@@ -1,3 +1,4 @@
+import React from "react"
 import { CustomNavigation } from "./components/CustomNav"
 import { Global, css } from '@emotion/core'
 
