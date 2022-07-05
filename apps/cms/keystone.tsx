@@ -131,7 +131,6 @@ const Passport = () => {
 };
 
 let ksConfig = (lists: any) => {
-  console.log(lists);
   return {
   db: dbConfig,
   experimental: {

@@ -8,7 +8,6 @@
 import path from 'path';
 import fs from 'fs';
 import yargs from 'yargs/yargs';
-import vhost from 'vhost';
 var express = require('express');
 import {
   createSystem,
@@ -72,7 +71,7 @@ export default (async () => {
         path.join(process.cwd(), `.keystone/${argv.app}/.next/static`)
       )
     );
-    expressServer.use('/elab', (req, res) => middleware(req, res));
+    expressServer.use(`/${argv.app}`, (req, res) => middleware(req, res));
     expressServer.use((req, res) => {
       console.log(req.path);
     });
