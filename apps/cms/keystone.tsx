@@ -39,6 +39,9 @@ const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
 const DB = require('./db');
 
+let appName: string = argv.app;
+if(!appName) appName = require('./currentApp').default;
+
 declare module 'express-serve-static-core' {
   interface Request {
     logIn: any;
@@ -65,7 +68,7 @@ let dbConfig: DatabaseConfig<BaseKeystoneTypeInfo> = {
 if (process.env.DB_URI) {
   dbConfig = {
     provider: 'postgresql',
-    url: `${process.env.DB_URI}/${argv.app}`,
+    url: `${process.env.DB_URI}/${appName}`,
   };
 }
 
@@ -131,6 +134,7 @@ const Passport = () => {
 };
 
 let ksConfig = (lists: any) => {
+  console.log(lists)
   return {
   db: dbConfig,
   experimental: {
@@ -138,6 +142,17 @@ let ksConfig = (lists: any) => {
     generateNodeAPI: true,
   },
   lists,
+  // ui: {
+  //   getAdditionalFiles: [
+  //     async (config: KeystoneConfig) => [
+  //       {
+  //         mode: 'write',
+  //         src: `export default '${argv.app}'`,
+  //         outputPath: 'pages/appName.js',
+  //       }
+  //     ],
+  //   ],
+  // },
   server: {
     port: argv.port || 3000,
     maxFileSize: 1024 * 1024 * 50,
@@ -287,5 +302,6 @@ let ksConfig = (lists: any) => {
 };}
 
 export default (() => {
-  return ksConfig(schemaMap[argv.app])
+  console.log(appName);
+  return ksConfig(schemaMap[appName]);
 })();

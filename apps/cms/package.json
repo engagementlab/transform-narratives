@@ -7,7 +7,9 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "export": "node ./export",
+    "build-export": "npx babel export/src -d export/lib --extensions .ts,.tsx",
+    "watch-export": "npx babel export/src -d export/lib --extensions .ts,.tsx --watch",
+    "export": "npm run build-export && node ./export/lib",
     "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
