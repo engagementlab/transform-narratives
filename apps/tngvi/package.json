@@ -2,14 +2,13 @@
   "name": "@el-next/tngvi",
   "private": true,
   "scripts": {
-    "postinstall": "keystone postinstall --fix",
-    "dev": "node vimeo.js && next dev -p 8081",
+    "dev": "next dev -p 8081",
     "build": "next build && next export",
-    "build-ks": "keystone build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@types/express-session": "^1.17.4",
     "@types/mongoose": "^5.11.97",
     "@types/react-copy-to-clipboard": "^5.0.2",
@@ -19,6 +18,7 @@
     "cloudinary-react": "^1.7.1",
     "connect-mongo": "3",
     "framer-motion": "^6.2.8",
+    "graphql": "^16.5.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.2.1",
     "next": "^12.1.6",

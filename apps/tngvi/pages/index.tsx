@@ -1,7 +1,10 @@
 import { InferGetStaticPropsType } from 'next';
 import { Fade, SlideshowProps } from 'react-slideshow-image';
 
-import { query } from '.keystone/api';
+// import { query } from '.keystone/api';
+
+import { gql } from "@apollo/client";
+import apollo from "../apollo-client";
 
 import Image from '../components/Image';
 import Button from '../components/Button';
@@ -57,7 +60,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
 }
 
 export async function getStaticProps() {
-  const homePage = await query.Home.findOne({
+  const homePage = await apollo.query({
     where: { name: 'Home Page' },
     query: `
     id 
