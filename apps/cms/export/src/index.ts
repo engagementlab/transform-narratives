@@ -51,41 +51,43 @@ const spawnBuild = () => {
     child.on('exit', (err: any, info: any) => {
       console.log(err, info);
       fs.move(cwd('.keystone/admin'), cwd(`.keystone/${appNames[spawnIndex]}`));
+      pm2.connect(function (err: any) {
+        if (err) {
+          console.error(err);
+          process.exit(2);
+        }
+        pm2.list((err: any, list: any[]) => {
+          // console.log(err, list);
 
+          if (
+            list.find((proc) => proc.name === `cms-${appNames[spawnIndex]}`)
+          ) {
+            pm2.restart(
+              `cms-${appNames[spawnIndex]}`,
+              (err: any, proc: any) => {
+                pm2.disconnect();
+              }
+            );
+          } else {
+            pm2.start(
+              {
+                script: cwd('/export/lib/start.js'),
+                name: `cms-${appNames[spawnIndex]}`,
+                args: `--app=${appNames[spawnIndex]} --port=${appPort}`,
+              },
+              function (err: any, apps: any) {
+                if (err) {
+                  console.error(err);
+                }
+                pm2.disconnect();
+              }
+            );
+          }
+        });
+      });
       spawnIndex++;
       appPort++;
       if (spawnIndex < appNames.length) spawnBuild();
-      else {
-        pm2.connect(function (err: any) {
-          if (err) {
-            console.error(err);
-            process.exit(2);
-          }
-          pm2.list((err: any, list: any[]) => {
-            // console.log(err, list);
-
-            if (list.find((el) => el.name === 'el-cms')) {
-              pm2.restart('el-cms', (err: any, proc: any) => {
-                pm2.disconnect();
-              });
-            } else {
-              pm2.start(
-                {
-                  script: cwd('/export/lib/start.js'),
-                  name: 'el-cms',
-                  args: `--apps=${appNames}`,
-                },
-                function (err: any, apps: any) {
-                  if (err) {
-                    console.error(err);
-                  }
-                  pm2.disconnect();
-                }
-              );
-            }
-          });
-        });
-      }
     });
   });
 };
