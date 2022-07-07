@@ -44,14 +44,14 @@ type ImageGridState = {
   setGridOpen: (open: boolean) => void
 }
 
-interface RelatedImage {
+export interface RelatedImage {
   [key: string]: {
     publicId: null | string;
     alt?: null | string;
   }
 }
 
-interface RelatedVideo {
+export interface RelatedVideo {
   [key: string]: { 
     label: string;
     value: string;
@@ -432,7 +432,14 @@ export const componentBlocks = {
               <img
                   src={`https://res.cloudinary.com/engagement-lab-home/image/upload/f_auto,dpr_auto,w_250/${props.fields.image.value.publicId}`}
                 />
-              {props.fields.image.value.alt && <div><em>(Alt: {props.fields.image.value.alt})</em></div>}
+              {props.fields.image.value.alt && 
+              <>
+                <em>
+                  <>
+                    (Alt: {props.fields.image.value.alt})
+                  </>
+                </em>
+              </>}
             </div>
             }
           </div>
@@ -456,9 +463,10 @@ export const componentBlocks = {
           <div>
             {!props.fields.video.value.label ? <span>Click <em>Edit</em></span> :
               <div>
-
+                <>
                 {props.fields.video.value.label}
                 <br />
+                </>
                 <img
                   style={{width:'150px'}}
                   src={(props.fields.video.value.thumbSm as unknown) as string}
