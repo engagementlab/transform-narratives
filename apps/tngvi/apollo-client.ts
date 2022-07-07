@@ -4,13 +4,15 @@ const apollo = new ApolloClient({
   uri: 'http://localhost:3000/api/graphql',
   cache: new InMemoryCache(),
 });
-const query = async (queryStr: string) => {
-  await apollo.query({
+const query = async (name: string, queryStr: string) => {
+  const result = await apollo.query({
     query: gql`
             query 
-            
+            {
+                ${queryStr}
             }
       `,
   });
+  return result.data[name];
 };
-export default apollo;
+export default query;

@@ -3,12 +3,12 @@ import { Fade, SlideshowProps } from 'react-slideshow-image';
 
 // import { query } from '.keystone/api';
 
-import { gql } from "@apollo/client";
-import apollo from "../apollo-client";
+import query from "../apollo-client";
 
-import Image from '../components/Image';
+import {Image} from '@el-next/components';
 import Button from '../components/Button';
 import Layout from '../components/Layout';
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';
 
 type HomePage = {
   id: string;
@@ -45,7 +45,7 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
         </div>
         <div className='w-full -translate-y-10 md:-translate-y-20 xl:-translate-y-40'>
           <Fade {...slidesProps}>
-            {homePage.slides.map((slide, i) => (
+            {homePage.slides.map((slide: { quote: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; image: { publicId: string; }; altText: string; }, i: any) => (
               <div key={`slide-${i}`} className='text-center flex flex-col items-center'>
                 <p className={`absolute w-full md:relative md:px-44 translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple ${pseudoBlurBg}`}>&ldquo;{slide.quote}&rdquo;</p>
                 <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
@@ -58,22 +58,24 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
     </Layout>
   );
 }
-
 export async function getStaticProps() {
-  const homePage = await apollo.query({
-    where: { name: 'Home Page' },
-    query: `
-    id 
-    intro { document } 
-    slides {
-      image
-      {
-        publicId
-      }
-      altText
-      quote
-    }`
-  }) as HomePage;
+    const q = await query(
+      'homePage',
+      `homePage(where: { name: { equals: "Home Page" } }) {
+        intro {
+          document
+        }
+        slides {
+          image {
+            publicId
+          }
+          altText
+          quote 
+        }
+      }`
+    );
+    const homePage = q[0]
+    // console.log(q[0]);
 
   return {
     props: {
