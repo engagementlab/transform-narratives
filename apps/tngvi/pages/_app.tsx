@@ -1,12 +1,14 @@
 import '../styles/globals.css'
+import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
-import { Favicon } from '@el-next/components';
-import { AnimatePresence } from 'framer-motion';
+// import {Favicon} from '@el-next/components';
+// import { AnimatePresence } from 'framer-motion';
 
 function App({ Component, pageProps }: AppProps) {
+  console.log(typeof Favicon)
   return (
     <div>
       <div>
@@ -16,19 +18,19 @@ function App({ Component, pageProps }: AppProps) {
           {process.env.NODE_ENV !== 'production' && <meta name="robots" content="noindex" />}
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <meta name="description" content={process.env.NODE_ENV} />
-          <Favicon />
+          {/* <Favicon /> */}
         </Head>
       </div>
       <main className='w-full mb-24 font-sans'>
       <Header />
-      <AnimatePresence
+      {/* <AnimatePresence
                 exitBeforeEnter
                 initial={false}
-                onExitComplete={() => window.scrollTo(0, 0)}>
+                onExitComplete={() => window.scrollTo(0, 0)}> */}
 
         <Component {...pageProps} />
-      </AnimatePresence>
-      <Footer />
+      {/* </AnimatePresence> */}
+      {/* <Footer /> */}
       </main>
     </div>
   )

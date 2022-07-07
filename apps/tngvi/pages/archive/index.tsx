@@ -6,15 +6,13 @@ import { useRouter } from "next/router";
 import _ from 'lodash';
 import { motion } from "framer-motion";
 
-import {
-    query
-} from '.keystone/api';
+import query from "../../apollo-client";
+
 import Filtering, {  MediaItem } from "../../components/Filtering";
-import Image from "../../components/Image";
+import { Image } from '@el-next/components';
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 
-const linkClass = 'no-underline border-b-2 border-b-[rgba(2,102,112,0)] hover:border-b-[rgba(2,102,112,1)] transition-all';
 const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => void }) => {
     return (
         <motion.div animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -56,45 +54,64 @@ export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetSta
 }
 
 export async function getStaticProps() {
-const filters = await query.Filter.findMany({
-    where: {
-        section: {
-            equals: 'media'
-        },
-        enabled: {
-            equals: true
-        }
-    },
-    query: 'key name type'
-}) as any[];
-// Group filters by type
-const filtersGrouped = filters.reduce((filterMemo, {
-    type,
-    key,
-    name
-}) => {
-    (filterMemo[type] = filterMemo[type] || []).push({
+
+    const filters = await query(
+        'filters', 
+        `filters(where: {
+            section: {
+                equals: media
+            },
+            enabled: {
+                equals: true
+            }
+        }) { 
+            key
+            name
+            type
+        }`) as any[];
+
+    // Group filters by type
+    const filtersGrouped = filters.reduce((filterMemo, {
+        type,
         key,
         name
-    });
-    return filterMemo;
-}, {});
-const mediaItems = await query.MediaItem.findMany({
-    query: 'title key shortDescription filters { key name } thumbnail { publicId }',
-    where: {
-        enabled: {
-            equals: true
-        }
-    },
-    orderBy: {
-        createdDate: 'desc'
-    }
-}) as MediaItem[];
+    }) => {
+        (filterMemo[type] = filterMemo[type] || []).push({
+            key,
+            name
+        });
+        return filterMemo;
+    }, {});
+	
+	const mediaItems = await query(
+		'mediaItems',
+		`mediaItems(
+			where: {
+				enabled: {
+					equals: true
+				}
+			},
+			orderBy: {
+				createdDate: desc
+			}		
+		) {
+			title
+			key
+			shortDescription 
+			filters {
+				key
+				name
+			}
+			thumbnail { 
+				publicId
+			}
+		}`) as MediaItem[];
 
-return {
-    props: {
-        filtersGrouped,
-        mediaItems,
-      }
-    };
-  }
+	return {
+		props: {
+			filtersGrouped,
+			mediaItems,
+		}
+	};
+
+}

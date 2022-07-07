@@ -1,9 +1,8 @@
 import { InferGetStaticPropsType } from 'next';
-import { query } from '.keystone/api';
+import query from "../../apollo-client";
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import BlockRenderers from '../../components/BlockRenderers';
+import { BlockRenderers } from '@el-next/components';
 import Layout from '../../components/Layout';
-import FlexLayout from '../../components/FlexLayout';
 import Image from '../../components/Image';
 import DocRenderers from '../../components/DocRenderers';
 import { ReactNode } from 'react';
@@ -37,11 +36,15 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
 }
 
 export async function getStaticProps() {
-  const page = await query.About.findOne({
-    where: { name: 'About Page' },
-    query: `content { document(hydrateRelationships: true) }`
-  }) as AboutPage;
-  // console.log(page.content.document[5].children[0].children[0])
+  const result = await query(
+    'aboutPage',
+    `aboutPage(where: { name: { equals: "About Page" } }) {
+      content { 
+        document(hydrateRelationships: true) 
+      }
+    }`
+  );
+  const page = result[0] as AboutPage;
   return {
     props: {
       page

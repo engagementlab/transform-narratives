@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import { Fade, SlideshowProps } from 'react-slideshow-image';
 
-import { query } from '.keystone/api';
+import query from "../apollo-client";
 
 import Image from '../components/Image';
 import Button from '../components/Button';

@@ -1,14 +1,13 @@
+import { ReactNode } from 'react';
 import { InferGetStaticPropsType } from 'next';
-import { query } from '.keystone/api';
+import { BlockRenderers } from '@el-next/components';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 
-import BlockRenderers from '../../components/BlockRenderers';
 import Image from '../../components/Image';
 import Layout from '../../components/Layout';
-import ImagePlaceholder from '../../components/ImagePlaceholder';
 import HeadingStyle from '../../components/HeadingStyle';
 import DocRenderers from '../../components/DocRenderers';
-import { ReactNode } from 'react';
+import query from "../../apollo-client";
 
 type CommunityPage = {
     values: any;
@@ -88,14 +87,31 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
 }
 
 export async function getStaticProps() {
-  const page = await query.Community.findOne({
-    where: { name: 'Community Page' },
-    query: `values { document } `
-  }) as CommunityPage;
-  const people = await query.Person.findMany({
-    query: `name title blurb remembrance image { publicId } content { document }`, orderBy: {name: 'asc'}, where: { enabled: { equals: true } },
-  }) as Person[];
-
+  const pageResult = await query(
+    'community',
+    `community(where: { name: { equals: 'Community Page' } }) {
+      values { 
+        document 
+      }
+    }`);
+  const peopleResult = await query(
+    'people',
+    `people(orderBy: {name: 'asc'}, where: { enabled: { equals: true }) {
+      name 
+      title
+      blurb
+      remembrance
+      image {
+        publicId 
+      } 
+      content {
+        document
+      }
+    }`);
+    
+  const page = pageResult[0] as CommunityPage;
+  const people = peopleResult as Person[];
+ 
   return {
     props: {
       page,

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { InferGetStaticPropsType } from 'next';
-import { query } from '.keystone/api';
 import { DocumentRenderer, } from '@keystone-6/document-renderer';
+
+import query from "../../apollo-client";
 
 import BlockRenderers from '../../components/BlockRenderers';
 import Layout from '../../components/Layout';
@@ -67,10 +68,14 @@ export default function BigPicture({ page }: InferGetStaticPropsType<typeof getS
   );
 }
 export async function getStaticProps() {
-  const page = await query.BigPicture.findOne({
-    where: { name: 'Big Picture Page' },
-    query: `content { document(hydrateRelationships: true) } `
-  }) as BigPicturePage;
+  const result = await query(
+    'bigPicture',
+    `bigPicture(where: { name: {equals: 'Big Picture Page'} }) {
+      content { 
+        document(hydrateRelationships: true) 
+    }`
+  );
+  const page = result[0] as BigPicturePage;
 
   return {
     props: {
