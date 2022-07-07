@@ -9,12 +9,15 @@
   },
   "dependencies": {
     "@cloudinary/react": "^1.1.0",
-    "@cloudinary/url-gen": "^1.6.0"
+    "@cloudinary/url-gen": "^1.6.0",
+    "@keystone-6/fields-document": "^3.0.0",
+    "next": "^12.1.6",
+    "zustand": "^4.0.0-rc.1"
   },
   "peerDependencies": {
-    "@types/react": "^18.0.14",
+    "@types/react": "^18.0.15",
     "react": "^18.2.0",
-    "react/jsx-runtime": "^18.0.14"
+    "react/jsx-runtime": "^18.2.0"
   },
   "preconstruct": {
     "entrypoints": [
