@@ -3,7 +3,7 @@ import type { NavigationProps } from '@keystone-6/core/admin-ui/components';
 import { NavigationContainer, NavItem, ListNavItems } from '@keystone-6/core/admin-ui/components';
 import React from 'react';
 
-import app from '../../currentApp';
+// import app from '../../currentApp';
 
 const listMapping = new Map<string, string>([
   ['Abouts', 'About Page'],
@@ -19,7 +19,7 @@ export function CustomNavigation({ authenticatedItem, lists }: NavigationProps) 
 
           {lists.map((list, i) => {
             return (
-                <NavItem key={i} href={`/${app}/${list.path}`}>{listMapping.get(list.label) ? listMapping.get(list.label) : list.label}</NavItem>
+                <NavItem key={i} href={`/${list.path}`}>{listMapping.get(list.label) ? listMapping.get(list.label) : list.label}</NavItem>
               )
           }
           )}

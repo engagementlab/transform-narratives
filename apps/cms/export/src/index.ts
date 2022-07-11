@@ -24,11 +24,6 @@ let appPort = 3000;
 let spawnIndex = 0;
 
 const spawnBuild = () => {
-  // This generated script is imported by our CustomNav component on build so it identifies the instance being built
-  fs.writeFileSync(
-    cwd('/currentApp.tsx'),
-    `export default '${appNames[spawnIndex]}'`
-  );
   const schemaFixChild = spawn('npm', ['run', 'postinstall']);
   schemaFixChild.on('error', (chunk: any) => {
     console.error(chunk);

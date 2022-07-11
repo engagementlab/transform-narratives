@@ -39,8 +39,7 @@ const AuthStrategy = require('passport-google-oauth20').Strategy;
 const MongoStore = require('connect-mongo')(session);
 const DB = require('./db');
 
-let appName: string = argv.app;
-if(!appName) appName = require('./currentApp').default;
+const appName: string = argv.app || 'elab';
 
 declare module 'express-serve-static-core' {
   interface Request {
@@ -134,7 +133,6 @@ const Passport = () => {
 };
 
 let ksConfig = (lists: any) => {
-  console.log(lists)
   return {
   db: dbConfig,
   experimental: {
@@ -302,6 +300,5 @@ let ksConfig = (lists: any) => {
 };}
 
 export default (() => {
-  console.log(appName);
   return ksConfig(schemaMap[appName]);
 })();
