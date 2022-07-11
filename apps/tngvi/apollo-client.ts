@@ -5,14 +5,19 @@ const apollo = new ApolloClient({
   cache: new InMemoryCache(),
 });
 const query = async (name: string, queryStr: string) => {
-  const result = await apollo.query({
-    query: gql`
+  try {
+    const result = await apollo.query({
+      query: gql`
             query 
             {
                 ${queryStr}
             }
       `,
-  });
-  return result.data[name];
+    });
+    return result.data[name];
+  } catch (err) {
+    if (err.networkError) console.error(err.networkError.result);
+    else console.error(err);
+  }
 };
 export default query;

@@ -37,8 +37,8 @@ export default function AboutInitiative({ page }: InferGetStaticPropsType<typeof
 
 export async function getStaticProps() {
   const result = await query(
-    'aboutPage',
-    `aboutPage(where: { name: { equals: "About Page" } }) {
+    'abouts',
+    `abouts(where: { name: { equals: "About Page" } }) {
       content { 
         document(hydrateRelationships: true) 
       }

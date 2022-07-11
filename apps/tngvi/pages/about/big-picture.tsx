@@ -69,10 +69,11 @@ export default function BigPicture({ page }: InferGetStaticPropsType<typeof getS
 }
 export async function getStaticProps() {
   const result = await query(
-    'bigPicture',
-    `bigPicture(where: { name: {equals: 'Big Picture Page'} }) {
+    'bigPictures',
+    `bigPictures(where: { name: { equals: "Big Picture Page" } }) {
       content { 
         document(hydrateRelationships: true) 
+      }
     }`
   );
   const page = result[0] as BigPicturePage;

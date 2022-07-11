@@ -9,9 +9,6 @@ import {
 import {
     DocumentRenderer,
 } from '@keystone-6/document-renderer';
-import {
-    query
-} from '.keystone/api';
 
 import _ from 'lodash';
 import create from 'zustand';
@@ -19,11 +16,14 @@ import {
     CopyToClipboard
 } from 'react-copy-to-clipboard';
 
+import query from '../../apollo-client';
+
 import { BlockRenderers } from '@el-next/components';
 import DocRenderers from '../../components/DocRenderers';
 import Layout from '../../components/Layout';
 import Video from '../../components/Video';
 import Link from 'next/link';
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';
 
 type MediaItem = {
     title: string;
@@ -49,8 +49,7 @@ const useStore = create < ShareState > (set => ({
 }));
 
 export default function MediaItem({
-    item,
-    relatedItems
+    item
 }: InferGetStaticPropsType < typeof getStaticProps > ) {
     const origin =
         typeof window !== 'undefined' && window.location.origin
@@ -72,12 +71,12 @@ export default function MediaItem({
                         <div>
                             <h1 className="text-2xl font-bold mb-2">{item.title}</h1>
                             {/* Render filters as links */}
-                            <p>{item.filters.map((filter, i) => {
+                            <p>{item.filters.map((filter: any, i: number) => {
                                 return filter.enabled ? 
                                 (
-                                    <>
+                                    <span key={filter.key}>
                                         <Link href={`${origin}/archive/?${filter.key}`}><a className={filterClass}>{filter.name}</a></Link>{i < item.filters.length-1 && ','}&nbsp;
-                                    </>
+                                    </span>
                                 )
                                 : 
                                     ''
@@ -132,10 +131,14 @@ export default function MediaItem({
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-    const items = (await query.MediaItem.findMany({
-      query: `key`,
-    })) as { key: string }[];
-  
+    const items = await query(
+        'mediaItems',
+        ` mediaItems {
+            key
+          }
+          `
+    ) as { key: string }[];
+
     const paths = items
       .filter(({ key }) => !!key)
       .map(({ key }) => `/archive/${key}`);
@@ -147,22 +150,37 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 }
   
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-    const item = (await query.MediaItem.findOne({
-        where: { key: params!.key as string },
-        query: 'title filters { name key enabled } content { document(hydrateRelationships: true) } videos thumbnail { publicId }',
-    })) as MediaItem;
-    const relatedItems = (await query.MediaItem.findMany({
-        where: { 
-            filters: { 
-                some:{
-                    OR: [
-                        { name: { equals: "2022" } },
-                        { name: { equals: "Rural Voices" } }
-                    ]
-                } 
+        
+    const itemResult = await query(
+        'mediaItems',
+        `mediaItems(where: { key: { equals: "${params!.key}" } }) {
+            title
+            filters {
+              name
+              key
+              enabled
             }
-        },
-        query: 'title key filters { key name } shortDescription thumbnail { publicId }',
-    })) as MediaItem[];
-    return { props: { item, relatedItems } };
+            content {
+              document(hydrateRelationships: true)
+            }
+            videos
+            thumbnail {
+              publicId
+            }
+          }`);
+          const item = itemResult[0] as MediaItem;
+    // const relatedItems = (await query.MediaItem.findMany({
+    //     where: { 
+    //         filters: { 
+    //             some:{
+    //                 OR: [
+    //                     { name: { equals: "2022" } },
+    //                     { name: { equals: "Rural Voices" } }
+    //                 ]
+    //             } 
+    //         }
+    //     },
+    //     query: 'title key filters { key name } shortDescription thumbnail { publicId }',
+    // })) as MediaItem[];
+    return { props: { item } };
 }

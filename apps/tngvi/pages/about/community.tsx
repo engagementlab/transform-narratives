@@ -88,15 +88,15 @@ export default function Community({ page, people }: InferGetStaticPropsType<type
 
 export async function getStaticProps() {
   const pageResult = await query(
-    'community',
-    `community(where: { name: { equals: 'Community Page' } }) {
+    'communities',
+    `communities(where: { name: { equals: "Community Page" } }) {
       values { 
         document 
       }
     }`);
   const peopleResult = await query(
     'people',
-    `people(orderBy: {name: 'asc'}, where: { enabled: { equals: true }) {
+    `people(orderBy: {name: asc}, where: { enabled: { equals: true }}) {
       name 
       title
       blurb
