@@ -4,7 +4,7 @@ import { DocumentRenderer, } from '@keystone-6/document-renderer';
 
 import query from "../../apollo-client";
 
-import BlockRenderers from '../../components/BlockRenderers';
+import { BlockRenderers } from '@el-next/components';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
 import Image from '../../components/Image';

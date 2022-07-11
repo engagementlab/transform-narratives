@@ -7,7 +7,7 @@ import _ from 'lodash';
 import query from "../apollo-client";
 
 import Image from '../../components/Image';
-import BlockRenderers from '../../components/BlockRenderers';
+import { BlockRenderers } from '@el-next/components';
 import Layout from '../../components/Layout';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import HeadingStyle from '../../components/HeadingStyle';

@@ -19,7 +19,7 @@ import {
     CopyToClipboard
 } from 'react-copy-to-clipboard';
 
-import BlockRenderers from '../../components/BlockRenderers';
+import { BlockRenderers } from '@el-next/components';
 import DocRenderers from '../../components/DocRenderers';
 import Layout from '../../components/Layout';
 import Video from '../../components/Video';
