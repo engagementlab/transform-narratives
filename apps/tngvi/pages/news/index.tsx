@@ -3,9 +3,7 @@ import {
 } from "next";
 import Link from "next/link";
 
-import {
-    query
-} from '.keystone/api';
+import query from "../apollo-client";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";

@@ -8,9 +8,7 @@ import {
     motion
 } from "framer-motion";
 
-import {
-    query
-} from '.keystone/api';
+import query from "../apollo-client";
 
 import Filtering, { StudioItem } from "../../components/Filtering";
 import Image from "../../components/Image";
