@@ -9,5 +9,5 @@ declare type ImageProps = {
     lazy?: boolean;
     aspectDefault?: boolean;
 };
-declare const Image: ({ alt, className, id, imgId, transforms, width, lazy, aspectDefault }: ImageProps) => JSX.Element;
-export default Image;
+export declare const Image: ({ alt, className, id, imgId, transforms, width, lazy, aspectDefault }: ImageProps) => JSX.Element;
+export {};

@@ -35,7 +35,7 @@ type ImageProps = {
     aspectDefault ? : boolean,
 };
 
-const Image = ({
+export const Image = ({
         alt,
         className,
         id,
@@ -74,5 +74,3 @@ const Image = ({
             />
             );
 }
-
-export default Image;

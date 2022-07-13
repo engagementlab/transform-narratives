@@ -21,7 +21,11 @@
   },
   "preconstruct": {
     "entrypoints": [
-      "index.ts"
+      "index.tsx",
+      "blockRenderers/index.tsx",
+      "favicon/index.tsx",
+      "image/index.tsx",
+      "video/index.tsx"
     ]
   }
 }

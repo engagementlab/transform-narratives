@@ -18,7 +18,7 @@ const thumbLoader = ({ src, width, quality }: ImageLoaderProps) => {
   return src.replace
   ('_1920x1080?r=pad', `_${width}x1080?r=pad`);
 }
-const Video = ({
+export const Video = ({
     thumbUrl,
     videoUrl,
     videoLabel,
@@ -59,5 +59,3 @@ const Video = ({
       </div>
     );
   }
-
-export default Video;

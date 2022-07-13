@@ -1,9 +1,9 @@
 import React from "react";
 import { InferRenderersForComponentBlocks } from "@keystone-6/fields-document/component-blocks";
 import Link from "next/link";
-import {componentBlocks} from '../../../apps/cms/admin/components';
-import Image from "./Image";
-import Video from "./Video";
+import {componentBlocks} from '../../../../apps/cms/admin/components';
+import { Image } from "../image";
+import { Video } from "../video";
 
 export const BlockRenderers = (imageOveride?: { (props: any): JSX.Element; (arg0: any): any; }) => {
   let blocks: InferRenderersForComponentBlocks<typeof componentBlocks>  = {
