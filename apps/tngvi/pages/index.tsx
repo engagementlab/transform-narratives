@@ -1,11 +1,9 @@
 import { InferGetStaticPropsType } from 'next';
 import { Fade, SlideshowProps } from 'react-slideshow-image';
-
-// import query from "../apollo-client";
+import { Image } from '@el-next/components/image';
 
 import query from "../apollo-client";
 
-import {Image} from '@el-next/components';
 import Button from '../components/Button';
 import Layout from '../components/Layout';
 import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal } from 'react';

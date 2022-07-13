@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import query from "../../apollo-client";
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
-import { BlockRenderers } from '@el-next/components';
+import { BlockRenderers } from '@el-next/components/blockRenderers';
 import Layout from '../../components/Layout';
 import Image from '../../components/Image';
 import DocRenderers from '../../components/DocRenderers';

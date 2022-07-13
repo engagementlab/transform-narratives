@@ -2,7 +2,7 @@ import { GetStaticPathsResult, GetStaticPropsContext, InferGetStaticPropsType } 
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import _ from 'lodash';
 
-import query from "../apollo-client";
+import query from "../../apollo-client";
 
 import { BlockRenderers } from '@el-next/components';
 import Layout from '../../components/Layout';

@@ -2,11 +2,11 @@ import '../styles/globals.css'
 import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head'
+import { Favicon } from '@el-next/components/favicon';
+
 import Header from '../components/Header'
 import Footer from '../components/Footer';
-import {Favicon} from '@el-next/components';
 // import { AnimatePresence } from 'framer-motion';
-
 function App({ Component, pageProps }: AppProps) {
   return (
     <div>

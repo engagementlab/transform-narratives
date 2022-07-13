@@ -18,7 +18,7 @@ import {
 
 import query from '../../apollo-client';
 
-import { BlockRenderers } from '@el-next/components';
+import { BlockRenderers } from '@el-next/components/blockRenderers';
 import DocRenderers from '../../components/DocRenderers';
 import Layout from '../../components/Layout';
 import Video from '../../components/Video';

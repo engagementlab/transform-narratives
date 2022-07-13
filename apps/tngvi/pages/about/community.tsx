@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { InferGetStaticPropsType } from 'next';
-import { BlockRenderers } from '@el-next/components';
+import { BlockRenderers } from '@el-next/components/blockRenderers';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 
 import Image from '../../components/Image';

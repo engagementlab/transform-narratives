@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import query from "../../apollo-client";
 
 import Filtering, {  MediaItem } from "../../components/Filtering";
-import { Image } from '@el-next/components';
+import { Image } from '@el-next/components/image';
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 
