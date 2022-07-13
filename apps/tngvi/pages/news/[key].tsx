@@ -4,7 +4,7 @@ import { DocumentRenderer, } from '@keystone-6/document-renderer';
 import Link from 'next/link';
 import _ from 'lodash';
 
-import query from "../apollo-client";
+import query from "../../apollo-client";
 
 import Image from '../../components/Image';
 import { BlockRenderers } from '@el-next/components/blockRenderers';
@@ -79,10 +79,13 @@ export default function NewsItem({ item, relatedItems }: InferGetStaticPropsType
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-  const items = (await query.NewsItem.findMany({
-    query: `key`,
-  })) as { key: string }[];
 
+    const items = await query(
+        'newsItems',
+        `newsItems {
+            key
+        }`
+    ) as { key: string }[];
   const paths = items
     .filter(({ key }) => !!key)
     .map(({ key }) => `/news/${key}`);
@@ -94,10 +97,20 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const item = (await query.NewsItem.findOne({
-      where: { key: params!.key as string },
-      query: 'title publishDate thumbnail { publicId } thumbAltText body { document(hydrateRelationships: true) }',
-  })) as NewsItem;
+  const itemResult = await query(
+    'newsItems',
+    `newsItems(where: { key: { equals: "${params!.key}" } }) {
+       title 
+       publishDate 
+       thumbnail { 
+           publicId }
+
+       thumbAltText 
+       body { 
+           document(hydrateRelationships: true) 
+        }
+      }`);
+  const item = itemResult[0] as NewsItem;
   const relatedItems = null;
   
   return { props: { item, relatedItems } };

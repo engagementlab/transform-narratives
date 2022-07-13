@@ -17,7 +17,7 @@ type Studio = {
   associatedMedia:[{ videos: any[]}];
 };
 
-export default function Studio({ item, relatedItems }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Studio({ item }: InferGetStaticPropsType<typeof getStaticProps>) {
 return (
   !item ? 'Not found!' :
   <Layout>
@@ -79,9 +79,13 @@ return (
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-  const items = (await query.Studio.findMany({
-    query: `key`,
-  })) as { key: string }[];
+  const items = await query(
+      'studios',
+      ` studios {
+          key
+        }
+        `
+  ) as { key: string }[];
 
   const paths = items
     .filter(({ key }) => !!key)
@@ -94,13 +98,25 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const item = (await query.Studio.findOne({
-      where: { key: params!.key as string },
-      query: 'name filters { name } content { document(hydrateRelationships: true) } ',
-  })) as Studio;
-  const relatedItems = (await query.Studio.findMany({
-      query: 'name key filters { type name } thumbnail { publicId }',
-  })) as Studio[];
+  const itemResult = await query(
+    'studios',
+    `studios(where: { key: { equals: "${params!.key}" } }) {
+       name 
+       filters { 
+         name
+       } 
+       content {
+         document(hydrateRelationships: true)
+       } 
+      }`);
+  const item = itemResult[0] as Studio;
+  // const item = (await query.Studio.findOne({
+  //     where: { key: params!.key as string },
+  //     query: '',
+  // })) as Studio;
+  // const relatedItems = (await query.Studio.findMany({
+  //     query: 'name key filters { type name } thumbnail { publicId }',
+  // })) as Studio[];
   
-  return { props: { item, relatedItems } };
+  return { props: { item } };
 }
