@@ -40,18 +40,20 @@ export default function Home({ homePage }: InferGetStaticPropsType<typeof getSta
 
 
         </div>
-        <div className='w-full -translate-y-10 md:-translate-y-20 xl:-translate-y-40'>
-          <Fade {...slidesProps}>
+        <div className='w-full flex flex-col items-center -translate-y-10 md:-translate-y-20 xl:-translate-y-40'>
+        <Image id='img-home' alt='' imgId='tngvi/homepage' width={2200} className='w-full' lazy={false} />
+
+          {/* <Fade {...slidesProps}>
             {homePage.slides.map((slide, i) => (
               <div key={`slide-${i}`} className='text-center flex flex-col items-center'>
                 <p className={`absolute w-full md:relative md:px-44 translate-y-20 md:translate-y-40 text-xl lg:text-2xl text-purple ${pseudoBlurBg}`}>&ldquo;{slide.quote}&rdquo;</p>
                 <Image id={'img-' + slide.image.publicId} alt={slide.altText} imgId={slide.image.publicId} width={1900} className='w-full aspect-[3/2]' lazy={true} />
               </div>
             ))}
-          </Fade>
+          </Fade> */}
+        <p className='w-4/5 md:w-1/2 lg:w-full text-sm lg:text-lg my-8 text-bluegreen text-center quote-shadow font-semibold '>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
         </div>
 
-        <p className='w-full text-sm lg:text-lg my-8 text-bluegreen text-center quote-shadow font-semibold '>Through local and collaborative storytelling, we seek to inspire solutions and interrupt cycles of gun violence.</p>
     </Layout>
   );
 }
