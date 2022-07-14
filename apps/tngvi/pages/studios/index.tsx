@@ -10,10 +10,20 @@ import {
 
 import query from "../../apollo-client";
 
-import Filtering, { StudioItem } from "../../components/Filtering";
+import Filtering from "../../components/Filtering";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
+
+type StudioItem = {
+    name: string;
+    key: string;
+    blurb: string;
+    filters: {key: string, name: string}[];
+    thumbnail: {
+        publicId: string;
+    }
+}
 
 const renderItem = (props: {
         item: StudioItem, toggleFilter: (filter: string) => void 
@@ -47,7 +57,7 @@ const renderItem = (props: {
 export default function Studios({ filtersGrouped, studios }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter();
     const preSelectedFilters = Object.keys(router.query).length === 1 ? Object.keys(router.query)[0].split('/') as never[] : [];
-    const filtering = new Filtering(filtersGrouped, preSelectedFilters, studios, renderItem);
+    const filtering = new Filtering<StudioItem>(filtersGrouped, preSelectedFilters, studios, renderItem);
 
     return (
         <Layout>
@@ -87,44 +97,24 @@ export async function getStaticProps() {
             name
         });
         return filterMemo;
-        }, {})
-        // const studios = await query.Studio.findMany({
-        //     query: 'name blurb key filters { key name } thumbnail { publicId }',
-        //     where: {
-        //         enabled: {
-        //             equals: true
-        //         }
-        //     },
-        //     orderBy: {
-        //         order: 'asc'
-        //     }
-        // }) as StudioItem[];
+        }, {});
 
-        const studios = await query(
-            'studios',
-            `studios(
-                where: {
-                    enabled: {
-                        equals: true
-                    }
-                },
-                orderBy: {
-                    createdDate: asc
-                }		
-            ) {
-                title
-                key
-                shortDescription 
-                filters {
-                    key
-                    name
+    const studios = await query(
+        'studios',
+        `studios(
+            where: {
+                enabled: {
+                    equals: true
                 }
-                thumbnail { 
-                    publicId
-                }
-            }`) as MediaItem[];
-    
-        return {
+            },
+            orderBy: {
+                createdDate: asc
+            }		
+        ) {
+            name blurb key filters { key name } thumbnail { publicId }
+        }`) as StudioItem[];
+
+    return {
       props: {
         filtersGrouped,
         studios,

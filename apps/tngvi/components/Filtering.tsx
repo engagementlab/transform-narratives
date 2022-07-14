@@ -15,26 +15,8 @@ import {
     AnimatePresence
 } from "framer-motion"
 
-export type MediaItem = {
-    title: string;
-    key: string;
-    shortDescription: string;
-    filters: {key: string, name: string}[];
-    thumbnail: {
-        publicId: string;
-    }
-}
-export type StudioItem = {
-    name: string;
-    key: string;
-    blurb: string;
-    filters: {key: string, name: string}[];
-    thumbnail: {
-        publicId: string;
-    }
-}
-type ItemRendererProps = {
-    item: MediaItem & StudioItem;
+interface ItemRendererProps<T> {
+    item: T;
     toggleFilter: (filter: string) => void;
 }
 type FilterState = {
@@ -62,7 +44,7 @@ interface StoreSubscribeWithSelector < T extends State > {
     }
 }
 
-export default class Filtering {
+export default class Filtering<T> {
 
     useStore: UseBoundStore < FilterState, Omit < StoreApi < FilterState > , "subscribe" > & StoreSubscribeWithSelector < FilterState >> ;
     filtersGrouped: {
@@ -70,11 +52,11 @@ export default class Filtering {
     };
     items;
     mode ? : string;
-    ItemRenderer: React.ComponentType < ItemRendererProps > ;
+    ItemRenderer: React.ComponentType < ItemRendererProps<T> >;
 
     constructor(filtersGrouped: {
         [x: string]: any[];
-    }, preSelectedFilters: never[], items: any[], ItemRenderer: React.ComponentType < ItemRendererProps > , mode ? : string) {
+    }, preSelectedFilters: never[], items: any[], ItemRenderer: React.ComponentType < ItemRendererProps<T> > , mode ? : string) {
 
         this.filtersGrouped = filtersGrouped;
         this.items = items;
@@ -277,7 +259,7 @@ export default class Filtering {
                         count === 0 ?
                         <p className='w-full text-xl my-20 text-center'>Sorry, no matches found. Please try other filters.</p> :
                         <AnimatePresence>
-                            {filteredItems.map((item: MediaItem & StudioItem, i: number) => (
+                            {filteredItems.map((item: T, i: number) => (
                                 <this.ItemRenderer key={i} item={item} toggleFilter={toggleFilter} />
                             ))}
                         </AnimatePresence>

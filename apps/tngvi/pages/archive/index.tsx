@@ -8,10 +8,20 @@ import { motion } from "framer-motion";
 
 import query from "../../apollo-client";
 
-import Filtering, {  MediaItem } from "../../components/Filtering";
+import Filtering from "../../components/Filtering";
 import { Image } from '@el-next/components/image';
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
+
+type MediaItem = {
+        title: string;
+        key: string;
+        shortDescription: string;
+        filters: {key: string, name: string}[];
+        thumbnail: {
+            publicId: string;
+        }
+}
 
 const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => void }) => {
     return (
@@ -38,7 +48,7 @@ const renderItem = (props: { item: MediaItem, toggleFilter: (filter: string) => 
 export default function MediaArchive({ filtersGrouped, mediaItems }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter();
     const preSelectedFilters = Object.keys(router.query).length === 1 ? Object.keys(router.query)[0].split('/') as never[] : [];
-    const filtering = new Filtering(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media');
+    const filtering = new Filtering<MediaItem>(filtersGrouped, preSelectedFilters, mediaItems, renderItem, 'media');
     return (
         <Layout>
             <div
