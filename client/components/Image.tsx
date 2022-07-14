@@ -48,7 +48,7 @@ const Image = ({
         // Instantiate a CloudinaryImage object for the image with public ID;
         const cloudImage = cld.image(`${imgId}`);
         let plugins: Plugins = [responsive({
-            steps: [800, 1000, 1400]
+            steps: [800, 1000, 1400, 1800, 2200]
         })];
 
         // Create image transforms
