@@ -97,8 +97,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
         'events',
         `events {
             key
-            }
-            `
+        }`
     ) as { key: string }[];
 
     const paths = items

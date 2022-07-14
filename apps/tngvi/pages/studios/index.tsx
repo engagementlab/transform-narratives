@@ -8,7 +8,7 @@ import {
     motion
 } from "framer-motion";
 
-import query from "../apollo-client";
+import query from "../../apollo-client";
 
 import Filtering, { StudioItem } from "../../components/Filtering";
 import Image from "../../components/Image";
@@ -64,7 +64,22 @@ export default function Studios({ filtersGrouped, studios }: InferGetStaticProps
 }
 
 export async function getStaticProps() {
-    const filters = await query.Filter.findMany({ query: 'key name type', where: { section: {equals: 'studio'}, enabled: { equals: true } } }) as any[];
+
+    const filters = await query(
+        'filters', 
+        `filters(where: {
+            section: {
+                equals: studio
+            },
+            enabled: {
+                equals: true
+            }
+        }) { 
+            key
+            name
+            type
+        }`) as any[];
+
     // Group filters by type
     const filtersGrouped = filters.reduce((filterMemo, {key, type, name}) => {
         (filterMemo[type] = filterMemo[type] || []).push({
@@ -73,18 +88,42 @@ export async function getStaticProps() {
         });
         return filterMemo;
         }, {})
-        const studios = await query.Studio.findMany({
-            query: 'name blurb key filters { key name } thumbnail { publicId }',
-            where: {
-                enabled: {
-                    equals: true
-                }
-            },
-            orderBy: {
-                order: 'asc'
-            }
-        }) as StudioItem[];
+        // const studios = await query.Studio.findMany({
+        //     query: 'name blurb key filters { key name } thumbnail { publicId }',
+        //     where: {
+        //         enabled: {
+        //             equals: true
+        //         }
+        //     },
+        //     orderBy: {
+        //         order: 'asc'
+        //     }
+        // }) as StudioItem[];
 
+        const studios = await query(
+            'studios',
+            `studios(
+                where: {
+                    enabled: {
+                        equals: true
+                    }
+                },
+                orderBy: {
+                    createdDate: asc
+                }		
+            ) {
+                title
+                key
+                shortDescription 
+                filters {
+                    key
+                    name
+                }
+                thumbnail { 
+                    publicId
+                }
+            }`) as MediaItem[];
+    
         return {
       props: {
         filtersGrouped,
