@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import _ from 'lodash';
-import Image from './Image';
+
+import { Image } from '@el-next/components/image';
 
 const ActiveLink = (href: string | undefined) => {
 

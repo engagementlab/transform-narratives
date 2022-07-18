@@ -7,7 +7,7 @@ import query from "../../apollo-client";
 import { BlockRenderers } from '@el-next/components/blockRenderers';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
-import Image from '../../components/Image';
+import { Image } from '@el-next/components/image';
 import DocRenderers from '../../components/DocRenderers';
 
 type BigPicturePage = {

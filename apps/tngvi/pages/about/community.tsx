@@ -3,7 +3,7 @@ import { InferGetStaticPropsType } from 'next';
 import { BlockRenderers } from '@el-next/components/blockRenderers';
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 
-import Image from '../../components/Image';
+import { Image } from '@el-next/components/image';
 import Layout from '../../components/Layout';
 import HeadingStyle from '../../components/HeadingStyle';
 import DocRenderers from '../../components/DocRenderers';

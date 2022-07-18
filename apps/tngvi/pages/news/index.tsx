@@ -4,7 +4,7 @@ import {
 import Link from "next/link";
 
 import query from "../../apollo-client";
-import Image from "../../components/Image";
+import { Image } from '@el-next/components/image';
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 

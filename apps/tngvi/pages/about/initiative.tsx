@@ -3,7 +3,7 @@ import query from "../../apollo-client";
 import { DocumentRenderer, DocumentRendererProps } from '@keystone-6/document-renderer';
 import { BlockRenderers } from '@el-next/components/blockRenderers';
 import Layout from '../../components/Layout';
-import Image from '../../components/Image';
+import { Image } from '@el-next/components/image';
 import DocRenderers from '../../components/DocRenderers';
 import { ReactNode } from 'react';
 
