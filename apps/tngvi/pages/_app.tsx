@@ -6,6 +6,7 @@ import { Favicon } from '@el-next/components/favicon';
 
 import Header from '../components/Header'
 import Footer from '../components/Footer';
+import { AnimatePresence } from 'framer-motion';
 // import { AnimatePresence } from 'framer-motion';
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,14 +23,14 @@ function App({ Component, pageProps }: AppProps) {
       </div>
       <main className='w-full mb-24 font-sans'>
       <Header />
-      {/* <AnimatePresence
+      <AnimatePresence
                 exitBeforeEnter
                 initial={false}
-                onExitComplete={() => window.scrollTo(0, 0)}> */}
+                onExitComplete={() => window.scrollTo(0, 0)}>
 
         <Component {...pageProps} />
-      {/* </AnimatePresence> */}
-      {/* <Footer /> */}
+      </AnimatePresence>
+      <Footer />
       </main>
     </div>
   )

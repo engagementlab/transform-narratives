@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import query from "../../apollo-client";
 
-import { BlockRenderers } from '@el-next/components';
+import { BlockRenderers } from '@el-next/components/blockRenderers';
 import Layout from '../../components/Layout';
 import DocRenderers from '../../components/DocRenderers';
 
@@ -18,7 +18,7 @@ type Studio = {
 };
 
 export default function Studio({ item }: InferGetStaticPropsType<typeof getStaticProps>) {
-return (
+  return (
   !item ? 'Not found!' :
   <Layout>
     <div>

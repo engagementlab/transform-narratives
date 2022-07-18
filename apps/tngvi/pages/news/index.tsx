@@ -3,7 +3,7 @@ import {
 } from "next";
 import Link from "next/link";
 
-import query from "../apollo-client";
+import query from "../../apollo-client";
 import Image from "../../components/Image";
 import Layout from "../../components/Layout";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
@@ -103,18 +103,27 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
     );
 }
 export async function getStaticProps() {
-    const items = await query.NewsItem.findMany({
-        query: 'title key publishDate externalLink blurb thumbnail { publicId }',
-        orderBy: {
-            publishDate: 'desc'
-        },
-        where: {
-            enabled: {
-                equals: true
+    const items = await query(
+        'newsItems',
+        `newsItems(
+            where: {
+                enabled: {
+                    equals: true
+                }
+            },
+            orderBy: {
+                publishDate: desc
+            }		
+        ) { 
+            title
+            key
+            publishDate
+            externalLink
+            blurb
+            thumbnail { 
+                publicId
             }
-        }
-    }) as News[];
-
+        }`) as News[];
     return {
         props: {
             items
