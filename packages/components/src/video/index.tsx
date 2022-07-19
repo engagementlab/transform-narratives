@@ -1,3 +1,5 @@
+// import '../styles.css';
+
 import Image, { ImageLoaderProps } from 'next/image'
 import React from 'react';
 import { useState } from 'react';
@@ -39,7 +41,7 @@ export const Video = ({
           <a href='#' onClick={(e) =>{ toggleOpen(true); e.preventDefault() }}>
             <Image alt={`Thumbnail image for video with title "${videoLabel}"`} src={thumbUrl} width={1920} height={1080} layout='responsive' unoptimized={true}/>
 
-            <span className='absolute top-[calc(50%-75px)] left-[calc(50%-75px)]'>
+            <span className='absolute' style={{top: 'calc(50% - 75px)', left: 'calc(50% - 75px)'}}>
                 <svg viewBox="0 0 151 151" width="151" height="151">
                     <circle style={{strokeWidth: '0.8px', stroke: '#B571E9', fill: 'rgba(141, 51, 210, .6)'}} cx="49.467" cy="49.467" r="49.467" transform="matrix(1.521806, 0, 0, 1.510012, 0, 0)"></circle>
                     <path style={{strokeWidth: '0.8px', stroke: '#B571E9', fill: 'rgba(237, 234, 229, .8)'}} d="M 214.012 155.256 L 252.117 221.256 L 175.907 221.256 L 214.012 155.256 Z" data-bx-shape="triangle 175.907 155.256 76.21 66 0.5 0 1@b1f3cbc1" transform="matrix(-0.000024, 1, -1, -0.000024, 268.262054, -141.660278)" data-bx-origin="0.53481 0.565042"></path>

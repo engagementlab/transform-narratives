@@ -8,31 +8,30 @@ var react = require('@cloudinary/react');
 var jsxRuntime = require('react/jsx-runtime');
 
 // Cloudinary instance
-const cld = new urlGen.Cloudinary({
+var cld = new urlGen.Cloudinary({
   cloud: {
-    cloudName: `engagement-lab-home`
+    cloudName: "engagement-lab-home"
   },
   url: {
     secure: true
   }
 });
-const Image = ({
-  alt,
-  className,
-  id,
-  imgId,
-  transforms,
-  width,
-  lazy,
-  aspectDefault
-}) => {
+var Image = function Image(_ref) {
+  var alt = _ref.alt,
+      className = _ref.className,
+      id = _ref.id,
+      imgId = _ref.imgId,
+      transforms = _ref.transforms,
+      width = _ref.width,
+      lazy = _ref.lazy,
+      aspectDefault = _ref.aspectDefault;
   // Instantiate a CloudinaryImage object for the image with public ID;
-  const cloudImage = cld.image(`${imgId}`);
-  let plugins = [react.responsive({
+  var cloudImage = cld.image("".concat(imgId));
+  var plugins = [react.responsive({
     steps: [800, 1000, 1400]
   })]; // Create image transforms
 
-  cloudImage.addTransformation(transforms || `f_auto,dpr_auto,c_crop,g_center${aspectDefault ? '' : ',ar_4:3'}`); // If lazyload not set to false, enable
+  cloudImage.addTransformation(transforms || "f_auto,dpr_auto,c_crop,g_center".concat(aspectDefault ? '' : ',ar_4:3')); // If lazyload not set to false, enable
 
   if (lazy === undefined) plugins.push(react.lazyload(), react.placeholder({
     mode: 'blur'
@@ -44,7 +43,7 @@ const Image = ({
     alt: alt,
     plugins: plugins,
     style: {
-      maxWidth: width + `px`
+      maxWidth: width + "px"
     }
   });
 };

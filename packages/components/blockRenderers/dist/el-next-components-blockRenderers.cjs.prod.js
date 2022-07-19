@@ -16,9 +16,9 @@ function _interopDefault (e) { return e && e.__esModule ? e : { 'default': e }; 
 
 var Link__default = /*#__PURE__*/_interopDefault(Link);
 
-const BlockRenderers = imageOveride => {
-  let blocks = {
-    image: props => {
+var BlockRenderers = function BlockRenderers(imageOveride) {
+  var blocks = {
+    image: function image(props) {
       return /*#__PURE__*/jsxRuntime.jsx("div", {
         style: {
           display: 'flex',
@@ -32,14 +32,14 @@ const BlockRenderers = imageOveride => {
         })
       });
     },
-    video: props => {
+    video: function video(props) {
       return /*#__PURE__*/jsxRuntime.jsx(video_dist_elNextComponentsVideo.Video, {
         videoLabel: props.video.label,
         videoUrl: props.video.value,
         thumbUrl: props.video.thumb
       });
     },
-    button: props => {
+    button: function button(props) {
       return /*#__PURE__*/jsxRuntime.jsx(Link__default["default"], {
         href: props.link.props.node.children[0].text,
         passHref: true,

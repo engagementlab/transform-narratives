@@ -5,7 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 require('react');
 var jsxRuntime = require('react/jsx-runtime');
 
-const Favicon = () => {
+var Favicon = function Favicon() {
   return /*#__PURE__*/jsxRuntime.jsxs(jsxRuntime.Fragment, {
     children: [/*#__PURE__*/jsxRuntime.jsx("link", {
       rel: "apple-touch-icon",
