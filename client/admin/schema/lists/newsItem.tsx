@@ -63,12 +63,6 @@ const NewsItem: Lists.NewsItem = list({
           }
       }),
       externalLink: text({
-        validation: {
-          match: { 
-            regex: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm,
-            explanation: 'Not a valid URL'
-          }
-        },
         label: 'External link'
       }),
       blurb: text({
@@ -102,29 +96,6 @@ const NewsItem: Lists.NewsItem = list({
               views: path.join(process.cwd(), 'admin/components/component-blocks')
           },
           componentBlocks,
-
-          relationships: {
-            image: {
-              kind: 'prop',
-              listKey: 'NewsImage',
-              selection: 'imageName altText caption image {publicUrlTransformed publicId}',
-            },
-          },
-      }),
-      images: relationship({
-        ref: 'NewsImage.newsImages',
-        many: true,
-        label: "Images (add here for use in 'Body' field)",
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['image', 'imageName', 'altText', 'caption'],
-          inlineCreate: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-          inlineEdit: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-        },
       }),
     },
     hooks: {

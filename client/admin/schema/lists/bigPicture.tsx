@@ -56,14 +56,6 @@ const BigPicture: Lists.BigPicture = list({
                 views: path.join(process.cwd(), 'admin/components/component-blocks')
             },
             componentBlocks,
-
-            relationships: {
-              image: {
-                kind: 'prop',
-                listKey: 'BigPictureImage',
-                selection: 'imageName altText image {publicUrlTransformed publicId}',
-              },
-            },
             hooks: {
                 resolveInput: async ({
                     listKey,
@@ -77,21 +69,6 @@ const BigPicture: Lists.BigPicture = list({
                       return FixButtons(resolvedData)
                  },
             }
-        }),
-        images: relationship({
-          ref: 'BigPictureImage.bigPictureImages',
-          many: true,
-          label: "Images (add here for use in 'Content' field)",
-          ui: {
-            displayMode: 'cards',
-            cardFields: ['image', 'imageName', 'altText'],
-            inlineCreate: {
-              fields: ['image', 'imageName', 'altText']
-            },
-            inlineEdit: {
-              fields: ['image', 'imageName', 'altText']
-            },
-          },
         }),
     },
     ui: {

@@ -10,7 +10,11 @@ import { v2 as cloudinary } from 'cloudinary';
 
 import * as lists from './admin/schema';
 const multer = require('multer');
-const upload = multer();
+const upload = multer({
+  limits:{
+    fieldSize: 1024 * 1024 * 50,
+  }
+});
 
 cloudinary.config({
   cloud_name: `${process.env.CLOUDINARY_CLOUD_NAME}`,
@@ -156,7 +160,7 @@ let ksConfig = {
                   );
                 }
               );
-              console.log(sorted);
+
               res.status(200).send(sorted);
             }
           );

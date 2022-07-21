@@ -106,35 +106,12 @@ const Event: Lists.Event = list({
         },
   
         componentBlocks,
-  
-        relationships: {
-          image: {
-            kind: 'prop',
-            listKey: 'EventImage',
-            selection: 'imageName altText caption image {publicUrlTransformed publicId}',
-          },
-        },
       }),
       // speakers: relationship({
       //   ref: 'Person',
       //   isFilterable: true,
       //   many: true,
       // }),
-      images: relationship({
-        ref: 'EventImage.eventImages',
-        many: true,
-        label: "Document Images (add here for use in 'Content/Bios' fields)",
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['image', 'imageName', 'altText', 'caption'],
-          inlineCreate: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-          inlineEdit: {
-            fields: ['image', 'imageName', 'altText', 'caption']
-          },
-        },
-      }),
     },
     hooks: {
       resolveInput: async ({

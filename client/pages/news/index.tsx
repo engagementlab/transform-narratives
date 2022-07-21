@@ -80,20 +80,20 @@ export default function News({ items }: InferGetStaticPropsType<typeof getStatic
                                 </a>
                                 :
                                 <Link href={`/news/${item.key}`} passHref>
-                                <a className='group'>
+                                    <a className='group'>
 
-                                    <h3
-                                        className="text-bluegreen hover:text-green-blue group-hover:text-green-blue text-xl font-semibold my-2">
-                                        {item.title}
-                                    </h3>
-                                    <p className='max-w-2xl'>{item.blurb}</p>
-                                    {
-                                    item.thumbnail ?
-                                    <Image id={`thumb-${i}`} alt={`Thumbnail for blog post with title "${item.title}" `}
-                                        imgId={item.thumbnail.publicId} width={335} /> :
-                                    <ImagePlaceholder imageLabel='News' width={335} height={200} />
-                                    }
-                                </a>
+                                        <h3
+                                            className="text-bluegreen hover:text-green-blue group-hover:text-green-blue text-xl font-semibold my-2">
+                                            {item.title}
+                                        </h3>
+                                        <p className='max-w-2xl'>{item.blurb}</p>
+                                        {
+                                        item.thumbnail ?
+                                        <Image id={`thumb-${i}`} alt={`Thumbnail for blog post with title "${item.title}" `}
+                                            imgId={item.thumbnail.publicId} width={335} /> :
+                                        <ImagePlaceholder imageLabel='News' width={335} height={200} />
+                                        }
+                                    </a>
                                 </Link>
                                 }
                             </div>
